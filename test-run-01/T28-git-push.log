@@ -1,0 +1,13 @@
+Start program name: .git/hooks/pre-push
+  Parameter list
+    Param[0]: .git/hooks/pre-push
+    Param[1]: origin
+    Param[2]: git@ghe.coxautoinc.com:David-Rotthoff/get-test.git
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+
+End program name: .git/hooks/pre-push
+
+To ghe.coxautoinc.com:David-Rotthoff/get-test.git
+   80d7cd0..9827196  development -> development

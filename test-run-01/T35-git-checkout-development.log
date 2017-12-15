@@ -1,0 +1,520 @@
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-hook-manager.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-hook-manager.pl
+  Smudge file full name: git-hook-manager.pl
+  Setup elapsed time: 0.06
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.06
+  Total lines processed: 70
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.clean.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.clean.pl
+  Smudge file full name: rcs-keywords.clean.pl
+  Setup elapsed time: 0.045
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.045
+  Total lines processed: 58
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.smudge.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.smudge.pl
+  Smudge file full name: rcs-keywords.smudge.pl
+  Setup elapsed time: 0.03
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.03
+  Total lines processed: 121
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-5.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-5.txt
+  Smudge file full name: test/test-5.txt
+  Setup elapsed time: 0.06
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.06
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-6.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-6.txt
+  Smudge file full name: test/test-6.txt
+  Setup elapsed time: 0.03
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.03
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-7.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-7.txt
+  Smudge file full name: test/test-7.txt
+  Setup elapsed time: 0.075
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.075
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-8.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-8.txt
+  Smudge file full name: test/test-8.txt
+  Setup elapsed time: 0.076
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.076
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-9.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-9.txt
+  Smudge file full name: test/test-9.txt
+  Setup elapsed time: 0.06
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.06
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Switched to branch 'development'
+Your branch is up to date with 'origin/development'.
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 0209c967b21f0db59146ace627e47ce2f52e3acf
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 1
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "0209c967b21f0db59146ace627e47ce2f52e3acf" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "1"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 0209c967b21f0db59146ace627e47ce2f52e3acf
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 1
+  git diff-tree cmd: git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT 0209c967b21f0db59146ace627e47ce2f52e3acf 00243a4abaf27c3d0a7f255cffa74231b5102f10
+  git checkout cmd: git checkout -- "git-hook-manager.pl"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-hook-manager.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-hook-manager.pl
+  Smudge file full name: git-hook-manager.pl
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 70
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-6.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-6.txt
+  Clean file full name: test/test-6.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-7.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-7.txt
+  Clean file full name: test/test-7.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-8.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-8.txt
+  Clean file full name: test/test-8.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-9.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-9.txt
+  Clean file full name: test/test-9.txt
+  Setup elapsed time: 0.015
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.015
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.153
+Total elapsed time: 0.153
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "rcs-keywords.clean.pl"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.clean.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.clean.pl
+  Smudge file full name: rcs-keywords.clean.pl
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 58
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: git-hook-manager.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: git-hook-manager.pl
+  Clean file full name: git-hook-manager.pl
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 70
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "rcs-keywords.smudge.pl"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.smudge.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.smudge.pl
+  Smudge file full name: rcs-keywords.smudge.pl
+  Setup elapsed time: 0.046
+  Execution elapsed time: 0.015
+  Total elapsed time: 0.061
+  Total lines processed: 121
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: rcs-keywords.clean.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: rcs-keywords.clean.pl
+  Clean file full name: rcs-keywords.clean.pl
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 58
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test-5.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-5.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-5.txt
+  Smudge file full name: test/test-5.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: rcs-keywords.smudge.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: rcs-keywords.smudge.pl
+  Clean file full name: rcs-keywords.smudge.pl
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 121
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.076
+Total elapsed time: 0.076
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test-6.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-6.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-6.txt
+  Smudge file full name: test/test-6.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: rcs-keywords.smudge.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: rcs-keywords.smudge.pl
+  Clean file full name: rcs-keywords.smudge.pl
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 121
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-5.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-5.txt
+  Clean file full name: test/test-5.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test-7.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-7.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-7.txt
+  Smudge file full name: test/test-7.txt
+  Setup elapsed time: 0.06
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.06
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-6.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-6.txt
+  Clean file full name: test/test-6.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.139
+Total elapsed time: 0.139
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test-8.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-8.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-8.txt
+  Smudge file full name: test/test-8.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test-7.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test-7.txt
+  Clean file full name: test/test-7.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test-9.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-9.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-9.txt
+  Smudge file full name: test/test-9.txt
+  Setup elapsed time: 0.045
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.045
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "00243a4abaf27c3d0a7f255cffa74231b5102f10" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[2]: 00243a4abaf27c3d0a7f255cffa74231b5102f10
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+Setup elapsed time: 0.061
+Execution elapsed time: 5.155
+Total elapsed time: 5.216
+Files processed: 8
+Files processed: 8
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 5.307
+Total elapsed time: 5.307
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+

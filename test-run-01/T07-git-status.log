@@ -1,0 +1,15 @@
+On branch development
+Your branch is up to date with 'origin/development'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	T01-git-checkout-master.log
+	T02-git-checkout-development.log
+	T03-git-rm-old-logs.log
+	T04-git-status.log
+	T05-git-commit.ERROR.log
+	T06-git-push.log
+	T07-git-status.log
+
+nothing added to commit but untracked files present (use "git add" to track)

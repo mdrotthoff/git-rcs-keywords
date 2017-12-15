@@ -1,0 +1,240 @@
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: README.md
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: README.md
+  Smudge file full name: README.md
+  Setup elapsed time: 0.076
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.076
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-command.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-command.txt
+  Smudge file full name: git-command.txt
+  Setup elapsed time: 0.077
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.077
+  Total lines processed: 31
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-exec.sh
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-exec.sh
+  Smudge file full name: git-exec.sh
+  Setup elapsed time: 0.091
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.091
+  Total lines processed: 69
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-hook-manager.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-hook-manager.pl
+  Smudge file full name: git-hook-manager.pl
+  Setup elapsed time: 0.045
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.045
+  Total lines processed: 70
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-hook-test.sh
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-hook-test.sh
+  Smudge file full name: git-hook-test.sh
+  Setup elapsed time: 0.076
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.076
+  Total lines processed: 45
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: git-resmudge.sh
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: git-resmudge.sh
+  Smudge file full name: git-resmudge.sh
+  Setup elapsed time: 0.106
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.106
+  Total lines processed: 11
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: install.sh
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: install.sh
+  Smudge file full name: install.sh
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.015
+  Total elapsed time: 0.076
+  Total lines processed: 499
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.clean.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.clean.pl
+  Smudge file full name: rcs-keywords.clean.pl
+  Setup elapsed time: 0.122
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.122
+  Total lines processed: 58
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: rcs-keywords.smudge.pl
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: rcs-keywords.smudge.pl
+  Smudge file full name: rcs-keywords.smudge.pl
+  Setup elapsed time: 0.077
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.077
+  Total lines processed: 121
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/file-1.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/file-1.txt
+  Smudge file full name: test/file-1.txt
+  Setup elapsed time: 0.062
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.062
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-1.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-1.txt
+  Smudge file full name: test/test-1.txt
+  Setup elapsed time: 0.045
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.045
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-2.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-2.txt
+  Smudge file full name: test/test-2.txt
+  Setup elapsed time: 0.076
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.076
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-3.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-3.txt
+  Smudge file full name: test/test-3.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-4.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-4.txt
+  Smudge file full name: test/test-4.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-5.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-5.txt
+  Smudge file full name: test/test-5.txt
+  Setup elapsed time: 0.075
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.075
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-6.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-6.txt
+  Smudge file full name: test/test-6.txt
+  Setup elapsed time: 0.061
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.061
+  Total lines processed: 1
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-7.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-7.txt
+  Smudge file full name: test/test-7.txt
+  Setup elapsed time: 0.122
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.122
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-8.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-8.txt
+  Smudge file full name: test/test-8.txt
+  Setup elapsed time: 0.077
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.077
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test-9.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test-9.txt
+  Smudge file full name: test/test-9.txt
+  Setup elapsed time: 0.045
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.045
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 709ddb6bc0456082e733f631ec71a449071e3039
+    Param[2]: 709ddb6bc0456082e733f631ec71a449071e3039
+    Param[3]: 1
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "709ddb6bc0456082e733f631ec71a449071e3039" "709ddb6bc0456082e733f631ec71a449071e3039" "1"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 709ddb6bc0456082e733f631ec71a449071e3039
+    Param[2]: 709ddb6bc0456082e733f631ec71a449071e3039
+    Param[3]: 1
+  git diff-tree cmd: git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT 709ddb6bc0456082e733f631ec71a449071e3039
+Setup elapsed time: 0.045
+Execution elapsed time: 0.0
+Total elapsed time: 0.045
+Files processed: 0
+Files processed: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.151
+Total elapsed time: 0.151
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+
