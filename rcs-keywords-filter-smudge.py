@@ -16,7 +16,7 @@ import time
 
 # Set the debugging flag
 summary_flag = bool(True)
-verbose_flag = bool(True)
+verbose_flag = bool(False)
 timing_flag = bool(False)
 debug_flag = bool(False)
 if debug_flag:
