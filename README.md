@@ -1,6 +1,3 @@
-
-TODO:  Need to complete the git-post-commit filter
-
 This module provides a means to add keyword expansion of the following
 standard RCS tags to your git projects:
 
