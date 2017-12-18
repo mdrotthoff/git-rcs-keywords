@@ -8,17 +8,18 @@
 # $Hash$
 # $Id$
 
-git_hook    = 'git-hook.py'
+git_hook = 'git-hook.py'
 
-git_dirs    = {'filter_dir': '.git/filters',
-               'event_dir': '.git/hooks'}
+git_dirs = {'filter_dir': 'filters', 'event_dir': 'hooks'}
 
-git_hooks   = [{'git_event': 'post_commit', 'event_code': 'rcs-keywords-hook-post-commit.py'},
-               {'git_event': 'post_checkout', 'event_code': 'rcs-keywords-hook-post-checkout.py'},
-               {'git_event': 'post_merge', 'event_code': 'rcs-keywords-hook-post-merge.py'}]
+git_hooks = [{'git_event': 'post_commit', 'event_code': 'rcs-keywords-hook-post-commit.py'},
+             {'git_event': 'post_checkout', 'event_code': 'rcs-keywords-hook-post-checkout.py'},
+             {'git_event': 'post_merge', 'event_code': 'rcs-keywords-hook-post-merge.py'}]
 
-git_filters = ['rcs-keywords-filter-clean.py',
-               'rcs-keywords-filter-smudge.py']
+git_filters = ['rcs-keywords-filter-clean.py', 'rcs-keywords-filter-smudge.py']
+
+git_file_pattern = ['*.sql', '*.txt', '*.yml', '*.yaml', '*.xml', '*.jsn', '*.json',
+                    '*.pl', '*.sh', '*.md', '*.ora', '*.py' ]
 
 import sys
 import os
@@ -38,6 +39,7 @@ if timing_flag:
 if verbose_flag:
     summary_flag = bool(True)
 
+
 def validatedirexists (dirname):
     # Steps:
     # 1) Verify destfile does not exit
@@ -48,6 +50,7 @@ def validatedirexists (dirname):
     if debug_flag:
         sys.stderr.write('  Validate directory %s exists: %s\n' % (dirname, str(dir_exists)))
     return dir_exists;
+
 
 def createdir (dirname):
     # Steps:
@@ -63,6 +66,7 @@ def createdir (dirname):
     if summary_flag:
         sys.stderr.write('  Directory %s created\n' % dirname)
     return;
+
 
 def copyfile (srcfile, destfile):
     # Steps:
@@ -85,15 +89,73 @@ def copyfile (srcfile, destfile):
             sys.stderr.write('  Copied file  %s to %s\n' % (srcfile, destfile))
     return;
 
-def registergitevent (eventname, eventcode):
+
+def registergitevent (eventdir, eventname, eventcode):
     if debug_flag:
+        sys.stderr.write('  git event dir: %s\n' % eventdir)
         sys.stderr.write('  git event name: %s\n' % eventname)
         sys.stderr.write('  event code: %s\n' % eventcode)
-    event_dir = os.path.join(target_dir, git_dirs['event_dir'], '%s.d' % eventname)
-    createdir(dirname = event_dir)
-    copyfile(srcfile = os.path.join(program_path, eventcode), destfile = os.path.join(event_dir, eventcode))
-    os.symlink(os.path.join(git_hook), os.path.join(target_dir, git_dirs['event_dir'], eventname))
+    event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
+    if debug_flag:
+        sys.stderr.write('  git event code dir: %s\n' % event_code_dir)
+    createdir(dirname = event_code_dir)
+    copyfile(srcfile = os.path.join(program_path, eventcode), destfile = os.path.join(event_code_dir, eventcode))
+    event_link = os.path.join(eventdir, eventname)
+    if os.path.islink(event_link):
+        if debug_flag:
+            sys.stderr.write('  Removed event link: %s\n' % event_link)
+        os.remove(event_link)
+    os.symlink(git_hook, event_link)
+    if debug_flag:
+        sys.stderr.write('  Created event link: %s\n' % event_link)
     return;
+
+
+def installgitkeywords (git_dir, repo_dir):
+    target_dir = None
+
+    if debug_flag:
+        sys.stderr.write('  Target git directory: %s\n' % git_dir)
+        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
+    # Validate that the installation target has a .git directory
+    if not validatedirexists(dirname = git_dir):
+        sys.stderr.write('  Target git directory %s is not a git repository\n' % git_dir)
+        sys.stderr.write('  Aborting installation!\n')
+        exit(1)
+
+    # Create the core directories
+    createdir(dirname = os.path.join(git_dir, git_dirs['filter_dir']))
+    createdir(dirname = os.path.join(git_dir, git_dirs['event_dir']))
+
+    # Copy the filter programs into place
+    for filter_name in git_filters:
+        copyfile(srcfile = os.path.join(program_path, filter_name), destfile = os.path.join(git_dir, git_dirs['filter_dir'], filter_name))
+
+
+    # Need to add registering the filters
+    # Configure the filters for use
+    # echo "Configuring the filters for use"
+    # git config --local filter.rcs-keywords.clean "${clean_filter}"
+    git_cmd = 'git config --local filter.rcs-keywords.clean "%s %s"' % ('Clean.filter', '%f')
+    if debug_flag:
+        sys.stderr.write('  git_cmd: %s\n' % git_cmd)
+    # git config --local filter.rcs-keywords.smudge "${smudge_filter} %f"
+    git_cmd = 'git config --local filter.rcs-keywords.smudge "%s %s"' % ('Smudge.filter', '%f')
+    if debug_flag:
+        sys.stderr.write('  git_cmd: %s\n' % git_cmd)
+    # echo "rcs-keywords configuring for use"
+
+    # Need to register the file patterns to the filters in the attributes files
+
+    # Copy the git event manager
+    copyfile(srcfile = os.path.join(program_path, git_hook), destfile = os.path.join(git_dir, git_dirs['event_dir'], git_hook))
+
+    # Register the git event hooks
+    for event_name in git_hooks:
+        registergitevent(eventdir = os.path.join(git_dir, git_dirs['event_dir']), eventname = event_name['git_event'], eventcode = event_name['event_code'])
+    return;
+
+
 
 # Set the start time for calculating elapsed time
 if timing_flag:
@@ -148,6 +210,8 @@ if debug_flag:
     sys.stderr.write(str(git_hooks))
     sys.stderr.write('\n  git filters: ')
     sys.stderr.write(str(git_filters))
+    sys.stderr.write('\n  git file_pattern: ')
+    sys.stderr.write(str(git_file_pattern))
     sys.stderr.write('\n')
 
 
@@ -155,30 +219,32 @@ if debug_flag:
 if timing_flag:
     setup_time = time.clock()
 
-# Validate that the installation target has a .git directory
-if not validatedirexists(dirname = os.path.join(target_dir, '.git')):
-    sys.stderr.write('Target installation directory %s is not a git repository\n' % target_dir)
-    sys.stderr.write('Aborting installation!\n')
-    exit(1)
+installgitkeywords (git_dir = os.path.join(target_dir, '.git'), repo_dir = target_dir)
 
-# Create the core directories
-createdir(dirname = os.path.join(target_dir, git_dirs['filter_dir']))
-createdir(dirname = os.path.join(target_dir, git_dirs['event_dir']))
+## Validate that the installation target has a .git directory
+#if not validatedirexists(dirname = os.path.join(target_dir, '.git')):
+#    sys.stderr.write('Target installation directory %s is not a git repository\n' % target_dir)
+#    sys.stderr.write('Aborting installation!\n')
+#    exit(1)
 
-# Copy the filter programs into place
-for filter_name in git_filters:
-    copyfile(srcfile = os.path.join(program_path, filter_name), destfile = os.path.join(target_dir, git_dirs['filter_dir'], filter_name))
+## Create the core directories
+#createdir(dirname = os.path.join(target_dir, git_dirs['filter_dir']))
+#createdir(dirname = os.path.join(target_dir, git_dirs['event_dir']))
+
+## Copy the filter programs into place
+#for filter_name in git_filters:
+#    copyfile(srcfile = os.path.join(program_path, filter_name), destfile = os.path.join(target_dir, git_dirs['filter_dir'], filter_name))
 
 
-# Need to add registering the filters
-# Need to register the file patterns to the filters in the attributes files
+## Need to add registering the filters
+## Need to register the file patterns to the filters in the attributes files
 
-# Copy the git event manager
-copyfile(srcfile = os.path.join(program_path, git_hook), destfile = os.path.join(target_dir, git_dirs['event_dir'], git_hook))
+## Copy the git event manager
+#copyfile(srcfile = os.path.join(program_path, git_hook), destfile = os.path.join(target_dir, git_dirs['event_dir'], git_hook))
 
-# Register the git event hooks
-for event_name in git_hooks:
-    registergitevent(eventname = event_name['git_event'], eventcode = event_name['event_code'])
+## Register the git event hooks
+#for event_name in git_hooks:
+#    registergitevent(eventname = event_name['git_event'], eventcode = event_name['event_code'])
 
 
 # Calculate the elapsed times
