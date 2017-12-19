@@ -132,7 +132,6 @@ def modifiedfiles():
             if debug_flag:
                 sys.stderr.write('  git_cmd: %s\n' % str(git_cmd))
 
-#            file_list = subprocess.check_output(git_cmd, stderr=subprocess.DEVNULL)
             git_return = subprocess.Popen(git_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             (git_stdout, git_stderr) = git_return.communicate()
             if debug_flag:
@@ -160,6 +159,58 @@ def modifiedfiles():
         sys.stderr.write('  Leaving module modifiedfiles\n')
     return file_list
 
+def git_not_checkedin():
+    """Find files that are modified but are not checked in.
+
+    Returns:
+        A list of modified files that are not checked in.
+    """
+    if verbose_flag:
+        sys.stderr.write('  Entered module git_not_checkedin\n')
+
+#    modified_files = subprocess.check_output(['git', 'status', '-s'])
+    try:
+        git_cmd = ['git', 'status', '-s']
+        if debug_flag:
+            sys.stderr.write('  git_cmd: %s\n' % str(git_cmd))
+        git_return = subprocess.Popen(git_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        (git_stdout, git_stderr) = git_return.communicate()
+        if debug_flag:
+            sys.stderr.write('    git exit code: %s\n' % str(git_return.returncode))
+            sys.stderr.write('    stdout length: %s\n' % str(len(git_stdout)))
+            sys.stderr.write('    stderr length: %s\n' % str(len(git_stderr)))
+
+    except subprocess.CalledProcessError or OSError:
+        if debug_flag:
+            sys.stderr.write('    git exit code: %s\n' % str(cmd_return.returncode))
+            sys.stderr.write('    stdout length: %s\n' % str(len(cmd_stdout)))
+            sys.stderr.write('    stderr length: %s\n' % str(len(cmd_stderr)))
+            if len(cmd_stdout) > 0:
+                sys.stdout.write('STDOUR from git_not_checkedin\n')
+                sys.stderr.write(cmd_stdout.strip().decode("utf-8"))
+                sys.stderr.write("\n")
+            if len(cmd_stderr) > 0:
+                sys.stdout.write('STDERR from git_not_checkedin\n')
+                sys.stderr.write(cmd_stderr.strip().decode("utf-8"))
+                sys.stderr.write("\n")
+        sys.exit(1)
+
+    modified_files_list = git_stdout.decode('utf8').splitlines()
+    if debug_flag:
+        sys.stderr.write('    Status files found\n')
+        for file_name in modified_files_list:
+            sys.stderr.write('      status file found: %s\n' % str(file_name))
+    modified_files_list = [l.split()[-1].strip('"') for l in modified_files_list]
+    if debug_flag:
+        sys.stderr.write('    Modified files found\n')
+        for file_name in modified_files_list:
+            sys.stderr.write('      modified file found: %s\n' % str(file_name))
+
+    if verbose_flag:
+        sys.stderr.write('  Leaving module git_not_checkedin\n')
+
+    return modified_files_list
+
 def checkoutfile(file_name):
     """Checkout file that has been modified by the latest commit.
 
@@ -169,12 +220,23 @@ def checkoutfile(file_name):
     if verbose_flag:
         sys.stderr.write('  Entered module checkoutfile\n')
 
+    # Remove the file if it currently exists
     try:
         if debug_flag:
             sys.stderr.write('  os file %s exists: %s\n' % (file_name, str(os.path.isfile(file_name))))
         os.remove(file_name)
-        if debug_flag:
-            sys.stderr.write('  Removed os file %s exists: %s\n' % (file_name, str(os.path.isfile(file_name))))
+    except OSError as err:
+        # If the file does not exist, it was removed so loop to the next file
+        if err.errno == errno.ENOENT:
+            if debug_flag:
+                sys.stderr.write('Unable to remove file name: %s  Error code: %d\n' % (str(git_checkout_cmd), err.errno))
+        else:
+            raise
+    if debug_flag:
+        sys.stderr.write('  Removed os file %s exists: %s\n' % (file_name, str(os.path.isfile(file_name))))
+
+    # Check out the file so that it is smudged
+    try:
         git_cmd = ['git', 'checkout', '-f', '%s' % file_name]
         if debug_flag:
             sys.stderr.write('  git_cmd: %s\n' % str(git_cmd))
@@ -185,8 +247,20 @@ def checkoutfile(file_name):
             sys.stderr.write('    stdout length: %s\n' % str(len(git_stdout)))
             sys.stderr.write('    stderr length: %s\n' % str(len(git_stderr)))
 
-    except subprocess.CalledProcessError as e:
-        sys.stderr.write('  git_cmd return code: %d\n' % e.returncode)
+    except subprocess.CalledProcessError or OSError:
+        if debug_flag:
+            sys.stderr.write('    git exit code: %s\n' % str(cmd_return.returncode))
+            sys.stderr.write('    stdout length: %s\n' % str(len(cmd_stdout)))
+            sys.stderr.write('    stderr length: %s\n' % str(len(cmd_stderr)))
+            if len(cmd_stdout) > 0:
+                sys.stdout.write('STDOUT from checkoutfile\n')
+                sys.stderr.write(cmd_stdout.strip().decode("utf-8"))
+                sys.stderr.write("\n")
+            if len(cmd_stderr) > 0:
+                sys.stdout.write('STDERR from checkoutfile\n')
+                sys.stderr.write(cmd_stderr.strip().decode("utf-8"))
+                sys.stderr.write("\n")
+        sys.exit(1)
 
     # Return from the function
     if verbose_flag:
@@ -237,10 +311,26 @@ checkfor(cmd = ['git', '--version'])
 if debug_flag:
     sys.stderr.write('  Getting list of files modified\n')
 files = modifiedfiles()
-if not files:
-    print('{}: No modified files.'.format(args[0]))
-    sys.exit(0)
-files.sort()
+modified_files_list = git_not_checkedin()
+# Remove any modified files from the list of files to process
+if modified_files_list:
+    if debug_flag:
+        sys.stderr.write('  Removing non-committed modifications\n')
+        for file_name in files:
+            sys.stderr.write('    Checking File name %s\n' % file_name)
+            if file_name not in modified_files_list:
+                sys.stderr.write('    File name %s not in modified file list\n' % file_name)
+            else:
+                sys.stderr.write('    File name %s IS in modified file list\n' % file_name)
+    files = [f for f in files if f not in modified_files_list]
+else:
+    if debug_flag:
+        sys.stderr.write('  Modified files list length: %d\n' % len(modified_files_list))
+
+## If no files remain in the list, 
+#if not files:
+#    print('{}: No modified files.'.format(args[0]))
+#    sys.exit(0)
 
 # Calculate the setup elapsed time
 if timing_flag:
@@ -251,11 +341,13 @@ if debug_flag:
     sys.stderr.write('  Processing modified files list\n')
 files_processed = 0
 #for fn in kwfn:
-for file_name in files:
-    if debug_flag:
-        sys.stderr.write('  Checking out file %s\n' % file_name)
-    checkoutfile(file_name = file_name)
-    files_processed = files_processed + 1
+if files:
+    files.sort()
+    for file_name in files:
+        if debug_flag:
+            sys.stderr.write('  Checking out file %s\n' % file_name)
+        checkoutfile(file_name = file_name)
+        files_processed = files_processed + 1
 
 # Calculate the elapsed times
 if timing_flag:
