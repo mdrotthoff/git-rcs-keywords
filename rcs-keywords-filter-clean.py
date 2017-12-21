@@ -43,9 +43,6 @@ def main(argv):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -59,6 +56,9 @@ def main(argv):
         sys.stderr.write('Hook path: %s\n' % str(hook_path))
         sys.stderr.write('Hook name: %s\n' % str(hook_name))
         sys.stderr.write('*********************************\n')
+
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
 
     # Calculate the source file being cleaned (if provided)
     if len(argv) > 1:

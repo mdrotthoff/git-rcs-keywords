@@ -1,11 +1,11 @@
 #! /usr/bin/env python
-# $Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
-# $Date:     2017-12-18 18:03:31 -0600 $
-# $File:     rcs-keywords-hook-post-commit.py $
-# $Rev:      2017-12-18 18:03:31 -0600 $
-# $Rev:      2017-12-18 18:03:31 -0600 $
-# $Source:   rcs-keywords-hook-post-commit.py $
-# $Hash:     fb219d2c084827a8773da8c0133f812a8d7962c0 $
+# $Author$
+# $Date$
+# $File$
+# $Rev$
+# $Rev$
+# $Source$
+# $Hash$
 
 """rcs-keywords-post-commit
 
@@ -43,9 +43,6 @@ def main(argv):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -64,16 +61,14 @@ def main(argv):
     if SUMMARY_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
+
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
         dump_list(list_values=argv,
                   list_description='    Param')
-##        param_num = 0
-#        for param in argv:
-#            sys.stderr.write('    Param[%d]: %s\n'
-#                             % (param, argv[param]))
-##            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:
@@ -560,12 +555,9 @@ def check_out_file(file_name):
         os.remove(file_name)
     except OSError as err:
         # Ignore a file not found error, it was being removed anyway
-        if err.errno == errno.ENOENT:
-            if DEBUG_FLAG:
-                sys.stderr.write('Unable to remove file: %s  Error code: %d\n'
-                                 % (file_name, err.errno))
-        else:
+        if err.errno != errno.ENOENT:
             raise
+
     if DEBUG_FLAG:
         sys.stderr.write('  Removed os file %s exists: %s\n'
                          % (file_name, str(os.path.isfile(file_name))))

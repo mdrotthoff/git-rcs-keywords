@@ -43,9 +43,6 @@ def main(argv):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -64,16 +61,14 @@ def main(argv):
     if SUMMARY_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
+
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
         dump_list(list_values=argv,
                   list_description='    Param')
-##        param_num = 0
-#        for param in argv:
-#            sys.stderr.write('    Param[%d]: %s\n'
-#                             % (param, argv[param]))
-##            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:

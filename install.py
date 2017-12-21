@@ -196,7 +196,6 @@ def installgitkeywords (git_dir, repo_dir):
     return;
 
 
-
 # Set the start time for calculating elapsed time
 if timing_flag:
     start_time = time.clock()

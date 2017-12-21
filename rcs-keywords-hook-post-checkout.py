@@ -34,9 +34,6 @@ def main(argv):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -56,6 +53,9 @@ def main(argv):
         program_name = str(sys.argv[0])
         sys.stderr.write('Start program name: %s\n' % str(program_name))
     
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
+
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
@@ -63,13 +63,6 @@ def main(argv):
         for param in sys.argv:
             sys.stderr.write('    Param[%d]: %s\n' % (param_num, param))
             param_num = param_num + 1
-    
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
     
     # If argv[3] is zero (file checkout rather than branch checkout), then exit the hook 
     if sys.argv[3] == '0':
@@ -89,12 +82,19 @@ def main(argv):
     elif SUMMARY_FLAG:
         sys.stderr.write('Continuing for branch checkout: %s\n' % sys.argv[3])
     
+    # Show the OS environment variables
+    if DEBUG_FLAG:
+        sys.stderr.write('  Environment variables defined\n')
+        for key, value in sorted(os.environ.items()):
+            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
+        sys.stderr.write("\n")
+    
     # Get the list of files impacted.  If argv[1] and argv[2] are the same commit, then pass the 
     # value only once otherwise the file list is not returned
     if sys.argv[1] == sys.argv[2]:
         git_diff_tree_cmd = 'git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT %s' % sys.argv[1]
     else:
-         git_diff_tree_cmd = 'git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT %s %s' % (sys.argv[1], sys.argv[2])
+        git_diff_tree_cmd = 'git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT %s %s' % (sys.argv[1], sys.argv[2])
     if VERBOSE_FLAG:
         sys.stderr.write('  git diff-tree cmd: %s\n' % str(git_diff_tree_cmd))
     
@@ -142,9 +142,9 @@ def main(argv):
                 os.remove(file_name)
             except OSError as err:
                 # If the file does not exist, it was removed so loop to the next file
-                if err.errno == errno.ENOENT:
-                    pass
-    
+                if err.errno != errno.ENOENT:
+                    raise
+
             # Execute the git checkout command
             git_return = subprocess.Popen([git_checkout_cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             (git_stdout, git_stderr) = git_return.communicate()

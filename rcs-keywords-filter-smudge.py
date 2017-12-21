@@ -42,9 +42,6 @@ def main(argv):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -68,6 +65,9 @@ def main(argv):
         program_name = str(argv[0])
         sys.stderr.write('Start program name: %s file: %s\n'
                          % (str(program_name), str(file_full_name)))
+
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
