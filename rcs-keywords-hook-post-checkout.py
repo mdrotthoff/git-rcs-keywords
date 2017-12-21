@@ -61,7 +61,7 @@ def main(argv):
         sys.stderr.write("  Parameter list\n")
         param_num = 0
         for param in sys.argv:
-            sys.stderr.write('    Param[%d]: %s\n' % (param_num, sys.argv[param_num]))
+            sys.stderr.write('    Param[%d]: %s\n' % (param_num, param))
             param_num = param_num + 1
     
     # Show the OS environment variables

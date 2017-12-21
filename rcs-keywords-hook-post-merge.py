@@ -1,11 +1,11 @@
 #! /usr/bin/env python
-# $Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
-# $Date:     2017-12-18 18:03:31 -0600 $
-# $File:     rcs-keywords-hook-post-merge.py $
-# $Rev:      2017-12-18 18:03:31 -0600 $
-# $Rev:      2017-12-18 18:03:31 -0600 $
-# $Source:   rcs-keywords-hook-post-merge.py $
-# $Hash:     fb219d2c084827a8773da8c0133f812a8d7962c0 $
+# $Author$
+# $Date$
+# $File$
+# $Rev$
+# $Rev$
+# $Source$
+# $Hash$
 
 """rcs-keywords-post-merge
 

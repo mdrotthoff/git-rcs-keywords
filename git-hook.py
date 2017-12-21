@@ -72,11 +72,11 @@ def main(argv):
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
-#        param_num = 0
+        param_num = 0
         for param in argv:
             sys.stderr.write('    Param[%d]: %s\n'
-                             % (param, argv[param]))
-#            param_num = param_num + 1
+                             % (param_num, param))
+            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:
