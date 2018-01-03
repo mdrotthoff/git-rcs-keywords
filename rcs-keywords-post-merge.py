@@ -189,7 +189,6 @@ def shutdown_message(argv, return_code=0, files_processed=0):
     exit(return_code)
 
 
-
 def display_timing(start_time=None, setup_time=None):
     """Function displays the elapsed time for various stages of the
     the program.
