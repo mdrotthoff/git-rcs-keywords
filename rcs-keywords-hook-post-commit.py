@@ -128,7 +128,7 @@ def main(argv):
     if TIMING_FLAG:
         setup_time = time.clock()
 
-    # Process the remaining file list
+    # Force a checkout of the remaining file list
     if DEBUG_FLAG:
         sys.stderr.write('  Processing the remaining file list\n')
     files_processed = 0
