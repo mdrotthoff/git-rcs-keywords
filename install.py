@@ -47,12 +47,57 @@ DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
+
+
+def check_for_cmd(cmd):
+    """Make sure that a program necessary for using this script is
+    available.
+
+    Arguments:
+        cmd -- string or list of strings of commands. A single string may
+               not contain spaces.
+
+    Returns:
+        Nothing
+    """
+    function_name = 'check_for_cmd'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+        sys.stderr.write('    Validating command is available\n')
+
+    # Ensure there are no embedded spaces in a string command
+    if isinstance(cmd, str) and ' ' in cmd:
+        shutdown_message(argv=sys.argv,
+                         return_code=1,
+                         files_processed=0)
+
+
+    # Execute the command
+    try:
+        execute_cmd(cmd)
+
+    # If the command fails, notify the user and exit immediately
+    except subprocess.CalledProcessError as err:
+        print("CalledProcessError - Required program '{}' not found! -- Exiting.".format(cmd))
+        shutdown_message(argv=sys.argv,
+                         return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        print("OSError - Required program '{}' not found! -- Exiting.".format(cmd))
+        shutdown_message(argv=sys.argv,
+                         return_code=err.errno,
+                         files_processed=0)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
 
 
 def validatedirexists(dirname):
@@ -64,12 +109,7 @@ def validatedirexists(dirname):
     Returns:
         Bool
     """
-    # Steps:
-    # 1) Verify destfile does not exit
-    # 1.1) If destfile exists check whether or not it is a duplicate of
-    #      source, if so ignore the file
-    # 2) check if source file exists
-    # 3) Copy srcfile to destfile using shutil.copyfile
+
     function_name = 'validatedir'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
@@ -94,12 +134,7 @@ def createdir(dirname):
     Returns:
         None
     """
-    # Steps:
-    # 1) Verify destfile does not exit
-    # 1.1) If destfile exists check whether or not it is a duplicate of
-    #      source, if so ignore the file
-    # 2) check if source file exists
-    # 3) Copy srcfile to destfile using shutil.copyfile
+
     function_name = 'createdir'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
@@ -132,12 +167,6 @@ def copyfile(srcfile, destfile):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
-    # Steps:
-    # 1) Verify destfile does not exit
-    # 1.1) If destfile exists check whether or not it is a duplicate of
-    #      source, if so ignore the file
-    # 2) check if source file exists
-    # 3) Copy srcfile to destfile using shutil.copyfile
     if DEBUG_FLAG:
         sys.stderr.write('  Copy source file: %s\n' % srcfile)
         sys.stderr.write('  Copy destination file: %s\n' % destfile)
@@ -255,6 +284,8 @@ def registerfilter(filter_dir, filter_type, filter_name):
     """
     if DEBUG_FLAG:
         sys.stderr.write('  Copying filter: %s\n' % filter_name)
+        sys.stderr.write('  Filter dir: %s\n' % filter_dir)
+        sys.stderr.write('  Filter type: %s\n' % filter_type)
 
     # Copy the filter program to the target directory
     copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_name),
@@ -267,23 +298,8 @@ def registerfilter(filter_dir, filter_type, filter_name):
            'config',
            '--local',
            'filter.rcs-keywords.%s' % filter_type,
-           '"%s %s"' % (os.path.join(filter_dir, filter_name)),
-           '%f']
-    if DEBUG_FLAG:
-        sys.stderr.write('  git_cmd: %s\n' % str(cmd))
+           '%s %s' % (os.path.join(filter_dir, filter_name), '%f')]
     execute_cmd(cmd=cmd)
-#    git_return = subprocess.Popen([git_cmd],
-#                                  stdout=subprocess.PIPE,
-#                                  stderr=subprocess.PIPE,
-#                                 shell=True)
-#    (git_stdout, git_stderr) = git_return.communicate()
-#    if DEBUG_FLAG:
-#        sys.stderr.write('    git exit code: %s\n'
-#                         % str(git_return.returncode))
-#        sys.stderr.write('    stdout length: %s\n'
-#                         % str(len(git_stdout)))
-#        sys.stderr.write('    stderr length: %s\n'
-#                         % str(len(git_stderr)))
     return
 
 
@@ -318,6 +334,14 @@ def installgitkeywords(git_dir, repo_dir):
     createdir(dirname=filter_dir)
     event_dir = os.path.join(git_dir, GIT_DIRS['event_dir'])
     createdir(dirname=event_dir)
+
+    # De-register the rcs-keywords filter
+    cmd = ['git',
+           'config',
+           '--local',
+           '--remove-section',
+           'filter.rcs-keywords']
+    execute_cmd(cmd=cmd)
 
     # Set up the filter programs for use
     for filter_def in GIT_FILTERS:
@@ -580,6 +604,8 @@ if DEBUG_FLAG:
     sys.stderr.write(str(GIT_FILE_PATTERN))
     sys.stderr.write('\n')
 
+# Check if git is available.
+check_for_cmd(cmd=['git', '--version'])
 
 # Save the setup time
 SETUP_TIME = time.clock()

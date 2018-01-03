@@ -23,11 +23,11 @@ import subprocess
 import time
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(True)
+VERBOSE_FLAG = bool(False)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
