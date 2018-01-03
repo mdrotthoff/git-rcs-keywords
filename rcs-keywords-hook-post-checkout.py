@@ -24,11 +24,11 @@ import subprocess
 import time
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(True)
+VERBOSE_FLAG = bool(False)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -65,12 +65,11 @@ def main(argv):
 
     if VERBOSE_FLAG:
         sys.stderr.write('  Entered module main\n')
-
-    # List the provided parameters
-    if VERBOSE_FLAG:
-        sys.stderr.write("  Parameter list\n")
-        dump_list(list_values=argv,
-                  list_description='    Param')
+        # List the provided parameters
+        param_num = 0
+        for param in sys.argv:
+            sys.stderr.write('    Param[%d]: %s\n' % (param_num, param))
+            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:
@@ -79,8 +78,7 @@ def main(argv):
             sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
         sys.stderr.write("\n")
 
-    # If argv[3] is zero (file checkout rather than branch checkout),
-    # then exit the hook
+    # If argv[3] is zero (file checkout rather than branch checkout), then exit the hook
     if sys.argv[3] == '0':
         if SUMMARY_FLAG:
             sys.stderr.write('Exiting for file checkout: %s\n' % sys.argv[3])
@@ -156,12 +154,13 @@ def main(argv):
     if DEBUG_FLAG:
         sys.stderr.write('  Processing the remaining file list\n')
     files_processed = 0
-    files.sort()
-    for file_name in files:
-        if DEBUG_FLAG:
-            sys.stderr.write('  Checking out file %s\n' % file_name)
-        check_out_file(file_name=file_name)
-        files_processed = files_processed + 1
+    if files:
+        files.sort()
+        for file_name in files:
+            if DEBUG_FLAG:
+                sys.stderr.write('  Checking out file %s\n' % file_name)
+            check_out_file(file_name=file_name)
+            files_processed = files_processed + 1
 
     # Calculate the elapsed times
     if TIMING_FLAG:
