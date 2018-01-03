@@ -111,6 +111,7 @@ def main(argv):
     shutdown_message(argv=argv,
                      files_processed=files_processed,
                      return_code=0)
+    return
 
 
 def startup_message(argv):
@@ -190,7 +191,6 @@ def shutdown_message(argv, return_code=0, files_processed=0):
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
     exit(return_code)
-
 
 
 def display_timing(start_time=None, setup_time=None):
@@ -425,8 +425,6 @@ def get_modified_files():
         sys.stderr.write('  Entered module %s\n' % function_name)
 
     modified_file_list = []
-#    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
-#           '--diff-filter=ACMRT']
     cmd = ['git', 'diff-tree', 'HEAD~1', 'HEAD', '--name-only', '-r',
            '--diff-filter=ACMRT']
 
@@ -465,7 +463,6 @@ def get_modified_files():
         dump_list(list_values=modified_file_list,
                   list_description='Modified file found',
                   list_message='List modified files found')
-
     if VERBOSE_FLAG:
         sys.stderr.write('  %d modified files found for processing\n'
                          % len(modified_file_list))
@@ -515,7 +512,7 @@ def git_not_checked_in(files):
         if DEBUG_FLAG:
             sys.stderr.write('  No modified files found to process\n')
             sys.stderr.write('  Leaving module git_not_checked_in\n')
-        return []
+        return files
 
     # Pull the file name (second field) of the output line and
     # remove any double quotes
@@ -578,24 +575,7 @@ def check_out_file(file_name):
     # Check out the file so that it is smudged
     try:
         sys.stderr.flush()
-        cmd_return = subprocess.Popen(cmd,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.PIPE)
-        (cmd_stdout, cmd_stderr) = cmd_return.communicate()
-        if DEBUG_FLAG:
-            sys.stderr.write('      git exit code: %s\n'
-                             % str(cmd_return.returncode))
-            sys.stderr.write('      stdout length: %s\n'
-                             % str(len(cmd_stdout)))
-            sys.stderr.write('      stderr length: %s\n'
-                             % str(len(cmd_stderr)))
-            dump_file_stream(stream_handle=cmd_stdout,
-                             stream_description=
-                             'STDOUT from check_out_file')
-            dump_file_stream(stream_handle=cmd_stderr,
-                             stream_description=
-                             'STDERR from check_out_file')
-
+        execute_cmd(cmd)
     except subprocess.CalledProcessError as err:
         sys.stderr.write('  CalledProcessError in check_out_file\n')
         shutdown_message(argv=sys.argv,
