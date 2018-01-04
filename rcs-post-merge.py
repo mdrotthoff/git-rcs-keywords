@@ -220,6 +220,32 @@ def display_timing(start_time=None, setup_time=None):
     return
 
 
+def print_file_stream(stream_handle):
+    """Function to print the byte stream handle from Popen
+    to STDERR.
+
+    Arguments:
+        steam_handle -- a stream handle returned by the Popen
+                        communicate function.
+
+    Returns:
+        Nothing
+    """
+    function_name = 'print_file_stream'
+    if DEBUG_FLAG:
+        sys.stderr.write('      Entered module %s\n' % function_name)
+
+    # Output the contents of the stream handle if any exists
+    if stream_handle:
+        for line in stream_handle.strip().decode("utf-8").splitlines():
+            sys.stderr.write("%s\n" % line)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('      Leaving module %s\n' % function_name)
+    return
+
+
 def dump_file_stream(stream_handle, stream_description):
     """Function to dump the byte stream handle from Popen
     to STDERR.
@@ -319,6 +345,8 @@ def execute_cmd(cmd):
                          stream_description='STDOUT from check_for_cmd')
         dump_file_stream(stream_handle=cmd_stderr,
                          stream_description='STDERR from check_for_cmd')
+    if cmd_stderr:
+        print_file_stream(cmd_stderr)
 
     # Return from the function
     if DEBUG_FLAG:
