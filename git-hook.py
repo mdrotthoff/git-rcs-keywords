@@ -38,21 +38,21 @@ SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
 
-def main(argv):
-    """Main program.
+def startup_message():
+    """Function display any startup messages
 
     Arguments:
-        argv: command line arguments
+        argv -- Command line parameters
 
     Returns:
         Nothing
     """
-    # Set the start time for calculating elapsed time
-    if TIMING_FLAG:
-        start_time = time.clock()
+    function_name = 'startup_message'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
 
     # Capture source executable information
-    program_name = str(argv[0])
+    program_name = str(sys.argv[0])
     (hook_path, hook_name) = os.path.split(program_name)
     if DEBUG_FLAG:
         sys.stderr.write('************ START **************\n')
@@ -62,17 +62,151 @@ def main(argv):
         sys.stderr.write('*********************************\n')
 
     # Output the program name start
-    if SUMMARY_FLAG:
-        sys.stderr.write('Start program name: %s\n' % program_name)
-
     if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
+        sys.stderr.write('Start program name: %s\n' % str(program_name))
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
+
+
+def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
+    """Function display any shutdown messages and
+    the program.
+
+    Arguments:
+        argv -- Command line parameters
+        files_processed -- The number of files checked out
+                           by the hook
+        return_code - the return code to be used when the
+                      program s
+
+    Returns:
+        Nothing
+    """
+    function_name = 'shutdown_message'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    program_name = str(sys.argv[0])
+    (hook_path, hook_name) = os.path.split(program_name)
+
+    # Display a processing summary
+    if VERBOSE_FLAG:
+        sys.stderr.write('Hooks seen: %d\n' % hook_count)
+        sys.stderr.write('Hooks executed: %d\n' % hook_executed)
+        sys.stderr.write("\n")
+
+    # Output the program end
+    if VERBOSE_FLAG:
+        sys.stderr.write('End program name: %s\n' % program_name)
+        sys.stderr.write("\n")
+
+    if DEBUG_FLAG:
+        sys.stderr.write('************ END ****************\n')
+        sys.stderr.write('Hook path: %s\n' % hook_path)
+        sys.stderr.write('Hook name: %s\n' % hook_name)
+        sys.stderr.write('Return code: %d\n' % return_code)
+        sys.stderr.write('*********************************\n')
+        sys.stderr.write("\n")
+        sys.stderr.write("\n")
+        sys.stderr.write("\n")
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    exit(return_code)
+
+
+def display_timing(start_time=None, setup_time=None):
+    """Function displays the elapsed time for various stages of the
+    the program.
+
+    Arguments:
+        start_time -- Time the program started
+        setup_time -- Time the setup stage of the program completed
+
+    Returns:
+        Nothing
+    """
+    function_name = 'display_timing'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    # Calculate the elapsed times
+    if TIMING_FLAG:
+        end_time = time.clock()
+        if setup_time is None:
+            setup_time = end_time
+        if start_time is None:
+            start_time = end_time
+        sys.stderr.write('    Setup elapsed time: %s\n'
+                         % str(setup_time - start_time))
+        sys.stderr.write('    Execution elapsed time: %s\n'
+                         % str(end_time - setup_time))
+        sys.stderr.write('    Total elapsed time: %s\n'
+                         % str(end_time - start_time))
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
+
+
+def dump_list(list_values, list_description, list_message):
+    """Function to dump the byte stream handle from Popen
+    to STDERR.
+
+    Arguments:
+        list_values -- a list of files to be output
+        list_descrition -- a text description of the file being output
+
+    Returns:
+        Nothing
+    """
+    function_name = 'dump_list'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    sys.stderr.write("    %s\n" % list_message)
+    list_num = 0
+    for value in list_values:
+        sys.stderr.write('      %s[%d]: %s\n'
+                         % (list_description, list_num, value))
+        list_num = list_num + 1
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
+
+
+def main(argv):
+    """Main program.
+
+    Arguments:
+        argv: command line arguments
+
+    Returns:
+        Nothing
+    """
+    function_name = 'main'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    # Set the start time for calculating elapsed time
+    start_time = time.clock()
+
+    # Display the startup message
+    if SUMMARY_FLAG or DEBUG_FLAG:
+        startup_message()
 
     # List the provided parameters
     if VERBOSE_FLAG:
-        sys.stderr.write("  Parameter list\n")
         dump_list(list_values=argv,
-                  list_description='    Param')
+                  list_description='Param',
+                  list_message='Parameter list')
 
 
     # Show the OS environment variables
@@ -83,18 +217,18 @@ def main(argv):
         sys.stderr.write("\n")
 
     # Verify that the named hook directory is a directory
-    list_dir = program_name + '.d'
+#    list_dir = program_name + '.d'
+    list_dir = sys.argv[0] + '.d'
     if not os.path.isdir(list_dir):
         sys.stderr.write('The hook directory %s is not a directory\n'
                          % list_dir)
         exit(0)
-    elif DEBUG_FLAG:
+    if DEBUG_FLAG:
         sys.stderr.write('The hook directory %s is a directory\n' % list_dir)
         sys.stderr.write("\n")
 
     # Calculate the setup elapsed time
-    if TIMING_FLAG:
-        setup_time = time.clock()
+    setup_time = time.clock()
 
     # Show the OS files in the hook named directory
     if DEBUG_FLAG:
@@ -148,62 +282,15 @@ def main(argv):
 
     # Calculate the elapsed times
     if TIMING_FLAG:
-        end_time = time.clock()
-        sys.stderr.write('Setup elapsed time: %s\n'
-                         % str(setup_time - start_time))
-        sys.stderr.write('Execution elapsed time: %s\n'
-                         % str(end_time - setup_time))
-        sys.stderr.write('Total elapsed time: %s\n'
-                         % str(end_time - start_time))
-
-    # Display a processing summary
-    if VERBOSE_FLAG:
-        sys.stderr.write('Hooks seen: %d\n' % hook_count)
-        sys.stderr.write('Hooks executed: %d\n' % hook_executed)
-        sys.stderr.write("\n")
-
-    # Output the program end
-    if SUMMARY_FLAG:
-        sys.stderr.write('End program name: %s\n' % program_name)
-        sys.stderr.write("\n")
-    elif DEBUG_FLAG:
-        sys.stderr.write('************ END ****************\n')
-        sys.stderr.write('Hook path: %s\n' % hook_path)
-        sys.stderr.write('Hook name: %s\n' % hook_name)
-        sys.stderr.write('*********************************\n')
-        sys.stderr.write("\n")
-        sys.stderr.write("\n")
-        sys.stderr.write("\n")
+        display_timing(start_time=start_time,
+                       setup_time=setup_time)
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Leaving module dump_file_stream\n')
-    return
-
-
-def dump_list(list_values, list_description):
-    """Function to dump the byte stream handle from Popen
-    to STDERR.
-
-    Arguments:
-        list_values -- a list of files to be output
-        list_descrition -- a text description of the file being output
-
-    Returns:
-        Nothing
-    """
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Entered module dump_file_list\n')
-
-    list_num = 0
-    for value in list_values:
-        sys.stderr.write('      %s[%d]: %s\n'
-                         % (list_description, list_num, value))
-        list_num = list_num + 1
-
-    # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Leaving module dump_file_list\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    shutdown_message(return_code=0,
+                     hook_count=hook_count,
+                     hook_executed=hook_executed)
     return
 
 
