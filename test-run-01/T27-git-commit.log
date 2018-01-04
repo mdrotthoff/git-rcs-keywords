@@ -1,0 +1,602 @@
+Start program name: .git/hooks/pre-commit
+  Parameter list
+    Param[0]: .git/hooks/pre-commit
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+
+End program name: .git/hooks/pre-commit
+
+Start program name: .git/hooks/prepare-commit-msg
+  Parameter list
+    Param[0]: .git/hooks/prepare-commit-msg
+    Param[1]: .git/COMMIT_EDITMSG
+    Param[2]: message
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+
+End program name: .git/hooks/prepare-commit-msg
+
+Start program name: .git/hooks/commit-msg
+  Parameter list
+    Param[0]: .git/hooks/commit-msg
+    Param[1]: .git/COMMIT_EDITMSG
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+
+End program name: .git/hooks/commit-msg
+
+Start program name: .git/hooks/post-commit
+  Parameter list
+    Param[0]: .git/hooks/post-commit
+  Executing hook program .git/hooks/post-commit.d/rcs-keywords-hook-post-commit.py
+Start program name: .git/hooks/post-commit.d/rcs-keywords-hook-post-commit.py
+  Parameter list
+    Param[0]: .git/hooks/post-commit.d/rcs-keywords-hook-post-commit.py
+  git diff-tree cmd: git diff-tree -r --name-only --diff-filter=ACMRT ORIG_HEAD HEAD
+  git checkout cmd: git checkout -- "T01-git-checkout-master.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.106
+Total elapsed time: 0.106
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T02-git-checkout-development.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T03-git-rm-old-logs.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T04-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T05-git-commit.ERROR.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T06-git-push.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.091
+Total elapsed time: 0.091
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T07-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.091
+Total elapsed time: 0.091
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T08-git-checkout-master.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T09-git-merge-development.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.107
+Total elapsed time: 0.107
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T10-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.138
+Total elapsed time: 0.138
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T11-git-branch-list.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.138
+Total elapsed time: 0.138
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T12-git-push.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T13-git-add-trace-logs.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.153
+Total elapsed time: 0.153
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T14-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.106
+Total elapsed time: 0.106
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T15-git-commit-initial-trace-logs.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T16-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.122
+Total elapsed time: 0.122
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T17-git-push.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.092
+Total elapsed time: 0.092
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T18-git-add-test-data.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.016
+Execution elapsed time: 0.122
+Total elapsed time: 0.138
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "T19-git-status.log"
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.092
+Total elapsed time: 0.092
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test.1.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test.1.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test.1.txt
+  Smudge file full name: test/test.1.txt
+  Setup elapsed time: 0.138
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.138
+  Total lines processed: 4
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+  git checkout cmd: git checkout -- "test/test.3.txt"
+Start program name: .git/filters/rcs-keywords-filter-smudge.py file: test/test.3.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-smudge.py
+    Param[1]: test/test.3.txt
+  Smudge file full name: test/test.3.txt
+  Setup elapsed time: 0.046
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.046
+  Total lines processed: 2
+End program name: .git/filters/rcs-keywords-filter-smudge.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test.1.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test.1.txt
+  Clean file full name: test/test.1.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 4
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/hooks/post-checkout
+  Parameter list
+    Param[0]: .git/hooks/post-checkout
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+  Executing hook program ".git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py" "98271966a1ca6f733a4ce95505d73ea674bf7525" "98271966a1ca6f733a4ce95505d73ea674bf7525" "0"
+Start program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+  Parameter list
+    Param[0]: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+    Param[1]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[2]: 98271966a1ca6f733a4ce95505d73ea674bf7525
+    Param[3]: 0
+Exiting for file checkout: 0
+End program name: .git/hooks/post-checkout.d/rcs-keywords-hook-post-checkout.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 0.123
+Total elapsed time: 0.123
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-checkout
+Setup elapsed time: 0.06
+Execution elapsed time: 6.958
+Total elapsed time: 7.018
+Files processed: 21
+Files processed: 21
+End program name: .git/hooks/post-commit.d/rcs-keywords-hook-post-commit.py
+
+Setup elapsed time: 0.0
+Execution elapsed time: 7.156
+Total elapsed time: 7.156
+Hooks seen: 1
+Hooks executed: 1
+
+End program name: .git/hooks/post-commit
+
+[development 9827196] Added trace logs
+ 10 files changed, 465 insertions(+)
+ create mode 100644 T10-git-status.log
+ create mode 100644 T11-git-branch-list.log
+ create mode 100644 T12-git-push.log
+ create mode 100644 T13-git-add-trace-logs.log
+ create mode 100644 T14-git-status.log
+ create mode 100644 T15-git-commit-initial-trace-logs.log
+ create mode 100644 T16-git-status.log
+ create mode 100644 T17-git-push.log
+ create mode 100644 T18-git-add-test-data.log
+ create mode 100644 T19-git-status.log

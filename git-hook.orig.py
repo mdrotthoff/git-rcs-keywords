@@ -27,11 +27,11 @@ import subprocess
 import time
 
 # Set the debugging flag
-DEBUG_FLAG = bool(False)
+DEBUG_FLAG = bool(True)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -47,11 +47,14 @@ def main(argv):
     Returns:
         Nothing
     """
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
+
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
 
-    # Capture source executable information
+    # Parameter processing
     program_name = str(argv[0])
     (hook_path, hook_name) = os.path.split(program_name)
     if DEBUG_FLAG:
@@ -63,17 +66,17 @@ def main(argv):
 
     # Output the program name start
     if SUMMARY_FLAG:
+#        program_name = str(argv[0])
         sys.stderr.write('Start program name: %s\n' % program_name)
-
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
 
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
-        dump_list(list_values=argv,
-                  list_description='    Param')
-
+#        param_num = 0
+        for param in argv:
+            sys.stderr.write('    Param[%d]: %s\n'
+                             % (param, argv[param]))
+#            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:
@@ -178,32 +181,6 @@ def main(argv):
     # Return from the function
     if VERBOSE_FLAG:
         sys.stderr.write('    Leaving module dump_file_stream\n')
-    return
-
-
-def dump_list(list_values, list_description):
-    """Function to dump the byte stream handle from Popen
-    to STDERR.
-
-    Arguments:
-        list_values -- a list of files to be output
-        list_descrition -- a text description of the file being output
-
-    Returns:
-        Nothing
-    """
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Entered module dump_file_list\n')
-
-    list_num = 0
-    for value in list_values:
-        sys.stderr.write('      %s[%d]: %s\n'
-                         % (list_description, list_num, value))
-        list_num = list_num + 1
-
-    # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Leaving module dump_file_list\n')
     return
 
 

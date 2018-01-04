@@ -1,0 +1,3 @@
+[submodule "rsmith-nl.git-keywords"]
+	path = rsmith-nl.git-keywords
+	url = https://github.com/rsmith-nl/git-keywords.git

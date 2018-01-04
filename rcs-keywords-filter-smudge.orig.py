@@ -22,11 +22,11 @@ import subprocess
 import time
 
 # Set the debugging flag
-DEBUG_FLAG = bool(False)
+DEBUG_FLAG = bool(True)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -42,6 +42,9 @@ def main(argv):
     Returns:
         Nothing
     """
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Entered module main\n')
+
     # Set the start time for calculating elapsed time
     if TIMING_FLAG:
         start_time = time.clock()
@@ -66,9 +69,6 @@ def main(argv):
         sys.stderr.write('Start program name: %s file: %s\n'
                          % (str(program_name), str(file_full_name)))
 
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
-
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
     git_field_log = ['%H', '%an', '%ae', '%ci']
@@ -76,11 +76,11 @@ def main(argv):
     # List the provided parameters
     if VERBOSE_FLAG:
         sys.stderr.write("  Parameter list\n")
-        param_num = 0
+#        param_num = 0
         for param in argv:
             sys.stderr.write('    Param[%d]: %s\n'
-                             % (param_num, param))
-            param_num = param_num + 1
+                             % (param, argv[param]))
+#            param_num = param_num + 1
 
     # Show the OS environment variables
     if DEBUG_FLAG:
