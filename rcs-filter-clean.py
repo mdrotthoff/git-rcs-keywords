@@ -207,7 +207,6 @@ def main(argv):
                   list_description='Param',
                   list_message='Parameter list')
 
-
     # Show the OS environment variables
     if DEBUG_FLAG:
         sys.stderr.write('  Environment variables defined\n')

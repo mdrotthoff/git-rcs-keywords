@@ -199,24 +199,10 @@ def main(argv):
     file_full_name = argv[1]
     (file_path, file_name) = os.path.split(file_full_name)
 
-#    # Output the program name start
-#    if SUMMARY_FLAG:
-#        program_name = str(argv[0])
-#        sys.stderr.write('Start program name: %s file: %s\n'
-#                         % (str(program_name), str(file_full_name)))
-
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
     git_field_log = ['%H', '%an', '%ae', '%ci']
 
-#    # List the provided parameters
-#    if VERBOSE_FLAG:
-#        sys.stderr.write("  Parameter list\n")
-#        param_num = 0
-#        for param in argv:
-#            sys.stderr.write('    Param[%d]: %s\n'
-#                             % (param_num, param))
-#            param_num = param_num + 1
     # List the provided parameters
     if VERBOSE_FLAG:
         dump_list(list_values=argv,
@@ -292,14 +278,12 @@ def main(argv):
         sys.stderr.write("Error message: %s\n"
                          % cmd_stderr.strip().decode("utf-8"))
         exit(cmd_return.returncode)
-#    elif len(cmd_stderr) > 0:
     if cmd_stderr:
         sys.stdout.write('STDERR from git diff-tree\n')
         sys.stderr.write(cmd_stderr.strip().decode("utf-8"))
         sys.stderr.write("\n")
 
     # Calculate replacement strings based on the git log results
-#    if len(cmd_stdout) > 0:
     if cmd_stdout:
         # Convert returned values to a list of dictionaries
         git_log = cmd_stdout.strip().decode("utf-8")
@@ -362,36 +346,10 @@ def main(argv):
         if DEBUG_FLAG:
             sys.stderr.write(line)
 
-#    # Calculate the elapsed times
-#    if TIMING_FLAG:
-#       end_time = time.clock()
-#        sys.stderr.write('  Setup elapsed time: %s\n'
-#                         % str(setup_time - start_time))
-#        sys.stderr.write('  Execution elapsed time: %s\n'
-#                         % str(end_time - setup_time))
-#        sys.stderr.write('  Total elapsed time: %s\n'
-#                         % str(end_time - start_time))
     # Calculate the elapsed times
     if TIMING_FLAG:
         display_timing(start_time=start_time,
                        setup_time=setup_time)
-
-#    # Display a processing summary
-#    if SUMMARY_FLAG:
-#        sys.stderr.write('  Total lines processed: %s\n' % str(line_count))
-#
-#    # Output the program end
-#    if SUMMARY_FLAG:
-#        sys.stderr.write('End program name: %s\n' % str(program_name))
-#        sys.stderr.write("\n")
-#    elif DEBUG_FLAG:
-#        sys.stderr.write('************ END ****************\n')
-#        sys.stderr.write('Hook path: %s\n' % str(hook_path))
-#        sys.stderr.write('Hook name: %s\n' % str(hook_name))
-#        sys.stderr.write('*********************************\n')
-#        sys.stderr.write("\n")
-#        sys.stderr.write("\n")
-#        sys.stderr.write("\n")
 
     # Return from the function
     if DEBUG_FLAG:
