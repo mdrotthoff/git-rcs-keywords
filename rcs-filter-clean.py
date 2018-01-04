@@ -184,6 +184,10 @@ def main(argv):
     Returns:
         Nothing
     """
+    function_name = 'main'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
     # Set the start time for calculating elapsed time
     start_time = time.clock()
 
@@ -280,8 +284,8 @@ def main(argv):
                        setup_time=setup_time)
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Leaving module check_out_file\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
     shutdown_message(return_code=0, lines_processed=line_count)
     return
 
