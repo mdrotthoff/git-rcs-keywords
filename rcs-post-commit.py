@@ -80,10 +80,6 @@ def main(argv):
     # the commit
     files = git_not_checked_in(files=files)
 
-    # TODO:  Add code to restrict files based on attribite file?
-    # TODO:  Add code to limit files based on keyword contents?
-    #for fn in kwfn:
-
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
@@ -363,12 +359,14 @@ def check_for_cmd(cmd):
 
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        print("CalledProcessError - Required program '{}' not found! -- Exiting.".format(cmd))
+        print("CalledProcessError - Program '{}' not found! -- Exiting."
+              .format(cmd))
         shutdown_message(argv=sys.argv,
                          return_code=err.returncode,
                          files_processed=0)
     except OSError as err:
-        print("OSError - Required program '{}' not found! -- Exiting.".format(cmd))
+        print("OSError - Required program '{}' not found! -- Exiting."
+              .format(cmd))
         shutdown_message(argv=sys.argv,
                          return_code=err.errno,
                          files_processed=0)

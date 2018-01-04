@@ -67,7 +67,8 @@ def main(argv):
             sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
         sys.stderr.write("\n")
 
-    # If argv[3] is zero (file checkout rather than branch checkout), then exit the hook
+    # If argv[3] is zero (file checkout rather than branch checkout),
+    # then exit the hook
     if sys.argv[3] == '0':
         shutdown_message(argv=argv,
                          files_processed=0,
@@ -85,15 +86,10 @@ def main(argv):
     # the commit
     files = git_not_checked_in(files=files)
 
-    # TODO:  Add code to restrict files based on attribite file?
-    # TODO:  Add code to limit files based on keyword contents?
-
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
     # Force a checkout of the remaining file list
-    if DEBUG_FLAG:
-        sys.stderr.write('  Processing the remaining file list\n')
     files_processed = 0
     if files:
         files.sort()
@@ -366,12 +362,14 @@ def check_for_cmd(cmd):
 
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        print("CalledProcessError - Required program '{}' not found! -- Exiting.".format(cmd))
+        print("CalledProcessError - Program '{}' not found! -- Exiting."
+              .format(cmd))
         shutdown_message(argv=sys.argv,
                          return_code=err.returncode,
                          files_processed=0)
     except OSError as err:
-        print("OSError - Required program '{}' not found! -- Exiting.".format(cmd))
+        print("OSError - Required program '{}' not found! -- Exiting."
+              .format(cmd))
         shutdown_message(argv=sys.argv,
                          return_code=err.errno,
                          files_processed=0)
