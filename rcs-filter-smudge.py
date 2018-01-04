@@ -5,7 +5,7 @@
 # $Rev$
 # $Revision$
 # $Source$
-# $Hash$
+# $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
 """rcs-keywords-filter-smudge
 

@@ -62,7 +62,7 @@ def startup_message():
         sys.stderr.write('*********************************\n')
 
     # Output the program name start
-    if VERBOSE_FLAG:
+    if SUMMARY_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
     # Return from the function
@@ -93,15 +93,10 @@ def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
     (hook_path, hook_name) = os.path.split(program_name)
 
     # Display a processing summary
-    if VERBOSE_FLAG:
+    if SUMMARY_FLAG:
         sys.stderr.write('Hooks seen: %d\n' % hook_count)
         sys.stderr.write('Hooks executed: %d\n' % hook_executed)
-        sys.stderr.write("\n")
-
-    # Output the program end
-    if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % program_name)
-        sys.stderr.write("\n")
 
     if DEBUG_FLAG:
         sys.stderr.write('************ END ****************\n')
@@ -217,7 +212,6 @@ def main(argv):
         sys.stderr.write("\n")
 
     # Verify that the named hook directory is a directory
-#    list_dir = program_name + '.d'
     list_dir = sys.argv[0] + '.d'
     if not os.path.isdir(list_dir):
         sys.stderr.write('The hook directory %s is not a directory\n'
