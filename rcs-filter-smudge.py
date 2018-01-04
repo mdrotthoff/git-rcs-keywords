@@ -94,11 +94,7 @@ def shutdown_message(return_code=0, lines_processed=0):
     # Display a processing summary
     if SUMMARY_FLAG:
         sys.stderr.write('  Lines processed: %d\n' % lines_processed)
-
-    # Output the program end
-    if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % program_name)
-        sys.stderr.write("\n")
 
     if DEBUG_FLAG:
         sys.stderr.write('************ END ****************\n')

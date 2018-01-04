@@ -51,8 +51,7 @@ def main(argv):
     setup_time = None
 
     # Display the startup message
-    if SUMMARY_FLAG or DEBUG_FLAG:
-        startup_message(argv)
+    startup_message(argv)
 
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
@@ -130,7 +129,7 @@ def startup_message(argv):
         sys.stderr.write('*********************************\n')
 
     # Output the program name start
-    if VERBOSE_FLAG:
+    if SUMMARY_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
     # Return from the function
@@ -163,11 +162,7 @@ def shutdown_message(argv, return_code=0, files_processed=0):
     # Display a processing summary
     if SUMMARY_FLAG:
         sys.stderr.write('  Files processed: %d\n' % files_processed)
-
-    # Output the program end
-    if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % program_name)
-        sys.stderr.write("\n")
 
     if DEBUG_FLAG:
         sys.stderr.write('************ END ****************\n')
