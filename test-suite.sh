@@ -211,9 +211,10 @@ git_add_file()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git add "${1}")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_rm_file()
@@ -230,9 +231,10 @@ git_rm_file()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git rm "${1}")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_force_rm_file()
@@ -249,9 +251,10 @@ git_force_rm_file()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git rm -f "${1}")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_commit()
@@ -268,9 +271,10 @@ git_commit()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git commit -m "Post-commit test")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_pull()
@@ -287,9 +291,10 @@ git_pull()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git push)
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_push()
@@ -306,9 +311,10 @@ git_push()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git push)
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_branch_list()
@@ -325,6 +331,8 @@ git_branch_list()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git branch -a)
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
 }
@@ -343,9 +351,10 @@ git_branch_checkout()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git checkout "${1}")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 git_branch_merge()
@@ -362,9 +371,10 @@ git_branch_merge()
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (git merge "${1}")
+    (log_blank_line)
+    (git status)
     (log_step_finish "${step_name}" "$?")
   } >> "${output_log}" 2>&1
-  git_status "${step_name} - git status"
 }
 
 
