@@ -60,6 +60,10 @@ def startup_message():
     if VERBOSE_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
+    # Output the program name start
+    if SUMMARY_FLAG:
+        sys.stderr.write('%s: %s\n' % (str(program_name), sys.argv[1]))
+
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
@@ -175,84 +179,32 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def main(argv):
-    """Main program.
+def git_log_attributes(git_field_log, full_file_name, git_field_name):
+    """Function to dump the git log associated with the provided
+    file name.
 
     Arguments:
-        argv: command line arguments
+        git_field_log -- a list of git log fields to capture
+        full_file_name -- The full file name to be examined
+        git_field_name -- Name of the attributes fields for the dictionary
 
     Returns:
-        Nothing
+        git_log -- Array of defined attribute dictionaries
     """
-    function_name = 'main'
+    function_name = 'git_log_attributes'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
-    # Set the start time for calculating elapsed time
-    start_time = time.clock()
-
-    # Display the startup message
-    if SUMMARY_FLAG or DEBUG_FLAG:
-        startup_message()
-
-    # Calculate the source file being smudged
-    file_full_name = argv[1]
-    (file_path, file_name) = os.path.split(file_full_name)
-
-    # Define the fields to be extracted from the commit log
-    git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
-    git_field_log = ['%H', '%an', '%ae', '%ci']
-
-    # List the provided parameters
-    if VERBOSE_FLAG:
-        dump_list(list_values=argv,
-                  list_description='Param',
-                  list_message='Parameter list')
-
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
-
-    # Display the name of the file being smudged
-    if VERBOSE_FLAG or DEBUG_FLAG:
-        sys.stderr.write('  Smudge file full name: %s\n' % str(file_full_name))
-        if DEBUG_FLAG:
-            sys.stderr.write('  Smudge file path: %s\n' % str(file_path))
-            sys.stderr.write('  Smudge file name: %s\n' % str(file_name))
-            sys.stderr.write("\n")
-
-    # Define the various substitution regular expressions
-    author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
-                              re.IGNORECASE)
-    id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
-                          re.IGNORECASE)
-    date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
-                            re.IGNORECASE)
-    source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
-                              re.IGNORECASE)
-    file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
-                            re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d ]+ +\$|\$Revision\$",
-                                re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d ]+ +\$|\$Rev\$",
-                           re.IGNORECASE)
-    hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
-                            re.IGNORECASE)
-
     # Format the git log command
-    git_field_log = '%x1f'.join(git_field_log) + '%x1e'
-#    cmd = 'git log --date=iso8601 --max-count=1 --format="%s" -- "%s"' \
-#          % (git_field_log, str(file_full_name))
+    git_field_format = '%x1f'.join(git_field_log) + '%x1e'
     cmd = ['git',
            'log',
            '--date=iso8601',
            '--max-count=1',
-           '--format="%s"' % git_field_log,
+           '--format="%s"' % git_field_format,
            '--',
-           '"%s"' % str(file_full_name)]
+           str(full_file_name)]
+#           '%s' % str(full_file_name)]
     if DEBUG_FLAG:
         sys.stderr.write('  git log cmd: %s\n' % str(cmd))
 
@@ -277,9 +229,10 @@ def main(argv):
                          % cmd_stdout.strip().decode("utf-8"))
         sys.stderr.write("Error message: %s\n"
                          % cmd_stderr.strip().decode("utf-8"))
-        exit(cmd_return.returncode)
+        shutdown_message(return_code=cmd_return.returncode, lines_processed=0)
+
     if cmd_stderr:
-        sys.stdout.write('STDERR from git diff-tree\n')
+        sys.stdout.write('STDERR from command %s\n' % str(cmd))
         sys.stderr.write(cmd_stderr.strip().decode("utf-8"))
         sys.stderr.write("\n")
 
@@ -290,7 +243,89 @@ def main(argv):
         git_log = git_log.strip().split("\x1e")
         git_log = [row.strip().split("\x1f") for row in git_log]
         git_log = [dict(zip(git_field_name, row)) for row in git_log]
-        # Print the returned values (debugging)
+    else:
+        git_log = []
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return git_log
+
+
+def main(argv):
+    """Main program.
+
+    Arguments:
+        argv: command line arguments
+
+    Returns:
+        Nothing
+    """
+    function_name = 'main'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    # Set the start time for calculating elapsed time
+    start_time = time.clock()
+
+    # Display the startup message
+    startup_message()
+
+    # Calculate the source file being smudged
+    file_full_name = argv[1]
+#    (file_path, file_name) = os.path.split(file_full_name)
+    file_name = os.path.basename(file_full_name)
+
+    # Define the fields to be extracted from the commit log
+    git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
+    git_field_log = ['%H', '%an', '%ae', '%ci']
+
+    # List the provided parameters
+    if VERBOSE_FLAG:
+        dump_list(list_values=argv,
+                  list_description='Param',
+                  list_message='Parameter list')
+
+    # Show the OS environment variables
+    if DEBUG_FLAG:
+        sys.stderr.write('  Environment variables defined\n')
+        for key, value in sorted(os.environ.items()):
+            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
+        sys.stderr.write("\n")
+
+    # Display the name of the file being smudged
+    if VERBOSE_FLAG or DEBUG_FLAG:
+        sys.stderr.write('  Smudge file full name: %s\n' % str(file_full_name))
+#        if DEBUG_FLAG:
+#            sys.stderr.write('  Smudge file path: %s\n' % str(file_path))
+#            sys.stderr.write('  Smudge file name: %s\n' % str(file_name))
+#            sys.stderr.write("\n")
+
+    # Define the various substitution regular expressions
+    author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
+                              re.IGNORECASE)
+    id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
+                          re.IGNORECASE)
+    date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
+                            re.IGNORECASE)
+    source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
+                              re.IGNORECASE)
+    file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
+                            re.IGNORECASE)
+    revision_regex = re.compile(r"\$Revision: +[-:\d ]+ +\$|\$Revision\$",
+                                re.IGNORECASE)
+    rev_regex = re.compile(r"\$Rev: +[-:\d ]+ +\$|\$Rev\$",
+                           re.IGNORECASE)
+    hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
+                            re.IGNORECASE)
+
+    # Format the git log command
+    git_log = git_log_attributes(git_field_log=git_field_log,
+                                 full_file_name=file_full_name,
+                                 git_field_name=git_field_name)
+
+    if git_log:
+        # Calculate the replacement strings based on the git log results
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
         git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
                                                str(git_log[0]['author_email']))

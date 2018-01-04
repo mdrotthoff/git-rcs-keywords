@@ -60,6 +60,10 @@ def startup_message():
     if VERBOSE_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
+    # Output the program name start
+    if SUMMARY_FLAG:
+        sys.stderr.write('%s: %s\n' % (str(program_name), sys.argv[1]))
+
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
@@ -192,8 +196,7 @@ def main(argv):
     start_time = time.clock()
 
     # Display the startup message
-    if SUMMARY_FLAG or DEBUG_FLAG:
-        startup_message()
+    startup_message()
 
     # Calculate the source file being cleaned (if provided)
     if len(argv) > 1:
