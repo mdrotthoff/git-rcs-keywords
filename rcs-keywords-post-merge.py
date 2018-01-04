@@ -572,24 +572,7 @@ def check_out_file(file_name):
     # Check out the file so that it is smudged
     try:
         sys.stderr.flush()
-        cmd_return = subprocess.Popen(cmd,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.PIPE)
-        (cmd_stdout, cmd_stderr) = cmd_return.communicate()
-        if DEBUG_FLAG:
-            sys.stderr.write('      git exit code: %s\n'
-                             % str(cmd_return.returncode))
-            sys.stderr.write('      stdout length: %s\n'
-                             % str(len(cmd_stdout)))
-            sys.stderr.write('      stderr length: %s\n'
-                             % str(len(cmd_stderr)))
-            dump_file_stream(stream_handle=cmd_stdout,
-                             stream_description=
-                             'STDOUT from check_out_file')
-            dump_file_stream(stream_handle=cmd_stderr,
-                             stream_description=
-                             'STDERR from check_out_file')
-
+        execute_cmd(cmd)
     except subprocess.CalledProcessError as err:
         sys.stderr.write('  CalledProcessError in check_out_file\n')
         shutdown_message(argv=sys.argv,
