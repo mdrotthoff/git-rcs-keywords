@@ -1,0 +1,153 @@
+No config file found, using default configuration
+************* Module rcs-keywords-hook-post-checkout.orig
+C: 43, 0: Trailing whitespace (trailing-whitespace)
+C: 53, 0: Trailing whitespace (trailing-whitespace)
+C: 58, 0: Trailing whitespace (trailing-whitespace)
+C: 64, 0: Line too long (86/80) (line-too-long)
+C: 66, 0: Trailing whitespace (trailing-whitespace)
+C: 73, 0: Trailing whitespace (trailing-whitespace)
+C: 74, 0: Trailing whitespace (trailing-whitespace)
+C: 74, 0: Line too long (88/80) (line-too-long)
+C: 91, 0: Trailing whitespace (trailing-whitespace)
+C: 92, 0: Trailing whitespace (trailing-whitespace)
+C: 92, 0: Line too long (96/80) (line-too-long)
+C: 95, 0: Line too long (110/80) (line-too-long)
+C: 97, 0: Line too long (129/80) (line-too-long)
+W: 97, 0: Bad indentation. Found 9 spaces, expected 8 (bad-indentation)
+C:100, 0: Trailing whitespace (trailing-whitespace)
+C:102, 0: Line too long (114/80) (line-too-long)
+C:109, 0: Trailing whitespace (trailing-whitespace)
+C:110, 0: Trailing whitespace (trailing-whitespace)
+C:110, 0: Line too long (91/80) (line-too-long)
+C:112, 0: Line too long (99/80) (line-too-long)
+C:113, 0: Line too long (82/80) (line-too-long)
+C:114, 0: Line too long (84/80) (line-too-long)
+C:119, 0: Trailing whitespace (trailing-whitespace)
+C:120, 0: Trailing whitespace (trailing-whitespace)
+C:124, 0: Trailing whitespace (trailing-whitespace)
+C:131, 0: Trailing whitespace (trailing-whitespace)
+C:138, 0: Line too long (84/80) (line-too-long)
+C:139, 0: Trailing whitespace (trailing-whitespace)
+C:144, 0: Line too long (85/80) (line-too-long)
+C:147, 0: Trailing whitespace (trailing-whitespace)
+C:149, 0: Line too long (121/80) (line-too-long)
+C:152, 0: Line too long (84/80) (line-too-long)
+C:155, 0: Trailing whitespace (trailing-whitespace)
+C:156, 0: Trailing whitespace (trailing-whitespace)
+C:156, 0: Line too long (99/80) (line-too-long)
+C:158, 0: Line too long (106/80) (line-too-long)
+C:159, 0: Line too long (90/80) (line-too-long)
+C:160, 0: Line too long (92/80) (line-too-long)
+C:169, 0: Trailing whitespace (trailing-whitespace)
+C:173, 0: Line too long (83/80) (line-too-long)
+C:174, 0: Line too long (85/80) (line-too-long)
+C:175, 0: Line too long (81/80) (line-too-long)
+C:177, 0: Trailing whitespace (trailing-whitespace)
+C:181, 0: Trailing whitespace (trailing-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+R: 28, 0: Too many local variables (20/15) (too-many-locals)
+W: 28, 9: Unused argument 'argv' (unused-argument)
+W: 63,12: Unused variable 'param' (unused-variable)
+R: 28, 0: Too many branches (34/12) (too-many-branches)
+R: 28, 0: Too many statements (117/50) (too-many-statements)
+
+
+Report
+======
+137 statements analysed.
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |138    |75.41 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |8      |4.37  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |30     |16.39 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |7      |3.83  |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |44     |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |3      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |3      |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++--------------------+------------+
+|message id          |occurrences |
++====================+============+
+|trailing-whitespace |22          |
++--------------------+------------+
+|line-too-long       |21          |
++--------------------+------------+
+|unused-variable     |1           |
++--------------------+------------+
+|unused-argument     |1           |
++--------------------+------------+
+|too-many-statements |1           |
++--------------------+------------+
+|too-many-locals     |1           |
++--------------------+------------+
+|too-many-branches   |1           |
++--------------------+------------+
+|missing-docstring   |1           |
++--------------------+------------+
+|bad-indentation     |1           |
++--------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 6.35/10
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |NC         |NC         |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |1      |NC         |NC         |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
