@@ -197,7 +197,7 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
            'log',
            '--date=iso8601',
            '--max-count=1',
-           '--format="%s"' % git_field_format,
+           '--format=%s' % git_field_format,
            '--',
            str(full_file_name)]
 #           '%s' % str(full_file_name)]
@@ -208,13 +208,11 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
     cmd_return = subprocess.Popen(cmd,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
-#                                  shell=True)
     (cmd_stdout, cmd_stderr) = cmd_return.communicate()
     if DEBUG_FLAG:
         sys.stderr.write('  git exit code: %s\n' % str(cmd_return.returncode))
         sys.stderr.write('  stdout length: %s\n' % str(len(cmd_stdout)))
         sys.stderr.write('  stderr length: %s\n' % str(len(cmd_stderr)))
-        sys.stderr.write("\n")
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
@@ -228,12 +226,16 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
         shutdown_message(return_code=cmd_return.returncode, lines_processed=0)
 
     if cmd_stderr:
-        sys.stdout.write('STDERR from command %s\n' % str(cmd))
+        sys.stderr.write('STDERR from command %s\n' % str(cmd))
         sys.stderr.write(cmd_stderr.strip().decode("utf-8"))
         sys.stderr.write("\n")
 
     # Calculate replacement strings based on the git log results
     if cmd_stdout:
+        if DEBUG_FLAG:
+            sys.stderr.write('STDOUT from command %s\n' % str(cmd))
+            sys.stderr.write(cmd_stdout.strip().decode("utf-8"))
+            sys.stderr.write("\n")
         # Convert returned values to a list of dictionaries
         git_log = cmd_stdout.strip().decode("utf-8")
         git_log = git_log.strip().split("\x1e")
@@ -241,6 +243,9 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
         git_log = [dict(zip(git_field_name, row)) for row in git_log]
     else:
         git_log = []
+
+    if DEBUG_FLAG:
+        sys.stderr.write('git_log: %s\n' % str(git_log))
 
     # Return from the function
     if DEBUG_FLAG:
@@ -269,7 +274,6 @@ def main(argv):
 
     # Calculate the source file being smudged
     file_full_name = argv[1]
-#    (file_path, file_name) = os.path.split(file_full_name)
     file_name = os.path.basename(file_full_name)
 
     # Define the fields to be extracted from the commit log
@@ -292,10 +296,6 @@ def main(argv):
     # Display the name of the file being smudged
     if VERBOSE_FLAG or DEBUG_FLAG:
         sys.stderr.write('  Smudge file full name: %s\n' % str(file_full_name))
-#        if DEBUG_FLAG:
-#            sys.stderr.write('  Smudge file path: %s\n' % str(file_path))
-#            sys.stderr.write('  Smudge file name: %s\n' % str(file_name))
-#            sys.stderr.write("\n")
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
