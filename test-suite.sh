@@ -378,8 +378,8 @@ fi
 
 
 # Run general tests involving the clean and smudge filters
-section_name="Test basic smudge / clean operations"
-(log_section_start "${section_name}") >> "${output_log}" 2>&1
+#section_name="Test basic smudge / clean operations"
+#(log_section_start "${section_name}") >> "${output_log}" 2>&1
 
 # Show the current branch information
 git_branch_list
@@ -426,7 +426,7 @@ git_branch_checkout "development"
 #git_branch_checkout "master"
 
 #(log_blank_line) >> "${output_log}"
-(log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
+#(log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
 
 
 # Run tests to exercise all the hooks and filters
@@ -434,155 +434,192 @@ section_name="Detailed test all operations"
 (log_section_start "${section_name}") >> "${output_log}" 2>&1
 
 #01: Make sure we are on the development branch
-git_status "01.01: Make sure we are on the development branch"
+step_num="01"
+git_status "${step_num}.01: Make sure we are on the development branch"
 
 #02: Create test files
+step_num="02"
 file_name="${test_dir}/old-01.txt"
-build_test_file "${file_name}" "02.01: Build test file ${file_name}"
+build_test_file "${file_name}" "${step_num}.01: Build test file ${file_name}"
 file_name="${test_dir}/old-02.txt"
-build_test_file "${file_name}" "02.02: Build test file ${file_name}"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
 file_name="${test_dir}/old-03.txt"
-build_test_file "${file_name}" "02.03: Build test file ${file_name}"
-list_dir "${test_dir}" "02.04: List the test files on directory ${test_dir}"
+build_test_file "${file_name}" "${step_num}.03: Build test file ${file_name}"
+list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir}"
 
 #03: Add the test files to the repository
-git_add_file "${test_dir}/old-*.txt" "03.01: Add test files ${test_dir}/old-*.txt to the repository"
-list_dir "${test_dir}" "03.02: List the test files on directory ${test_dir}"
+step_num="03"
+git_add_file "${test_dir}/old-*.txt" "${step_num}.01: Add test files ${test_dir}/old-*.txt to the repository"
+list_dir "${test_dir}" "${step_num}.02: List the test files on directory ${test_dir}"
 
 #04: Update one test files
+step_num="04"
 file_name="${test_dir}/old-03.txt"
-append_test_file "${file_name}" "04.01: Append data to test file ${file_name} to prevent committing"
+append_test_file "${file_name}" "${step_num}.01: Append data to test file ${file_name} to prevent committing"
 
 #05: Commit the changes & display the files
-git_commit "05.01: Commit the test files to the repository"
+step_num="05"
+git_commit "${step_num}.01: Commit the test files to the repository"
 file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "05.02: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "05.03: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "05.04: Display contents of test file ${file_name}"
-list_dir "${test_dir}" "05.05: List the test files on directory ${test_dir}"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+list_dir "${test_dir}" "${step_num}.05: List the test files on directory ${test_dir}"
 
 #06: Add and commit the updated log files
-git_add_file "${test_dir}/old-*.txt" "06.01: Add test files ${test_dir}/old-*.txt to the repository"
-git_commit "06.02: Commit the test files to the repository"
-git_push "06.03: Push the changes"
-list_dir "${test_dir}" "06.04: List the test files on directory ${test_dir}"
+step_num="06"
+git_add_file "${test_dir}/old-*.txt" "${step_num}.01: Add test files ${test_dir}/old-*.txt to the repository"
+git_commit "${step_num}.02: Commit the test files to the repository"
+git_push "${step_num}.03: Push the changes"
+list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir}"
 
 #07: Display the files
+step_num="07"
 file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "07.01: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.01: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "07.02: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "07.03: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
 
 #08: Checkout the master branch
-git_branch_checkout "master" "08.01: Checkout the master branch"
-list_dir "${test_dir}" "08.02: List the test files on directory ${test_dir}"
+step_num="08"
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+list_dir "${test_dir}" "${step_num}.02: List the test files on directory ${test_dir}"
 
 #09: Merge development changes into the master branch
-git_branch_list "09.01: List the branches"
-git_branch_checkout "master" "09.02: Checkout the master branch"
-git_branch_list "09.03: List the branches"
-git_branch_merge "development" "09.04: Merge development changes into the master branch"
-list_dir "${test_dir}" "09.05: List the test files on directory ${test_dir} after merge"
-git_commit "09.06: Commit the changes"
-git_push "09.07: Push the changes"
-list_dir "${test_dir}" "09.08: List the test files on directory ${test_dir} after push"
+step_num="09"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+git_branch_merge "development" "${step_num}.04: Merge development changes into the master branch"
+list_dir "${test_dir}" "${step_num}.05: List the test files on directory ${test_dir} after merge"
+git_commit "${step_num}.06: Commit the changes"
+git_push "${step_num}.07: Push the changes"
+list_dir "${test_dir}" "${step_num}.08: List the test files on directory ${test_dir} after push"
 
 #10: Display the files
+step_num="10"
 file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "10.01: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.01: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "10.02: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
 file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "10.03: Display contents of test file ${file_name}"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
 
 #11: Remove the test files from the development branch
-git_branch_list "11.01: List the branches"
-git_branch_checkout "development" "11.02: Checkout the development branch"
-git_branch_list "11.03: List the branches"
-list_dir "${test_dir}" "11.04: List the test files on directory ${test_dir} prior to removal"
-git_rm_file "${test_dir}/old-*.txt" "11.05: Remove the test files from the development branch"
-list_dir "${test_dir}" "11.06: List the test files on directory ${test_dir} after removal"
-git_commit "11.07: Commit the changes"
-git_push "11.08: Push the changes"
-list_dir "${test_dir}" "11.09: List the test files on directory ${test_dir} after push"
+step_num="11"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir} prior to removal"
+git_rm_file "${test_dir}/old-*.txt" "${step_num}.05: Remove the test files from the development branch"
+list_dir "${test_dir}" "${step_num}.06: List the test files on directory ${test_dir} after removal"
+git_commit "${step_num}.07: Commit the changes"
+git_push "${step_num}.08: Push the changes"
+list_dir "${test_dir}" "${step_num}.09: List the test files on directory ${test_dir} after push"
 
 #12: Merge development changes into the master branch
-git_branch_list "12.01: List the branches"
-git_branch_checkout "master" "12.02: Checkout the master branch"
-git_branch_list "12.03: List the branches"
-list_dir "${test_dir}" "12.04: List the test files on directory ${test_dir} prior to removal"
-git_branch_merge "development" "12.05: Merge development changes into the master branch"
-list_dir "${test_dir}" "12.06: List the test files on directory ${test_dir} prior to removal"
-git_commit "12.07: Commit the changes"
-git_push "12.08: Push the changes"
+step_num="12"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir} prior to removal"
+git_branch_merge "development" "${step_num}.05: Merge development changes into the master branch"
+list_dir "${test_dir}" "${step_num}.06: List the test files on directory ${test_dir} prior to removal"
+git_commit "${step_num}.07: Commit the changes"
+git_push "${step_num}.08: Push the changes"
 
 #13: Checkout the development branch
-git_branch_list "13.01: List the branches"
-git_branch_checkout "master" "13.02: Checkout the master branch"
-git_branch_list "13.03: List the branches"
-list_dir "${test_dir}" "13.04: List the test files on directory ${test_dir} after checkout"
-git_commit "13.05: Commit any changes"
-git_push "13.06: Push the changes"
+step_num="13"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir} after checkout"
+git_commit "${step_num}.05: Commit any changes"
+git_push "${step_num}.06: Push the changes"
 
 
 
-(log_message "15: Add test data to trace log") >> "${output_log}" 2>&1
-(log_message "16: Show the status") >> "${output_log}" 2>&1
-(log_message "17: Add additional test data") >> "${output_log}" 2>&1
-(log_message "18: Show the status") >> "${output_log}" 2>&1
+step_num="15"
+(log_message "${step_num}: Add test data to trace log") >> "${output_log}" 2>&1
+step_num="16"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
+step_num="17"
+(log_message "${step_num}: Add additional test data") >> "${output_log}" 2>&1
+step_num="18"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
 
 #19: Commit the additional test data
-git_commit "19.01: Commit the additional test data"
+step_num="19"
+git_commit "${step_num}.01: Commit the additional test data"
 
-(log_message "20: Push the changes") >> "${output_log}" 2>&1
-(log_message "21: List the branches") >> "${output_log}" 2>&1
-(log_message "22: Checkout the development branch") >> "${output_log}" 2>&1
-(log_message "23: Merge the master branch") >> "${output_log}" 2>&1
-(log_message "24: Add trace logs") >> "${output_log}" 2>&1
+step_num="20"
+(log_message "${step_num}: Push the changes") >> "${output_log}" 2>&1
+step_num="21"
+(log_message "${step_num}: List the branches") >> "${output_log}" 2>&1
+step_num="22"
+(log_message "${step_num}: Checkout the development branch") >> "${output_log}" 2>&1
+step_num="23"
+(log_message "${step_num}: Merge the master branch") >> "${output_log}" 2>&1
+step_num="24"
+(log_message "${step_num}: Add trace logs") >> "${output_log}" 2>&1
 
 #25: Commit & push changes
-git_commit "25.01: Commit changes"
-git_push "25.02: Push changes"
+step_num="25"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
 
-(log_message "27: Pull development") >> "${output_log}" 2>&1
-(log_message "28: Checkout master") >> "${output_log}" 2>&1
-(log_message "29: Pull master") >> "${output_log}" 2>&1
-(log_message "30: Merge development") >> "${output_log}" 2>&1
+step_num="27"
+(log_message "${step_num}: Pull development") >> "${output_log}" 2>&1
+step_num="28"
+(log_message "${step_num}: Checkout master") >> "${output_log}" 2>&1
+step_num="29"
+(log_message "${step_num}: Pull master") >> "${output_log}" 2>&1
+step_num="30"
+(log_message "${step_num}: Merge development") >> "${output_log}" 2>&1
 
 #31: Merge master changes into the development branch
-git_branch_list "31.01: List the branches"
-git_branch_checkout "development" "31.02: Checkout the development branch"
-git_branch_list "31.03: List the branches"
-git_pull "31.04: Pull the development branch"
-git_branch_merge "master" "31.05: Merge master changes into the development branch"
-git_commit "31.06: Commit the changes"
+step_num="31"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the development branch"
+git_branch_merge "master" "${step_num}.05: Merge master changes into the development branch"
+git_commit "${step_num}.06: Commit the changes"
 
 #32: Merge development changes into the master branch
-git_branch_list "32.01: List the branches"
-git_branch_checkout "master" "32.02: Checkout the master branch"
-git_branch_list "32.03: List the branches"
-git_pull "32.04: Pull the master branch"
-git_branch_merge "master" "32.05: Merge development changes into the master branch"
-git_commit "32.06: Commit the changes"
+step_num="32"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the master branch"
+git_branch_merge "master" "${step_num}.05: Merge development changes into the master branch"
+git_commit "${step_num}.06: Commit the changes"
 
 #33: Push changes
-git_push "33.01: Push changes"
+step_num="33"
+git_push "${step_num}.01: Push changes"
 
-(log_message "36: Checkout development") >> "${output_log}" 2>&1
-(log_message "37: Merge master") >> "${output_log}" 2>&1
+step_num="36"
+(log_message "${step_num}: Checkout development") >> "${output_log}" 2>&1
+step_num="37"
+(log_message "${step_num}: Merge master") >> "${output_log}" 2>&1
 
 #38: Commit & push changes
-git_commit "38.01: Commit changes"
-git_push "38.02: Push changes"
+step_num="38"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
 
 #40: Checkout master
-git_branch_checkout "master" "40.01: Checkout master"
+step_num="40"
+git_branch_checkout "master" "${step_num}.01: Checkout master"
 
 #41: Checkout development
-git_branch_checkout "development" "41.01: Checkout development"
+step_num="41"
+git_branch_checkout "development" "${step_num}.01: Checkout development"
 
 (log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
+
