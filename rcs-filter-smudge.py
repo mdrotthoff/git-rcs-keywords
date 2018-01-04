@@ -257,7 +257,7 @@ def main(argv):
         sys.stderr.write('  git log cmd: %s\n' % str(cmd))
 
     # Process the git log command
-    cmd_return = subprocess.Popen([cmd],
+    cmd_return = subprocess.Popen(cmd,
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
 #                                  shell=True)
