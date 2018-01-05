@@ -1,0 +1,93 @@
+*** post-commit
+def main(argv):
+def startup_message(argv):
+def shutdown_message(argv, return_code=0, files_processed=0):
+def display_timing(start_time=None, setup_time=None):
+def print_file_stream(stream_handle):
+def dump_file_stream(stream_handle, stream_description):
+def dump_list(list_values, list_description, list_message):
+def execute_cmd(cmd):
+def check_for_cmd(cmd):
+def git_ls_files():
+def get_modified_files():
+def git_not_checked_in(files):
+def check_out_file(file_name):
+
+
+*** post-merge
+def main(argv):
+def startup_message(argv):
+def shutdown_message(argv, return_code=0, files_processed=0):
+def display_timing(start_time=None, setup_time=None):
+def print_file_stream(stream_handle):
+def dump_file_stream(stream_handle, stream_description):
+def dump_list(list_values, list_description, list_message):
+def execute_cmd(cmd):
+def check_for_cmd(cmd):
+def git_ls_files():
+def get_modified_files():
+def git_not_checked_in(files):
+def check_out_file(file_name):
+
+
+*** post-checkout
+def main(argv):
+def startup_message(argv):
+def shutdown_message(argv, return_code=0, files_processed=0):
+def display_timing(start_time=None, setup_time=None):
+def print_file_stream(stream_handle):
+def dump_file_stream(stream_handle, stream_description):
+def dump_list(list_values, list_description, list_message):
+def execute_cmd(cmd):
+def check_for_cmd(cmd):
+def git_ls_files():
+def get_checkout_files(first_hash, second_hash):
+def git_not_checked_in(files):
+def check_out_file(file_name):
+
+
+*** filter-clean
+def startup_message():
+def shutdown_message(return_code=0, lines_processed=0):
+def display_timing(start_time=None, setup_time=None):
+def dump_list(list_values, list_description, list_message):
+def main(argv):
+
+
+*** filter-smudge
+def startup_message():
+def shutdown_message(return_code=0, lines_processed=0):
+def display_timing(start_time=None, setup_time=None):
+def dump_list(list_values, list_description, list_message):
+def git_log_attributes(git_field_log, full_file_name, git_field_name):
+def main(argv):
+
+
+*** git-hook
+def startup_message():
+def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
+def display_timing(start_time=None, setup_time=None):
+def dump_list(list_values, list_description, list_message):
+def main(argv):
+
+
+*** install
+def check_for_cmd(cmd):
+def validatedirexists(dirname):
+def createdir(dirname):
+def copyfile(srcfile, destfile):
+def execute_cmd(cmd):
+def registergitevent(eventdir, eventname, eventcode):
+def registerfilter(filter_dir, filter_type, filter_name):
+def registerfilepattern(git_dir):
+def installgitkeywords(git_dir, repo_dir):
+def display_timing(start_clock=None, setup_clock=None):
+def startup_message():
+def shutdown_message(return_code=0):
+def dump_file_stream(stream_handle, stream_description):
+def dump_list(list_values, list_description, list_message):
+
+
+
+
+

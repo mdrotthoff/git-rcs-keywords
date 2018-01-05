@@ -19,16 +19,16 @@ GIT_HOOK = 'git-hook.py'
 GIT_DIRS = {'filter_dir': 'filters', 'event_dir': 'hooks'}
 
 GIT_HOOKS = [{'event_name': 'post-commit',
-              'event_code': 'rcs-keywords-post-commit.py'},
+              'event_code': 'rcs-post-commit.py'},
              {'event_name': 'post-checkout',
-              'event_code': 'rcs-keywords-post-checkout.py'},
+              'event_code': 'rcs-post-checkout.py'},
              {'event_name': 'post-merge',
-              'event_code': 'rcs-keywords-post-merge.py'}]
+              'event_code': 'rcs-post-merge.py'}]
 
 GIT_FILTERS = [{'filter_type': 'clean',
-                'filter_name': 'rcs-keywords-filter-clean.py'},
+                'filter_name': 'rcs-filter-clean.py'},
                {'filter_type': 'smudge',
-                'filter_name': 'rcs-keywords-filter-smudge.py'}]
+                'filter_name': 'rcs-filter-smudge.py'}]
 
 GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
                     '*.yaml', '*.hosts', '*.xml', '*.jsn',
@@ -73,10 +73,7 @@ def check_for_cmd(cmd):
 
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
-        shutdown_message(argv=sys.argv,
-                         return_code=1,
-                         files_processed=0)
-
+        shutdown_message(return_code=1)
 
     # Execute the command
     try:
@@ -84,15 +81,13 @@ def check_for_cmd(cmd):
 
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        print("CalledProcessError - Required program '{}' not found! -- Exiting.".format(cmd))
-        shutdown_message(argv=sys.argv,
-                         return_code=err.returncode,
-                         files_processed=0)
+        print("CalledProcessError - Program '{}' not found! -- Exiting."
+              .format(cmd))
+        shutdown_message(return_code=err.returncode)
     except OSError as err:
-        print("OSError - Required program '{}' not found! -- Exiting.".format(cmd))
-        shutdown_message(argv=sys.argv,
-                         return_code=err.errno,
-                         files_processed=0)
+        print("OSError - Required program '{}' not found! -- Exiting."
+              .format(cmd))
+        shutdown_message(return_code=err.errno)
 
     # Return from the function
     if DEBUG_FLAG:
@@ -173,7 +168,7 @@ def copyfile(srcfile, destfile):
 
     # If the file already exists, throw the appropriate exception
     if os.path.exists(destfile):
-        sys.stderr.write('  Destination file already exist -- OVERWRITTING!!!!\n')
+        sys.stderr.write('  Destination file exists -- OVERWRITTING!!!!\n')
     # Copy the source file to the destination file
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
@@ -282,6 +277,10 @@ def registerfilter(filter_dir, filter_type, filter_name):
     Returns:
         None
     """
+    function_name = 'registerfilter'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
     if DEBUG_FLAG:
         sys.stderr.write('  Copying filter: %s\n' % filter_name)
         sys.stderr.write('  Filter dir: %s\n' % filter_dir)
@@ -300,6 +299,58 @@ def registerfilter(filter_dir, filter_type, filter_name):
            'filter.rcs-keywords.%s' % filter_type,
            '%s %s' % (os.path.join(filter_dir, filter_name), '%f')]
     execute_cmd(cmd=cmd)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
+
+
+def registerfilepattern(git_dir):
+    """Register the relevant file patterns for rcs-keywords functionality
+
+    Arguments:
+        filter_dir: Directory to hold the filter program
+        filter_type: Type of the filter program
+        filter_name: Source program of the filter to be copied
+
+    Returns:
+        None
+    """
+    function_name = 'registerfilepattern'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    # Register the defined file patterns to the filters in the attributes files
+    attribute_file = os.path.join(git_dir, 'info', 'attributes')
+    attribute_backup = os.path.join(git_dir, 'info', 'attributes~')
+
+    # If the attribute file already exists, rename the file and re-create it
+    # without the rcs file patterns defined
+    if os.path.exists(attribute_file):
+        os.rename(attribute_file, attribute_backup)
+        keyword_regex = re.compile("rcs-keywords", re.IGNORECASE)
+        source = open(attribute_backup, "r")
+        destination = open(attribute_file, "w")
+        for line in source:
+            if not keyword_regex.search(line):
+                destination.write(line)
+        source.close()
+    else:
+        destination = open(attribute_file, "w")
+
+    # Write the appropriate file patterns for the filter usage
+    max_len = len(max(GIT_FILE_PATTERN, key=len))
+    if DEBUG_FLAG:
+        sys.stderr.write('  max file pattern length: %d\n' % max_len)
+    for file_pattern in GIT_FILE_PATTERN:
+        destination.write('%s filter=rcs-keywords\n'
+                          % file_pattern.ljust(max_len))
+    destination.close()
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -351,29 +402,7 @@ def installgitkeywords(git_dir, repo_dir):
                        filter_name=filter_def['filter_name'])
 
     # Register the defined file patterns to the filters in the attributes files
-    attribute_file = os.path.join(git_dir, 'info', 'attributes')
-    attribute_backup = os.path.join(git_dir, 'info', 'attributes~')
-
-    # If the attribute file already exists, rename the file and re-create it
-    if os.path.exists(attribute_file):
-        os.rename(attribute_file, attribute_backup)
-        keyword_regex = re.compile("rcs-keywords", re.IGNORECASE)
-        source = open(attribute_backup, "r")
-        destination = open(attribute_file, "w")
-        for line in source:
-            if not keyword_regex.search(line):
-                destination.write(line)
-        source.close()
-    else:
-        destination = open(attribute_file, "w")
-
-    # Write the appropriate file patterns for the filter usage
-    max_len = len(max(GIT_FILE_PATTERN, key=len))
-    sys.stderr.write('  max file pattern length: %d\n' % max_len)
-    for file_pattern in GIT_FILE_PATTERN:
-        destination.write('%s filter=rcs-keywords\n'
-                          % file_pattern.ljust(max_len))
-    destination.close()
+    registerfilepattern(git_dir)
 
     # Copy the git event manager
     copyfile(srcfile=os.path.join(PROGRAM_PATH, GIT_HOOK),

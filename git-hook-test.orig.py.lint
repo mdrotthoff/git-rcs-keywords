@@ -1,0 +1,111 @@
+No config file found, using default configuration
+************* Module git-hook-test.orig
+C:  9, 0: Line too long (81/80) (line-too-long)
+C: 51, 0: Line too long (82/80) (line-too-long)
+C: 68, 0: Line too long (81/80) (line-too-long)
+C: 69, 0: Line too long (83/80) (line-too-long)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 16, 0: Invalid constant name "summary_flag" (invalid-name)
+C: 17, 0: Invalid constant name "verbose_flag" (invalid-name)
+C: 18, 0: Invalid constant name "timing_flag" (invalid-name)
+C: 19, 0: Invalid constant name "debug_flag" (invalid-name)
+C: 21, 4: Invalid constant name "timing_flag" (invalid-name)
+C: 23, 4: Invalid constant name "verbose_flag" (invalid-name)
+C: 25, 4: Invalid constant name "summary_flag" (invalid-name)
+C: 29, 4: Invalid constant name "start_time" (invalid-name)
+C: 32, 0: Invalid constant name "program_name" (invalid-name)
+C: 33, 1: Invalid constant name "hook_path" (invalid-name)
+C: 33,12: Invalid constant name "hook_name" (invalid-name)
+C: 43, 4: Invalid constant name "program_name" (invalid-name)
+C: 49, 4: Invalid constant name "param_num" (invalid-name)
+C: 63, 4: Invalid constant name "setup_time" (invalid-name)
+C: 67, 4: Invalid constant name "end_time" (invalid-name)
+
+
+Report
+======
+57 statements analysed.
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |20     |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++------------------+------------+
+|message id        |occurrences |
++==================+============+
+|invalid-name      |15          |
++------------------+------------+
+|line-too-long     |4           |
++------------------+------------+
+|missing-docstring |1           |
++------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 6.49/10
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |56     |73.68 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |0      |0.00  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |18     |23.68 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |2      |2.63  |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |NC         |NC         |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+

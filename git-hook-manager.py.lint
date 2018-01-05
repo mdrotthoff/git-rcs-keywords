@@ -1,0 +1,117 @@
+No config file found, using default configuration
+************* Module git-hook-manager
+W: 99, 0: TODO: Add error handling if hook_call is not zero after execution (fixme)
+C: 51, 0: Trailing whitespace (trailing-whitespace)
+C: 64, 0: Line too long (85/80) (line-too-long)
+C: 67, 0: Line too long (84/80) (line-too-long)
+C: 77, 0: Line too long (130/80) (line-too-long)
+C: 83, 0: Line too long (82/80) (line-too-long)
+C:109, 0: Line too long (84/80) (line-too-long)
+C:  1, 0: Invalid module name "git-hook-manager" (invalid-name)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 18, 0: Invalid constant name "debug_flag" (invalid-name)
+C: 19, 0: Invalid constant name "debug_flag" (invalid-name)
+C: 20, 0: Invalid constant name "verbose_flag" (invalid-name)
+C: 24, 4: Invalid constant name "start_time" (invalid-name)
+C: 27, 1: Invalid constant name "hook_path" (invalid-name)
+C: 27,12: Invalid constant name "hook_name" (invalid-name)
+C: 35, 8: Invalid constant name "program_name" (invalid-name)
+C: 39, 4: Invalid constant name "param_num" (invalid-name)
+C: 53, 0: Invalid constant name "list_dir" (invalid-name)
+C: 82, 4: Invalid constant name "setup_time" (invalid-name)
+C: 87, 0: Invalid constant name "hook_count" (invalid-name)
+C: 88, 0: Invalid constant name "hook_executed" (invalid-name)
+C:108, 4: Invalid constant name "end_time" (invalid-name)
+
+
+Report
+======
+88 statements analysed.
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |88     |78.57 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |0      |0.00  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |20     |17.86 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |4      |3.57  |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |21     |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |1      |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++--------------------+------------+
+|message id          |occurrences |
++====================+============+
+|invalid-name        |14          |
++--------------------+------------+
+|line-too-long       |5           |
++--------------------+------------+
+|trailing-whitespace |1           |
++--------------------+------------+
+|missing-docstring   |1           |
++--------------------+------------+
+|fixme               |1           |
++--------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 7.50/10
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |NC         |NC         |0.00        |100.00   |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+

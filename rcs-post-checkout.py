@@ -5,7 +5,7 @@
 # $Rev$
 # $Rev$
 # $Source$
-# $Hash$
+# $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
 """rcs-keywords-post-checkout
 
@@ -49,8 +49,7 @@ def main(argv):
     start_time = time.clock()
 
     # Display the startup message
-    if SUMMARY_FLAG or DEBUG_FLAG:
-        startup_message(argv)
+    startup_message(argv)
 
     if VERBOSE_FLAG:
         sys.stderr.write('  Entered module main\n')
@@ -71,7 +70,7 @@ def main(argv):
     # then exit the hook
     if sys.argv[3] == '0':
         shutdown_message(argv=argv,
-                         files_processed=0,
+                         files_processed=-1,
                          return_code=0)
     elif SUMMARY_FLAG:
         sys.stderr.write('Continuing for branch checkout: %s\n' % sys.argv[3])
@@ -138,7 +137,7 @@ def startup_message(argv):
         sys.stderr.write('*********************************\n')
 
     # Output the program name start
-    if VERBOSE_FLAG:
+    if SUMMARY_FLAG:
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
     # Return from the function
@@ -171,11 +170,7 @@ def shutdown_message(argv, return_code=0, files_processed=0):
     # Display a processing summary
     if SUMMARY_FLAG:
         sys.stderr.write('  Files processed: %d\n' % files_processed)
-
-    # Output the program end
-    if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % program_name)
-        sys.stderr.write("\n")
 
     if DEBUG_FLAG:
         sys.stderr.write('************ END ****************\n')
@@ -225,6 +220,32 @@ def display_timing(start_time=None, setup_time=None):
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
+
+
+def print_file_stream(stream_handle):
+    """Function to print the byte stream handle from Popen
+    to STDERR.
+
+    Arguments:
+        steam_handle -- a stream handle returned by the Popen
+                        communicate function.
+
+    Returns:
+        Nothing
+    """
+    function_name = 'print_file_stream'
+    if DEBUG_FLAG:
+        sys.stderr.write('      Entered module %s\n' % function_name)
+
+    # Output the contents of the stream handle if any exists
+    if stream_handle:
+        for line in stream_handle.strip().decode("utf-8").splitlines():
+            sys.stderr.write("%s\n" % line)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('      Leaving module %s\n' % function_name)
     return
 
 
@@ -326,6 +347,8 @@ def execute_cmd(cmd):
                          stream_description='STDOUT from check_for_cmd')
         dump_file_stream(stream_handle=cmd_stderr,
                          stream_description='STDERR from check_for_cmd')
+    if cmd_stderr:
+        print_file_stream(cmd_stderr)
 
     # Return from the function
     if DEBUG_FLAG:
