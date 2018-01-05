@@ -12,6 +12,17 @@
 
 This module installs the RCS keyword functionality into an
 existing git repository.
+
+TODO: When installing in a defined directory from the command line,
+      need to change directory to the repository before performing 
+      the installation.  Otherwise the wrong config file gets updated!
+
+TODO: Solution: 1) Get cwd,
+                2) change to target dir,
+                3) install,
+                4) return to initial working directory
+
+NOTE: At the current time, installation into submodules it not supported
 """
 
 GIT_HOOK = 'git-hook.py'
