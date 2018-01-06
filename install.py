@@ -365,7 +365,7 @@ def registerfilepattern(git_dir):
     return
 
 
-def installgitkeywords(git_dir, repo_dir):
+def installgitkeywords(repo_dir):
     """Register a git event in the .git/hooks folder
 
     Arguments:
@@ -380,16 +380,24 @@ def installgitkeywords(git_dir, repo_dir):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+#    git_dir=os.path.join(repo_dir, '.git')
+    git_dir='.git'
     if DEBUG_FLAG:
-        sys.stderr.write('  Target git directory: %s\n' % git_dir)
         sys.stderr.write('  Repository directory: %s\n' % repo_dir)
+        sys.stderr.write('  Target git directory: %s\n' % git_dir)
 
     # Validate that the installation target has a .git directory
-    if not validatedirexists(dirname=git_dir):
-        sys.stderr.write('  Target git directory %s is not a git repository\n'
-                         % git_dir)
+    sys.stderr.write('Current directory %s\n' % os.getcwd())
+    if not validatedirexists(dirname=os.path.join(repo_dir, git_dir)):
+        sys.stderr.write('  Target directory %s is not a git repository\n'
+                         % repo_dir)
         sys.stderr.write('  Aborting installation!\n')
-        exit(1)
+        raise Exception('Target git directory %s is not a git repository'
+                        % repo_dir)
+
+    # Change to the repository directory
+    os.chdir(os.path.abspath(repo_dir))
+    sys.stderr.write('Current directory %s\n' % os.getcwd())
 
     # Create the core directories
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
@@ -602,7 +610,7 @@ def dump_list(list_values, list_description, list_message):
 START_TIME = time.clock()
 
 ## Parameter processing
-PROGRAM_NAME = str(sys.argv[0])
+PROGRAM_NAME = os.path.abspath(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
 if SUMMARY_FLAG or DEBUG_FLAG:
     startup_message()
@@ -616,8 +624,13 @@ else:
     TARGET_DIR = ''
     if DEBUG_FLAG:
         sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
+#TARGET_DIR=os.path.abspath(TARGET_DIR)
+
 if SUMMARY_FLAG:
     sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
+
+# Save the current working directory
+current_dir=os.getcwd()
 
 if VERBOSE_FLAG:
     dump_list(list_values=sys.argv,
@@ -650,8 +663,15 @@ check_for_cmd(cmd=['git', '--version'])
 # Save the setup time
 SETUP_TIME = time.clock()
 
-installgitkeywords(git_dir=os.path.join(TARGET_DIR, '.git'),
-                   repo_dir=TARGET_DIR)
+# Install the keyword support
+#try:
+installgitkeywords(repo_dir=TARGET_DIR)
+#except:
+#    os.chdir(current_dir)
+#    raise
+
+# Return to the initial working directory
+os.chdir(current_dir)
 
 # Calculate the elapsed times
 if TIMING_FLAG:
