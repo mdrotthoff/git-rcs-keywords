@@ -567,7 +567,7 @@ def dump_list(list_values, list_description, list_message):
 
     Returns:
         Nothing
-    """
+        """
     function_name = 'dump_list'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
@@ -603,11 +603,6 @@ def locate_submodule(dirname='',
     """
     dirmodule = os.path.join(dirname, subdirname)
 #    field_name = ['moduledir', 'repodir']
-
-#    print('Dir name: %s' % dirname)
-#    print('Subdir name: %s' % subdirname)
-#    print('File name: %s' % filename)
-#    print('Dir module name: %s' % dirmodule)
 
 #    submodule_list = [os.path.relpath(os.path.join(dirpath, file), dirname)
 #                      for (dirpath, _, filenames) in os.walk(dirmodule)
