@@ -8,10 +8,9 @@
 # $Hash$
 # $Id$
 
-"""Install
+"""Install-submodule
 
-This module installs the RCS keyword functionality into an
-existing git repository.
+Basic code to being implementing rcs keyword deployment to submodules
 """
 
 GIT_HOOK = 'git-hook.py'
@@ -41,9 +40,11 @@ from shutil import copy2
 import subprocess
 import re
 #import errno
+#import pathlib2
+
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
@@ -286,11 +287,11 @@ def registerfilter(filter_dir, filter_type, filter_name):
         sys.stderr.write('  Filter dir: %s\n' % filter_dir)
         sys.stderr.write('  Filter type: %s\n' % filter_type)
 
-#    # Copy the filter program to the target directory
-#    copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_name),
-#             destfile=os.path.join(filter_dir, filter_name))
-#    if DEBUG_FLAG:
-#        sys.stderr.write('  Registering filter: %s\n' % filter_name)
+    # Copy the filter program to the target directory
+    copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_name),
+             destfile=os.path.join(filter_dir, filter_name))
+    if DEBUG_FLAG:
+        sys.stderr.write('  Registering filter: %s\n' % filter_name)
 
     # Register the filter program to rcs-keywords filter
     cmd = ['git',
@@ -354,40 +355,7 @@ def registerfilepattern(git_dir):
     return
 
 
-def validategitrepo(repo_dir, git_dir='.git'):
-    """Validate that the supplied directory is a git repository
-
-    Arguments:
-        repo_dir: Source git repository folder
-        git_dir:  Name of the git configuration subfolder
-
-    Returns:
-        None
-    """
-    function_name = 'validategitrepo'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
-        sys.stderr.write('  Target git directory: %s\n' % git_dir)
-#    git_dir=os.path.join(repo_dir, '.git')
-#    git_dir='.git'
-
-    # Validate that the installation target has a .git directory
-    sys.stderr.write('Current directory %s\n' % os.getcwd())
-    if not validatedirexists(dirname=os.path.join(repo_dir, git_dir)):
-        sys.stderr.write('  Target directory %s is not a git repository\n'
-                         % repo_dir)
-        sys.stderr.write('  Aborting installation!\n')
-        raise Exception('Target git directory %s is not a git repository'
-                        % repo_dir)
-
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
-    return
-
-
-def installgitkeywords(repo_dir, git_dir='.git'):
+def installgitkeywords(git_dir, repo_dir):
     """Register a git event in the .git/hooks folder
 
     Arguments:
@@ -402,31 +370,37 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
-#    git_dir=os.path.join(repo_dir, '.git')
-#    git_dir='.git'
     if DEBUG_FLAG:
-        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
         sys.stderr.write('  Target git directory: %s\n' % git_dir)
+        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
 
-#     # Validate that the installation target has a .git directory
-#     sys.stderr.write('Current directory %s\n' % os.getcwd())
-#     if not validatedirexists(dirname=os.path.join(repo_dir, git_dir)):
-#         sys.stderr.write('  Target directory %s is not a git repository\n'
-#                          % repo_dir)
-#         sys.stderr.write('  Aborting installation!\n')
-#         raise Exception('Target git directory %s is not a git repository'
-#                         % repo_dir)
-
-    # Change to the repository directory
-#    os.chdir(os.path.abspath(repo_dir))
-    sys.stderr.write('Current directory %s\n' % os.getcwd())
+    # Validate that the installation target has a .git directory
+    if not validatedirexists(dirname=git_dir):
+        sys.stderr.write('  Target git directory %s is not a git repository\n'
+                         % git_dir)
+        sys.stderr.write('  Aborting installation!\n')
+        exit(1)
 
     # Create the core directories
-#    filter_dir = os.path.join(repo_dir, git_dir, GIT_DIRS['filter_dir'])
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     createdir(dirname=filter_dir)
     event_dir = os.path.join(git_dir, GIT_DIRS['event_dir'])
     createdir(dirname=event_dir)
+
+    # De-register the rcs-keywords filter
+    cmd = ['git',
+           'config',
+           '--local',
+           '--remove-section',
+           'filter.rcs-keywords']
+    execute_cmd(cmd=cmd)
+
+    # Set up the filter programs for use
+    for filter_def in GIT_FILTERS:
+        # Register the defined filter program
+        registerfilter(filter_dir=filter_dir,
+                       filter_type=filter_def['filter_type'],
+                       filter_name=filter_def['filter_name'])
 
     # Register the defined file patterns to the filters in the attributes files
     registerfilepattern(git_dir)
@@ -440,34 +414,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
         registergitevent(eventdir=event_dir,
                          eventname=git_event['event_name'],
                          eventcode=git_event['event_code'])
-
-
-    # Set up the filter programs for use
-    for filter_def in GIT_FILTERS:
-        copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_def['filter_name']),
-                 destfile=os.path.join(filter_dir, filter_def['filter_name']))
-
-    # De-register the rcs-keywords filter
-    # Change to the repository directory
-    current_dir = os.getcwd()
-    os.chdir(os.path.abspath(repo_dir))
-    sys.stderr.write('Current directory %s\n' % os.getcwd())
-    cmd = ['git',
-           'config',
-           '--local',
-           '--remove-section',
-           'filter.rcs-keywords']
-    execute_cmd(cmd=cmd)
-
-    # Set up the filter programs for use
-    filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
-    for filter_def in GIT_FILTERS:
-        # Register the defined filter program
-        registerfilter(filter_dir=os.path.join('$GIT_DIR', GIT_DIRS['filter_dir']),
-                       filter_type=filter_def['filter_type'],
-                       filter_name=filter_def['filter_name'])
-    os.chdir(current_dir)
-    sys.stderr.write('Current directory %s\n' % os.getcwd())
 
     # Return from the function
     if DEBUG_FLAG:
@@ -621,7 +567,7 @@ def dump_list(list_values, list_description, list_message):
 
     Returns:
         Nothing
-    """
+        """
     function_name = 'dump_list'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
@@ -639,7 +585,9 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def findsubmodules(repo_dir):
+def locate_submodule(dirname='',
+                     subdirname=os.path.join('.git', 'modules'),
+                     filename='config'):
     """Function to find the relevent configuration files for any
     submodules associated with the master repository.  Leave the
     parameter blank if the current working directory is holds
@@ -653,34 +601,22 @@ def findsubmodules(repo_dir):
     Returns:
         List of file names
     """
-    function_name = 'findsubmodules'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
+    dirmodule = os.path.join(dirname, subdirname)
+#    field_name = ['moduledir', 'repodir']
 
-#    sys.stderr.write('Current dir: %s\n' % os.getcwd())
-    dirmodule = os.path.join('.git', 'modules')
-#    sys.stderr.write('Module dir: %s\n' % dirmodule)
-    field_name = ['gitdir', 'repodir']
-
-#    sys.stderr.write('dirmodule: %s\n' % dirmodule)
-#    sys.stderr.write('dirpath: %s\n' % dirpath)
 #    submodule_list = [os.path.relpath(os.path.join(dirpath, file), dirname)
 #                      for (dirpath, _, filenames) in os.walk(dirmodule)
 #                      for file in filenames if file == filename]
-
-#    submodule_list = [os.path.relpath(dirpath, dirmodule)
-#                      for (dirpath, _, filenames) in os.walk(dirmodule)
-#                      for file in filenames if file == 'config']
+    submodule_list = [os.path.relpath(dirpath, dirmodule)
+                      for (dirpath, _, filenames) in os.walk(dirmodule)
+                      for file in filenames if file == filename]
 #    submodule_list = [dirpath
 #                      for (dirpath, _, filenames) in os.walk(dirmodule)
 #                      for file in filenames if file == filename]
-    submodule_list = [dict(zip(field_name, (dirpath, os.path.relpath(dirpath, dirmodule))))
-                      for (dirpath, _, filenames) in os.walk(dirmodule)
-                      for name in filenames if name == 'config']
+#    submodule_list = [dict(zip(field_name, (dirpath, os.path.relpath(dirpath, dirmodule))))
+#                      for (dirpath, _, filenames) in os.walk(dirmodule)
+#                      for name in filenames if name == filename]
 
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return submodule_list
 
 
@@ -691,7 +627,7 @@ def findsubmodules(repo_dir):
 START_TIME = time.clock()
 
 ## Parameter processing
-PROGRAM_NAME = os.path.abspath(sys.argv[0])
+PROGRAM_NAME = str(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
 if SUMMARY_FLAG or DEBUG_FLAG:
     startup_message()
@@ -705,13 +641,8 @@ else:
     TARGET_DIR = ''
     if DEBUG_FLAG:
         sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
-#TARGET_DIR=os.path.abspath(TARGET_DIR)
-
 if SUMMARY_FLAG:
     sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
-
-# Save the current working directory
-current_dir=os.getcwd()
 
 if VERBOSE_FLAG:
     dump_list(list_values=sys.argv,
@@ -725,18 +656,18 @@ if DEBUG_FLAG:
         sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
     sys.stderr.write("\n")
 
-# Show the embedded variables
-if DEBUG_FLAG:
-    sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
-    sys.stderr.write('  git dirs: ')
-    sys.stderr.write(str(GIT_DIRS))
-    sys.stderr.write('\n  git hooks: ')
-    sys.stderr.write(str(GIT_HOOKS))
-    sys.stderr.write('\n  git filters: ')
-    sys.stderr.write(str(GIT_FILTERS))
-    sys.stderr.write('\n  git file_pattern: ')
-    sys.stderr.write(str(GIT_FILE_PATTERN))
-    sys.stderr.write('\n')
+## Show the embedded variables
+#if DEBUG_FLAG:
+#    sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
+#    sys.stderr.write('  git dirs: ')
+#    sys.stderr.write(str(GIT_DIRS))
+#    sys.stderr.write('\n  git hooks: ')
+#    sys.stderr.write(str(GIT_HOOKS))
+#    sys.stderr.write('\n  git filters: ')
+#    sys.stderr.write(str(GIT_FILTERS))
+#    sys.stderr.write('\n  git file_pattern: ')
+#    sys.stderr.write(str(GIT_FILE_PATTERN))
+#    sys.stderr.write('\n')
 
 # Check if git is available.
 check_for_cmd(cmd=['git', '--version'])
@@ -744,35 +675,31 @@ check_for_cmd(cmd=['git', '--version'])
 # Save the setup time
 SETUP_TIME = time.clock()
 
-# Install the keyword support
-try:
-    # Validate that a git repository was supplied
-    validategitrepo(repo_dir=TARGET_DIR)
-    # Change to the repository directory
-    os.chdir(os.path.abspath(TARGET_DIR))
-    if DEBUG_FLAG:
-        sys.stderr.write('Current directory %s\n' % os.getcwd())
-    # Install rcs keywords support in the repo 
-#    installgitkeywords(repo_dir=TARGET_DIR)
-    installgitkeywords(repo_dir='')
-    sys.stderr.write('finding submodules\n')
-    submodules = findsubmodules(repo_dir=TARGET_DIR)
-    if DEBUG_FLAG:
-        sys.stderr.write('  Submodule count: %d\n' % len(submodules))
-    for module in submodules:
-        if DEBUG_FLAG:
-            sys.stderr.write('    Found submodule %s\n' % str(module))
-        sys.stderr.write('Repo dir: %s\n' % module['repodir'])
-        sys.stderr.write('git dir: %s\n' % module['gitdir'])
-        installgitkeywords(repo_dir=module['repodir'],
-                           git_dir=module['gitdir'])
+#installgitkeywords(git_dir=os.path.join(TARGET_DIR, '.git'),
+#                   repo_dir=TARGET_DIR)
 
-except:
-    sys.stderr.write('Exception caught\n')
-    raise
+# TODO:  For each submodule found in submodule list:
+#        1) Install filter programs
+#        2) Install hook programs
+#        3) Install attribute filters
+#        4) Change to repository directory
+#        5) Register filter programs
+#        6) Return to main repository
 
-# Return to the initial working directory
-os.chdir(current_dir)
+submodule_list = locate_submodule(TARGET_DIR)
+print(type(submodule_list))
+for module_name in submodule_list:
+    print(module_name)
+#    p = [module_name.strip(os.path.sep).split(os.path.sep)]
+#    print(p)
+#    p = os.path.relpath(module_name, 'files')
+#    print(p)
+
+#submodule_list = locate_submodule('../git-rcs-keywords')
+#for module_name in submodule_list:
+#    print(module_name)
+##    p = [module_name.strip(os.path.sep).split(os.path.sep)]
+##    print(p)
 
 # Calculate the elapsed times
 if TIMING_FLAG:
