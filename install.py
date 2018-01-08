@@ -12,10 +12,6 @@
 
 This module installs the RCS keyword functionality into an
 existing git repository.
-
-TODO: Add submodule support to the installation
-
-NOTE: At the current time, installation into submodules it not supported
 """
 
 GIT_HOOK = 'git-hook.py'
