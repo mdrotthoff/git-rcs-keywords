@@ -550,22 +550,9 @@ if [[ -f "${output_log}" ]] ;then
 fi
 
 
-#list_dir "${test_dir}"
-#exit 0
-
-
 # Run general tests involving the clean and smudge filters
-#section_name="Test basic smudge / clean operations"
-#(log_section_start "${section_name}") >> "${output_log}" 2>&1
-
-# Show the current branch information
-#git_branch_list
-#git_branch_checkout "development"
 current_dir=$(pwd)
 
-## Run tests to exercise all the hooks and filters
-#section_name="Detailed test all operations"
-#(log_section_start "${section_name}") >> "${output_log}" 2>&1
 
 #01: Create the master test repository
 section_name="Set up the master repository"
