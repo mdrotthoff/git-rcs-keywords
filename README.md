@@ -1,4 +1,4 @@
-# H1 GIT-RCS-KEYWORDS
+H1 GIT-RCS-KEYWORDS
 This project provides a means to add keyword expansion of the following
 standard RCS tags to your git projects.  The mechanism used is a combination
 of git filters and git event hooks. Keywords are handled in a non-case
@@ -16,7 +16,7 @@ relevant substitution values are:
 | $Source$   | Name of the file complete with relative path |
 | $Hash$     | Commit hash of the change |
 
-## H2 Installation
+H2 Installation
 To install the rcs keyword expansion support, execute the install.py program in the
 repository.  This may either be done at the root of the git repository or by
 providing the directory path of the repository root on the command line.  The installer
@@ -31,7 +31,7 @@ The installer will also register the (hard-coded) file patterns into the file
 filters.  Finally, if the repository has any sub-modules, the filters will also be
 installed into the submodules.
 
-## H2 Technical details
+H2 Technical details
 There are two filters programs registered with the git repository.  The clean filter
 is registered to convert the RCS keyword from an expanded state to a keyword state.
 This allows the keyword without expansion to be stored in the git repository.  The
