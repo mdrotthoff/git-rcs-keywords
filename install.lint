@@ -1,0 +1,142 @@
+Processing file: install.py
+ 
+ 
+pycodestyle:
+ 
+checking install.py
+install.py:37:1: E402 module level import not at top of file
+install.py:38:1: E402 module level import not at top of file
+install.py:39:1: E402 module level import not at top of file
+install.py:40:1: E402 module level import not at top of file
+install.py:41:1: E402 module level import not at top of file
+install.py:42:1: E402 module level import not at top of file
+install.py:43:1: E265 block comment should start with '# '
+install.py:426:5: E303 too many blank lines (2)
+install.py:431:80: E501 line too long (80 > 79 characters)
+install.py:446:80: E501 line too long (83 > 79 characters)
+install.py:631:45: W291 trailing whitespace
+install.py:644:80: E501 line too long (91 > 79 characters)
+install.py:660:1: E266 too many leading '#' for block comment
+install.py:680:12: E225 missing whitespace around operator
+install.py:721:47: W291 trailing whitespace
+install.py:734:1: E722 do not use bare except'
+1       E225 missing whitespace around operator
+1       E265 block comment should start with '# '
+1       E266 too many leading '#' for block comment
+1       E303 too many blank lines (2)
+6       E402 module level import not at top of file
+3       E501 line too long (80 > 79 characters)
+1       E722 do not use bare except'
+2       W291 trailing whitespace
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module install
+C:446, 0: Line too long (83/80) (line-too-long)
+C:631, 0: Trailing whitespace (trailing-whitespace)
+C:644, 0: Line too long (91/80) (line-too-long)
+C:680, 0: Exactly one space required around assignment
+current_dir=os.getcwd()
+           ^ (bad-whitespace)
+C:721, 0: Trailing whitespace (trailing-whitespace)
+W:432, 4: Redefining name 'current_dir' from outer scope (line 680) (redefined-outer-name)
+W:622,19: Unused argument 'repo_dir' (unused-argument)
+C:680, 0: Invalid constant name "current_dir" (invalid-name)
+C:723, 4: Invalid constant name "submodules" (invalid-name)
+
+
+Report
+======
+345 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |16     |16         |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |378    |55.51 |378      |=          |
++----------+-------+------+---------+-----------+
+|docstring |181    |26.58 |181      |=          |
++----------+-------+------+---------+-----------+
+|comment   |69     |10.13 |69       |=          |
++----------+-------+------+---------+-----------+
+|empty     |53     |7.78  |53       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |7      |7        |=          |
++-----------+-------+---------+-----------+
+|refactor   |0      |0        |=          |
++-----------+-------+---------+-----------+
+|warning    |2      |2        |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++---------------------+------------+
+|message id           |occurrences |
++=====================+============+
+|trailing-whitespace  |2           |
++---------------------+------------+
+|line-too-long        |2           |
++---------------------+------------+
+|invalid-name         |2           |
++---------------------+------------+
+|unused-argument      |1           |
++---------------------+------------+
+|redefined-outer-name |1           |
++---------------------+------------+
+|bad-whitespace       |1           |
++---------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 9.74/10 (previous run: 9.74/10, +0.00)
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+

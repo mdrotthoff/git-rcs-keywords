@@ -1,0 +1,272 @@
+Processing file: rcs-keywords-hook-post-merge.orig.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-keywords-hook-post-merge.orig.py
+rcs-keywords-hook-post-merge.orig.py:9:80: E501 line too long (96 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:50:80: E501 line too long (90 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:57:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:72:80: E501 line too long (80 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:89:1: E302 expected 2 blank lines, found 1
+rcs-keywords-hook-post-merge.orig.py:99:80: E501 line too long (80 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:105:80: E501 line too long (94 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:108:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:135:80: E501 line too long (98 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:138:80: E501 line too long (88 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:139:80: E501 line too long (82 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:140:80: E501 line too long (82 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:162:1: E302 expected 2 blank lines, found 1
+rcs-keywords-hook-post-merge.orig.py:176:80: E501 line too long (94 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:179:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:185:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:203:80: E501 line too long (81 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:207:80: E501 line too long (80 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:214:1: E302 expected 2 blank lines, found 1
+rcs-keywords-hook-post-merge.orig.py:226:80: E501 line too long (103 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:233:80: E501 line too long (121 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:237:80: E501 line too long (107 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:242:80: E501 line too long (90 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:245:80: E501 line too long (80 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:256:1: E303 too many blank lines (3)
+rcs-keywords-hook-post-merge.orig.py:257:1: E305 expected 2 blank lines after class or function definition, found 3
+rcs-keywords-hook-post-merge.orig.py:280:80: E501 line too long (82 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:294:13: E251 unexpected spaces around keyword / parameter equals
+rcs-keywords-hook-post-merge.orig.py:294:15: E251 unexpected spaces around keyword / parameter equals
+rcs-keywords-hook-post-merge.orig.py:307:80: E501 line too long (89 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:309:80: E501 line too long (88 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:311:1: E266 too many leading '#' for block comment
+rcs-keywords-hook-post-merge.orig.py:311:35: W291 trailing whitespace
+rcs-keywords-hook-post-merge.orig.py:312:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:316:1: E266 too many leading '#' for block comment
+rcs-keywords-hook-post-merge.orig.py:317:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:317:80: E501 line too long (86 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:318:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:321:1: E266 too many leading '#' for block comment
+rcs-keywords-hook-post-merge.orig.py:322:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:322:80: E501 line too long (111 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:323:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:324:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:330:1: E266 too many leading '#' for block comment
+rcs-keywords-hook-post-merge.orig.py:330:80: E501 line too long (88 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:330:89: W291 trailing whitespace
+rcs-keywords-hook-post-merge.orig.py:331:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:332:80: E501 line too long (96 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:334:80: E501 line too long (81 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:336:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:349:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:355:31: E251 unexpected spaces around keyword / parameter equals
+rcs-keywords-hook-post-merge.orig.py:355:33: E251 unexpected spaces around keyword / parameter equals
+rcs-keywords-hook-post-merge.orig.py:358:1: E266 too many leading '#' for block comment
+rcs-keywords-hook-post-merge.orig.py:359:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:360:1: E265 block comment should start with '# '
+rcs-keywords-hook-post-merge.orig.py:371:80: E501 line too long (81 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:377:80: E501 line too long (82 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:380:80: E501 line too long (126 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:384:80: E501 line too long (118 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:387:80: E501 line too long (81 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:391:80: E501 line too long (96 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:391:97: W291 trailing whitespace
+rcs-keywords-hook-post-merge.orig.py:393:80: E501 line too long (103 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:394:80: E501 line too long (87 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:395:80: E501 line too long (89 > 79 characters)
+rcs-keywords-hook-post-merge.orig.py:409:80: E501 line too long (81 > 79 characters)
+4       E251 unexpected spaces around keyword / parameter equals
+11      E265 block comment should start with '# '
+5       E266 too many leading '#' for block comment
+3       E302 expected 2 blank lines, found 1
+1       E303 too many blank lines (3)
+1       E305 expected 2 blank lines after class or function definition, found 3
+39      E501 line too long (96 > 79 characters)
+3       W291 trailing whitespace
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-keywords-hook-post-merge.orig
+C:  9, 0: Line too long (96/80) (line-too-long)
+C: 50, 0: Line too long (90/80) (line-too-long)
+C: 55, 0: Unnecessary parens after 'print' keyword (superfluous-parens)
+C: 57, 0: Line too long (84/80) (line-too-long)
+C:105, 0: Line too long (94/80) (line-too-long)
+C:108, 0: Line too long (84/80) (line-too-long)
+C:135, 0: Line too long (98/80) (line-too-long)
+C:138, 0: Line too long (88/80) (line-too-long)
+C:139, 0: Line too long (82/80) (line-too-long)
+C:140, 0: Line too long (82/80) (line-too-long)
+C:176, 0: Line too long (94/80) (line-too-long)
+C:179, 0: Line too long (84/80) (line-too-long)
+C:185, 0: Line too long (84/80) (line-too-long)
+C:203, 0: Line too long (81/80) (line-too-long)
+C:226, 0: Line too long (103/80) (line-too-long)
+C:233, 0: Line too long (121/80) (line-too-long)
+C:237, 0: Line too long (107/80) (line-too-long)
+C:242, 0: Line too long (90/80) (line-too-long)
+C:280, 0: Line too long (82/80) (line-too-long)
+C:294, 0: No space allowed around keyword argument assignment
+checkfor(cmd = ['git', '--version'])
+             ^ (bad-whitespace)
+C:307, 0: Line too long (89/80) (line-too-long)
+C:309, 0: Line too long (88/80) (line-too-long)
+C:311, 0: Trailing whitespace (trailing-whitespace)
+C:317, 0: Line too long (86/80) (line-too-long)
+C:322, 0: Line too long (111/80) (line-too-long)
+C:330, 0: Trailing whitespace (trailing-whitespace)
+C:330, 0: Line too long (88/80) (line-too-long)
+C:332, 0: Line too long (96/80) (line-too-long)
+C:334, 0: Line too long (81/80) (line-too-long)
+C:355, 0: No space allowed around keyword argument assignment
+        checkoutfile(file_name = file_name)
+                               ^ (bad-whitespace)
+C:371, 0: Line too long (81/80) (line-too-long)
+C:377, 0: Line too long (82/80) (line-too-long)
+C:380, 0: Line too long (126/80) (line-too-long)
+C:384, 0: Line too long (118/80) (line-too-long)
+C:387, 0: Line too long (81/80) (line-too-long)
+C:391, 0: Trailing whitespace (trailing-whitespace)
+C:391, 0: Line too long (96/80) (line-too-long)
+C:393, 0: Line too long (103/80) (line-too-long)
+C:394, 0: Line too long (87/80) (line-too-long)
+C:395, 0: Line too long (89/80) (line-too-long)
+C:409, 0: Line too long (81/80) (line-too-long)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 18, 0: Invalid constant name "summary_flag" (invalid-name)
+C: 19, 0: Invalid constant name "verbose_flag" (invalid-name)
+C: 20, 0: Invalid constant name "timing_flag" (invalid-name)
+C: 21, 0: Invalid constant name "debug_flag" (invalid-name)
+C: 23, 4: Invalid constant name "timing_flag" (invalid-name)
+C: 25, 4: Invalid constant name "verbose_flag" (invalid-name)
+C: 27, 4: Invalid constant name "summary_flag" (invalid-name)
+W: 54, 4: Exception to catch is the result of a binary "or" operation (binary-op-exception)
+E: 55,68: Undefined variable 'args' (undefined-variable)
+W:123,16: Redefining name 'file_name' from outer scope (line 305) (redefined-outer-name)
+C:126,44: Invalid variable name "e" (invalid-name)
+R: 89, 0: Too many branches (19/12) (too-many-branches)
+W:201,12: Redefining name 'file_name' from outer scope (line 305) (redefined-outer-name)
+W:198, 4: Redefining name 'modified_files_list' from outer scope (line 300) (redefined-outer-name)
+W:183, 4: Exception to catch is the result of a binary "or" operation (binary-op-exception)
+E:185,61: Undefined variable 'cmd_return' (undefined-variable)
+E:186,65: Undefined variable 'cmd_stdout' (undefined-variable)
+E:187,65: Undefined variable 'cmd_stderr' (undefined-variable)
+E:188,19: Undefined variable 'cmd_stdout' (undefined-variable)
+E:190,33: Undefined variable 'cmd_stdout' (undefined-variable)
+E:192,19: Undefined variable 'cmd_stderr' (undefined-variable)
+E:194,33: Undefined variable 'cmd_stderr' (undefined-variable)
+W:214,17: Redefining name 'file_name' from outer scope (line 305) (redefined-outer-name)
+E:233,91: Undefined variable 'git_checkout_cmd' (undefined-variable)
+C:258, 4: Invalid constant name "start_time" (invalid-name)
+C:261, 0: Invalid constant name "program_name" (invalid-name)
+C:262, 1: Invalid constant name "hook_path" (invalid-name)
+C:262,12: Invalid constant name "hook_name" (invalid-name)
+C:272, 4: Invalid constant name "program_name" (invalid-name)
+C:278, 4: Invalid constant name "param_num" (invalid-name)
+C:299, 0: Invalid constant name "files" (invalid-name)
+C:300, 0: Invalid constant name "modified_files_list" (invalid-name)
+C:310, 4: Invalid constant name "files" (invalid-name)
+C:343, 4: Invalid constant name "setup_time" (invalid-name)
+C:348, 0: Invalid constant name "files_processed" (invalid-name)
+C:407, 4: Invalid constant name "end_time" (invalid-name)
+
+
+Report
+======
+247 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |4      |4          |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |249    |62.72 |249      |=          |
++----------+-------+------+---------+-----------+
+|docstring |23     |5.79  |23       |=          |
++----------+-------+------+---------+-----------+
+|comment   |102    |25.69 |102      |=          |
++----------+-------+------+---------+-----------+
+|empty     |23     |5.79  |23       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |62     |62       |=          |
++-----------+-------+---------+-----------+
+|refactor   |1      |1        |=          |
++-----------+-------+---------+-----------+
+|warning    |6      |6        |=          |
++-----------+-------+---------+-----------+
+|error      |9      |9        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++---------------------+------------+
+|message id           |occurrences |
++=====================+============+
+|line-too-long        |35          |
++---------------------+------------+
+|invalid-name         |20          |
++---------------------+------------+
+|undefined-variable   |9           |
++---------------------+------------+
+|redefined-outer-name |4           |
++---------------------+------------+
+|trailing-whitespace  |3           |
++---------------------+------------+
+|binary-op-exception  |2           |
++---------------------+------------+
+|bad-whitespace       |2           |
++---------------------+------------+
+|too-many-branches    |1           |
++---------------------+------------+
+|superfluous-parens   |1           |
++---------------------+------------+
+|missing-docstring    |1           |
++---------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 5.38/10 (previous run: 5.38/10, +0.00)
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+

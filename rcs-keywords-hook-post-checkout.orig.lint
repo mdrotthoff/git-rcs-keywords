@@ -1,0 +1,213 @@
+Processing file: rcs-keywords-hook-post-checkout.orig.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-keywords-hook-post-checkout.orig.py
+rcs-keywords-hook-post-checkout.orig.py:28:1: E302 expected 2 blank lines, found 1
+rcs-keywords-hook-post-checkout.orig.py:43:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:53:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:58:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:64:80: E501 line too long (86 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:66:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:73:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:74:80: E501 line too long (88 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:74:89: W291 trailing whitespace
+rcs-keywords-hook-post-checkout.orig.py:91:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:92:80: E501 line too long (96 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:92:97: W291 trailing whitespace
+rcs-keywords-hook-post-checkout.orig.py:95:80: E501 line too long (110 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:97:10: E111 indentation is not a multiple of four
+rcs-keywords-hook-post-checkout.orig.py:97:80: E501 line too long (129 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:100:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:102:80: E501 line too long (114 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:109:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:110:80: E501 line too long (91 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:110:92: W291 trailing whitespace
+rcs-keywords-hook-post-checkout.orig.py:112:80: E501 line too long (99 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:113:80: E501 line too long (82 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:114:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:119:31: W291 trailing whitespace
+rcs-keywords-hook-post-checkout.orig.py:120:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:124:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:131:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:138:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:139:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:144:80: E501 line too long (85 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:147:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:149:80: E501 line too long (121 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:152:80: E501 line too long (84 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:155:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:156:80: E501 line too long (99 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:156:100: W291 trailing whitespace
+rcs-keywords-hook-post-checkout.orig.py:158:80: E501 line too long (106 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:159:80: E501 line too long (90 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:160:80: E501 line too long (92 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:169:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:173:80: E501 line too long (83 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:174:80: E501 line too long (85 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:175:80: E501 line too long (81 > 79 characters)
+rcs-keywords-hook-post-checkout.orig.py:177:1: W293 blank line contains whitespace
+rcs-keywords-hook-post-checkout.orig.py:181:1: W293 blank line contains whitespace
+1       E111 indentation is not a multiple of four
+1       E302 expected 2 blank lines, found 1
+21      E501 line too long (86 > 79 characters)
+5       W291 trailing whitespace
+17      W293 blank line contains whitespace
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-keywords-hook-post-checkout.orig
+C: 43, 0: Trailing whitespace (trailing-whitespace)
+C: 53, 0: Trailing whitespace (trailing-whitespace)
+C: 58, 0: Trailing whitespace (trailing-whitespace)
+C: 64, 0: Line too long (86/80) (line-too-long)
+C: 66, 0: Trailing whitespace (trailing-whitespace)
+C: 73, 0: Trailing whitespace (trailing-whitespace)
+C: 74, 0: Trailing whitespace (trailing-whitespace)
+C: 74, 0: Line too long (88/80) (line-too-long)
+C: 91, 0: Trailing whitespace (trailing-whitespace)
+C: 92, 0: Trailing whitespace (trailing-whitespace)
+C: 92, 0: Line too long (96/80) (line-too-long)
+C: 95, 0: Line too long (110/80) (line-too-long)
+C: 97, 0: Line too long (129/80) (line-too-long)
+W: 97, 0: Bad indentation. Found 9 spaces, expected 8 (bad-indentation)
+C:100, 0: Trailing whitespace (trailing-whitespace)
+C:102, 0: Line too long (114/80) (line-too-long)
+C:109, 0: Trailing whitespace (trailing-whitespace)
+C:110, 0: Trailing whitespace (trailing-whitespace)
+C:110, 0: Line too long (91/80) (line-too-long)
+C:112, 0: Line too long (99/80) (line-too-long)
+C:113, 0: Line too long (82/80) (line-too-long)
+C:114, 0: Line too long (84/80) (line-too-long)
+C:119, 0: Trailing whitespace (trailing-whitespace)
+C:120, 0: Trailing whitespace (trailing-whitespace)
+C:124, 0: Trailing whitespace (trailing-whitespace)
+C:131, 0: Trailing whitespace (trailing-whitespace)
+C:138, 0: Line too long (84/80) (line-too-long)
+C:139, 0: Trailing whitespace (trailing-whitespace)
+C:144, 0: Line too long (85/80) (line-too-long)
+C:147, 0: Trailing whitespace (trailing-whitespace)
+C:149, 0: Line too long (121/80) (line-too-long)
+C:152, 0: Line too long (84/80) (line-too-long)
+C:155, 0: Trailing whitespace (trailing-whitespace)
+C:156, 0: Trailing whitespace (trailing-whitespace)
+C:156, 0: Line too long (99/80) (line-too-long)
+C:158, 0: Line too long (106/80) (line-too-long)
+C:159, 0: Line too long (90/80) (line-too-long)
+C:160, 0: Line too long (92/80) (line-too-long)
+C:169, 0: Trailing whitespace (trailing-whitespace)
+C:173, 0: Line too long (83/80) (line-too-long)
+C:174, 0: Line too long (85/80) (line-too-long)
+C:175, 0: Line too long (81/80) (line-too-long)
+C:177, 0: Trailing whitespace (trailing-whitespace)
+C:181, 0: Trailing whitespace (trailing-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+R: 28, 0: Too many local variables (20/15) (too-many-locals)
+W: 28, 9: Unused argument 'argv' (unused-argument)
+W: 63,12: Unused variable 'param' (unused-variable)
+R: 28, 0: Too many branches (34/12) (too-many-branches)
+R: 28, 0: Too many statements (117/50) (too-many-statements)
+
+
+Report
+======
+137 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |1      |1          |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |138    |75.41 |138      |=          |
++----------+-------+------+---------+-----------+
+|docstring |8      |4.37  |8        |=          |
++----------+-------+------+---------+-----------+
+|comment   |30     |16.39 |30       |=          |
++----------+-------+------+---------+-----------+
+|empty     |7      |3.83  |7        |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |44     |44       |=          |
++-----------+-------+---------+-----------+
+|refactor   |3      |3        |=          |
++-----------+-------+---------+-----------+
+|warning    |3      |3        |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++--------------------+------------+
+|message id          |occurrences |
++====================+============+
+|trailing-whitespace |22          |
++--------------------+------------+
+|line-too-long       |21          |
++--------------------+------------+
+|unused-variable     |1           |
++--------------------+------------+
+|unused-argument     |1           |
++--------------------+------------+
+|too-many-statements |1           |
++--------------------+------------+
+|too-many-locals     |1           |
++--------------------+------------+
+|too-many-branches   |1           |
++--------------------+------------+
+|missing-docstring   |1           |
++--------------------+------------+
+|bad-indentation     |1           |
++--------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 6.35/10 (previous run: 6.35/10, +0.00)
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+

@@ -1,0 +1,113 @@
+Processing file: rcs-keywords-filter-clean.orig.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-keywords-filter-clean.orig.py
+rcs-keywords-filter-clean.orig.py:9:80: E501 line too long (93 > 79 characters)
+rcs-keywords-filter-clean.orig.py:22:1: E265 block comment should start with '# '
+rcs-keywords-filter-clean.orig.py:37:1: E302 expected 2 blank lines, found 1
+1       E265 block comment should start with '# '
+1       E302 expected 2 blank lines, found 1
+1       E501 line too long (93 > 79 characters)
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-keywords-filter-clean.orig
+C:  9, 0: Line too long (93/80) (line-too-long)
+R: 37, 0: Too many local variables (31/15) (too-many-locals)
+R: 37, 0: Too many branches (21/12) (too-many-branches)
+R: 37, 0: Too many statements (96/50) (too-many-statements)
+
+
+Report
+======
+116 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |1      |1          |=          |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |129    |71.27 |129      |=          |
++----------+-------+------+---------+-----------+
+|docstring |15     |8.29  |15       |=          |
++----------+-------+------+---------+-----------+
+|comment   |27     |14.92 |27       |=          |
++----------+-------+------+---------+-----------+
+|empty     |10     |5.52  |10       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |1      |1        |=          |
++-----------+-------+---------+-----------+
+|refactor   |3      |3        |=          |
++-----------+-------+---------+-----------+
+|warning    |0      |0        |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++--------------------+------------+
+|message id          |occurrences |
++====================+============+
+|too-many-statements |1           |
++--------------------+------------+
+|too-many-locals     |1           |
++--------------------+------------+
+|too-many-branches   |1           |
++--------------------+------------+
+|line-too-long       |1           |
++--------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 9.66/10 (previous run: 9.66/10, +0.00)
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
