@@ -5,8 +5,15 @@
 # $Date$
 # $Source$
 
-output_log="test-suite.log"
+output_log="$(pwd)/test-suite.log"
+install_src="$(realpath "$(dirname ${0})/install.py")"
+
+repo_dir="git-test-repo"
+submodule_dir="test-repo2"
 test_dir="testing"
+repo_prefix="https://mdrotthoff:Dell_1891@github.com/mdrotthoff"
+master_repo="rcs-keywords-test1.git"
+module_repo="rcs-keywords-test2.git"
 #test_file1="test1.txt"
 #test_file2="test 1.txt"
 
@@ -152,6 +159,93 @@ append_test_file()
   } >> "${output_log}" 2>&1
 }
 
+remove_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Remove directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    rm -rf "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+tree_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Tree directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="tree \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (tree "${1}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+change_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Change to directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    cd "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+#    (ls -lah "${1}")
+
+make_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Make directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="mkdir -p \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (mkdir -p "${1}")
+    (log_blank_line)
+    (ls -lah "${1}")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
 list_dir()
 {
   local step_name
@@ -163,21 +257,34 @@ list_dir()
   fi
 
   step_cmd="ls -lah \"${1}\""
-#  (log_step_start "${step_name}" "${step_cmd}") >> "${output_log}" 2>&1
-#  (test_file_contents) >> "${1}" 2>> "${output_log}"
-#  (log_step_finish "${step_name}" "$?") >> "${output_log}" 2>&1
   {
     (log_step_start "${step_name}" "${step_cmd}")
     (log_blank_line)
     (ls -lah "${1}")
     (log_blank_line)
-#    (log_message "** ${step_name} - start file contents **")
-#    (log_message "$(ls -lah "${1}")")
-#    (log_message "** ${step_name} - end file contents **")
     (log_step_finish "${step_name}" "$?")
-} >> "${output_log}" 2>&1
+  } >> "${output_log}" 2>&1
 }
 
+install_rcs()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Install RCS keyword support to ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="${install_src} \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    ("${install_src}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
 
 git_status()
 {
@@ -197,20 +304,60 @@ git_status()
   } >> "${output_log}" 2>&1
 }
 
+git_clone()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Clone a github repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git clone --no-checkout \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git clone --no-checkout "${1}" .)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_submodule_add()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Add submodule ${1}"
+  if ! [[ -z ${3} ]] ; then
+    step_name="${3}"
+  fi
+
+  step_cmd="git submodule add \"${1}\" \"${2}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git submodule add "${1}" "${2}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
 git_add_file()
 {
   local step_name
   local step_cmd
 
-  step_name="Add file ${1} to the repository"
+  step_name="Add file ${2} to the repository"
   if ! [[ -z ${2} ]] ; then
     step_name="${2}"
   fi
 
-  step_cmd="git add \"${1}\""
+  step_cmd="git add --verbose \"${1}\""
   {
     (log_step_start "${step_name}" "${step_cmd}")
-    (git add "${1}")
+    (git add --verbose "${1}")
     (log_blank_line)
     (git status)
     (log_step_finish "${step_name}" "$?")
@@ -337,6 +484,26 @@ git_branch_list()
   } >> "${output_log}" 2>&1
 }
 
+git_branch_create()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Create git branch ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git branch \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git branch "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
 git_branch_checkout()
 {
   local step_name
@@ -383,141 +550,131 @@ if [[ -f "${output_log}" ]] ;then
 fi
 
 
-#list_dir "${test_dir}"
+# Run general tests involving the clean and smudge filters
+current_dir=$(pwd)
+
+
+#01: Create the master test repository
+section_name="Set up the master repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="01"
+make_dir "${repo_dir}" "${step_num}.01: Create the master repo directory ${repo_dir}"
+change_dir "${repo_dir}" "${step_num}.02: Change directory to ${repo_dir}"
+git_clone "${repo_prefix}/${master_repo}" "${step_num}.03: Clone the master repository ${master_repo} to ${repo_dir}"
+install_rcs "." "${step_num}.04: Install RCS support to the repository"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${repo_dir}"
+git_branch_create "development" "${step_num}.08: Create the development branch"
+git_branch_checkout "development" "${step_num}.09: Checkout the development branch"
+git_branch_list "${step_num}.10: List the branches"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#02: Create the submodule repository
+section_name="Set up the submodule repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="02"
+git_submodule_add "${repo_prefix}/${module_repo}" "${submodule_dir}" "${step_num}.01: Clone the submodule repository ${submodule_repo} to ${submodule_dir}"
+change_dir "${submodule_dir}" "${step_num}.02: Change directory to ${submodule_dir}"
+git_branch_checkout "master" "${step_num}.03: Checkout the master branch"
+git_branch_create "development" "${step_num}.04: Create the development branch"
+git_branch_checkout "development" "${step_num}.05: Checkout the development branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${submodule_dir}"
+change_dir ".." "${step_num}.08: Change directory to ${repo_dir}"
+install_rcs "." "${step_num}.09: Install RCS support to the repository"
+tree_dir "." "${step_num}.10: Show the repository directory tree"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#03: Create test files
+section_name="Create test files in the master repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="03"
+file_name="test-01.txt"
+build_test_file "${file_name}" "${step_num}.01: Build test file ${file_name}"
+file_name="test-02.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+file_name="test-03.txt"
+build_test_file "${file_name}" "${step_num}.03: Build test file ${file_name}"
+list_dir "." "${step_num}.04: List the test files"
+git_add_file "test-*.txt" "${step_num}.04: Add test files test-*.txt to the repository"
+list_dir "." "${step_num}.05: List the test files"
+file_name="test-03.txt"
+append_test_file "${file_name}" "${step_num}.06: Append data to test file ${file_name} to prevent committing"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#04: Commit the changes & display the files
+section_name="Commit test files to the master repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="04"
+git_commit "${step_num}.01: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.05: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#05: Add and commit the updated log files
+section_name="Commit updated test files to the master repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="05"
+file_name="test-02.txt"
+append_test_file "${file_name}" "${step_num}.01: Append data to test file ${file_name}"
+git_add_file "test-*.txt" "${step_num}.02: Add test files test-*.txt to the repository"
+git_commit "${step_num}.03: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.07: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#06: Checkout the master branch
+section_name="Switch to the master branch in the master repository"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="06"
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+list_dir "." "${step_num}.02: List the test files"
+git_branch_checkout "development" "${step_num}.03: Checkout the development branch"
+list_dir "." "${step_num}.04: List the test files"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+list_dir "." "${step_num}.06: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+#07: Merge development changes into the master branch
+section_name="Merge development branch to the master branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="07"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after merge"
+git_commit "${step_num}.04: Commit the changes"
+list_dir "." "${step_num}.05: List the test files after commit"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
 #exit 0
 
 
-# Run general tests involving the clean and smudge filters
-#section_name="Test basic smudge / clean operations"
-#(log_section_start "${section_name}") >> "${output_log}" 2>&1
-
-# Show the current branch information
-git_branch_list
-git_branch_checkout "development"
-
-#build_test_file "${test_file1}"
-#display_file_contents "${test_file1}"
-#git_add_file "${test_file1}"
-#git_rm_file "${test_file1}"
-#git_force_rm_file "${test_file1}"
-#build_test_file "${test_file1}"
-#display_file_contents "${test_file1}"
-#git_add_file "${test_file1}"
-#append_test_file "${test_file1}"
-#display_file_contents "${test_file1}"
-#git_commit
-#git_add_file "${test_file1}"
-#git_commit
-
-#build_test_file "${test_file2}"
-#display_file_contents "${test_file2}"
-#git_add_file "${test_file2}"
-#git_rm_file "${test_file2}"
-#git_force_rm_file "${test_file2}"
-#build_test_file "${test_file2}"
-#display_file_contents "${test_file2}"
-#git_add_file "${test_file2}"
-#append_test_file "${test_file2}"
-#display_file_contents "${test_file2}"
-#git_commit
-#git_add_file "${test_file2}"
-#git_commit
+#99: Remove the test repositories
+step_num="99"
+change_dir "${current_dir}" "${step_num}.01: Change to directory ${current_dir}"
+if [[ -d "${repo_dir}" ]] ; then
+  remove_dir "${repo_dir}" "${step_num}.02: Remove repo directory ${repo_dir}"
+fi
+exit 0
 
 
-#git_rm_file "${test_file1}"
-#git_commit
-#git_rm_file "${test_file2}"
-#git_commit
-#git_push
-#git_status
-
-## Show the current branch information
-#git_branch_list
-#git_branch_checkout "master"
-
-#(log_blank_line) >> "${output_log}"
-#(log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
-
-
-# Run tests to exercise all the hooks and filters
-section_name="Detailed test all operations"
-(log_section_start "${section_name}") >> "${output_log}" 2>&1
-
-#01: Make sure we are on the development branch
-step_num="01"
-git_status "${step_num}.01: Make sure we are on the development branch"
-
-#02: Create test files
-step_num="02"
-file_name="${test_dir}/old-01.txt"
-build_test_file "${file_name}" "${step_num}.01: Build test file ${file_name}"
-file_name="${test_dir}/old-02.txt"
-build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
-file_name="${test_dir}/old-03.txt"
-build_test_file "${file_name}" "${step_num}.03: Build test file ${file_name}"
-list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir}"
-
-#03: Add the test files to the repository
-step_num="03"
-git_add_file "${test_dir}/old-*.txt" "${step_num}.01: Add test files ${test_dir}/old-*.txt to the repository"
-list_dir "${test_dir}" "${step_num}.02: List the test files on directory ${test_dir}"
-
-#04: Update one test files
-step_num="04"
-file_name="${test_dir}/old-03.txt"
-append_test_file "${file_name}" "${step_num}.01: Append data to test file ${file_name} to prevent committing"
-
-#05: Commit the changes & display the files
-step_num="05"
-git_commit "${step_num}.01: Commit the test files to the repository"
-file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
-list_dir "${test_dir}" "${step_num}.05: List the test files on directory ${test_dir}"
-
-#06: Add and commit the updated log files
-step_num="06"
-git_add_file "${test_dir}/old-*.txt" "${step_num}.01: Add test files ${test_dir}/old-*.txt to the repository"
-git_commit "${step_num}.02: Commit the test files to the repository"
-git_push "${step_num}.03: Push the changes"
-list_dir "${test_dir}" "${step_num}.04: List the test files on directory ${test_dir}"
-
-#07: Display the files
-step_num="07"
-file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "${step_num}.01: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
-
-#08: Checkout the master branch
-step_num="08"
-git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
-list_dir "${test_dir}" "${step_num}.02: List the test files on directory ${test_dir}"
-
-#09: Merge development changes into the master branch
-step_num="09"
-git_branch_list "${step_num}.01: List the branches"
-git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
-git_branch_list "${step_num}.03: List the branches"
-git_branch_merge "development" "${step_num}.04: Merge development changes into the master branch"
-list_dir "${test_dir}" "${step_num}.05: List the test files on directory ${test_dir} after merge"
-git_commit "${step_num}.06: Commit the changes"
-git_push "${step_num}.07: Push the changes"
-list_dir "${test_dir}" "${step_num}.08: List the test files on directory ${test_dir} after push"
-
-#10: Display the files
-step_num="10"
-file_name="${test_dir}/old-01.txt"
-display_file_contents "${file_name}" "${step_num}.01: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-02.txt"
-display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
-file_name="${test_dir}/old-03.txt"
-display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
 
 #11: Remove the test files from the development branch
 step_num="11"

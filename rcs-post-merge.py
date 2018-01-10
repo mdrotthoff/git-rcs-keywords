@@ -74,6 +74,10 @@ def main(argv):
 
     # Get the list of modified files
     files = get_modified_files()
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Files not checked in')
 
     # Filter the list of modified files to exclude those modified since
     # the commit
@@ -528,9 +532,9 @@ def git_not_checked_in(files):
     # Deal with unmodified repositories
     if not modified_files_list:
         if DEBUG_FLAG:
-            sys.stderr.write('  No modified files found to process\n')
+            sys.stderr.write('  No modified files found to exclude\n')
             sys.stderr.write('  Leaving module git_not_checked_in\n')
-        return []
+        return files
 
     # Pull the file name (second field) of the output line and
     # remove any double quotes

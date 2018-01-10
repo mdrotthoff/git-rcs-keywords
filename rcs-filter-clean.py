@@ -5,7 +5,7 @@
 # $Rev$
 # $Rev$
 # $Source$
-# $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
+# $Hash$
 
 """rcs-keywords-filter-clean
 

@@ -1,0 +1,1857 @@
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Set up the master repository
+***    Date:  2018-01-08 18:10:52.399361100
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.01: Create the master repo directory git-test-repo
+***    Cmd:   mkdir -p "git-test-repo"   
+***    Date:  2018-01-08 18:10:52.445829700
+*****************************************************************
+ 
+ 
+ 
+total 4.0K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users         0 Jan  8 18:10 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None 0 Jan  8 18:10 ..
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.01: Create the master repo directory git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:10:52.584537100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.02: Change directory to git-test-repo
+***    Cmd:   cd "git-test-repo"   
+***    Date:  2018-01-08 18:10:52.630544000
+*****************************************************************
+ 
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible/git-test-repo
+total 4.0K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users         0 Jan  8 18:10 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None 0 Jan  8 18:10 ..
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.02: Change directory to git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:10:52.791509200
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.03: Clone the master repository rcs-keywords-test1.git to git-test-repo
+***    Cmd:   git clone --no-checkout "https://mdrotthoff:Dell_1891@github.com/mdrotthoff/rcs-keywords-test1.git"   
+***    Date:  2018-01-08 18:10:52.837545400
+*****************************************************************
+ 
+Cloning into '.'...
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	deleted:    README.md
+
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.03: Clone the master repository rcs-keywords-test1.git to git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:10:53.664103500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.04: Install RCS support to the repository
+***    Cmd:   /cygdrive/d/workspaces/ansible/git-rcs-keywords/install.py "."   
+***    Date:  2018-01-08 18:10:53.730149600
+*****************************************************************
+ 
+ 
+  Target directory: 
+  Directory .git/filters created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/git-hook.py to .git/hooks/git-hook.py
+  Directory .git/hooks/post-commit.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-commit.py to .git/hooks/post-commit.d/rcs-post-commit.py
+  Directory .git/hooks/post-checkout.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-checkout.py to .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Directory .git/hooks/post-merge.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-merge.py to .git/hooks/post-merge.d/rcs-post-merge.py
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-clean.py to .git/filters/rcs-filter-clean.py
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-smudge.py to .git/filters/rcs-filter-smudge.py
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.04: Install RCS support to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:10:54.163659500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.05: Checkout the master branch
+***    Cmd:   git checkout "master"   
+***    Date:  2018-01-08 18:10:54.209503700
+*****************************************************************
+ 
+.git/filters/rcs-filter-smudge.py: README.md
+  Lines processed: 2
+End program name: .git/filters/rcs-filter-smudge.py
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Continuing for branch checkout: 1
+.git/filters/rcs-filter-clean.py: README.md
+  Lines processed: 2
+End program name: .git/filters/rcs-filter-clean.py
+  Files processed: 0
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+ 
+.git/filters/rcs-filter-clean.py: README.md
+  Lines processed: 2
+End program name: .git/filters/rcs-filter-clean.py
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.05: Checkout the master branch
+***    Status: 0
+***    Date:   2018-01-08 18:10:55.206492000
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.06: List the branches
+***    Cmd:   git branch -a   
+***    Date:  2018-01-08 18:10:55.252204600
+*****************************************************************
+ 
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.06: List the branches
+***    Status: 0
+***    Date:   2018-01-08 18:10:55.426150000
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.07: List the repo directory git-test-repo
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:10:55.472421000
+*****************************************************************
+ 
+ 
+total 9.0K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:10 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None  0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:10 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         79 Jan  8 18:10 README.md
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.07: List the repo directory git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:10:55.579055500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.08: Create the development branch
+***    Cmd:   git branch "development"   
+***    Date:  2018-01-08 18:10:55.625732300
+*****************************************************************
+ 
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.08: Create the development branch
+***    Status: 0
+***    Date:   2018-01-08 18:10:55.805429100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.09: Checkout the development branch
+***    Cmd:   git checkout "development"   
+***    Date:  2018-01-08 18:10:55.851443500
+*****************************************************************
+ 
+Switched to branch 'development'
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Continuing for branch checkout: 1
+  Files processed: 0
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+ 
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.09: Checkout the development branch
+***    Status: 0
+***    Date:   2018-01-08 18:10:56.418523700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 01.10: List the branches
+***    Cmd:   git branch -a   
+***    Date:  2018-01-08 18:10:56.495103400
+*****************************************************************
+ 
+* development
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+ 
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  01.10: List the branches
+***    Status: 0
+***    Date:   2018-01-08 18:10:56.653428300
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Set up the master repository
+***    Date:  2018-01-08 18:10:56.720991900
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Set up the submodule repository
+***    Date:  2018-01-08 18:10:56.769895400
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.01: Clone the submodule repository  to test-repo2
+***    Cmd:   git submodule add "https://mdrotthoff:Dell_1891@github.com/mdrotthoff/rcs-keywords-test2.git" "test-repo2"   
+***    Date:  2018-01-08 18:10:56.816552800
+*****************************************************************
+ 
+Cloning into '/cygdrive/d/workspaces/ansible/git-test-repo/test-repo2'...
+ 
+On branch development
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   .gitmodules
+	new file:   test-repo2
+
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.01: Clone the submodule repository  to test-repo2
+***    Status: 0
+***    Date:   2018-01-08 18:10:59.281093600
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.02: Change directory to test-repo2
+***    Cmd:   cd "test-repo2"   
+***    Date:  2018-01-08 18:10:59.336083300
+*****************************************************************
+ 
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible/git-test-repo/test-repo2
+total 2.0K
+drwxrwxr-x+ 1 mdrotthoff Domain Users  0 Jan  8 18:10 .
+drwxrwxr-x+ 1 mdrotthoff Domain Users  0 Jan  8 18:10 ..
+-rw-rw-r--+ 1 mdrotthoff Domain Users 35 Jan  8 18:10 .git
+-rw-rw-r--+ 1 mdrotthoff Domain Users 78 Jan  8 18:10 README.md
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.02: Change directory to test-repo2
+***    Status: 0
+***    Date:   2018-01-08 18:10:59.470511100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.03: Checkout the master branch
+***    Cmd:   git checkout "master"   
+***    Date:  2018-01-08 18:10:59.534532900
+*****************************************************************
+ 
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.03: Checkout the master branch
+***    Status: 0
+***    Date:   2018-01-08 18:10:59.743153900
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.04: Create the development branch
+***    Cmd:   git branch "development"   
+***    Date:  2018-01-08 18:10:59.791339600
+*****************************************************************
+ 
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.04: Create the development branch
+***    Status: 0
+***    Date:   2018-01-08 18:10:59.953880600
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.05: Checkout the development branch
+***    Cmd:   git checkout "development"   
+***    Date:  2018-01-08 18:11:00.015788500
+*****************************************************************
+ 
+Switched to branch 'development'
+ 
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.05: Checkout the development branch
+***    Status: 0
+***    Date:   2018-01-08 18:11:00.214477500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.06: List the branches
+***    Cmd:   git branch -a   
+***    Date:  2018-01-08 18:11:00.280216300
+*****************************************************************
+ 
+* development
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+ 
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.06: List the branches
+***    Status: 0
+***    Date:   2018-01-08 18:11:00.444694100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.07: List the repo directory test-repo2
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:00.509848900
+*****************************************************************
+ 
+ 
+total 2.0K
+drwxrwxr-x+ 1 mdrotthoff Domain Users  0 Jan  8 18:10 .
+drwxrwxr-x+ 1 mdrotthoff Domain Users  0 Jan  8 18:10 ..
+-rw-rw-r--+ 1 mdrotthoff Domain Users 35 Jan  8 18:10 .git
+-rw-rw-r--+ 1 mdrotthoff Domain Users 78 Jan  8 18:10 README.md
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.07: List the repo directory test-repo2
+***    Status: 0
+***    Date:   2018-01-08 18:11:00.646427100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.08: Change directory to git-test-repo
+***    Cmd:   cd ".."   
+***    Date:  2018-01-08 18:11:00.696508300
+*****************************************************************
+ 
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible/git-test-repo
+total 10K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:10 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.08: Change directory to git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:11:00.835023300
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.09: Install RCS support to the repository
+***    Cmd:   /cygdrive/d/workspaces/ansible/git-rcs-keywords/install.py "."   
+***    Date:  2018-01-08 18:11:00.884719000
+*****************************************************************
+ 
+ 
+  Target directory: 
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/git-hook.py to .git/hooks/git-hook.py
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-commit.py to .git/hooks/post-commit.d/rcs-post-commit.py
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-checkout.py to .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-merge.py to .git/hooks/post-merge.d/rcs-post-merge.py
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-clean.py to .git/filters/rcs-filter-clean.py
+  Destination file exists -- OVERWRITTING!!!!
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-smudge.py to .git/filters/rcs-filter-smudge.py
+  Directory .git/modules/test-repo2/filters created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/git-hook.py to .git/modules/test-repo2/hooks/git-hook.py
+  Directory .git/modules/test-repo2/hooks/post-commit.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-commit.py to .git/modules/test-repo2/hooks/post-commit.d/rcs-post-commit.py
+  Directory .git/modules/test-repo2/hooks/post-checkout.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-checkout.py to .git/modules/test-repo2/hooks/post-checkout.d/rcs-post-checkout.py
+  Directory .git/modules/test-repo2/hooks/post-merge.d created
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-post-merge.py to .git/modules/test-repo2/hooks/post-merge.d/rcs-post-merge.py
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-clean.py to .git/modules/test-repo2/filters/rcs-filter-clean.py
+  Copied file  /cygdrive/d/workspaces/ansible/git-rcs-keywords/rcs-filter-smudge.py to .git/modules/test-repo2/filters/rcs-filter-smudge.py
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.09: Install RCS support to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:11:01.440973600
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 02.10: Show the repository directory tree
+***    Cmd:   tree "."   
+***    Date:  2018-01-08 18:11:01.490159500
+*****************************************************************
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible/git-test-repo
+.
+├── README.md
+└── test-repo2
+    └── README.md
+
+1 directory, 2 files
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  02.10: Show the repository directory tree
+***    Status: 0
+***    Date:   2018-01-08 18:11:01.625809800
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Set up the submodule repository
+***    Date:  2018-01-08 18:11:01.694049000
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Create test files in the master repository
+***    Date:  2018-01-08 18:11:01.742874700
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.01: Build test file test-01.txt
+***    Cmd:   echo >> "test-01.txt"   
+***    Date:  2018-01-08 18:11:01.790223300
+*****************************************************************
+ 
+ 
+** 03.01: Build test file test-01.txt - start file contents **
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+** 03.01: Build test file test-01.txt - end file contents **
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.01: Build test file test-01.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:01.935209700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.02: Build test file test-02.txt
+***    Cmd:   echo >> "test-02.txt"   
+***    Date:  2018-01-08 18:11:01.983649000
+*****************************************************************
+ 
+ 
+** 03.02: Build test file test-02.txt - start file contents **
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+** 03.02: Build test file test-02.txt - end file contents **
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.02: Build test file test-02.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:02.156585100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.03: Build test file test-03.txt
+***    Cmd:   echo >> "test-03.txt"   
+***    Date:  2018-01-08 18:11:02.202398800
+*****************************************************************
+ 
+ 
+** 03.03: Build test file test-03.txt - start file contents **
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+** 03.03: Build test file test-03.txt - end file contents **
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.03: Build test file test-03.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:02.344283200
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.04: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:02.390592800
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:10 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.04: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:02.499332800
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.04: Add test files test-*.txt to the repository
+***    Cmd:   git add "test-*.txt"   
+***    Date:  2018-01-08 18:11:02.545702800
+*****************************************************************
+ 
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+ 
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+On branch development
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   .gitmodules
+	new file:   test-01.txt
+	new file:   test-02.txt
+	new file:   test-03.txt
+	new file:   test-repo2
+
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.04: Add test files test-*.txt to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:11:03.271758700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.05: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:03.320369800
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:10 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          61 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.05: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:03.454434400
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 03.06: Append data to test file test-03.txt to prevent committing
+***    Cmd:   echo >> "test-03.txt"   
+***    Date:  2018-01-08 18:11:03.503751200
+*****************************************************************
+ 
+ 
+** 03.06: Append data to test file test-03.txt to prevent committing - start file contents **
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+ 
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+** 03.06: Append data to test file test-03.txt to prevent committing - end file contents **
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  03.06: Append data to test file test-03.txt to prevent committing
+***    Status: 0
+***    Date:   2018-01-08 18:11:03.668681300
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Create test files in the master repository
+***    Date:  2018-01-08 18:11:03.716533900
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Commit test files to the master repository
+***    Date:  2018-01-08 18:11:03.764688300
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 04.01: Commit the test files to the repository
+***    Cmd:   git commit -m "Post-commit test"   
+***    Date:  2018-01-08 18:11:03.812433300
+*****************************************************************
+ 
+Start program name: .git/hooks/post-commit.d/rcs-post-commit.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+  Files processed: 3
+End program name: .git/hooks/post-commit.d/rcs-post-commit.py
+Start program name: .git/hooks/post-commit
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-commit
+[development b160e37] Post-commit test
+ 5 files changed, 28 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 100644 test-01.txt
+ create mode 100644 test-02.txt
+ create mode 100644 test-03.txt
+ create mode 160000 test-repo2
+ 
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+On branch development
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   test-03.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  04.01: Commit the test files to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.034918300
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 04.02: Display contents of test file test-01.txt
+***    Cmd:   cat "test-01.txt"   
+***    Date:  2018-01-08 18:11:06.081435200
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:03 -0600 $
+$Revision: 2018-01-08 18:11:03 -0600 $
+$Rev:      2018-01-08 18:11:03 -0600 $
+$File:     test-01.txt $
+$Source:   test-01.txt $
+$Hash:     b160e37c6bf20df3ee4b3344fcf46aa1c7b91843 $
+$Id:       test-01.txt | 2018-01-08 18:11:03 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  04.02: Display contents of test file test-01.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.192977500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 04.03: Display contents of test file test-02.txt
+***    Cmd:   cat "test-02.txt"   
+***    Date:  2018-01-08 18:11:06.239625600
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:03 -0600 $
+$Revision: 2018-01-08 18:11:03 -0600 $
+$Rev:      2018-01-08 18:11:03 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     b160e37c6bf20df3ee4b3344fcf46aa1c7b91843 $
+$Id:       test-02.txt | 2018-01-08 18:11:03 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  04.03: Display contents of test file test-02.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.330212900
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 04.04: Display contents of test file test-03.txt
+***    Cmd:   cat "test-03.txt"   
+***    Date:  2018-01-08 18:11:06.377444200
+*****************************************************************
+ 
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+ 
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  04.04: Display contents of test file test-03.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.468466900
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 04.05: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:06.514581200
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:11 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         124 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  04.05: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.622585900
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Commit test files to the master repository
+***    Date:  2018-01-08 18:11:06.668478300
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Commit updated test files to the master repository
+***    Date:  2018-01-08 18:11:06.714316100
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.01: Append data to test file test-02.txt
+***    Cmd:   echo >> "test-02.txt"   
+***    Date:  2018-01-08 18:11:06.761681100
+*****************************************************************
+ 
+ 
+** 05.01: Append data to test file test-02.txt - start file contents **
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:03 -0600 $
+$Revision: 2018-01-08 18:11:03 -0600 $
+$Rev:      2018-01-08 18:11:03 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     b160e37c6bf20df3ee4b3344fcf46aa1c7b91843 $
+$Id:       test-02.txt | 2018-01-08 18:11:03 -0600 | David Rotthoff $
+ 
+$Author$
+$Date$
+$Revision$
+$Rev$
+$File$
+$Source$
+$Hash$
+$Id$
+** 05.01: Append data to test file test-02.txt - end file contents **
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.01: Append data to test file test-02.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:06.961275500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.02: Add test files test-*.txt to the repository
+***    Cmd:   git add "test-*.txt"   
+***    Date:  2018-01-08 18:11:07.007858800
+*****************************************************************
+ 
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+ 
+On branch development
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   test-02.txt
+	modified:   test-03.txt
+
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.02: Add test files test-*.txt to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:11:07.467861300
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.03: Commit the test files to the repository
+***    Cmd:   git commit -m "Post-commit test"   
+***    Date:  2018-01-08 18:11:07.513949700
+*****************************************************************
+ 
+Start program name: .git/hooks/post-commit.d/rcs-post-commit.py
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+  Files processed: 2
+End program name: .git/hooks/post-commit.d/rcs-post-commit.py
+Start program name: .git/hooks/post-commit
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-commit
+[development c6a2417] Post-commit test
+ 2 files changed, 18 insertions(+)
+ 
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.03: Commit the test files to the repository
+***    Status: 0
+***    Date:   2018-01-08 18:11:09.616036300
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.04: Display contents of test file test-01.txt
+***    Cmd:   cat "test-01.txt"   
+***    Date:  2018-01-08 18:11:09.661671900
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:03 -0600 $
+$Revision: 2018-01-08 18:11:03 -0600 $
+$Rev:      2018-01-08 18:11:03 -0600 $
+$File:     test-01.txt $
+$Source:   test-01.txt $
+$Hash:     b160e37c6bf20df3ee4b3344fcf46aa1c7b91843 $
+$Id:       test-01.txt | 2018-01-08 18:11:03 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.04: Display contents of test file test-01.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:09.753208700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.05: Display contents of test file test-02.txt
+***    Cmd:   cat "test-02.txt"   
+***    Date:  2018-01-08 18:11:09.800151700
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-02.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-02.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.05: Display contents of test file test-02.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:09.891352200
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.06: Display contents of test file test-03.txt
+***    Cmd:   cat "test-03.txt"   
+***    Date:  2018-01-08 18:11:09.938008000
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-03.txt $
+$Source:   test-03.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-03.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-03.txt $
+$Source:   test-03.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-03.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.06: Display contents of test file test-03.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:10.028434500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 05.07: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:10.073945700
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:11 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  05.07: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:10.181727600
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Commit updated test files to the master repository
+***    Date:  2018-01-08 18:11:10.228428100
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Switch to the master branch in the master repository
+***    Date:  2018-01-08 18:11:10.274581800
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.01: Checkout the master branch
+***    Cmd:   git checkout "master"   
+***    Date:  2018-01-08 18:11:10.335471400
+*****************************************************************
+ 
+warning: unable to rmdir 'test-repo2': Directory not empty
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Continuing for branch checkout: 1
+  Files processed: 0
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	test-repo2/
+
+nothing added to commit but untracked files present (use "git add" to track)
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.01: Checkout the master branch
+***    Status: 0
+***    Date:   2018-01-08 18:11:10.938905700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.02: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:10.985285800
+*****************************************************************
+ 
+ 
+total 13K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None  0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         79 Jan  8 18:10 README.md
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.02: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:11.092878100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.03: Checkout the development branch
+***    Cmd:   git checkout "development"   
+***    Date:  2018-01-08 18:11:11.138851700
+*****************************************************************
+ 
+.git/filters/rcs-filter-smudge.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+Switched to branch 'development'
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Continuing for branch checkout: 1
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+  Files processed: 4
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+ 
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+On branch development
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.03: Checkout the development branch
+***    Status: 0
+***    Date:   2018-01-08 18:11:15.117865500
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.04: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:15.164026000
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:11 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.04: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:15.337297700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.05: Checkout the master branch
+***    Cmd:   git checkout "master"   
+***    Date:  2018-01-08 18:11:15.389986700
+*****************************************************************
+ 
+warning: unable to rmdir 'test-repo2': Directory not empty
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Continuing for branch checkout: 1
+  Files processed: 0
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	test-repo2/
+
+nothing added to commit but untracked files present (use "git add" to track)
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.05: Checkout the master branch
+***    Status: 0
+***    Date:   2018-01-08 18:11:15.971552700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 06.06: List the test files
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:16.017371500
+*****************************************************************
+ 
+ 
+total 13K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None  0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         79 Jan  8 18:10 README.md
+drwxrwxr-x+ 1 mdrotthoff     Domain Users          0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  06.06: List the test files
+***    Status: 0
+***    Date:   2018-01-08 18:11:16.125343600
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Switch to the master branch in the master repository
+***    Date:  2018-01-08 18:11:16.171765500
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+*****************************************************************
+***  Section Start
+***    Title: Merge development branch to the master branch
+***    Date:  2018-01-08 18:11:16.249342600
+*****************************************************************
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.01: List the branches
+***    Cmd:   git branch -a   
+***    Date:  2018-01-08 18:11:16.310471600
+*****************************************************************
+ 
+  development
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+ 
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	test-repo2/
+
+nothing added to commit but untracked files present (use "git add" to track)
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.01: List the branches
+***    Status: 0
+***    Date:   2018-01-08 18:11:16.467023100
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.02: Merge development changes into the master branch
+***    Cmd:   git merge "development"   
+***    Date:  2018-01-08 18:11:16.513181400
+*****************************************************************
+ 
+Updating 863b526..c6a2417
+.git/filters/rcs-filter-smudge.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+Fast-forward
+ .gitmodules |  3 +++
+ test-01.txt |  8 ++++++++
+ test-02.txt | 17 +++++++++++++++++
+ test-03.txt | 17 +++++++++++++++++
+ test-repo2  |  1 +
+ 5 files changed, 46 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 100644 test-01.txt
+ create mode 100644 test-02.txt
+ create mode 100644 test-03.txt
+ create mode 160000 test-repo2
+Start program name: .git/hooks/post-merge.d/rcs-post-merge.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-01.txt
+  Lines processed: 8
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+.git/filters/rcs-filter-smudge.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Start program name: .git/hooks/post-checkout
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+  Files processed: 4
+End program name: .git/hooks/post-merge.d/rcs-post-merge.py
+Start program name: .git/hooks/post-merge
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-merge
+ 
+.git/filters/rcs-filter-clean.py: test-02.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+.git/filters/rcs-filter-clean.py: test-03.txt
+  Lines processed: 17
+End program name: .git/filters/rcs-filter-clean.py
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.02: Merge development changes into the master branch
+***    Status: 0
+***    Date:   2018-01-08 18:11:20.574434000
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.03: List the test files after merge
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:20.620289000
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:11 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.03: List the test files after merge
+***    Status: 0
+***    Date:   2018-01-08 18:11:20.727929700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.04: Commit the changes
+***    Cmd:   git commit -m "Post-commit test"   
+***    Date:  2018-01-08 18:11:20.774606300
+*****************************************************************
+ 
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+ 
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.04: Commit the changes
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.105927300
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.05: List the test files after commit
+***    Cmd:   ls -lah "."   
+***    Date:  2018-01-08 18:11:21.167602200
+*****************************************************************
+ 
+ 
+total 17K
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None   0 Jan  8 18:10 ..
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:11 .git
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         125 Jan  8 18:11 .gitmodules
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          79 Jan  8 18:10 README.md
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         351 Jan  8 18:11 test-01.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-02.txt
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         704 Jan  8 18:11 test-03.txt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users           0 Jan  8 18:10 test-repo2
+ 
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.05: List the test files after commit
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.286237000
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.06: Display contents of test file test-01.txt
+***    Cmd:   cat "test-01.txt"   
+***    Date:  2018-01-08 18:11:21.332537600
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:03 -0600 $
+$Revision: 2018-01-08 18:11:03 -0600 $
+$Rev:      2018-01-08 18:11:03 -0600 $
+$File:     test-01.txt $
+$Source:   test-01.txt $
+$Hash:     b160e37c6bf20df3ee4b3344fcf46aa1c7b91843 $
+$Id:       test-01.txt | 2018-01-08 18:11:03 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.06: Display contents of test file test-01.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.423094800
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.07: Display contents of test file test-02.txt
+***    Cmd:   cat "test-02.txt"   
+***    Date:  2018-01-08 18:11:21.499508200
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-02.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-02.txt $
+$Source:   test-02.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-02.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.07: Display contents of test file test-02.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.603891700
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 07.08: Display contents of test file test-03.txt
+***    Cmd:   cat "test-03.txt"   
+***    Date:  2018-01-08 18:11:21.650442800
+*****************************************************************
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-03.txt $
+$Source:   test-03.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-03.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+$Author:   David Rotthoff <david.rotthoff@coxautoinc.com> $
+$Date:     2018-01-08 18:11:07 -0600 $
+$Revision: 2018-01-08 18:11:07 -0600 $
+$Rev:      2018-01-08 18:11:07 -0600 $
+$File:     test-03.txt $
+$Source:   test-03.txt $
+$Hash:     c6a2417069706c39ba086aadfd044efe6fbfb7e9 $
+$Id:       test-03.txt | 2018-01-08 18:11:07 -0600 | David Rotthoff $
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  07.08: Display contents of test file test-03.txt
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.741365400
+*****************************************************************
+ 
+*****************************************************************
+*****************************************************************
+***  Section Finish
+***    Title: Merge development branch to the master branch
+***    Date:  2018-01-08 18:11:21.787470300
+*****************************************************************
+*****************************************************************
+ 
+ 
+ 
+*****************************************************************
+***  Step Start
+***    Title: 99.01: Change to directory /cygdrive/d/workspaces/ansible
+***    Cmd:   cd "/cygdrive/d/workspaces/ansible"   
+***    Date:  2018-01-08 18:11:21.833596400
+*****************************************************************
+ 
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible
+total 1.1M
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  8 18:10 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Oct  9 11:59 ..
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  5 14:47 .metadata
+drwxrwx---+ 1 Administrators Domain Users            0 Jan  5 14:11 ActiveStateRecipes
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  5 17:20 ansible
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Dec 15 10:42 ansible.new
+-rwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None  379 Mar 24  2017 bookmarks.xml
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:31 dba_home
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  8 11:04 git-rcs-keywords
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         885K Jan  8 10:55 git-rcs-keywords.tgz
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  8 12:36 git-test
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  5 17:06 git-test-alt
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  8 18:11 git-test-repo
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:33 mdrotthoff.git-keywords
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:34 mdrotthoff.network_interface
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:34 mdrotthoff.sshknownhosts
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:36 opsview
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  8 13:09 rcs-keywords-test1
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Oct 19 14:00 RemoteSystemsTempFiles
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan 20  2017 Sirius_Project
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          67K Jan  8 18:11 test-suite.log
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:37 tnsnames
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:37 va-logrotate
+-rwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None 2.2K Oct 23 17:07 workspace-git.sh
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  99.01: Change to directory /cygdrive/d/workspaces/ansible
+***    Status: 0
+***    Date:   2018-01-08 18:11:21.969538400
+*****************************************************************
+ 
+*****************************************************************
+***  Step Start
+***    Title: 99.02: Remove repo directory git-test-repo
+***    Cmd:   cd "git-test-repo"   
+***    Date:  2018-01-08 18:11:22.015141600
+*****************************************************************
+ 
+ 
+ 
+Current working directory: /cygdrive/d/workspaces/ansible
+total 1.1M
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  8 18:11 .
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Oct  9 11:59 ..
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  5 14:47 .metadata
+drwxrwx---+ 1 Administrators Domain Users            0 Jan  5 14:11 ActiveStateRecipes
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  5 17:20 ansible
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Dec 15 10:42 ansible.new
+-rwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None  379 Mar 24  2017 bookmarks.xml
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:31 dba_home
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  8 11:04 git-rcs-keywords
+-rw-rw-r--+ 1 mdrotthoff     Domain Users         885K Jan  8 10:55 git-rcs-keywords.tgz
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan  8 12:36 git-test
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  5 17:06 git-test-alt
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:33 mdrotthoff.git-keywords
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:34 mdrotthoff.network_interface
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:34 mdrotthoff.sshknownhosts
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:36 opsview
+drwxrwxr-x+ 1 mdrotthoff     Domain Users            0 Jan  8 13:09 rcs-keywords-test1
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Oct 19 14:00 RemoteSystemsTempFiles
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Jan 20  2017 Sirius_Project
+-rw-rw-r--+ 1 mdrotthoff     Domain Users          69K Jan  8 18:11 test-suite.log
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:37 tnsnames
+drwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None    0 Dec  6 12:37 va-logrotate
+-rwxrwx---+ 1 Administrators VAA-MDROTTH-DT1+None 2.2K Oct 23 17:07 workspace-git.sh
+ 
+*****************************************************************
+***  Step Finish
+***    Title:  99.02: Remove repo directory git-test-repo
+***    Status: 0
+***    Date:   2018-01-08 18:11:22.248773600
+*****************************************************************
+ 
