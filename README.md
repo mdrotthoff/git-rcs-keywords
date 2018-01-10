@@ -1,53 +1,66 @@
+$Id$
+$Date$
+$Author$
+$Rev$
+$Revision$
+$File$
+$Source$
+$Hash$
+
 This module provides a means to add keyword expansion of the following
 standard RCS tags to your git projects:
 
-	 $Id$
-	 $Date$
-	 $File$
-	 $Author$
-	 $Rev$
-	 $Source$
-	 $Hash$
+| Keyword  | Value used |
+|----------|-----------------------------------------------------------|
+| Id       |  |
+| Date     |  |
+| Author   |  |
+| Rev      |  |
+| Revision |  |
+| File     |  |
+| Source   |  |
+| Hash     |  |
 
-The mechanism used are git filters.  The smudge filter is run on checkout and commit.
-The clean filter is run on commit.  The tags are only expanded on the local disk,
-not in the repository itself.
 
-*NOTE:* The revision used is the date the file was last commit to the git repository as
-        git does not have a true revision number.
+The mechanism used is a combination of git filters and git event hooks.
 
-The install the rcs keyword expansion, change directory to the root of the git
-repository and run the install.sh script.  It will make all of the necessary changes
-to the git repository configuration.  Additionally, if there are git submodules
-defined in the repository, you will be prompted as to wheter or not the functionality
-should be installed into the submodules as well.
+There are two filters programs registered with the git repository.  The clean filter
+is registered to convert the RCS keyword from an expanded state to a keyword state.
+This allows the keyword without expansion to be stored in the git repository.  The
+clean filter is run whenever a file is added to the git change log prior to
+committing the change to the local git repository. The smudge filter is registered
+to convert the RCS keywords into an expanded state for storage in the local copy
+of the repository.  The smudge filter is run whenever a file is checked out
+as the result of a commit, branch change, or any other time the file is created
+from the git repository.
 
-The install script will make the following changes to each git repository / submodule
-into which it installs the rcs keywords functionality.  First in the <git_dir>/config
-file, the following section will be added:
+Additionally, there are three git event hooks registered to ensure that the data used
+in expanding the RCS keywords is accurate and consistent.  Due to the method git uses
+to manage pulling changes from the remote copy of the repository, the events are used
+to trigger a fresh checkout of the modified files under specific conditions.  The three
+event hooks registered are:
 
-	[filter "rcs-keywords"]
-		clean  = .git/filters/rcs-keywords-filter-clean.py %f
-		smudge = .git/filters/rcs-keywords-filter-smudge.py %f
+1. post-checkout event - re-processes files found during a git checkout that may not
+have had up-to-date commit information at the time of the checkout
 
-*NOTE:* Each of the filters installed has a filter_debug which by default is set to
-        False (debugging not enabled).  If set to True, select information will be displayed
-        to the standard error output for debugging purposes.
+2. post-commit event - re-processes files which were just added to the local repository
+as a part of a git commit action so that the keyword data is re-expanded for the latest
+commit
 
-Next, a hook manager will be installed into the hooks directory by copying the python
-module git-hook.py.  This provides the capability of having multiple hooks for the
-same git event. The same code will support running hooks for other events if required
-by looking for a folder of the <event name>.d. The only requirement for supporting an
-additional event is to create a symbolic link to the relevent event name in the hooks
-directory.
+3. post-merge event - re-process files found during the latest git merge action as the
+result of a git pull or git merge action
 
-	ln -s <git_dir>/hooks/git-hook.py <git_dir>/hooks/<event name>
-	mkdir <git_dir>/hooks/<event name>.d
 
-Finally, file patterns need to be registered to be managed by filters in the file:
-
-	<git_dir>/info/attributes
-
-Each registration is composed of a line in the attributes file of the following pattern:
-
-	<file pattern>		filter=rcs-keywords
+To install the rcs keyword expansion support, execute the install.py program in the
+repository.  This may either be done at the root of the git repository or by
+providing the directory path of the repository root on the command line.  The installer
+will copy the two filter programs into the .git/filters folder of the repository.
+Additionally, the three event hook programs will be copied into the relevant event
+subfolder (named <event>.d) in the .git/hooks folder.  A git hook manager will be also
+be copied into the .git/hooks folder to act as a control program to allow multiple
+event hooks to exist for each event being registered.  Next, the installer will
+register the filters in the .git/config file so that they will be called as needed by git.
+The installer will also register the (hard-coded) file patterns into the file
+.git/info/attributes to control which files in the repository are managed by the
+filters.  Finally, if the repository has any sub-modules, the filters will also be
+installed into the submodules.
