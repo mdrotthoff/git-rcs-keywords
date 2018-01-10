@@ -11,9 +11,9 @@ pylint:
 No config file found, using default configuration
 ************* Module git-hook
 C:  1, 0: Invalid module name "git-hook" (invalid-name)
-R:181, 0: Too many local variables (17/15) (too-many-locals)
-R:181, 0: Too many branches (21/12) (too-many-branches)
-R:181, 0: Too many statements (58/50) (too-many-statements)
+R:183, 0: Too many local variables (17/15) (too-many-locals)
+R:183, 0: Too many branches (21/12) (too-many-branches)
+R:183, 0: Too many statements (58/50) (too-many-statements)
 
 
 Report
@@ -43,13 +43,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |165    |60.22 |165      |=          |
+|code      |165    |59.78 |165      |=          |
 +----------+-------+------+---------+-----------+
-|docstring |60     |21.90 |60       |=          |
+|docstring |60     |21.74 |60       |=          |
 +----------+-------+------+---------+-----------+
-|comment   |30     |10.95 |30       |=          |
+|comment   |30     |10.87 |30       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |19     |6.93  |19       |=          |
+|empty     |21     |7.61  |19       |+2.00      |
 +----------+-------+------+---------+-----------+
 
 

@@ -4,10 +4,6 @@ Processing file: rcs-post-commit.py
 pycodestyle:
  
 checking rcs-post-commit.py
-rcs-post-commit.py:379:5: E303 too many blank lines (2)
-rcs-post-commit.py:547:6: E114 indentation is not a multiple of four (comment)
-1       E114 indentation is not a multiple of four (comment)
-1       E303 too many blank lines (2)
  
  
 pylint:
@@ -44,13 +40,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |328    |58.47 |328      |=          |
+|code      |328    |58.36 |328      |=          |
 +----------+-------+------+---------+-----------+
-|docstring |134    |23.89 |134      |=          |
+|docstring |134    |23.84 |134      |=          |
 +----------+-------+------+---------+-----------+
-|comment   |62     |11.05 |62       |=          |
+|comment   |62     |11.03 |62       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |37     |6.60  |37       |=          |
+|empty     |38     |6.76  |39       |-1.00      |
 +----------+-------+------+---------+-----------+
 
 

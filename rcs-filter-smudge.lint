@@ -4,8 +4,6 @@ Processing file: rcs-filter-smudge.py
 pycodestyle:
  
 checking rcs-filter-smudge.py
-rcs-filter-smudge.py:36:1: E302 expected 2 blank lines, found 1
-1       E302 expected 2 blank lines, found 1
  
  
 pylint:
@@ -13,8 +11,8 @@ pylint:
 No config file found, using default configuration
 ************* Module rcs-filter-smudge
 C:  1, 0: Invalid module name "rcs-filter-smudge" (invalid-name)
-R:256, 0: Too many local variables (29/15) (too-many-locals)
-R:256, 0: Too many statements (74/50) (too-many-statements)
+R:257, 0: Too many local variables (29/15) (too-many-locals)
+R:257, 0: Too many statements (74/50) (too-many-statements)
 
 
 Report
@@ -93,13 +91,13 @@ Raw metrics
 +----------+-------+------+---------+-----------+
 |type      |number |%     |previous |difference |
 +==========+=======+======+=========+===========+
-|code      |226    |62.60 |226      |=          |
+|code      |226    |62.43 |226      |=          |
 +----------+-------+------+---------+-----------+
-|docstring |72     |19.94 |72       |=          |
+|docstring |72     |19.89 |72       |=          |
 +----------+-------+------+---------+-----------+
-|comment   |41     |11.36 |41       |=          |
+|comment   |41     |11.33 |41       |=          |
 +----------+-------+------+---------+-----------+
-|empty     |22     |6.09  |22       |=          |
+|empty     |23     |6.35  |22       |+1.00      |
 +----------+-------+------+---------+-----------+
 
 

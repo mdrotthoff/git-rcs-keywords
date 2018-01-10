@@ -4,10 +4,6 @@ Processing file: rcs-filter-clean.py
 pycodestyle:
  
 checking rcs-filter-clean.py
-rcs-filter-clean.py:21:1: E265 block comment should start with '# '
-rcs-filter-clean.py:36:1: E302 expected 2 blank lines, found 1
-1       E265 block comment should start with '# '
-1       E302 expected 2 blank lines, found 1
  
  
 pylint:
