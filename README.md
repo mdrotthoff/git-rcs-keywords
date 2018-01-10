@@ -1,25 +1,18 @@
-$Id$
-$Date$
-$Author$
-$Rev$
-$Revision$
-$File$
-$Source$
-$Hash$
-
 This module provides a means to add keyword expansion of the following
 standard RCS tags to your git projects:
 
+|----------|-----------------------------------------------------------|
 | Keyword  | Value used |
 |----------|-----------------------------------------------------------|
-| Id       |  |
-| Date     |  |
-| Author   |  |
-| Rev      |  |
-| Revision |  |
-| File     |  |
-| Source   |  |
-| Hash     |  |
+| Id       | Composition of the file name, commit date, and author name |
+| Date     | Date the change was committed to the repository |
+| Author   | Author's name and e-mail address from the commit log |
+| Rev      | Date the change was commited |
+| Revision | Date the change was commited |
+| File     | Name of the file |
+| Source   | Name of the file complete with relative path |
+| Hash     | Commit hash of the change |
+|----------|-----------------------------------------------------------|
 
 
 The mechanism used is a combination of git filters and git event hooks.
