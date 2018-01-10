@@ -18,7 +18,6 @@ back to the repository.
 import sys
 import os
 import re
-#import subprocess
 import time
 
 # Set the debugging flag
@@ -32,6 +31,7 @@ if TIMING_FLAG:
 SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
+
 
 def startup_message():
     """Function display any startup messages

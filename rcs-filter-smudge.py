@@ -33,6 +33,7 @@ SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
 
+
 def startup_message():
     """Function display any startup messages
 

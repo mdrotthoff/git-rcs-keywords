@@ -23,6 +23,7 @@ import errno
 import subprocess
 import time
 
+
 # Set the debugging flag
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
@@ -378,7 +379,6 @@ def check_for_cmd(cmd):
                          return_code=1,
                          files_processed=0)
 
-
     # Execute the command
     try:
         execute_cmd(cmd)
@@ -563,7 +563,7 @@ def git_not_checked_in(files):
                   list_description='modified file found',
                   list_message='Modified files found')
 
-     # Remove any modified files from the list of files to process
+    # Remove any modified files from the list of files to process
     if modified_files_list:
         if DEBUG_FLAG:
             sys.stderr.write('  Removing non-committed modified files\n')

@@ -14,6 +14,15 @@ This module installs the RCS keyword functionality into an
 existing git repository.
 """
 
+
+import sys
+import os
+import time
+from shutil import copy2
+import subprocess
+import re
+
+
 GIT_HOOK = 'git-hook.py'
 
 GIT_DIRS = {'filter_dir': 'filters', 'event_dir': 'hooks'}
@@ -34,13 +43,6 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
                     '*.yaml', '*.hosts', '*.xml', '*.jsn',
                     '*.json', '*.pl', '*.py', '*.sh']
 
-import sys
-import os
-import time
-from shutil import copy2
-import subprocess
-import re
-#import errno
 
 # Set the debugging flag
 DEBUG_FLAG = bool(False)
@@ -422,14 +424,14 @@ def installgitkeywords(repo_dir, git_dir='.git'):
                          eventname=git_event['event_name'],
                          eventcode=git_event['event_code'])
 
-
     # Set up the filter programs for use
     for filter_def in GIT_FILTERS:
         copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_def['filter_name']),
                  destfile=os.path.join(filter_dir, filter_def['filter_name']))
 
-    # Change to the repository directory and de-register the rcs-keywords filter
-    current_dir = os.getcwd()
+    # Change to the repository directory and de-register the
+    # rcs-keywords filter
+    local_dir = os.getcwd()
     os.chdir(os.path.abspath(repo_dir))
 #    sys.stderr.write('Current directory %s\n' % os.getcwd())
     cmd = ['git',
@@ -443,10 +445,11 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join('$GIT_DIR', GIT_DIRS['filter_dir']),
+        registerfilter(filter_dir=os.path.join('$GIT_DIR',
+                                               GIT_DIRS['filter_dir']),
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])
-    os.chdir(current_dir)
+    os.chdir(local_dir)
 #    sys.stderr.write('Current directory %s\n' % os.getcwd())
 
     # Return from the function
@@ -619,7 +622,8 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def findsubmodules(repo_dir):
+# def findsubmodules(repo_dir):
+def findsubmodules():
     """Function to find the relevent configuration files for any
     submodules associated with the master repository.  Leave the
     parameter blank if the current working directory is holds
@@ -628,7 +632,7 @@ def findsubmodules(repo_dir):
     Arguments:
         dirname -- OS folder holding the master repository.
         subdirname -- Subdirectory name within dirname to search
-        filename -- Name of the file to find 
+        filename -- Name of the file to find
 
     Returns:
         List of file names
@@ -641,7 +645,9 @@ def findsubmodules(repo_dir):
     dirmodule = os.path.join('.git', 'modules')
     field_name = ['gitdir', 'repodir']
 
-    submodule_list = [dict(zip(field_name, (dirpath, os.path.relpath(dirpath, dirmodule))))
+    submodule_list = [dict(zip(field_name, (dirpath,
+                                            os.path.relpath(dirpath,
+                                                            dirmodule))))
                       for (dirpath, _, filenames) in os.walk(dirmodule)
                       for name in filenames if name == 'config']
 
@@ -657,7 +663,7 @@ def findsubmodules(repo_dir):
 # Set the start time for calculating elapsed time
 START_TIME = time.clock()
 
-## Parameter processing
+# Parameter processing
 PROGRAM_NAME = os.path.abspath(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
 if SUMMARY_FLAG or DEBUG_FLAG:
@@ -677,7 +683,7 @@ if SUMMARY_FLAG:
     sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
 
 # Save the current working directory
-current_dir=os.getcwd()
+current_dir = os.getcwd()
 
 if VERBOSE_FLAG:
     dump_list(list_values=sys.argv,
@@ -718,9 +724,10 @@ try:
     os.chdir(os.path.abspath(TARGET_DIR))
     if DEBUG_FLAG:
         sys.stderr.write('Current directory %s\n' % os.getcwd())
-    # Install rcs keywords support in the repo 
+    # Install rcs keywords support in the repo
     installgitkeywords(repo_dir='')
-    submodules = findsubmodules(repo_dir=TARGET_DIR)
+#    submodules = findsubmodules(repo_dir=TARGET_DIR)
+    submodules = findsubmodules()
     if DEBUG_FLAG:
         sys.stderr.write('  Submodule count: %d\n' % len(submodules))
     for module in submodules:
