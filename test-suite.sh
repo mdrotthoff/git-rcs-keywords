@@ -93,7 +93,6 @@ test_file_contents()
   echo "\$Source\$"
   echo "\$Hash\$"
   echo "\$Id\$"
-#  echo " "
 }
 
 display_file_contents()
@@ -673,6 +672,8 @@ if [[ -d "${repo_dir}" ]] ; then
   remove_dir "${repo_dir}" "${step_num}.02: Remove repo directory ${repo_dir}"
 fi
 exit 0
+
+
 
 
 
