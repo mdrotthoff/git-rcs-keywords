@@ -1,7 +1,6 @@
 This module provides a means to add keyword expansion of the following
 standard RCS tags to your git projects:
 
-|----------|-----------------------------------------------------------|
 | Keyword  | Value used |
 |----------|-----------------------------------------------------------|
 | Id       | Composition of the file name, commit date, and author name |
