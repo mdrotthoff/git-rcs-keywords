@@ -5,6 +5,13 @@ of git filters and git event hooks. Keywords are handled in a non-case
 sensitive fashion for expansion purposes.  The keywords supported and the
 relevant substitution values are:
 
+## To Do
+1. Check to see if there are issues if a rebase is performed after committing
+changes to the repository!!!!
+2. Look into filtering the files actually processed based on the file patterns
+specified in the attributes file
+
+
 | Keyword    | Value used |
 |------------|-----------------------------------------------------------|
 | $Id$       | Composition of the file name, commit date, and author name |

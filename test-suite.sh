@@ -1,12 +1,20 @@
 #! /bin/bash
 # Simple shell script to test the git RCS keywords setup
 
+# TODO:  Add tests for the rebase command
+#        1) Commit changes
+#           1.1) Create changed file
+#           1.2) Commit the changed file
+#           1.3) Pull changes from the master repo
+#           1.4) Rebase the non-pushed commit
+#           1.5) Validate the smudge filter was executed
+
 # $Author$
 # $Date$
 # $Source$
 
 output_log="$(pwd)/test-suite.log"
-install_src="$(realpath "$(dirname ${0})/install.py")"
+install_src="$(realpath "$(dirname "${0}")/install.py")"
 
 repo_dir="git-test-repo"
 submodule_dir="test-repo2"
@@ -573,7 +581,7 @@ git_branch_list "${step_num}.10: List the branches"
 section_name="Set up the submodule repository"
 (log_section_start "${section_name}") >> "${output_log}" 2>&1
 step_num="02"
-git_submodule_add "${repo_prefix}/${module_repo}" "${submodule_dir}" "${step_num}.01: Clone the submodule repository ${submodule_repo} to ${submodule_dir}"
+git_submodule_add "${repo_prefix}/${module_repo}" "${submodule_dir}" "${step_num}.01: Clone the submodule repository ${module_repo} to ${submodule_dir}"
 change_dir "${submodule_dir}" "${step_num}.02: Change directory to ${submodule_dir}"
 git_branch_checkout "master" "${step_num}.03: Checkout the master branch"
 git_branch_create "development" "${step_num}.04: Create the development branch"
