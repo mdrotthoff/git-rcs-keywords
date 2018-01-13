@@ -1,0 +1,1212 @@
+git checkout development:
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'development'
+		Your branch is up to date with 'origin/development'.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+			Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "42e08c79496f2cfe5f107d606640c9d2dd7aab62" "42e08c79496f2cfe5f107d606640c9d2dd7aab62" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+					Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+					Param[1]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 42e08c79496f2cfe5f107d606640c9d2dd7aab62 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					git exit code: 0
+					stdout length: 0
+					stderr length: 0
+				Setup elapsed time: 0.077
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.077
+				Files processed: 0
+				Files processed: 0
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.169
+		Total elapsed time: 0.169
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git checkout master:
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'master'
+		Your branch is up to date with 'origin/master'.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+			Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "42e08c79496f2cfe5f107d606640c9d2dd7aab62" "42e08c79496f2cfe5f107d606640c9d2dd7aab62" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+					Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+					Param[1]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 42e08c79496f2cfe5f107d606640c9d2dd7aab62 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					git exit code: 0
+					stdout length: 0
+					stderr length: 0
+				Setup elapsed time: 0.077
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.077
+				Files processed: 0
+				Files processed: 0
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.2
+		Total elapsed time: 0.2
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git add master:
+
+
+git commit master:
+	Start program name: .git/hooks/pre-commit
+		Parameter list
+			Param[0]: .git/hooks/pre-commit
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/pre-commit.d is a directory
+		OS Files existing in the hook named directory .git/hooks/pre-commit.d
+			File: 01-pre-commit   12/11/17 09:01:30  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/pre-commit.d/01-pre-commit
+		Executing hook program .git/hooks/pre-commit.d/01-pre-commit
+
+			Start program name: .git/hooks/pre-commit.d/01-pre-commit
+				Parameter list
+					Param[0]: .git/hooks/pre-commit.d/01-pre-commit
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/pre-commit.d/01-pre-commit
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.123
+		Total elapsed time: 0.123
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/pre-commit
+
+	Start program name: .git/hooks/prepare-commit-msg
+		Parameter list
+			Param[0]: .git/hooks/prepare-commit-msg
+			Param[1]: .git/COMMIT_EDITMSG
+			Param[2]: message
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/prepare-commit-msg.d is a directory
+		OS Files existing in the hook named directory .git/hooks/prepare-commit-msg.d
+			File: 01-prepare-commit-msg   12/11/17 09:02:22  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+		Executing hook program ".git/hooks/prepare-commit-msg.d/01-prepare-commit-msg" ".git/COMMIT_EDITMSG" "message"
+
+			Start program name: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+				Parameter list
+					Param[0]: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+					Param[1]: .git/COMMIT_EDITMSG
+					Param[2]: message
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.091
+		Total elapsed time: 0.091
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/prepare-commit-msg
+
+	Start program name: .git/hooks/commit-msg
+		Parameter list
+			Param[0]: .git/hooks/commit-msg
+			Param[1]: .git/COMMIT_EDITMSG
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/commit-msg.d is a directory
+		OS Files existing in the hook named directory .git/hooks/commit-msg.d
+			File: 01-commit-msg   12/11/17 08:54:48  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/commit-msg.d/01-commit-msg
+		Executing hook program ".git/hooks/commit-msg.d/01-commit-msg" ".git/COMMIT_EDITMSG"
+
+			Start program name: .git/hooks/commit-msg.d/01-commit-msg
+				Parameter list
+					Param[0]: .git/hooks/commit-msg.d/01-commit-msg
+					Param[1]: .git/COMMIT_EDITMSG
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/commit-msg.d/01-commit-msg
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.092
+		Total elapsed time: 0.092
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/commit-msg
+
+	Start program name: .git/hooks/post-commit
+		Parameter list
+			Param[0]: .git/hooks/post-commit
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-commit.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-commit.d
+			File: 01-post-commit   12/11/17 08:57:51  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/post-commit.d/01-post-commit
+		Executing hook program .git/hooks/post-commit.d/01-post-commit
+
+			Start program name: .git/hooks/post-commit.d/01-post-commit
+				Parameter list
+					Param[0]: .git/hooks/post-commit.d/01-post-commit
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513194509 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/post-commit.d/01-post-commit
+
+		Hook return code 0
+		Setup elapsed time: 0.016
+		Execution elapsed time: 0.122
+		Total elapsed time: 0.138
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-commit
+
+
+git checkout development:
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'development'
+		Your branch is up to date with 'origin/development'.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "42e08c79496f2cfe5f107d606640c9d2dd7aab62" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+					Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+					Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					Param[2]: 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 46a1489790f0f35b01db119f237a4d2f788ddd8e 42e08c79496f2cfe5f107d606640c9d2dd7aab62
+					git exit code: 0
+					stdout length: 59
+					stderr length: 0
+				git checkout cmd: git checkout -- "01-git-checkout-development.log"
+				git checkout cmd: git checkout -- "02-git-checkout-master.log"
+				Setup elapsed time: 0.061
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.061
+				Files processed: 2
+				Files processed: 2
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.198
+		Total elapsed time: 0.198
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git merge master:
+	Updating 42e08c7..46a1489
+	Fast-forward
+	01-git-checkout-development.log | 188 ++++++++++++++++++++++++++++++++++++++++
+	02-git-checkout-master.log      | 188 ++++++++++++++++++++++++++++++++++++++++
+	2 files changed, 376 insertions(+)
+	create mode 100644 01-git-checkout-development.log
+	create mode 100644 02-git-checkout-master.log
+
+	Start program name: .git/hooks/post-merge
+		Parameter list
+			Param[0]: .git/hooks/post-merge
+			Param[1]: 0
+		Environment variables defined
+			Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+			Key: GIT_REFLOG_ACTION  Value: merge master
+		The hook directory .git/hooks/post-merge.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-merge.d
+			File: git-post-merge.py   12/13/17 13:13:35  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-merge.d/git-post-merge.py
+		Executing hook program ".git/hooks/post-merge.d/git-post-merge.py" "0"
+
+			Start program name: .git/hooks/post-merge.d/git-post-merge.py
+				Parameter list
+					Param[0]: .git/hooks/post-merge.d/git-post-merge.py
+					Param[1]: 0
+				Environment variables defined
+					Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+					Key: GIT_REFLOG_ACTION  Value: merge master
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD
+					git exit code: 0
+					stdout length: 59
+					stderr length: 0
+				git checkout cmd: git checkout -- "01-git-checkout-development.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9637
+
+					Start program name: .git/hooks/post-checkout
+						Parameter list
+							Param[0]: .git/hooks/post-checkout
+							Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+							Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+							Param[3]: 0
+						Environment variables defined
+							Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+							Key: GIT_DIR  Value: .git
+							Key: GIT_PREFIX  Value: 
+							Key: GIT_REFLOG_ACTION  Value: merge master
+						The hook directory .git/hooks/post-checkout.d is a directory
+						OS Files existing in the hook named directory .git/hooks/post-checkout.d
+							File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+						Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+						Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "0"
+
+							Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+								Parameter list
+									Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+									Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+									Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+									Param[3]: 0
+								Environment variables defined
+									Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+									Key: GIT_DIR  Value: .git
+									Key: GIT_PREFIX  Value: 
+									Key: GIT_REFLOG_ACTION  Value: merge master
+								git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 46a1489790f0f35b01db119f237a4d2f788ddd8e 46a1489790f0f35b01db119f237a4d2f788ddd8e
+									git exit code: 0
+									stdout length: 0
+									stderr length: 0
+								Setup elapsed time: 0.076
+								Execution elapsed time: 0.0
+								Total elapsed time: 0.076
+								Files processed: 0
+								Files processed: 0
+								End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+						Hook return code 0
+						Setup elapsed time: 0.0
+						Execution elapsed time: 0.231
+						Total elapsed time: 0.231
+						Hooks seen: 1
+						Hooks executed: 1
+						End program name: .git/hooks/post-checkout
+
+				git checkout cmd: git checkout -- "02-git-checkout-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9637
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+								Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+								Param[3]: 0
+
+							Environment variables defined
+								Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+								File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+										Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_46a1489790f0f35b01db119f237a4d2f788ddd8e  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 46a1489790f0f35b01db119f237a4d2f788ddd8e 46a1489790f0f35b01db119f237a4d2f788ddd8e
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.061
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.061
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.183
+							Total elapsed time: 0.183
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+
+					Setup elapsed time: 0.076
+					Execution elapsed time: 0.795
+					Total elapsed time: 0.871
+					Files processed: 2
+					Files processed: 2
+					End program name: .git/hooks/post-merge.d/git-post-merge.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 1.024
+		Total elapsed time: 1.024
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-merge
+
+
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'master'
+		Your branch is ahead of 'origin/master' by 1 commit.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+					Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+					Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 46a1489790f0f35b01db119f237a4d2f788ddd8e 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					git exit code: 0
+					stdout length: 0
+					stderr length: 0
+				Setup elapsed time: 0.06
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.06
+				Files processed: 0
+				Files processed: 0
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.198
+		Total elapsed time: 0.198
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git checkout master:
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'master'
+		Your branch is ahead of 'origin/master' by 1 commit.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+				Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+				Param[1]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+				Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+				Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 46a1489790f0f35b01db119f237a4d2f788ddd8e 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					git exit code: 0
+					stdout length: 0
+					stderr length: 0
+				Setup elapsed time: 0.06
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.06
+				Files processed: 0
+				Files processed: 0
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.198
+		Total elapsed time: 0.198
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git push master:
+	Start program name: .git/hooks/pre-push
+		Parameter list
+			Param[0]: .git/hooks/pre-push
+			Param[1]: origin
+			Param[2]: git@ghe.coxautoinc.com:David-Rotthoff/get-test.git
+		Environment variables defined
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/pre-push.d is a directory
+		OS Files existing in the hook named directory .git/hooks/pre-push.d
+			File: 01-pre-push   12/11/17 09:10:39  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/pre-push.d/01-pre-push
+		Executing hook program ".git/hooks/pre-push.d/01-pre-push" "origin" "git@ghe.coxautoinc.com:David-Rotthoff/get-test.git"
+
+			Start program name: .git/hooks/pre-push.d/01-pre-push
+				Parameter list
+					Param[0]: .git/hooks/pre-push.d/01-pre-push
+					Param[1]: origin
+					Param[2]: git@ghe.coxautoinc.com:David-Rotthoff/get-test.git
+				Environment variables defined
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/pre-push.d/01-pre-push
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.107
+		Total elapsed time: 0.107
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/pre-push
+
+
+git add master:
+
+
+git commit master:
+	Start program name: .git/hooks/pre-commit
+		Parameter list
+			Param[0]: .git/hooks/pre-commit
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/pre-commit.d is a directory
+		OS Files existing in the hook named directory .git/hooks/pre-commit.d
+			File: 01-pre-commit   12/11/17 09:01:30  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/pre-commit.d/01-pre-commit
+		Executing hook program .git/hooks/pre-commit.d/01-pre-commit
+
+			Start program name: .git/hooks/pre-commit.d/01-pre-commit
+				Parameter list
+					Param[0]: .git/hooks/pre-commit.d/01-pre-commit
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/pre-commit.d/01-pre-commit
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.061
+		Total elapsed time: 0.061
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/pre-commit
+
+	Start program name: .git/hooks/prepare-commit-msg
+		Parameter list
+			Param[0]: .git/hooks/prepare-commit-msg
+			Param[1]: .git/COMMIT_EDITMSG
+			Param[2]: message
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/prepare-commit-msg.d is a directory
+		OS Files existing in the hook named directory .git/hooks/prepare-commit-msg.d
+			File: 01-prepare-commit-msg   12/11/17 09:02:22  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+		Executing hook program ".git/hooks/prepare-commit-msg.d/01-prepare-commit-msg" ".git/COMMIT_EDITMSG" "message"
+
+			Start program name: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+				Parameter list
+					Param[0]: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+					Param[1]: .git/COMMIT_EDITMSG
+					Param[2]: message
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/prepare-commit-msg.d/01-prepare-commit-msg
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.076
+		Total elapsed time: 0.076
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/prepare-commit-msg
+
+	Start program name: .git/hooks/commit-msg
+		Parameter list
+			Param[0]: .git/hooks/commit-msg
+			Param[1]: .git/COMMIT_EDITMSG
+		Environment variables defined
+			Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/commit-msg.d is a directory
+		OS Files existing in the hook named directory .git/hooks/commit-msg.d
+			File: 01-commit-msg   12/11/17 08:54:48  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/commit-msg.d/01-commit-msg
+		Executing hook program ".git/hooks/commit-msg.d/01-commit-msg" ".git/COMMIT_EDITMSG"
+
+			Start program name: .git/hooks/commit-msg.d/01-commit-msg
+				Parameter list
+					Param[0]: .git/hooks/commit-msg.d/01-commit-msg
+					Param[1]: .git/COMMIT_EDITMSG
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/commit-msg.d/01-commit-msg
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.061
+		Total elapsed time: 0.061
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/commit-msg
+
+	Start program name: .git/hooks/post-commit
+		Parameter list
+			Param[0]: .git/hooks/post-commit
+		Environment variables defined
+			Key: EXECIGNORE  Value: *.dll
+			Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+			Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+			Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+			Key: GIT_DIR  Value: .git
+			Key: GIT_EDITOR  Value: :
+			Key: GIT_INDEX_FILE  Value: .git/index
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-commit.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-commit.d
+			File: 01-post-commit   12/11/17 08:57:51  19 bytes  0777  Symlink
+		Saw hook program .git/hooks/post-commit.d/01-post-commit
+		Executing hook program .git/hooks/post-commit.d/01-post-commit
+
+			Start program name: .git/hooks/post-commit.d/01-post-commit
+				Parameter list
+					Param[0]: .git/hooks/post-commit.d/01-post-commit
+				Environment variables defined
+					Key: GIT_AUTHOR_DATE  Value: @1513195067 -0600
+					Key: GIT_AUTHOR_EMAIL  Value: david.rotthoff@coxautoinc.com
+					Key: GIT_AUTHOR_NAME  Value: David Rotthoff
+					Key: GIT_DIR  Value: .git
+					Key: GIT_EDITOR  Value: :
+					Key: GIT_INDEX_FILE  Value: .git/index
+					Key: GIT_PREFIX  Value: 
+				Setup elapsed time: 0.0
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.0
+				End program name: .git/hooks/post-commit.d/01-post-commit
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.109
+		Total elapsed time: 0.109
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-commit
+
+	6 files changed, 1880 insertions(+)
+	create mode 100644 03-git-add-master.log
+	create mode 100644 04-git-commit-master.log
+	create mode 100644 05-git-checkout-development.log
+	create mode 100644 06-git-merge-master.log
+	create mode 100644 07-git-checkout-master.log
+	create mode 100644 08-git-push-master.log
+
+
+git checkout development:
+	Start program name: .git/hooks/post-checkout
+		Switched to branch 'development'
+		Your branch is ahead of 'origin/development' by 1 commit.
+		Parameter list
+			Param[0]: .git/hooks/post-checkout
+			Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+			Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+			Param[3]: 1
+		Environment variables defined
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+		The hook directory .git/hooks/post-checkout.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-checkout.d
+			File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+		Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+		Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "46a1489790f0f35b01db119f237a4d2f788ddd8e" "1"
+
+			Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+				Parameter list
+					Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+					Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+					Param[2]: 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					Param[3]: 1
+				Environment variables defined
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 46a1489790f0f35b01db119f237a4d2f788ddd8e
+					git exit code: 0
+					stdout length: 153
+					stderr length: 0
+				git checkout cmd: git checkout -- "03-git-add-master.log"
+				git checkout cmd: git checkout -- "04-git-commit-master.log"
+				git checkout cmd: git checkout -- "05-git-checkout-development.log"
+				git checkout cmd: git checkout -- "06-git-merge-master.log"
+				git checkout cmd: git checkout -- "07-git-checkout-master.log"
+				git checkout cmd: git checkout -- "08-git-push-master.log"
+				Setup elapsed time: 0.06
+				Execution elapsed time: 0.0
+				Total elapsed time: 0.06
+				Files processed: 6
+				Files processed: 6
+				End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 0.152
+		Total elapsed time: 0.152
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-checkout
+
+
+git merge master:
+	Start program name: .git/hooks/post-merge
+		Updating 46a1489..48b3256
+		Fast-forward
+			03-git-add-master.log           |   0
+			04-git-commit-master.log        | 746 ++++++++++++++++++++++++++++++++++++++++
+			05-git-checkout-development.log | 190 ++++++++++
+			06-git-merge-master.log         | 577 +++++++++++++++++++++++++++++++
+			07-git-checkout-master.log      | 189 ++++++++++
+			08-git-push-master.log          | 178 ++++++++++
+			6 files changed, 1880 insertions(+)
+		create mode 100644 03-git-add-master.log
+		create mode 100644 04-git-commit-master.log
+		create mode 100644 05-git-checkout-development.log
+		create mode 100644 06-git-merge-master.log
+		create mode 100644 07-git-checkout-master.log
+		create mode 100644 08-git-push-master.log
+		Parameter list
+			Param[0]: .git/hooks/post-merge
+			Param[1]: 0
+		Environment variables defined
+			Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+			Key: GIT_DIR  Value: .git
+			Key: GIT_PREFIX  Value: 
+			Key: GIT_REFLOG_ACTION  Value: merge master
+		The hook directory .git/hooks/post-merge.d is a directory
+		OS Files existing in the hook named directory .git/hooks/post-merge.d
+			File: git-post-merge.py   12/13/17 13:54:25  6403 bytes  0770  Regular
+		Saw hook program .git/hooks/post-merge.d/git-post-merge.py
+		Executing hook program ".git/hooks/post-merge.d/git-post-merge.py" "0"
+
+			Start program name: .git/hooks/post-merge.d/git-post-merge.py
+				Parameter list
+					Param[0]: .git/hooks/post-merge.d/git-post-merge.py
+					Param[1]: 0
+				Environment variables defined
+					Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+					Key: GIT_DIR  Value: .git
+					Key: GIT_PREFIX  Value: 
+					Key: GIT_REFLOG_ACTION  Value: merge master
+				git diff-tree cmd: git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD
+					git exit code: 0
+					stdout length: 153
+					stderr length: 0
+				git checkout cmd: git checkout -- "03-git-add-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9633
+	
+					Start program name: .git/hooks/post-checkout
+						Parameter list
+							Param[0]: .git/hooks/post-checkout
+							Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+							Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+							Param[3]: 0
+						Environment variables defined
+							Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+							Key: GIT_DIR  Value: .git
+							Key: GIT_PREFIX  Value: 
+							Key: GIT_REFLOG_ACTION  Value: merge master
+						The hook directory .git/hooks/post-checkout.d is a directory
+						OS Files existing in the hook named directory .git/hooks/post-checkout.d
+							File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+						Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+						Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+							Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+								Parameter list
+									Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+									Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+									Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+									Param[3]: 0
+								Environment variables defined
+									Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+									Key: GIT_DIR  Value: .git
+									Key: GIT_PREFIX  Value: 
+									Key: GIT_REFLOG_ACTION  Value: merge master
+								git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+									git exit code: 0
+									stdout length: 0
+									stderr length: 0
+								Setup elapsed time: 0.061
+								Execution elapsed time: 0.0
+								Total elapsed time: 0.061
+								Files processed: 0
+								Files processed: 0
+								End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+						Hook return code 0
+						Setup elapsed time: 0.0
+						Execution elapsed time: 0.2
+						Total elapsed time: 0.2
+						Hooks seen: 1
+						Hooks executed: 1
+						End program name: .git/hooks/post-checkout
+
+				git checkout cmd: git checkout -- "04-git-commit-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9635
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[3]: 0
+							Environment variables defined
+								Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+								File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.06
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.06
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.198
+							Total elapsed time: 0.198
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+							
+				git checkout cmd: git checkout -- "05-git-checkout-development.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9635
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[3]: 0
+							Environment variables defined
+								Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+								File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.06
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.06
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.213
+							Total elapsed time: 0.213
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+
+				git checkout cmd: git checkout -- "06-git-merge-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9637
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[3]: 0
+							Environment variables defined
+								Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+								File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.061
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.061
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.169
+							Total elapsed time: 0.169
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+
+				git checkout cmd: git checkout -- "07-git-checkout-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9635
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[3]: 0
+							Environment variables defined
+								Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+							File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.03
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.03
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.199
+							Total elapsed time: 0.199
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+
+				git checkout cmd: git checkout -- "08-git-push-master.log"
+					git exit code: 0
+					stdout length: 0
+					stderr length: 9637
+
+						Start program name: .git/hooks/post-checkout
+							Parameter list
+								Param[0]: .git/hooks/post-checkout
+								Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+								Param[3]: 0
+							Environment variables defined
+								Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+								Key: GIT_DIR  Value: .git
+								Key: GIT_PREFIX  Value: 
+								Key: GIT_REFLOG_ACTION  Value: merge master
+							The hook directory .git/hooks/post-checkout.d is a directory
+							OS Files existing in the hook named directory .git/hooks/post-checkout.d
+								File: git-post-checkout.py   12/13/17 13:13:07  6246 bytes  0770  Regular
+							Saw hook program .git/hooks/post-checkout.d/git-post-checkout.py
+							Executing hook program ".git/hooks/post-checkout.d/git-post-checkout.py" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "48b3256fac7f757badd0b4b691ed24ae5dbd3bbd" "0"
+
+								Start program name: .git/hooks/post-checkout.d/git-post-checkout.py
+									Parameter list
+										Param[0]: .git/hooks/post-checkout.d/git-post-checkout.py
+										Param[1]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[2]: 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										Param[3]: 0
+									Environment variables defined
+										Key: GITHEAD_48b3256fac7f757badd0b4b691ed24ae5dbd3bbd  Value: master
+										Key: GIT_DIR  Value: .git
+										Key: GIT_PREFIX  Value: 
+										Key: GIT_REFLOG_ACTION  Value: merge master
+									git diff-tree cmd: git diff-tree -r --name-only --no-commit-id 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd 48b3256fac7f757badd0b4b691ed24ae5dbd3bbd
+										git exit code: 0
+										stdout length: 0
+										stderr length: 0
+									Setup elapsed time: 0.046
+									Execution elapsed time: 0.0
+									Total elapsed time: 0.046
+									Files processed: 0
+									Files processed: 0
+									End program name: .git/hooks/post-checkout.d/git-post-checkout.py
+
+							Hook return code 0
+							Setup elapsed time: 0.0
+							Execution elapsed time: 0.122
+							Total elapsed time: 0.122
+							Hooks seen: 1
+							Hooks executed: 1
+							End program name: .git/hooks/post-checkout
+				Setup elapsed time: 0.075
+				Execution elapsed time: 2.158
+				Total elapsed time: 2.233
+				Files processed: 6
+				Files processed: 6
+				End program name: .git/hooks/post-merge.d/git-post-merge.py
+
+		Hook return code 0
+		Setup elapsed time: 0.0
+		Execution elapsed time: 2.37
+		Total elapsed time: 2.37
+		Hooks seen: 1
+		Hooks executed: 1
+		End program name: .git/hooks/post-merge
+

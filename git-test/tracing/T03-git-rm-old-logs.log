@@ -1,0 +1,23 @@
+rm '01-git-checkout-development.log'
+rm '02-git-checkout-master.log'
+rm '03-git-add-master.log'
+rm '04-git-commit-master.log'
+rm '05-git-checkout-development.log'
+rm '06-git-merge-master.log'
+rm '07-git-checkout-master.log'
+rm '08-git-push-master.log'
+rm '09-git-add-master.log'
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test.2.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test.2.txt
+  Clean file full name: test/test.2.txt
+  Setup elapsed time: 0.015
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.015
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+rm '10-git-commit-master.log'
+rm '11-git-checkout-development.log'
+rm '12-git-merge-master.log'

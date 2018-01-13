@@ -1,0 +1,41 @@
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test.1.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test.1.txt
+  Clean file full name: test/test.1.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+Start program name: .git/filters/rcs-keywords-filter-clean.py file: test/test.2.txt
+  Parameter list
+    Param[0]: .git/filters/rcs-keywords-filter-clean.py
+    Param[1]: test/test.2.txt
+  Clean file full name: test/test.2.txt
+  Setup elapsed time: 0.0
+  Execution elapsed time: 0.0
+  Total elapsed time: 0.0
+  Total lines processed: 3
+End program name: .git/filters/rcs-keywords-filter-clean.py
+
+On branch master
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	T01-git-checkout-master.log
+	T02-git-checkout-development.log
+	T03-git-rm-old-logs.log
+	T04-git-status.log
+	T05-git-commit.ERROR.log
+	T06-git-push.log
+	T07-git-status.log
+	T08-git-checkout-master.log
+	T09-git-merge-development.log
+	T10-git-status.log
+
+nothing added to commit but untracked files present (use "git add" to track)

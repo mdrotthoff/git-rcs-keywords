@@ -1,7 +1,0 @@
-The git-hook-manager program should provide the following functionality:
-
-1) Able to add / remove git-hook functionality for a specified git hook
-2) Validate that the hook being managed is a valid, defined git hook
-   Note that no special care will be taken regarding server vs client hooks
-3) Should validate that the specified hook processing program exists before
-   creating / removing symbolic links.  Program should be git-hook.py

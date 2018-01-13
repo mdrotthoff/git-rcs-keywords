@@ -1,0 +1,27 @@
+On branch development
+Your branch is up to date with 'origin/development'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	deleted:    01-git-checkout-development.log
+	deleted:    02-git-checkout-master.log
+	deleted:    03-git-add-master.log
+	deleted:    04-git-commit-master.log
+	deleted:    05-git-checkout-development.log
+	deleted:    06-git-merge-master.log
+	deleted:    07-git-checkout-master.log
+	deleted:    08-git-push-master.log
+	deleted:    09-git-add-master.log
+	deleted:    10-git-commit-master.log
+	deleted:    11-git-checkout-development.log
+	deleted:    12-git-merge-master.log
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	T01-git-checkout-master.log
+	T02-git-checkout-development.log
+	T03-git-rm-old-logs.log
+	T04-git-status.log
+

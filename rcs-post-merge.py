@@ -16,18 +16,20 @@ repository.
 
 """
 
+
 import sys
 import os
 import errno
 import subprocess
 import time
 
+
 # Set the debugging flag
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -74,6 +76,10 @@ def main(argv):
 
     # Get the list of modified files
     files = get_modified_files()
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Files not checked in')
 
     # Filter the list of modified files to exclude those modified since
     # the commit
@@ -371,7 +377,6 @@ def check_for_cmd(cmd):
                          return_code=1,
                          files_processed=0)
 
-
     # Execute the command
     try:
         execute_cmd(cmd)
@@ -528,9 +533,9 @@ def git_not_checked_in(files):
     # Deal with unmodified repositories
     if not modified_files_list:
         if DEBUG_FLAG:
-            sys.stderr.write('  No modified files found to process\n')
+            sys.stderr.write('  No modified files found to exclude\n')
             sys.stderr.write('  Leaving module git_not_checked_in\n')
-        return []
+        return files
 
     # Pull the file name (second field) of the output line and
     # remove any double quotes
@@ -541,7 +546,7 @@ def git_not_checked_in(files):
                   list_description='modified file found',
                   list_message='Modified files found')
 
-     # Remove any modified files from the list of files to process
+    # Remove any modified files from the list of files to process
     if modified_files_list:
         if DEBUG_FLAG:
             sys.stderr.write('  Removing non-committed modified files\n')
