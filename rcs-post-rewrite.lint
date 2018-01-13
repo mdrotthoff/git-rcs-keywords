@@ -1,0 +1,18 @@
+Processing file: rcs-post-rewrite.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-post-rewrite.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-post-rewrite
+C:  1, 0: Invalid module name "rcs-post-rewrite" (invalid-name)
+R: 45, 0: Too many branches (13/12) (too-many-branches)
+
+------------------------------------------------------------------
+Your code has been rated at 9.93/10 (previous run: 9.93/10, +0.00)
+

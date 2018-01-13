@@ -1,3 +1,0 @@
-$Rev$
-$Author$
-$Hash$

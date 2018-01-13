@@ -1,0 +1,23 @@
+Processing file: install-dev.py
+ 
+ 
+pycodestyle:
+ 
+checking install-dev.py
+install-dev.py:772:1: E722 do not use bare except'
+except:
+^
+1       E722 do not use bare except'
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module install-dev
+C:  1, 0: Invalid module name "install-dev" (invalid-name)
+C:717, 0: Invalid constant name "current_dir" (invalid-name)
+C:761, 4: Invalid constant name "submodules" (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.91/10 (previous run: 9.91/10, +0.00)
+

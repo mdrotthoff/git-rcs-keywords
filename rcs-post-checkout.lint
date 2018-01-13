@@ -1,0 +1,17 @@
+Processing file: rcs-post-checkout.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-post-checkout.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-post-checkout
+C:  1, 0: Invalid module name "rcs-post-checkout" (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+

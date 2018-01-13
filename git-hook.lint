@@ -1,0 +1,20 @@
+Processing file: git-hook.py
+ 
+ 
+pycodestyle:
+ 
+checking git-hook.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module git-hook
+C:  1, 0: Invalid module name "git-hook" (invalid-name)
+R:183, 0: Too many local variables (17/15) (too-many-locals)
+R:183, 0: Too many branches (21/12) (too-many-branches)
+R:183, 0: Too many statements (58/50) (too-many-statements)
+
+------------------------------------------------------------------
+Your code has been rated at 9.73/10 (previous run: 9.73/10, +0.00)
+
