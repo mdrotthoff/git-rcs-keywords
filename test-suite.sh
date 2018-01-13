@@ -14,7 +14,8 @@
 # $Source$
 
 output_log="$(pwd)/test-suite.log"
-install_src="$(realpath "$(dirname "${0}")/install.py")"
+#install_src="$(realpath "$(dirname "${0}")/install.py")"
+install_src="$(realpath "$(dirname "${0}")/install-dev.py")"
 
 repo_dir="git-test-repo"
 submodule_dir="test-repo2"
@@ -351,6 +352,26 @@ git_submodule_add()
   } >> "${output_log}" 2>&1
 }
 
+git_rebase()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Rebase the git repository"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git rebase"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rebase)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
 git_add_file()
 {
   local step_name
@@ -541,10 +562,10 @@ git_branch_merge()
     step_name="${2}"
   fi
 
-  step_cmd="git merge \"${1}\""
+  step_cmd="git merge \"${1}\" -m \"Merge from ${1}\""
   {
     (log_step_start "${step_name}" "${step_cmd}")
-    (git merge "${1}")
+    (git merge "${1}" -m "Merge from ${1}")
     (log_blank_line)
     (git status)
     (log_step_finish "${step_name}" "$?")
@@ -573,8 +594,9 @@ git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
 git_branch_list "${step_num}.06: List the branches"
 list_dir "." "${step_num}.07: List the repo directory ${repo_dir}"
 git_branch_create "development" "${step_num}.08: Create the development branch"
-git_branch_checkout "development" "${step_num}.09: Checkout the development branch"
-git_branch_list "${step_num}.10: List the branches"
+git_branch_list "${step_num}.09: List the branches"
+git_branch_checkout "development" "${step_num}.10: Checkout the development branch"
+git_branch_list "${step_num}.11: List the branches"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
 
 #02: Create the submodule repository
@@ -670,7 +692,107 @@ file_name="test-03.txt"
 display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
 
-#exit 0
+
+
+#08: Add dev file to development branch 
+section_name="Add dev file to development branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="08"
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+file_name="dev-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add dev file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+
+#09: Add master file to master branch 
+section_name="Add master file to master branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="09"
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+file_name="master-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add master file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding merging"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+
+#10: Merge development branch to master branch
+section_name="Merge development branch to master branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="10"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after adding merging"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+
+#11: Rebase the master branch
+section_name="Rebase the master branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="11"
+git_rebase "${step_num}.01: Rebase the master branch"
+git_branch_list "${step_num}.02: List the branches"
+list_dir "." "${step_num}.03: List the test files after rebase operation"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+
+#12: Merge master branch to development branch
+section_name="Merge master branch to development branch"
+(log_section_start "${section_name}") >> "${output_log}" 2>&1
+step_num="12"
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+git_branch_merge "master" "${step_num}.02: Merge master changes into the development branch"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+
+exit 0
 
 
 #99: Remove the test repositories
