@@ -32,7 +32,9 @@ GIT_HOOKS = [{'event_name': 'post-commit',
              {'event_name': 'post-checkout',
               'event_code': 'rcs-post-checkout.py'},
              {'event_name': 'post-merge',
-              'event_code': 'rcs-post-merge.py'}]
+              'event_code': 'rcs-post-merge.py'},
+             {'event_name': 'post-rewrite',
+              'event_code': 'rcs-post-rewrite.py'}]
 
 GIT_FILTERS = [{'filter_type': 'clean',
                 'filter_name': 'rcs-filter-clean.py'},

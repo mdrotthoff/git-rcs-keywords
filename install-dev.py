@@ -50,7 +50,6 @@ UNUSED_HOOKS = [{'event_name': 'applypatch-msg'},
                 {'event_name': 'post-update'},
                 {'event_name': 'push-to-checkout'},
                 {'event_name': 'pre-auto-gc'},
-#                {'event_name': 'post-rewrite'},
                 {'event_name': 'sendemail-validate'}]
 
 GIT_FILTERS = [{'filter_type': 'clean',
