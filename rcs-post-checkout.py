@@ -25,11 +25,11 @@ import time
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(False)
+DEBUG_FLAG = bool(True)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -52,8 +52,9 @@ def main(argv):
     # Display the startup message
     startup_message(argv)
 
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
+    function_name = 'main'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
         # List the provided parameters
         param_num = 0
         for param in sys.argv:
@@ -262,8 +263,9 @@ def dump_file_stream(stream_handle, stream_description):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Entered module dump_file_stream\n')
+    function_name = 'dump_file_stream'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
 
     # Output the stream handle description
     sys.stderr.write('      %s\n' % stream_description)
@@ -274,8 +276,8 @@ def dump_file_stream(stream_handle, stream_description):
         sys.stderr.write("\n")
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Leaving module dump_file_stream\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('      Leaving module %s\n' % function_name)
     return
 
 
@@ -446,8 +448,10 @@ def get_checkout_files(first_hash, second_hash):
     Returns:
         A list of filenames.
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module get_committed_files\n')
+    function_name = 'get_checkout_files'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
     file_list = []
 
     # Get the list of files impacted.  If argv[1] and argv[2] are the same
@@ -458,7 +462,7 @@ def get_checkout_files(first_hash, second_hash):
                'diff-tree',
                '-r',
                '--name-only',
-               '-no-commit-id',
+               '--no-commit-id',
                '--diff-filter=ACMRT',
                first_hash]
     else:
@@ -466,7 +470,7 @@ def get_checkout_files(first_hash, second_hash):
                'diff-tree',
                '-r',
                '--name-only',
-               '-no-commit-id',
+               '--no-commit-id',
                '--diff-filter=ACMRT',
                first_hash,
                second_hash]
@@ -478,7 +482,7 @@ def get_checkout_files(first_hash, second_hash):
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
         # This is a new repository, so get a list of all files
-        if err.returncode == 128:  # new repository
+        if err.returncode == 128:
             cmd_stdout = git_ls_files()
         else:
             shutdown_message(argv=sys.argv,
@@ -508,8 +512,8 @@ def get_checkout_files(first_hash, second_hash):
                          % len(file_list))
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Leaving module get_committed_files\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
     return file_list
 
 
