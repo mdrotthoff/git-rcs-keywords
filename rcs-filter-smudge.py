@@ -5,7 +5,7 @@
 # $Rev$
 # $Revision$
 # $Source$
-# $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
+# $Hash$
 
 """rcs-keywords-filter-smudge
 
@@ -26,12 +26,13 @@ DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
+
 
 def startup_message():
     """Function display any startup messages

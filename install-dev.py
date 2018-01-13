@@ -36,6 +36,22 @@ GIT_HOOKS = [{'event_name': 'post-commit',
              {'event_name': 'post-rewrite',
               'event_code': 'rcs-post-rewrite.py'}]
 
+UNUSED_HOOKS = [{'event_name': 'applypatch-msg'},
+                {'event_name': 'pre-applypatch'},
+                {'event_name': 'post-applypatch'},
+                {'event_name': 'pre-commit'},
+                {'event_name': 'prepare-commit-msg'},
+                {'event_name': 'commit-msg'},
+                {'event_name': 'pre-rebase'},
+                {'event_name': 'pre-push'},
+                {'event_name': 'ore-receive'},
+                {'event_name': 'update'},
+                {'event_name': 'post-receive'},
+                {'event_name': 'post-update'},
+                {'event_name': 'push-to-checkout'},
+                {'event_name': 'pre-auto-gc'},
+                {'event_name': 'sendemail-validate'}]
+
 GIT_FILTERS = [{'filter_type': 'clean',
                 'filter_name': 'rcs-filter-clean.py'},
                {'filter_type': 'smudge',
@@ -245,21 +261,28 @@ def registergitevent(eventdir, eventname, eventcode):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+    event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
     if DEBUG_FLAG:
         sys.stderr.write('  git event dir: %s\n' % eventdir)
         sys.stderr.write('  git event name: %s\n' % eventname)
         sys.stderr.write('  git event code: %s\n' % eventcode)
-    event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
-    if DEBUG_FLAG:
         sys.stderr.write('  git event code dir: %s\n' % event_code_dir)
-    createdir(dirname=event_code_dir)
-    copyfile(srcfile=os.path.join(PROGRAM_PATH, eventcode),
-             destfile=os.path.join(event_code_dir, eventcode))
+
+    # If an event handler is defined, create the event subdiectory
+    # and copy the code to it
+    if eventcode:
+        createdir(dirname=event_code_dir)
+        copyfile(srcfile=os.path.join(PROGRAM_PATH, eventcode),
+                 destfile=os.path.join(event_code_dir, eventcode))
+
+    # Register the handler with git event
     event_link = os.path.join(eventdir, eventname)
     if os.path.islink(event_link):
         if DEBUG_FLAG:
             sys.stderr.write('  Removed event link: %s\n' % event_link)
         os.remove(event_link)
+    if SUMMARY_FLAG:
+        sys.stderr.write('  Registered event: %s\n' % event_link)
     os.symlink(GIT_HOOK, event_link)
     if DEBUG_FLAG:
         sys.stderr.write('  Created event link: %s\n' % event_link)
@@ -425,6 +448,12 @@ def installgitkeywords(repo_dir, git_dir='.git'):
         registergitevent(eventdir=event_dir,
                          eventname=git_event['event_name'],
                          eventcode=git_event['event_code'])
+
+    # Register the unsued git event hooks
+    for git_event in UNUSED_HOOKS:
+        registergitevent(eventdir=event_dir,
+                         eventname=git_event['event_name'],
+                         eventcode=None)
 
     # Set up the filter programs for use
     for filter_def in GIT_FILTERS:

@@ -23,12 +23,13 @@ import errno
 import subprocess
 import time
 
+
 # Set the debugging flag
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
@@ -51,8 +52,9 @@ def main(argv):
     # Display the startup message
     startup_message(argv)
 
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module main\n')
+    function_name = 'main'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
         # List the provided parameters
         param_num = 0
         for param in sys.argv:
@@ -261,20 +263,22 @@ def dump_file_stream(stream_handle, stream_description):
     Returns:
         Nothing
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Entered module dump_file_stream\n')
+    function_name = 'dump_file_stream'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
 
     # Output the stream handle description
     sys.stderr.write('      %s\n' % stream_description)
 
     # Output the contents of the stream handle if any exists
-    if len(stream_handle) > 0:
+#    if len(stream_handle) > 0:
+    if stream_handle:
         sys.stderr.write(stream_handle.strip().decode("utf-8"))
         sys.stderr.write("\n")
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('    Leaving module dump_file_stream\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('      Leaving module %s\n' % function_name)
     return
 
 
@@ -378,7 +382,6 @@ def check_for_cmd(cmd):
                          return_code=1,
                          files_processed=0)
 
-
     # Execute the command
     try:
         execute_cmd(cmd)
@@ -446,8 +449,10 @@ def get_checkout_files(first_hash, second_hash):
     Returns:
         A list of filenames.
     """
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Entered module get_committed_files\n')
+    function_name = 'get_checkout_files'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
     file_list = []
 
     # Get the list of files impacted.  If argv[1] and argv[2] are the same
@@ -458,7 +463,7 @@ def get_checkout_files(first_hash, second_hash):
                'diff-tree',
                '-r',
                '--name-only',
-               '-no-commit-id',
+               '--no-commit-id',
                '--diff-filter=ACMRT',
                first_hash]
     else:
@@ -466,7 +471,7 @@ def get_checkout_files(first_hash, second_hash):
                'diff-tree',
                '-r',
                '--name-only',
-               '-no-commit-id',
+               '--no-commit-id',
                '--diff-filter=ACMRT',
                first_hash,
                second_hash]
@@ -478,7 +483,7 @@ def get_checkout_files(first_hash, second_hash):
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
         # This is a new repository, so get a list of all files
-        if err.returncode == 128:  # new repository
+        if err.returncode == 128:
             cmd_stdout = git_ls_files()
         else:
             shutdown_message(argv=sys.argv,
@@ -489,7 +494,7 @@ def get_checkout_files(first_hash, second_hash):
     file_list = cmd_stdout.decode('utf8').splitlines()
 
     # Deal with unmodified repositories
-    if len(file_list) == 1 and file_list[0] is 'clean':
+    if file_list and file_list[0] == 'clean':
         if DEBUG_FLAG:
             sys.stderr.write('  No files found to process\n')
             sys.stderr.write('  Leaving module get_committed_files\n')
@@ -508,8 +513,8 @@ def get_checkout_files(first_hash, second_hash):
                          % len(file_list))
 
     # Return from the function
-    if VERBOSE_FLAG:
-        sys.stderr.write('  Leaving module get_committed_files\n')
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
     return file_list
 
 
@@ -563,7 +568,7 @@ def git_not_checked_in(files):
                   list_description='modified file found',
                   list_message='Modified files found')
 
-     # Remove any modified files from the list of files to process
+    # Remove any modified files from the list of files to process
     if modified_files_list:
         if DEBUG_FLAG:
             sys.stderr.write('  Removing non-committed modified files\n')

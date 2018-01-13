@@ -20,23 +20,26 @@ programs.
 
 """
 
+
 import sys
 import os
 import stat
 import subprocess
 import time
 
+
 # Set the debugging flag
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
+VERBOSE_FLAG = bool(True)
 if TIMING_FLAG:
     VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
+
 
 def startup_message():
     """Function display any startup messages
@@ -203,7 +206,6 @@ def main(argv):
                   list_description='Param',
                   list_message='Parameter list')
 
-
     # Show the OS environment variables
     if DEBUG_FLAG:
         sys.stderr.write('  Environment variables defined\n')
@@ -231,8 +233,8 @@ def main(argv):
         for file_name in sorted(os.listdir(list_dir)):
             file_stat = os.lstat(os.path.join(list_dir,
                                               file_name))
-            file_mtime = str(time.strftime('%x %X', \
-                             time.localtime(file_stat.st_mtime)))
+            file_mtime = str(time.strftime('%x %X',
+                                           time.localtime(file_stat.st_mtime)))
             file_size = str(file_stat.st_size)
             file_mode = str(oct(stat.S_IMODE(file_stat.st_mode)))
             file_type = ''
@@ -267,7 +269,8 @@ def main(argv):
                                                      for param in argv[1:]))
             hook_executed = hook_executed + 1
             if VERBOSE_FLAG:
-                sys.stderr.write('  Executing hook program %s\n' % hook_program)
+                sys.stderr.write('  Executing hook program %s\n'
+                                 % hook_program)
             hook_call = subprocess.call([hook_program], shell=True)
             if DEBUG_FLAG:
                 sys.stderr.write('Hook return code %s\n' % hook_call)
