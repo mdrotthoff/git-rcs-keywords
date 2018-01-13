@@ -14,6 +14,11 @@ post-commit event.  It detects which files have been changed
 and forces the file to be checked back out within the
 repository.
 
+TODO:  Need to read stdin for the list of commit hashes to
+       process.  Only need to use one of the two values on
+       the each line to determine the files that are
+       affected.  Should need to just check the files
+       out during the post-rewrite. 
 """
 
 
