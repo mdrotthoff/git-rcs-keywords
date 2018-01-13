@@ -25,7 +25,7 @@ import time
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
@@ -271,7 +271,8 @@ def dump_file_stream(stream_handle, stream_description):
     sys.stderr.write('      %s\n' % stream_description)
 
     # Output the contents of the stream handle if any exists
-    if len(stream_handle) > 0:
+#    if len(stream_handle) > 0:
+    if stream_handle:
         sys.stderr.write(stream_handle.strip().decode("utf-8"))
         sys.stderr.write("\n")
 
@@ -493,7 +494,7 @@ def get_checkout_files(first_hash, second_hash):
     file_list = cmd_stdout.decode('utf8').splitlines()
 
     # Deal with unmodified repositories
-    if len(file_list) == 1 and file_list[0] is 'clean':
+    if file_list and file_list[0] == 'clean':
         if DEBUG_FLAG:
             sys.stderr.write('  No files found to process\n')
             sys.stderr.write('  Leaving module get_committed_files\n')
