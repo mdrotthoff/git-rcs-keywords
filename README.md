@@ -49,10 +49,10 @@ of the repository.  The smudge filter is run whenever a file is checked out
 as the result of a commit, branch change, or any other time the file is created
 from the git repository.
 
-Additionally, there are three git event hooks registered to ensure that the data used
+Additionally, there are four git event hooks registered to ensure that the data used
 in expanding the RCS keywords is accurate and consistent.  Due to the method git uses
 to manage pulling changes from the remote copy of the repository, the events are used
-to trigger a fresh checkout of the modified files under specific conditions.  The three
+to trigger a fresh checkout of the modified files under specific conditions.  The four
 event hooks registered are:
 
 1. post-checkout event - re-processes files found during a git checkout that may not
@@ -64,3 +64,6 @@ commit
 
 3. post-merge event - re-process files found during the latest git merge action as the
 result of a git pull or git merge action
+
+4. post-rewrite event - re-checkout files found to have been rewrittne during a git
+rebase operation.
