@@ -18,7 +18,7 @@ TODO:  Need to read stdin for the list of commit hashes to
        process.  Only need to use one of the two values on
        the each line to determine the files that are
        affected.  Should need to just check the files
-       out during the post-rewrite. 
+       out during the post-rewrite.
 """
 
 
@@ -30,7 +30,7 @@ import time
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
@@ -76,39 +76,54 @@ def main(argv):
             sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
         sys.stderr.write("\n")
 
+    # Check if git is available.
+    check_for_cmd(cmd=['git', '--version'])
+
     # Read stdin and write it to stderr
     input_lines = sys.stdin.readlines()
     line_count = 1
+    files = []
     for source_line in input_lines:
-        sys.stderr.write('Line: %d  Data: %s\n' % (line_count, str(source_line).strip('\n')))
         line_count += 1
-    sys.stderr.write('Total input lines: %d\n' % line_count)
+        words = source_line.split()
+        # Get the list of modified files
+        files = files + get_modified_files(words[1].strip())
+
+    # Dump the list of files found to be rewritten
+    if VERBOSE_FLAG:
+        dump_list(list_values=sorted(files),
+                  list_description='File',
+                  list_message='Rewritten files list')
+
+    # Create a list of unique files that were rewritten
+    files = set(sorted(files))
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Unique rewritten files list')
+
+    # Remove modified files from the list
+    files = git_not_checked_in(files)
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Non-modified rewritten files list')
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of modified files
-    files = get_modified_files()
-
-#    # Filter the list of modified files to exclude those modified since
-#    # the commit
-#    files = git_not_checked_in(files=files)
-
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
-#    # Force a checkout of the remaining file list
-#    if DEBUG_FLAG:
-#        sys.stderr.write('  Processing the remaining file list\n')
-#    # Process the remaining file list
+    # Force a checkout of the remaining file list
     files_processed = 0
-#    if files:
-#        files.sort()
-#        for file_name in files:
-#            if DEBUG_FLAG:
-#                sys.stderr.write('  Checking out file %s\n' % file_name)
-#            check_out_file(file_name=file_name)
-#            files_processed = files_processed + 1
+    if files:
+        for file_name in sorted(files):
+            if SUMMARY_FLAG:
+                sys.stderr.write('  Checking out rewritten file %s\n'
+                                 % file_name)
+            check_out_file(file_name=file_name)
+            files_processed = files_processed + 1
 
     # Calculate the elapsed times
     if TIMING_FLAG:
@@ -414,62 +429,62 @@ def check_for_cmd(cmd):
     return
 
 
-# def git_ls_files():
-#     """Find files that are relevant based on all files for the
-#        repository branch.
-# 
-#     Arguments:
-#         None
-# 
-#     Returns:
-#         A list of filenames.
-#     """
-#     function_name = 'git_ls_files'
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Entered module %s\n' % function_name)
-# 
-#     cmd = ['git', 'ls-files']
-# 
-#     # Get a list of all files in the current repository branch
-#     try:
-#         cmd_stdout = execute_cmd(cmd)
-# 
-#     # if an exception occurs, raise it to the caller
-#     except subprocess.CalledProcessError as err:
-#         shutdown_message(argv=sys.argv,
-#                          return_code=err.returncode,
-#                          files_processed=0)
-# 
-#     # Return from the function
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Leaving module %s\n' % function_name)
-#     return cmd_stdout
+def git_ls_files():
+    """Find files that are relevant based on all files for the
+       repository branch.
+
+    Arguments:
+        None
+
+    Returns:
+        A list of filenames.
+    """
+    function_name = 'git_ls_files'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    cmd = ['git', 'ls-files']
+
+    # Get a list of all files in the current repository branch
+    try:
+        cmd_stdout = execute_cmd(cmd)
+
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        shutdown_message(argv=sys.argv,
+                         return_code=err.returncode,
+                         files_processed=0)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return cmd_stdout
 
 
-def get_modified_files():
+def get_modified_files(dest_hash):
     """Find files that were modified by the merge.
 
     Arguments:
         None
- 
+
     Returns:
         A list of filenames.
     """
     function_name = 'get_modified_files'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
- 
+
     modified_file_list = []
-    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
-           '--diff-filter=ACMRT']
- 
+    cmd = ['git', 'diff-tree', dest_hash, '--name-only', '-r',
+           '--no-commit-id', '--diff-filter=ACMRT']
+
     if DEBUG_FLAG:
         sys.stderr.write('    Getting list of files modified\n')
- 
+
     # Fetch the list of files modified by the last commit
     try:
         cmd_stdout = execute_cmd(cmd)
- 
+
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
         # This is a new repository, so get a list of all files
@@ -479,10 +494,10 @@ def get_modified_files():
             shutdown_message(argv=sys.argv,
                              return_code=err.returncode,
                              files_processed=0)
- 
+
     # Convert the stdout stream to a list of files
     modified_file_list = cmd_stdout.decode('utf8').splitlines()
- 
+
     # Deal with unmodified repositories
     if modified_file_list and modified_file_list[0] == 'clean':
         if DEBUG_FLAG:
@@ -491,7 +506,7 @@ def get_modified_files():
         shutdown_message(argv=sys.argv,
                          return_code=0,
                          files_processed=0)
- 
+
     # List all files initially selected
     if DEBUG_FLAG:
         dump_list(list_values=modified_file_list,
@@ -507,131 +522,131 @@ def get_modified_files():
     if VERBOSE_FLAG:
         sys.stderr.write('  %d modified files found for processing\n'
                          % len(modified_file_list))
- 
+
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
     return modified_file_list
 
 
-# def git_not_checked_in(files):
-#     """Find files that are modified but are not checked in.
-# 
-#     Arguments:
-#         None
-# 
-#     Returns:
-#         A list of modified files that are not checked in.
-#     """
-#     function_name = 'git_not_checked_in'
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Entered module %s\n' % function_name)
-# 
-#     cmd = ['git', 'status', '-s']
-# 
-#     # Get the list of files that are modified but not checked in
-#     try:
-#         cmd_stdout = execute_cmd(cmd)
-# 
-#     # if an exception occurs, raise it to the caller
-#     except subprocess.CalledProcessError as err:
-#         sys.stderr.write('  CalledProcessError in git_not_checked_id\n')
-#         shutdown_message(argv=sys.argv,
-#                          return_code=err.returncode,
-#                          files_processed=0)
-#     except OSError as err:
-#         sys.stderr.write('  OSError in git_not_checked_id\n')
-#         shutdown_message(argv=sys.argv,
-#                          return_code=err.errno,
-#                          files_processed=0)
-# 
-#     # Convert the stream output to a list of output lines
-#     modified_files_list = cmd_stdout.decode('utf8').splitlines()
-# 
-#     # Deal with unmodified repositories
-#     if not modified_files_list:
-#         if DEBUG_FLAG:
-#             sys.stderr.write('  No modified files found to process\n')
-#             sys.stderr.write('  Leaving module git_not_checked_in\n')
-#         return files
-# 
-#     # Pull the file name (second field) of the output line and
-#     # remove any double quotes
-#     modified_files_list = [l.split(None, 1)[-1].strip('"')
-#                            for l in modified_files_list]
-#     if DEBUG_FLAG and modified_files_list:
-#         dump_list(list_values=modified_files_list,
-#                   list_description='modified file found',
-#                   list_message='Modified files found')
-# 
-#     # Remove any modified files from the list of files to process
-#     if modified_files_list:
-#         if DEBUG_FLAG:
-#             sys.stderr.write('  Removing non-committed modified files\n')
-#         files = [f for f in files if f not in modified_files_list]
-# 
-#     # Return from the function
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Leaving module %s\n' % function_name)
-#     return files
+def git_not_checked_in(files):
+    """Find files that are modified but are not checked in.
+
+    Arguments:
+        None
+
+    Returns:
+        A list of modified files that are not checked in.
+    """
+    function_name = 'git_not_checked_in'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+
+    cmd = ['git', 'status', '-s']
+
+    # Get the list of files that are modified but not checked in
+    try:
+        cmd_stdout = execute_cmd(cmd)
+
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write('  CalledProcessError in git_not_checked_id\n')
+        shutdown_message(argv=sys.argv,
+                         return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write('  OSError in git_not_checked_id\n')
+        shutdown_message(argv=sys.argv,
+                         return_code=err.errno,
+                         files_processed=0)
+
+    # Convert the stream output to a list of output lines
+    modified_files_list = cmd_stdout.decode('utf8').splitlines()
+
+    # Deal with unmodified repositories
+    if not modified_files_list:
+        if DEBUG_FLAG:
+            sys.stderr.write('  No modified files found to process\n')
+            sys.stderr.write('  Leaving module git_not_checked_in\n')
+        return files
+
+    # Pull the file name (second field) of the output line and
+    # remove any double quotes
+    modified_files_list = [l.split(None, 1)[-1].strip('"')
+                           for l in modified_files_list]
+    if DEBUG_FLAG and modified_files_list:
+        dump_list(list_values=modified_files_list,
+                  list_description='modified file found',
+                  list_message='Modified files found')
+
+    # Remove any modified files from the list of files to process
+    if modified_files_list:
+        if DEBUG_FLAG:
+            sys.stderr.write('  Removing non-committed modified files\n')
+        files = [f for f in files if f not in modified_files_list]
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return files
 
 
-# def check_out_file(file_name):
-#     """Checkout file that has been modified by the latest commit.
-# 
-#     Arguments:
-#         file_name -- the file name to be checked out for smudging
-# 
-#     Returns:
-#         Nothing.
-#     """
-#     function_name = 'check_out_file'
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Entered module %s\n' % function_name)
-#         sys.stderr.write('    os file %s exists: %s\n'
-#                          % (file_name, str(os.path.isfile(file_name))))
-# 
-#     # Remove the file if it currently exists
-#     try:
-#         sys.stderr.flush()
-#         os.remove(file_name)
-#     except OSError as err:
-#         # Ignore a file not found error, it was being removed anyway
-#         if err.errno == errno.ENOENT:
-#             if DEBUG_FLAG:
-#                 sys.stderr.write('Unable to remove file: %s  Error code: %d\n'
-#                                  % (file_name, err.errno))
-#         else:
-#             shutdown_message(argv=sys.argv,
-#                              return_code=err.errno,
-#                              files_processed=0)
-#     if DEBUG_FLAG:
-#         sys.stderr.write('    Removed os file %s exists: %s\n'
-#                          % (file_name, str(os.path.isfile(file_name))))
-# 
-#     cmd = ['git', 'checkout', '-f', '%s' % file_name]
-#     if DEBUG_FLAG:
-#         sys.stderr.write('    git_cmd: %s\n' % str(cmd))
-# 
-#     # Check out the file so that it is smudged
-#     try:
-#         sys.stderr.flush()
-#         execute_cmd(cmd)
-#     except subprocess.CalledProcessError as err:
-#         sys.stderr.write('  CalledProcessError in check_out_file\n')
-#         shutdown_message(argv=sys.argv,
-#                          return_code=err.returncode,
-#                          files_processed=0)
-#     except OSError as err:
-#         sys.stderr.write('  OSError in check_out_file\n')
-#         shutdown_message(argv=sys.argv,
-#                          return_code=err.errno,
-#                          files_processed=0)
-# 
-#     # Return from the function
-#     if DEBUG_FLAG:
-#         sys.stderr.write('  Leaving module %s\n' % function_name)
-#     return
+def check_out_file(file_name):
+    """Checkout file that has been modified by the latest commit.
+
+    Arguments:
+        file_name -- the file name to be checked out for smudging
+
+    Returns:
+        Nothing.
+    """
+    function_name = 'check_out_file'
+    if DEBUG_FLAG:
+        sys.stderr.write('  Entered module %s\n' % function_name)
+        sys.stderr.write('    os file %s exists: %s\n'
+                         % (file_name, str(os.path.isfile(file_name))))
+
+    # Remove the file if it currently exists
+    try:
+        sys.stderr.flush()
+        os.remove(file_name)
+    except OSError as err:
+        # Ignore a file not found error, it was being removed anyway
+        if err.errno == errno.ENOENT:
+            if DEBUG_FLAG:
+                sys.stderr.write('Unable to remove file: %s  Error code: %d\n'
+                                 % (file_name, err.errno))
+        else:
+            shutdown_message(argv=sys.argv,
+                             return_code=err.errno,
+                             files_processed=0)
+    if DEBUG_FLAG:
+        sys.stderr.write('    Removed os file %s exists: %s\n'
+                         % (file_name, str(os.path.isfile(file_name))))
+
+    cmd = ['git', 'checkout', '-f', '%s' % file_name]
+    if DEBUG_FLAG:
+        sys.stderr.write('    git_cmd: %s\n' % str(cmd))
+
+    # Check out the file so that it is smudged
+    try:
+        sys.stderr.flush()
+        execute_cmd(cmd)
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write('  CalledProcessError in check_out_file\n')
+        shutdown_message(argv=sys.argv,
+                         return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write('  OSError in check_out_file\n')
+        shutdown_message(argv=sys.argv,
+                         return_code=err.errno,
+                         files_processed=0)
+
+    # Return from the function
+    if DEBUG_FLAG:
+        sys.stderr.write('  Leaving module %s\n' % function_name)
+    return
 
 
 # Execute the main function
