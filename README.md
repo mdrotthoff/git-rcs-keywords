@@ -6,9 +6,7 @@ sensitive fashion for expansion purposes.  The keywords supported and the
 relevant substitution values are:
 
 ## To Do
-1. Check to see if there are issues if a rebase is performed after committing
-changes to the repository!!!!
-2. Look into filtering the files actually processed based on the file patterns
+1. Look into filtering the files actually processed based on the file patterns
 specified in the attributes file
 
 
@@ -53,7 +51,9 @@ Additionally, there are four git event hooks registered to ensure that the data 
 in expanding the RCS keywords is accurate and consistent.  Due to the method git uses
 to manage pulling changes from the remote copy of the repository, the events are used
 to trigger a fresh checkout of the modified files under specific conditions.  The four
-event hooks registered are:
+event hooks registered are:  Note: The event hooks exclude from this process any file
+that has been modified by the user.  So if a file has been modified since a git add but
+before the git commit action, it will *NOT* be replaced (and the keywords not expanded).
 
 1. post-checkout event - re-processes files found during a git checkout that may not
 have had up-to-date commit information at the time of the checkout
@@ -65,5 +65,5 @@ commit
 3. post-merge event - re-process files found during the latest git merge action as the
 result of a git pull or git merge action
 
-4. post-rewrite event - re-checkout files found to have been rewrittne during a git
+4. post-rewrite event - re-checkout files found to have been rewritten during a git
 rebase operation.
