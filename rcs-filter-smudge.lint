@@ -10,10 +10,11 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-filter-smudge
-C:  1, 0: Invalid module name "rcs-filter-smudge" (invalid-name)
-R:257, 0: Too many local variables (29/15) (too-many-locals)
-R:257, 0: Too many statements (74/50) (too-many-statements)
+C:  1, 0: Module name "rcs-filter-smudge" doesn't conform to snake_case naming style (invalid-name)
+R:255, 0: Too many local variables (29/15) (too-many-locals)
+R:255, 0: Too many statements (74/50) (too-many-statements)
+C:394, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.85/10 (previous run: 9.85/10, +0.00)
+Your code has been rated at 9.80/10 (previous run: 9.56/10, +0.25)
 
