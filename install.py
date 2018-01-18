@@ -22,7 +22,7 @@ from shutil import copy2
 import subprocess
 import re
 from pycallgraph import PyCallGraph
-from pycallgraph.output import GephiOutput
+from pycallgraph.output import GraphvizOutput
 
 GIT_HOOK = 'git-hook.py'
 
@@ -48,16 +48,11 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
+CALL_GRAPH_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
-if DEBUG_FLAG:
-    TIMING_FLAG = bool(True)
 VERBOSE_FLAG = bool(False)
-if TIMING_FLAG:
-    VERBOSE_FLAG = bool(True)
 SUMMARY_FLAG = bool(True)
-if VERBOSE_FLAG:
-    SUMMARY_FLAG = bool(True)
 
 PROGRAM_NAME = os.path.abspath(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
@@ -71,6 +66,7 @@ else:
     TARGET_DIR = ''
     if DEBUG_FLAG:
         sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
+
 
 def check_for_cmd(cmd):
     """Make sure that a program necessary for using this script is
@@ -676,28 +672,21 @@ def findsubmodules():
     return submodule_list
 
 
-######
-# Main
-######
 def main():
+    """Main program.
+
+    Arguments:
+        argv: command line arguments
+
+    Returns:
+        Nothing
+    """
     # Set the start time for calculating elapsed time
     start_time = time.clock()
 
     # Parameter processing
-#    program_name = os.path.abspath(sys.argv[0])
-#    (program_path, program_executable) = os.path.split(PROGRAM_NAME)
     if SUMMARY_FLAG or DEBUG_FLAG:
         startup_message()
-
-#    # Set the installation target
-#    if len(sys.argv) > 1:
-#        TARGET_DIR = sys.argv[1]
-#        if DEBUG_FLAG:
-#            sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
-#    else:
-#        TARGET_DIR = ''
-#        if DEBUG_FLAG:
-#            sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
 
     if SUMMARY_FLAG:
         sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
@@ -771,13 +760,15 @@ def main():
                        setup_clock=setup_time)
 
     shutdown_message(return_code=0)
-#    exit(0)
+
 
 # Execute the main function
 if __name__ == '__main__':
-    gephi = GephiOutput()
-    gephi.output_file = 'basic.gdf'
-
-    sys.stderr.write("System path: %s" % sys.path)
-    with PyCallGraph(output=gephi):
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = os.path.basename(sys.argv[0]) + '.' + graphviz.output_type
+        with PyCallGraph(output=graphviz):
+            main()
+    else:
         main()

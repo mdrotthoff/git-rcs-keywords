@@ -27,9 +27,12 @@ import os
 import errno
 import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(True)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
@@ -645,4 +648,12 @@ def check_out_file(file_name):
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = os.path.basename(sys.argv[0]) + '.' + graphviz.output_type
+        sys.stderr.write('Writing %s file: %s\n' % (graphviz.output_tpye, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)
