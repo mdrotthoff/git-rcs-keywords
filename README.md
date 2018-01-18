@@ -50,10 +50,10 @@ from the git repository.
 Additionally, there are four git event hooks registered to ensure that the data used
 in expanding the RCS keywords is accurate and consistent.  Due to the method git uses
 to manage pulling changes from the remote copy of the repository, the events are used
-to trigger a fresh checkout of the modified files under specific conditions.  The four
-event hooks registered are:  Note: The event hooks exclude from this process any file
-that has been modified by the user.  So if a file has been modified since a git add but
-before the git commit action, it will *NOT* be replaced (and the keywords not expanded).
+to trigger a fresh checkout of the modified files under specific conditions.  Note: The
+event hooks exclude from this process any file that has been modified by the user.
+So if a file has been modified since a git add but before the git commit action, it will
+*NOT* be replaced (and the keywords not expanded). The four event hooks registered are:  
 
 1. post-checkout event - re-processes files found during a git checkout that may not
 have had up-to-date commit information at the time of the checkout
@@ -67,3 +67,9 @@ result of a git pull or git merge action
 
 4. post-rewrite event - re-checkout files found to have been rewritten during a git
 rebase operation.
+
+Finally, a program is installed into the git hooks directory which controls access to
+the various git event hooks.  This allows each git event to have multiple hooks for a
+specific event.  This is done by creating a subdirectory for each of the registered
+git events to hold the associated hook programs.  Note that the hooks are executed in
+a sorted fashion so there is some control over the order the hook programs are executed.
