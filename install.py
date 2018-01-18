@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 # $Author$
 # $Date$
 # $File$
@@ -21,7 +21,8 @@ import time
 from shutil import copy2
 import subprocess
 import re
-
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GephiOutput
 
 GIT_HOOK = 'git-hook.py'
 
@@ -47,7 +48,7 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(False)
+DEBUG_FLAG = bool(True)
 TIMING_FLAG = bool(False)
 if DEBUG_FLAG:
     TIMING_FLAG = bool(True)
@@ -58,6 +59,18 @@ SUMMARY_FLAG = bool(True)
 if VERBOSE_FLAG:
     SUMMARY_FLAG = bool(True)
 
+PROGRAM_NAME = os.path.abspath(sys.argv[0])
+(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
+
+# Set the installation target
+if len(sys.argv) > 1:
+    TARGET_DIR = sys.argv[1]
+    if DEBUG_FLAG:
+        sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
+else:
+    TARGET_DIR = ''
+    if DEBUG_FLAG:
+        sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
 
 def check_for_cmd(cmd):
     """Make sure that a program necessary for using this script is
@@ -244,11 +257,10 @@ def registergitevent(eventdir, eventname, eventcode):
     function_name = 'registergitevent'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
-
-    if DEBUG_FLAG:
         sys.stderr.write('  git event dir: %s\n' % eventdir)
         sys.stderr.write('  git event name: %s\n' % eventname)
         sys.stderr.write('  git event code: %s\n' % eventcode)
+
     event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
     if DEBUG_FLAG:
         sys.stderr.write('  git event code dir: %s\n' % event_code_dir)
@@ -508,6 +520,9 @@ def startup_message():
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+#    program_name = os.path.abspath(sys.argv[0])
+#    (program_path, program_executable) = os.path.split(program_name)
+
     # Display source executable information
     if DEBUG_FLAG:
         sys.stderr.write('************ START **************\n')
@@ -544,6 +559,9 @@ def shutdown_message(return_code=0):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+#    program_name = os.path.abspath(sys.argv[0])
+#    (program_path, program_executable) = os.path.split(program_name)
+
     # Output the program end
     if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % PROGRAM_NAME)
@@ -563,7 +581,7 @@ def shutdown_message(return_code=0):
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
-    exit(return_code)
+#    exit(return_code)
 
 
 def dump_file_stream(stream_handle, stream_description):
@@ -624,7 +642,6 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-# def findsubmodules(repo_dir):
 def findsubmodules():
     """Function to find the relevent configuration files for any
     submodules associated with the master repository.  Leave the
@@ -662,95 +679,105 @@ def findsubmodules():
 ######
 # Main
 ######
-# Set the start time for calculating elapsed time
-START_TIME = time.clock()
+def main():
+    # Set the start time for calculating elapsed time
+    start_time = time.clock()
 
-# Parameter processing
-PROGRAM_NAME = os.path.abspath(sys.argv[0])
-(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
-if SUMMARY_FLAG or DEBUG_FLAG:
-    startup_message()
+    # Parameter processing
+#    program_name = os.path.abspath(sys.argv[0])
+#    (program_path, program_executable) = os.path.split(PROGRAM_NAME)
+    if SUMMARY_FLAG or DEBUG_FLAG:
+        startup_message()
 
-# Set the installation target
-if len(sys.argv) > 1:
-    TARGET_DIR = sys.argv[1]
+#    # Set the installation target
+#    if len(sys.argv) > 1:
+#        TARGET_DIR = sys.argv[1]
+#        if DEBUG_FLAG:
+#            sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
+#    else:
+#        TARGET_DIR = ''
+#        if DEBUG_FLAG:
+#            sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
+
+    if SUMMARY_FLAG:
+        sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
+
+    # Save the current working directory
+    current_dir = os.getcwd()
+
+    if VERBOSE_FLAG:
+        dump_list(list_values=sys.argv,
+                  list_description='Param',
+                  list_message='Parameter list')
+
+    # Show the OS environment variables
     if DEBUG_FLAG:
-        sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
-else:
-    TARGET_DIR = ''
+        sys.stderr.write('  Environment variables defined\n')
+        for key, value in sorted(os.environ.items()):
+            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
+        sys.stderr.write("\n")
+
+    # Show the embedded variables
     if DEBUG_FLAG:
-        sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
+        sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
+        sys.stderr.write('  git dirs: ')
+        sys.stderr.write(str(GIT_DIRS))
+        sys.stderr.write('\n  git hooks: ')
+        sys.stderr.write(str(GIT_HOOKS))
+        sys.stderr.write('\n  git filters: ')
+        sys.stderr.write(str(GIT_FILTERS))
+        sys.stderr.write('\n  git file_pattern: ')
+        sys.stderr.write(str(GIT_FILE_PATTERN))
+        sys.stderr.write('\n')
 
-if SUMMARY_FLAG:
-    sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
+    # Check if git is available.
+    check_for_cmd(cmd=['git', '--version'])
 
-# Save the current working directory
-current_dir = os.getcwd()
+    # Save the setup time
+    setup_time = time.clock()
 
-if VERBOSE_FLAG:
-    dump_list(list_values=sys.argv,
-              list_description='Param',
-              list_message='Parameter list')
-
-# Show the OS environment variables
-if DEBUG_FLAG:
-    sys.stderr.write('  Environment variables defined\n')
-    for key, value in sorted(os.environ.items()):
-        sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-    sys.stderr.write("\n")
-
-# Show the embedded variables
-if DEBUG_FLAG:
-    sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
-    sys.stderr.write('  git dirs: ')
-    sys.stderr.write(str(GIT_DIRS))
-    sys.stderr.write('\n  git hooks: ')
-    sys.stderr.write(str(GIT_HOOKS))
-    sys.stderr.write('\n  git filters: ')
-    sys.stderr.write(str(GIT_FILTERS))
-    sys.stderr.write('\n  git file_pattern: ')
-    sys.stderr.write(str(GIT_FILE_PATTERN))
-    sys.stderr.write('\n')
-
-# Check if git is available.
-check_for_cmd(cmd=['git', '--version'])
-
-# Save the setup time
-SETUP_TIME = time.clock()
-
-# Install the keyword support
-try:
-    # Validate that a git repository was supplied
-    validategitrepo(repo_dir=TARGET_DIR)
-    # Change to the repository directory
-    os.chdir(os.path.abspath(TARGET_DIR))
-    if DEBUG_FLAG:
-        sys.stderr.write('Current directory %s\n' % os.getcwd())
-    # Install rcs keywords support in the repo
-    installgitkeywords(repo_dir='')
-#    submodules = findsubmodules(repo_dir=TARGET_DIR)
-    submodules = findsubmodules()
-    if DEBUG_FLAG:
-        sys.stderr.write('  Submodule count: %d\n' % len(submodules))
-    for module in submodules:
+    # Install the keyword support
+    try:
+        # Validate that a git repository was supplied
+        validategitrepo(repo_dir=TARGET_DIR)
+        # Change to the repository directory
+        os.chdir(os.path.abspath(TARGET_DIR))
         if DEBUG_FLAG:
-            sys.stderr.write('    Found submodule %s\n' % str(module))
-            sys.stderr.write('Repo dir: %s\n' % module['repodir'])
-            sys.stderr.write('git dir: %s\n' % module['gitdir'])
-        installgitkeywords(repo_dir=module['repodir'],
-                           git_dir=module['gitdir'])
+            sys.stderr.write('Current directory %s\n' % os.getcwd())
+        # Install rcs keywords support in the repo
+        installgitkeywords(repo_dir='')
+    #    submodules = findsubmodules(repo_dir=TARGET_DIR)
+        submodules = findsubmodules()
+        if DEBUG_FLAG:
+            sys.stderr.write('  Submodule count: %d\n' % len(submodules))
+        for module in submodules:
+            if DEBUG_FLAG:
+                sys.stderr.write('    Found submodule %s\n' % str(module))
+                sys.stderr.write('Repo dir: %s\n' % module['repodir'])
+                sys.stderr.write('git dir: %s\n' % module['gitdir'])
+            installgitkeywords(repo_dir=module['repodir'],
+                               git_dir=module['gitdir'])
 
-except:
-    sys.stderr.write('Exception caught\n')
-    raise
+    except:
+        sys.stderr.write('Exception caught\n')
+        raise
 
-# Return to the initial working directory
-os.chdir(current_dir)
+    # Return to the initial working directory
+    os.chdir(current_dir)
 
-# Calculate the elapsed times
-if TIMING_FLAG:
-    display_timing(start_clock=START_TIME,
-                   setup_clock=SETUP_TIME)
+    # Calculate the elapsed times
+    if TIMING_FLAG:
+        display_timing(start_clock=start_time,
+                       setup_clock=setup_time)
 
-shutdown_message(return_code=0)
-exit(0)
+    shutdown_message(return_code=0)
+#    exit(0)
+
+# Execute the main function
+if __name__ == '__main__':
+    gephi = GephiOutput()
+    gephi.output_file = 'basic.gdf'
+
+    sys.stderr.write("System path: %s" % sys.path)
+    with PyCallGraph(output=gephi):
+        main()
