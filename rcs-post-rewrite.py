@@ -651,8 +651,10 @@ if __name__ == '__main__':
     if CALL_GRAPH_FLAG:
         graphviz = GraphvizOutput()
         graphviz.output_type = 'pdf'
-        graphviz.output_file = os.path.basename(sys.argv[0]) + '.' + graphviz.output_type
-        sys.stderr.write('Writing %s file: %s\n' % (graphviz.output_tpye, graphviz.output_file))
+        graphviz.output_file = {os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type}
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
         with PyCallGraph(output=graphviz):
             main(argv=sys.argv)
     else:
