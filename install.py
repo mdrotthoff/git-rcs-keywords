@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python
 # $Author$
 # $Date$
 # $File$
@@ -14,6 +14,16 @@ This module installs the RCS keyword functionality into an
 existing git repository.
 """
 
+
+import sys
+import os
+import time
+from shutil import copy2
+import subprocess
+import re
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 GIT_HOOK = 'git-hook.py'
 
 GIT_DIRS = {'filter_dir': 'filters', 'event_dir': 'hooks'}
@@ -23,7 +33,9 @@ GIT_HOOKS = [{'event_name': 'post-commit',
              {'event_name': 'post-checkout',
               'event_code': 'rcs-post-checkout.py'},
              {'event_name': 'post-merge',
-              'event_code': 'rcs-post-merge.py'}]
+              'event_code': 'rcs-post-merge.py'},
+             {'event_name': 'post-rewrite',
+              'event_code': 'rcs-post-rewrite.py'}]
 
 GIT_FILTERS = [{'filter_type': 'clean',
                 'filter_name': 'rcs-filter-clean.py'},
@@ -34,25 +46,26 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
                     '*.yaml', '*.hosts', '*.xml', '*.jsn',
                     '*.json', '*.pl', '*.py', '*.sh']
 
-import sys
-import os
-import time
-from shutil import copy2
-import subprocess
-import re
-#import errno
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
-if DEBUG_FLAG:
-    TIMING_FLAG = bool(True)
 VERBOSE_FLAG = bool(False)
-if TIMING_FLAG:
-    VERBOSE_FLAG = bool(True)
-SUMMARY_FLAG = bool(True)
-if VERBOSE_FLAG:
-    SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
+
+PROGRAM_NAME = os.path.abspath(sys.argv[0])
+(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
+
+# Set the installation target
+if len(sys.argv) > 1:
+    TARGET_DIR = sys.argv[1]
+    if DEBUG_FLAG:
+        sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
+else:
+    TARGET_DIR = ''
+    if DEBUG_FLAG:
+        sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
 
 
 def check_for_cmd(cmd):
@@ -166,9 +179,6 @@ def copyfile(srcfile, destfile):
         sys.stderr.write('  Copy source file: %s\n' % srcfile)
         sys.stderr.write('  Copy destination file: %s\n' % destfile)
 
-    # If the file already exists, throw the appropriate exception
-    if os.path.exists(destfile):
-        sys.stderr.write('  Destination file exists -- OVERWRITTING!!!!\n')
     # Copy the source file to the destination file
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
@@ -240,11 +250,10 @@ def registergitevent(eventdir, eventname, eventcode):
     function_name = 'registergitevent'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
-
-    if DEBUG_FLAG:
         sys.stderr.write('  git event dir: %s\n' % eventdir)
         sys.stderr.write('  git event name: %s\n' % eventname)
         sys.stderr.write('  git event code: %s\n' % eventcode)
+
     event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
     if DEBUG_FLAG:
         sys.stderr.write('  git event code dir: %s\n' % event_code_dir)
@@ -422,14 +431,14 @@ def installgitkeywords(repo_dir, git_dir='.git'):
                          eventname=git_event['event_name'],
                          eventcode=git_event['event_code'])
 
-
     # Set up the filter programs for use
     for filter_def in GIT_FILTERS:
         copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_def['filter_name']),
                  destfile=os.path.join(filter_dir, filter_def['filter_name']))
 
-    # Change to the repository directory and de-register the rcs-keywords filter
-    current_dir = os.getcwd()
+    # Change to the repository directory and de-register the
+    # rcs-keywords filter
+    local_dir = os.getcwd()
     os.chdir(os.path.abspath(repo_dir))
 #    sys.stderr.write('Current directory %s\n' % os.getcwd())
     cmd = ['git',
@@ -443,10 +452,11 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join('$GIT_DIR', GIT_DIRS['filter_dir']),
+        registerfilter(filter_dir=os.path.join('$GIT_DIR',
+                                               GIT_DIRS['filter_dir']),
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])
-    os.chdir(current_dir)
+    os.chdir(local_dir)
 #    sys.stderr.write('Current directory %s\n' % os.getcwd())
 
     # Return from the function
@@ -503,6 +513,9 @@ def startup_message():
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+#    program_name = os.path.abspath(sys.argv[0])
+#    (program_path, program_executable) = os.path.split(program_name)
+
     # Display source executable information
     if DEBUG_FLAG:
         sys.stderr.write('************ START **************\n')
@@ -539,6 +552,9 @@ def shutdown_message(return_code=0):
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
+#    program_name = os.path.abspath(sys.argv[0])
+#    (program_path, program_executable) = os.path.split(program_name)
+
     # Output the program end
     if VERBOSE_FLAG:
         sys.stderr.write('End program name: %s\n' % PROGRAM_NAME)
@@ -558,7 +574,7 @@ def shutdown_message(return_code=0):
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
-    exit(return_code)
+#    exit(return_code)
 
 
 def dump_file_stream(stream_handle, stream_description):
@@ -619,7 +635,7 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def findsubmodules(repo_dir):
+def findsubmodules():
     """Function to find the relevent configuration files for any
     submodules associated with the master repository.  Leave the
     parameter blank if the current working directory is holds
@@ -628,7 +644,7 @@ def findsubmodules(repo_dir):
     Arguments:
         dirname -- OS folder holding the master repository.
         subdirname -- Subdirectory name within dirname to search
-        filename -- Name of the file to find 
+        filename -- Name of the file to find
 
     Returns:
         List of file names
@@ -641,7 +657,9 @@ def findsubmodules(repo_dir):
     dirmodule = os.path.join('.git', 'modules')
     field_name = ['gitdir', 'repodir']
 
-    submodule_list = [dict(zip(field_name, (dirpath, os.path.relpath(dirpath, dirmodule))))
+    submodule_list = [dict(zip(field_name, (dirpath,
+                                            os.path.relpath(dirpath,
+                                                            dirmodule))))
                       for (dirpath, _, filenames) in os.walk(dirmodule)
                       for name in filenames if name == 'config']
 
@@ -651,97 +669,99 @@ def findsubmodules(repo_dir):
     return submodule_list
 
 
-######
-# Main
-######
-# Set the start time for calculating elapsed time
-START_TIME = time.clock()
+def main():
+    """Main program.
 
-## Parameter processing
-PROGRAM_NAME = os.path.abspath(sys.argv[0])
-(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
-if SUMMARY_FLAG or DEBUG_FLAG:
-    startup_message()
+    Arguments:
+        argv: command line arguments
 
-# Set the installation target
-if len(sys.argv) > 1:
-    TARGET_DIR = sys.argv[1]
+    Returns:
+        Nothing
+    """
+    # Set the start time for calculating elapsed time
+    start_time = time.clock()
+
+    # Parameter processing
+    if SUMMARY_FLAG or DEBUG_FLAG:
+        startup_message()
+
+    if SUMMARY_FLAG:
+        sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
+
+    # Save the current working directory
+    current_dir = os.getcwd()
+
+    if VERBOSE_FLAG:
+        dump_list(list_values=sys.argv,
+                  list_description='Param',
+                  list_message='Parameter list')
+
+    # Show the embedded variables
     if DEBUG_FLAG:
-        sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
-else:
-    TARGET_DIR = ''
-    if DEBUG_FLAG:
-        sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
+        sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
+        sys.stderr.write('  git dirs: ')
+        sys.stderr.write(str(GIT_DIRS))
+        sys.stderr.write('\n  git hooks: ')
+        sys.stderr.write(str(GIT_HOOKS))
+        sys.stderr.write('\n  git filters: ')
+        sys.stderr.write(str(GIT_FILTERS))
+        sys.stderr.write('\n  git file_pattern: ')
+        sys.stderr.write(str(GIT_FILE_PATTERN))
+        sys.stderr.write('\n')
 
-if SUMMARY_FLAG:
-    sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
+    # Check if git is available.
+    check_for_cmd(cmd=['git', '--version'])
 
-# Save the current working directory
-current_dir=os.getcwd()
+    # Save the setup time
+    setup_time = time.clock()
 
-if VERBOSE_FLAG:
-    dump_list(list_values=sys.argv,
-              list_description='Param',
-              list_message='Parameter list')
-
-# Show the OS environment variables
-if DEBUG_FLAG:
-    sys.stderr.write('  Environment variables defined\n')
-    for key, value in sorted(os.environ.items()):
-        sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-    sys.stderr.write("\n")
-
-# Show the embedded variables
-if DEBUG_FLAG:
-    sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
-    sys.stderr.write('  git dirs: ')
-    sys.stderr.write(str(GIT_DIRS))
-    sys.stderr.write('\n  git hooks: ')
-    sys.stderr.write(str(GIT_HOOKS))
-    sys.stderr.write('\n  git filters: ')
-    sys.stderr.write(str(GIT_FILTERS))
-    sys.stderr.write('\n  git file_pattern: ')
-    sys.stderr.write(str(GIT_FILE_PATTERN))
-    sys.stderr.write('\n')
-
-# Check if git is available.
-check_for_cmd(cmd=['git', '--version'])
-
-# Save the setup time
-SETUP_TIME = time.clock()
-
-# Install the keyword support
-try:
-    # Validate that a git repository was supplied
-    validategitrepo(repo_dir=TARGET_DIR)
-    # Change to the repository directory
-    os.chdir(os.path.abspath(TARGET_DIR))
-    if DEBUG_FLAG:
-        sys.stderr.write('Current directory %s\n' % os.getcwd())
-    # Install rcs keywords support in the repo 
-    installgitkeywords(repo_dir='')
-    submodules = findsubmodules(repo_dir=TARGET_DIR)
-    if DEBUG_FLAG:
-        sys.stderr.write('  Submodule count: %d\n' % len(submodules))
-    for module in submodules:
+    # Install the keyword support
+    try:
+        # Validate that a git repository was supplied
+        validategitrepo(repo_dir=TARGET_DIR)
+        # Change to the repository directory
+        os.chdir(os.path.abspath(TARGET_DIR))
         if DEBUG_FLAG:
-            sys.stderr.write('    Found submodule %s\n' % str(module))
-            sys.stderr.write('Repo dir: %s\n' % module['repodir'])
-            sys.stderr.write('git dir: %s\n' % module['gitdir'])
-        installgitkeywords(repo_dir=module['repodir'],
-                           git_dir=module['gitdir'])
+            sys.stderr.write('Current directory %s\n' % os.getcwd())
+        # Install rcs keywords support in the repo
+        installgitkeywords(repo_dir='')
+    #    submodules = findsubmodules(repo_dir=TARGET_DIR)
+        submodules = findsubmodules()
+        if DEBUG_FLAG:
+            sys.stderr.write('  Submodule count: %d\n' % len(submodules))
+        for module in submodules:
+            if DEBUG_FLAG:
+                sys.stderr.write('    Found submodule %s\n' % str(module))
+                sys.stderr.write('Repo dir: %s\n' % module['repodir'])
+                sys.stderr.write('git dir: %s\n' % module['gitdir'])
+            installgitkeywords(repo_dir=module['repodir'],
+                               git_dir=module['gitdir'])
 
-except:
-    sys.stderr.write('Exception caught\n')
-    raise
+    except:
+        sys.stderr.write('Exception caught\n')
+        raise
 
-# Return to the initial working directory
-os.chdir(current_dir)
+    # Return to the initial working directory
+    os.chdir(current_dir)
 
-# Calculate the elapsed times
-if TIMING_FLAG:
-    display_timing(start_clock=START_TIME,
-                   setup_clock=SETUP_TIME)
+    # Calculate the elapsed times
+    if TIMING_FLAG:
+        display_timing(start_clock=start_time,
+                       setup_clock=setup_time)
 
-shutdown_message(return_code=0)
-exit(0)
+    shutdown_message(return_code=0)
+
+
+# Execute the main function
+if __name__ == '__main__':
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main()
+    else:
+        main()

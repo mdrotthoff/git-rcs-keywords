@@ -7,13 +7,18 @@
 # $Source$
 # $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
-"""rcs-keywords-post-merge
+"""rcs-keywords-post-rewrite
 
 This module provides code to act as an event hook for the git
-post-merge event.  It detects which files have been changed
+post-commit event.  It detects which files have been changed
 and forces the file to be checked back out within the
 repository.
 
+TODO:  Need to read stdin for the list of commit hashes to
+       process.  Only need to use one of the two values on
+       the each line to determine the files that are
+       affected.  Should need to just check the files
+       out during the post-rewrite.
 """
 
 
@@ -64,27 +69,49 @@ def main(argv):
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of modified files
-    files = get_modified_files()
+    # Read stdin and write it to stderr
+    input_lines = sys.stdin.readlines()
+    line_count = 1
+    files = []
+    for source_line in input_lines:
+        line_count += 1
+        words = source_line.split()
+        # Get the list of modified files
+        files = files + get_modified_files(words[1].strip())
+
+    # Dump the list of files found to be rewritten
+    if VERBOSE_FLAG:
+        dump_list(list_values=sorted(files),
+                  list_description='File',
+                  list_message='Rewritten files list')
+
+    # Create a list of unique files that were rewritten
+    files = set(sorted(files))
     if VERBOSE_FLAG:
         dump_list(list_values=files,
                   list_description='File',
-                  list_message='Files not checked in')
+                  list_message='Unique rewritten files list')
 
-    # Filter the list of modified files to exclude those modified since
-    # the commit
-    files = git_not_checked_in(files=files)
+    # Remove modified files from the list
+    files = git_not_checked_in(files)
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Non-modified rewritten files list')
+
+    # Check if git is available.
+    check_for_cmd(cmd=['git', '--version'])
 
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
-    # Process the remaining file list
+    # Force a checkout of the remaining file list
     files_processed = 0
     if files:
-        files.sort()
-        for file_name in files:
-            if DEBUG_FLAG:
-                sys.stderr.write('  Checking out file %s\n' % file_name)
+        for file_name in sorted(files):
+            if SUMMARY_FLAG:
+                sys.stderr.write('  Checking out rewritten file %s\n'
+                                 % file_name)
             check_out_file(file_name=file_name)
             files_processed = files_processed + 1
 
@@ -99,6 +126,7 @@ def main(argv):
     shutdown_message(argv=argv,
                      files_processed=files_processed,
                      return_code=0)
+    return
 
 
 def startup_message(argv):
@@ -423,7 +451,7 @@ def git_ls_files():
     return cmd_stdout
 
 
-def get_modified_files():
+def get_modified_files(dest_hash):
     """Find files that were modified by the merge.
 
     Arguments:
@@ -437,8 +465,8 @@ def get_modified_files():
         sys.stderr.write('  Entered module %s\n' % function_name)
 
     modified_file_list = []
-    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
-           '--diff-filter=ACMRT']
+    cmd = ['git', 'diff-tree', dest_hash, '--name-only', '-r',
+           '--no-commit-id', '--diff-filter=ACMRT']
 
     if DEBUG_FLAG:
         sys.stderr.write('    Getting list of files modified\n')
@@ -469,13 +497,18 @@ def get_modified_files():
                          return_code=0,
                          files_processed=0)
 
+    # List all files initially selected
+    if DEBUG_FLAG:
+        dump_list(list_values=modified_file_list,
+                  list_description='Modified file found',
+                  list_message='List initial files found')
+
     # Only return regular files.
     modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
     if DEBUG_FLAG:
         dump_list(list_values=modified_file_list,
                   list_description='Modified file found',
                   list_message='List modified files found')
-
     if VERBOSE_FLAG:
         sys.stderr.write('  %d modified files found for processing\n'
                          % len(modified_file_list))
@@ -523,7 +556,7 @@ def git_not_checked_in(files):
     # Deal with unmodified repositories
     if not modified_files_list:
         if DEBUG_FLAG:
-            sys.stderr.write('  No modified files found to exclude\n')
+            sys.stderr.write('  No modified files found to process\n')
             sys.stderr.write('  Leaving module git_not_checked_in\n')
         return files
 

@@ -20,23 +20,22 @@ programs.
 
 """
 
+
 import sys
 import os
 import stat
 import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
-if DEBUG_FLAG:
-    TIMING_FLAG = bool(True)
 VERBOSE_FLAG = bool(False)
-if TIMING_FLAG:
-    VERBOSE_FLAG = bool(True)
-SUMMARY_FLAG = bool(True)
-if VERBOSE_FLAG:
-    SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 
 def startup_message():
@@ -204,13 +203,6 @@ def main(argv):
                   list_description='Param',
                   list_message='Parameter list')
 
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
-
     # Verify that the named hook directory is a directory
     list_dir = sys.argv[0] + '.d'
     if not os.path.isdir(list_dir):
@@ -291,4 +283,14 @@ def main(argv):
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)
