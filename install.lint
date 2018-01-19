@@ -10,8 +10,8 @@ pylint:
  
 No config file found, using default configuration
 ************* Module install
-C:768, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
+C:761, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.97/10 (previous run: 9.97/10, +0.00)
+Your code has been rated at 9.97/10 (previous run: 9.97/10, -0.00)
 

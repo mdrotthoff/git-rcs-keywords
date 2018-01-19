@@ -11,11 +11,10 @@ pylint:
 No config file found, using default configuration
 ************* Module git-hook
 C:  1, 0: Module name "git-hook" doesn't conform to snake_case naming style (invalid-name)
-R:180, 0: Too many local variables (17/15) (too-many-locals)
-R:180, 0: Too many branches (21/12) (too-many-branches)
-R:180, 0: Too many statements (58/50) (too-many-statements)
-C:294, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
+R:180, 0: Too many branches (19/12) (too-many-branches)
+R:180, 0: Too many statements (54/50) (too-many-statements)
+C:287, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.67/10 (previous run: 9.33/10, +0.33)
+Your code has been rated at 9.72/10 (previous run: 9.67/10, +0.06)
 
