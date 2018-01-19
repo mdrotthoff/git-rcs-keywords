@@ -72,6 +72,8 @@ rebase operation.
 
 Finally, a program is installed into the git hooks directory which controls access to
 the various git event hooks.  This allows each git event to have multiple hooks for a
-specific event.  This is done by creating a subdirectory for each of the registered
-git events to hold the associated hook programs.  Note that the hooks are executed in
-a sorted fashion so there is some control over the order the hook programs are executed.
+specific event.  This is done by creating a subdirectory named <git event>.d for each
+of the registered git events to hold the associated hook programs.  A symbolic link is
+created from the control program to the git event being managed.  Note that the hooks
+are executed in a sorted fashion so there is some control over the order the hook
+programs are executed.
