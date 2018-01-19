@@ -25,11 +25,11 @@ from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
-CALL_GRAPH_FLAG = bool(True)
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 
 def startup_message():
@@ -285,13 +285,6 @@ def main(argv):
                   list_description='Param',
                   list_message='Parameter list')
 
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
-
     # Display the name of the file being smudged
     if VERBOSE_FLAG or DEBUG_FLAG:
         sys.stderr.write('  Smudge file full name: %s\n' % str(file_full_name))
@@ -393,8 +386,8 @@ if __name__ == '__main__':
     if CALL_GRAPH_FLAG:
         graphviz = GraphvizOutput()
         graphviz.output_type = 'pdf'
-        graphviz.output_file = {os.path.basename(sys.argv[0])
-                                + '.' + graphviz.output_type}
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
         sys.stderr.write('Writing %s file: %s\n'
                          % (graphviz.output_type, graphviz.output_file))
         with PyCallGraph(output=graphviz):

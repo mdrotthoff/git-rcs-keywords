@@ -32,11 +32,11 @@ from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
-CALL_GRAPH_FLAG = bool(True)
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 
 def main(argv):
@@ -65,13 +65,6 @@ def main(argv):
         dump_list(list_values=argv,
                   list_description='Param',
                   list_message='Parameter list')
-
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
@@ -651,8 +644,8 @@ if __name__ == '__main__':
     if CALL_GRAPH_FLAG:
         graphviz = GraphvizOutput()
         graphviz.output_type = 'pdf'
-        graphviz.output_file = {os.path.basename(sys.argv[0])
-                                + '.' + graphviz.output_type}
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
         sys.stderr.write('Writing %s file: %s\n'
                          % (graphviz.output_type, graphviz.output_file))
         with PyCallGraph(output=graphviz):

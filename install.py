@@ -48,11 +48,11 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-CALL_GRAPH_FLAG = bool(True)
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 PROGRAM_NAME = os.path.abspath(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
@@ -179,9 +179,6 @@ def copyfile(srcfile, destfile):
         sys.stderr.write('  Copy source file: %s\n' % srcfile)
         sys.stderr.write('  Copy destination file: %s\n' % destfile)
 
-    # If the file already exists, throw the appropriate exception
-    if os.path.exists(destfile):
-        sys.stderr.write('  Destination file exists -- OVERWRITTING!!!!\n')
     # Copy the source file to the destination file
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
@@ -699,13 +696,6 @@ def main():
                   list_description='Param',
                   list_message='Parameter list')
 
-    # Show the OS environment variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  Environment variables defined\n')
-        for key, value in sorted(os.environ.items()):
-            sys.stderr.write('    Key: %s  Value: %s\n' % (key, value))
-        sys.stderr.write("\n")
-
     # Show the embedded variables
     if DEBUG_FLAG:
         sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
@@ -767,8 +757,8 @@ if __name__ == '__main__':
     if CALL_GRAPH_FLAG:
         graphviz = GraphvizOutput()
         graphviz.output_type = 'pdf'
-        graphviz.output_file = {os.path.basename(sys.argv[0])
-                                + '.' + graphviz.output_type}
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
         sys.stderr.write('Writing %s file: %s\n'
                          % (graphviz.output_type, graphviz.output_file))
         with PyCallGraph(output=graphviz):
