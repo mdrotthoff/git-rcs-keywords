@@ -10,10 +10,11 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-filter-clean
-C:  1, 0: Invalid module name "rcs-filter-clean" (invalid-name)
-R:178, 0: Too many local variables (25/15) (too-many-locals)
-R:178, 0: Too many statements (63/50) (too-many-statements)
+C:  1, 0: Module name "rcs-filter-clean" doesn't conform to snake_case naming style (invalid-name)
+R:176, 0: Too many local variables (23/15) (too-many-locals)
+R:176, 0: Too many statements (59/50) (too-many-statements)
+C:285, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.80/10 (previous run: 9.80/10, +0.00)
+Your code has been rated at 9.73/10 (previous run: 9.74/10, -0.01)
 

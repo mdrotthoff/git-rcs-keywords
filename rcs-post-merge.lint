@@ -10,8 +10,9 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-post-merge
-C:  1, 0: Invalid module name "rcs-post-merge" (invalid-name)
+C:  1, 0: Module name "rcs-post-merge" doesn't conform to snake_case naming style (invalid-name)
+C:612, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+Your code has been rated at 9.93/10 (previous run: 9.93/10, -0.00)
 

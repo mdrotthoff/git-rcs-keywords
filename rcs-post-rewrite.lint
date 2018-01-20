@@ -10,9 +10,9 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-post-rewrite
-C:  1, 0: Invalid module name "rcs-post-rewrite" (invalid-name)
-R: 45, 0: Too many branches (13/12) (too-many-branches)
+C:  1, 0: Module name "rcs-post-rewrite" doesn't conform to snake_case naming style (invalid-name)
+C:645, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.93/10 (previous run: 9.93/10, +0.00)
+Your code has been rated at 9.93/10 (previous run: 9.90/10, +0.03)
 
