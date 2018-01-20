@@ -1,0 +1,29 @@
+Processing file: rcs-post-rewrite.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-post-rewrite.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-post-rewrite
+C:  1, 0: Invalid module name "rcs-post-rewrite" (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+
+ 
+ 
+Start program name: rcs-post-rewrite.py
+    Setup elapsed time: 0.022609
+    Execution elapsed time: 0.000876
+    Total elapsed time: 0.023485
+  Files processed: 0
+End program name: rcs-post-rewrite.py
+Python Call Graph v0.5.1
+Starting trace
+Creating rcs-post-rewrite.pdf
+Done!

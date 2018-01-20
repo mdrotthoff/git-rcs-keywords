@@ -1,0 +1,43 @@
+Processing file: install.py
+ 
+ 
+pycodestyle:
+ 
+checking install.py
+install.py:738:5: E722 do not use bare except'
+    except:
+    ^
+1       E722 do not use bare except'
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+
+--------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
+
+ 
+ 
+  Target directory: 
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/git-hook.py to .git/hooks/git-hook.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-commit.py to .git/hooks/post-commit.d/rcs-post-commit.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-checkout.py to .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-merge.py to .git/hooks/post-merge.d/rcs-post-merge.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-rewrite.py to .git/hooks/post-rewrite.d/rcs-post-rewrite.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-filter-clean.py to .git/filters/rcs-filter-clean.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-filter-smudge.py to .git/filters/rcs-filter-smudge.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/git-hook.py to .git/modules/rsmith-nl.git-keywords/hooks/git-hook.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-commit.py to .git/modules/rsmith-nl.git-keywords/hooks/post-commit.d/rcs-post-commit.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-checkout.py to .git/modules/rsmith-nl.git-keywords/hooks/post-checkout.d/rcs-post-checkout.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-merge.py to .git/modules/rsmith-nl.git-keywords/hooks/post-merge.d/rcs-post-merge.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-post-rewrite.py to .git/modules/rsmith-nl.git-keywords/hooks/post-rewrite.d/rcs-post-rewrite.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-filter-clean.py to .git/modules/rsmith-nl.git-keywords/filters/rcs-filter-clean.py
+  Copied file  /home/mdrotthoff/workspaces/ansible/git-rcs-keywords/rcs-filter-smudge.py to .git/modules/rsmith-nl.git-keywords/filters/rcs-filter-smudge.py
+    Setup elapsed time: 0.004437
+    Execution elapsed time: 0.091518
+    Total elapsed time: 0.095955
+Python Call Graph v0.5.1
+Starting trace
+Creating install.pdf
+Done!

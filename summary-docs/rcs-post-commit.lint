@@ -1,0 +1,209 @@
+Processing file: rcs-post-commit.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-post-commit.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-post-commit
+C:  1, 0: Invalid module name "rcs-post-commit" (invalid-name)
+
+------------------------------------------------------------------
+Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+
+ 
+ 
+Start program name: rcs-post-commit.py
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.7e-05
+    Execution elapsed time: 0.00079
+    Total elapsed time: 0.000827
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.9e-05
+    Execution elapsed time: 0.000734
+    Total elapsed time: 0.000773
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000805
+    Total elapsed time: 0.000841
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.7e-05
+    Execution elapsed time: 0.000761
+    Total elapsed time: 0.000798
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.2e-05
+    Execution elapsed time: 0.000764
+    Total elapsed time: 0.000796
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.7e-05
+    Execution elapsed time: 0.000721
+    Total elapsed time: 0.000758
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000833
+    Total elapsed time: 0.000869
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.8e-05
+    Execution elapsed time: 0.000732
+    Total elapsed time: 0.00077
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.5e-05
+    Execution elapsed time: 0.000731
+    Total elapsed time: 0.000766
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000757
+    Total elapsed time: 0.000793
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000797
+    Total elapsed time: 0.000833
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000756
+    Total elapsed time: 0.000792
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.2e-05
+    Execution elapsed time: 0.000724
+    Total elapsed time: 0.000756
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000831
+    Total elapsed time: 0.000867
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.000746
+    Total elapsed time: 0.000782
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.6e-05
+    Execution elapsed time: 0.00079
+    Total elapsed time: 0.000826
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.5e-05
+    Execution elapsed time: 0.000756
+    Total elapsed time: 0.000791
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Setup elapsed time: 3.2e-05
+    Execution elapsed time: 0.000627
+    Total elapsed time: 0.000659
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+    Setup elapsed time: 0.023725
+    Execution elapsed time: 0.139216
+    Total elapsed time: 0.162941
+  Files processed: 18
+End program name: rcs-post-commit.py
+Python Call Graph v0.5.1
+Starting trace
+Creating rcs-post-commit.pdf
+Done!
