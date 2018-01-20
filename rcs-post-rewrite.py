@@ -30,10 +30,10 @@ import time
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
-TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(True)
-SUMMARY_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
+TIMING_FLAG = bool(False)
+VERBOSE_FLAG = bool(False)
+SUMMARY_FLAG = bool(False)
 
 
 def main(argv):

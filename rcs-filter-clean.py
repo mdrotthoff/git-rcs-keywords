@@ -22,10 +22,10 @@ import time
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
-TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(True)
-SUMMARY_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
+TIMING_FLAG = bool(False)
+VERBOSE_FLAG = bool(False)
+SUMMARY_FLAG = bool(False)
 
 
 def startup_message():
@@ -56,7 +56,7 @@ def startup_message():
         sys.stderr.write('Start program name: %s\n' % str(program_name))
 
     # Output the program name start
-    if SUMMARY_FLAG and len(sys.argv) > 1:
+    if SUMMARY_FLAG:
         sys.stderr.write('%s: %s\n' % (str(program_name), sys.argv[1]))
 
     # Return from the function

@@ -63,10 +63,10 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(True)
-TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(True)
-SUMMARY_FLAG = bool(True)
+DEBUG_FLAG = bool(False)
+TIMING_FLAG = bool(False)
+VERBOSE_FLAG = bool(False)
+SUMMARY_FLAG = bool(False)
 
 
 def check_for_cmd(cmd):
