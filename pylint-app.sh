@@ -9,6 +9,7 @@ generate_lint()
 {
   local app="${1}"
   local logfile="${app%.*}.lint"
+  local pdffile="${app%.*}.pdf"
   
   if [[ -z "${1}" ]] ; then
     echo "No application name provided to generate_lint"
@@ -26,6 +27,7 @@ generate_lint()
       echo "pylint:"
       echo " "
       pylint "${app}"
+    pycallgraph -o "${pdffile}" -f pdf "${1}"
     } > "${logfile}" 2>&1
   fi
 }
