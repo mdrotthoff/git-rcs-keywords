@@ -10,9 +10,2530 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-post-commit
-C:  1, 0: Module name "rcs-post-commit" doesn't conform to snake_case naming style (invalid-name)
-C:611, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
+C:  1, 0: Invalid module name "rcs-post-commit" (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.93/10 (previous run: 9.75/10, +0.18)
+Your code has been rated at 9.96/10 (previous run: 9.96/10, -0.00)
 
+  Entered module startup_message
+************ START **************
+Hook program: rcs-post-commit.py
+Hook path: 
+Hook name: rcs-post-commit.py
+*********************************
+Start program name: rcs-post-commit.py
+  Leaving module startup_message
+  Entered module main
+  Entered module dump_list
+    Parameter list
+      Param[0]: rcs-post-commit.py
+  Leaving module dump_list
+  Entered module check_for_cmd
+    Validating command is available
+    Entered module execute_cmd
+      cmd: ['git', '--version']
+        cmd return code: 0
+        stdout length: 19
+        stderr length: 0
+      Entered module dump_file_stream
+        STDOUT from check_for_cmd
+git version 2.13.6
+      Leaving module dump_file_stream
+      Entered module dump_file_stream
+        STDERR from check_for_cmd
+      Leaving module dump_file_stream
+    Leaving module execute_cmd
+  Leaving module check_for_cmd
+  Entered module get_modified_files
+    Getting list of files modified
+    Entered module execute_cmd
+      cmd: ['git', 'diff-tree', 'HEAD~1', 'HEAD', '--name-only', '-r', '--diff-filter=ACMRT']
+        cmd return code: 0
+        stdout length: 586
+        stderr length: 0
+      Entered module dump_file_stream
+        STDOUT from check_for_cmd
+git-hook.lint
+git-hook.py
+git-hook.py.pdf
+install-dev.lint
+install.lint
+install.py
+install.py.pdf
+post-checkout.pdf
+post-commit.pdf
+post-merge.pdf
+post-rewrite.pdf
+rcs-filter-clean.lint
+rcs-filter-clean.py
+rcs-filter-clean.py.pdf
+rcs-filter-smudge.lint
+rcs-filter-smudge.py
+rcs-filter-smudge.py.pdf
+rcs-post-checkout.lint
+rcs-post-checkout.py
+rcs-post-checkout.py.pdf
+rcs-post-commit.lint
+rcs-post-commit.py
+rcs-post-commit.py.pdf
+rcs-post-merge.lint
+rcs-post-merge.py
+rcs-post-merge.py.pdf
+rcs-post-rewrite.lint
+rcs-post-rewrite.py
+rcs-post-rewrite.py.pdf
+test-suite.log
+test-suite.sh
+      Leaving module dump_file_stream
+      Entered module dump_file_stream
+        STDERR from check_for_cmd
+      Leaving module dump_file_stream
+    Leaving module execute_cmd
+  Entered module dump_list
+    List modified files found
+      Modified file found[0]: git-hook.lint
+      Modified file found[1]: git-hook.py
+      Modified file found[2]: install-dev.lint
+      Modified file found[3]: install.lint
+      Modified file found[4]: install.py
+      Modified file found[5]: rcs-filter-clean.lint
+      Modified file found[6]: rcs-filter-clean.py
+      Modified file found[7]: rcs-filter-smudge.lint
+      Modified file found[8]: rcs-filter-smudge.py
+      Modified file found[9]: rcs-post-checkout.lint
+      Modified file found[10]: rcs-post-checkout.py
+      Modified file found[11]: rcs-post-commit.lint
+      Modified file found[12]: rcs-post-commit.py
+      Modified file found[13]: rcs-post-merge.lint
+      Modified file found[14]: rcs-post-merge.py
+      Modified file found[15]: rcs-post-rewrite.lint
+      Modified file found[16]: rcs-post-rewrite.py
+      Modified file found[17]: test-suite.log
+      Modified file found[18]: test-suite.sh
+  Leaving module dump_list
+  19 modified files found for processing
+  Leaving module get_modified_files
+  Entered module git_not_checked_in
+    Entered module execute_cmd
+      cmd: ['git', 'status', '-s']
+        cmd return code: 0
+        stdout length: 872
+        stderr length: 0
+      Entered module dump_file_stream
+        STDOUT from check_for_cmd
+M git-hook.lint
+ M git-hook.py
+ D git-hook.py.pdf
+ M install-dev.lint
+ M install-dev.py
+ M install.lint
+ M install.py
+ D install.py.pdf
+ D post-checkout.pdf
+ D post-commit.pdf
+ D post-merge.pdf
+ D post-rewrite.pdf
+ M pylint-app.sh
+ M rcs-filter-clean.lint
+ M rcs-filter-clean.py
+ D rcs-filter-clean.py.pdf
+ M rcs-filter-smudge.lint
+ M rcs-filter-smudge.py
+ D rcs-filter-smudge.py.pdf
+ M rcs-post-checkout.lint
+ M rcs-post-checkout.py
+ D rcs-post-checkout.py.pdf
+ M rcs-post-commit.lint
+ M rcs-post-commit.py
+ D rcs-post-commit.py.pdf
+ M rcs-post-merge.lint
+ M rcs-post-merge.py
+ D rcs-post-merge.py.pdf
+ M rcs-post-rewrite.lint
+ M rcs-post-rewrite.py
+ D rcs-post-rewrite.py.pdf
+?? git-hook.pdf
+?? install-dev.pdf
+?? install.pdf
+?? rcs-filter-clean.pdf
+?? rcs-filter-smudge.pdf
+?? rcs-post-checkout.pdf
+?? rcs-post-commit.pdf
+?? rcs-post-merge.pdf
+?? rcs-post-rewrite.pdf
+      Leaving module dump_file_stream
+      Entered module dump_file_stream
+        STDERR from check_for_cmd
+      Leaving module dump_file_stream
+    Leaving module execute_cmd
+  Entered module dump_list
+    Modified files found
+      modified file found[0]: git-hook.lint
+      modified file found[1]: git-hook.py
+      modified file found[2]: git-hook.py.pdf
+      modified file found[3]: install-dev.lint
+      modified file found[4]: install-dev.py
+      modified file found[5]: install.lint
+      modified file found[6]: install.py
+      modified file found[7]: install.py.pdf
+      modified file found[8]: post-checkout.pdf
+      modified file found[9]: post-commit.pdf
+      modified file found[10]: post-merge.pdf
+      modified file found[11]: post-rewrite.pdf
+      modified file found[12]: pylint-app.sh
+      modified file found[13]: rcs-filter-clean.lint
+      modified file found[14]: rcs-filter-clean.py
+      modified file found[15]: rcs-filter-clean.py.pdf
+      modified file found[16]: rcs-filter-smudge.lint
+      modified file found[17]: rcs-filter-smudge.py
+      modified file found[18]: rcs-filter-smudge.py.pdf
+      modified file found[19]: rcs-post-checkout.lint
+      modified file found[20]: rcs-post-checkout.py
+      modified file found[21]: rcs-post-checkout.py.pdf
+      modified file found[22]: rcs-post-commit.lint
+      modified file found[23]: rcs-post-commit.py
+      modified file found[24]: rcs-post-commit.py.pdf
+      modified file found[25]: rcs-post-merge.lint
+      modified file found[26]: rcs-post-merge.py
+      modified file found[27]: rcs-post-merge.py.pdf
+      modified file found[28]: rcs-post-rewrite.lint
+      modified file found[29]: rcs-post-rewrite.py
+      modified file found[30]: rcs-post-rewrite.py.pdf
+      modified file found[31]: git-hook.pdf
+      modified file found[32]: install-dev.pdf
+      modified file found[33]: install.pdf
+      modified file found[34]: rcs-filter-clean.pdf
+      modified file found[35]: rcs-filter-smudge.pdf
+      modified file found[36]: rcs-post-checkout.pdf
+      modified file found[37]: rcs-post-commit.pdf
+      modified file found[38]: rcs-post-merge.pdf
+      modified file found[39]: rcs-post-rewrite.pdf
+  Leaving module dump_list
+  Removing non-committed modified files
+  Leaving module git_not_checked_in
+  Processing the remaining file list
+  Checking out file test-suite.log
+  Entered module check_out_file
+    os file test-suite.log exists: True
+    Removed os file test-suite.log exists: False
+    git_cmd: ['git', 'checkout', '-f', u'test-suite.log']
+    Entered module execute_cmd
+      cmd: ['git', 'checkout', '-f', u'test-suite.log']
+        cmd return code: 0
+        stdout length: 0
+        stderr length: 2315
+      Entered module dump_file_stream
+        STDOUT from check_for_cmd
+      Leaving module dump_file_stream
+      Entered module dump_file_stream
+        STDERR from check_for_cmd
+Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout
+Hook path: .git/hooks
+Hook name: post-checkout
+*********************************
+Start program name: .git/hooks/post-checkout
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/hooks/post-checkout
+      Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[3]: 0
+  Leaving module dump_list
+The hook directory .git/hooks/post-checkout.d is a directory
+
+OS Files existing in the hook named directory .git/hooks/post-checkout.d
+  File: rcs-post-checkout.py   01/20/18 14:42:12  19919 bytes  0775  Regular
+
+Saw hook program .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Executing hook program ".git/hooks/post-checkout.d/rcs-post-checkout.py" "45541340845ddedb6cbaa529bdc850391054b621" "45541340845ddedb6cbaa529bdc850391054b621" "0"
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+*********************************
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Leaving module startup_message
+  Entered module main
+    Param[0]: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[3]: 0
+  Entered module shutdown_message
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+************ END ****************
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+Hook return code 0
+  Entered module display_timing
+    Setup elapsed time: 8.2e-05
+    Execution elapsed time: 0.000929
+    Total elapsed time: 0.001011
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+************ END ****************
+Hook path: .git/hooks
+Hook name: post-checkout
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+      Leaving module dump_file_stream
+      Entered module print_file_stream
+Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout
+Hook path: .git/hooks
+Hook name: post-checkout
+*********************************
+Start program name: .git/hooks/post-checkout
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/hooks/post-checkout
+      Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[3]: 0
+  Leaving module dump_list
+The hook directory .git/hooks/post-checkout.d is a directory
+
+OS Files existing in the hook named directory .git/hooks/post-checkout.d
+  File: rcs-post-checkout.py   01/20/18 14:42:12  19919 bytes  0775  Regular
+
+Saw hook program .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Executing hook program ".git/hooks/post-checkout.d/rcs-post-checkout.py" "45541340845ddedb6cbaa529bdc850391054b621" "45541340845ddedb6cbaa529bdc850391054b621" "0"
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+*********************************
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Leaving module startup_message
+  Entered module main
+    Param[0]: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[3]: 0
+  Entered module shutdown_message
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+************ END ****************
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+Hook return code 0
+  Entered module display_timing
+    Setup elapsed time: 8.2e-05
+    Execution elapsed time: 0.000929
+    Total elapsed time: 0.001011
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+************ END ****************
+Hook path: .git/hooks
+Hook name: post-checkout
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+      Leaving module print_file_stream
+    Leaving module execute_cmd
+  Leaving module check_out_file
+  Checking out file test-suite.sh
+  Entered module check_out_file
+    os file test-suite.sh exists: True
+    Removed os file test-suite.sh exists: False
+    git_cmd: ['git', 'checkout', '-f', u'test-suite.sh']
+    Entered module execute_cmd
+      cmd: ['git', 'checkout', '-f', u'test-suite.sh']
+        cmd return code: 0
+        stdout length: 0
+        stderr length: 34393
+      Entered module dump_file_stream
+        STDOUT from check_for_cmd
+      Leaving module dump_file_stream
+      Entered module dump_file_stream
+        STDERR from check_for_cmd
+Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/filters/rcs-filter-smudge.py
+Hook path: .git/filters
+Hook name: rcs-filter-smudge.py
+*********************************
+Start program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-suite.sh
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/filters/rcs-filter-smudge.py
+      Param[1]: test-suite.sh
+  Leaving module dump_list
+  Smudge file full name: test-suite.sh
+  Entered module git_log_attributes
+  git log cmd: ['git', 'log', '--date=iso8601', '--max-count=1', '--format=%H%x1f%an%x1f%ae%x1f%ci%x1e', '--', 'test-suite.sh']
+  git exit code: 0
+  stdout length: 103
+  stderr length: 0
+STDOUT from command ['git', 'log', '--date=iso8601', '--max-count=1', '--format=%H%x1f%an%x1f%ae%x1f%ci%x1e', '--', 'test-suite.sh']
+a1afde666a2d32f8bfca535a0b787fb33fc8b821David Rotthoffdrotthoff@gmail.com2018-01-18 16:16:47 -0600
+git_log: [{'author_email': u'drotthoff@gmail.com', 'hash': u'a1afde666a2d32f8bfca535a0b787fb33fc8b821', 'commit_date': u'2018-01-18 16:16:47 -0600', 'author_name': u'David Rotthoff'}]
+  Leaving module git_log_attributes
+git hash:     $Hash:     a1afde666a2d32f8bfca535a0b787fb33fc8b821 $
+git author:   $Author:   David Rotthoff <drotthoff@gmail.com> $
+git date:     $Date:     2018-01-18 16:16:47 -0600 $
+git rev:      $Rev:      2018-01-18 16:16:47 -0600 $
+git revision: $Revision: 2018-01-18 16:16:47 -0600 $
+git file:     $File:     test-suite.sh $
+git source:   $Source:   test-suite.sh $
+git id:       $Id:       test-suite.sh | 2018-01-18 16:16:47 -0600 | David Rotthoff $
+
+#! /bin/bash
+# Simple shell script to test the git RCS keywords setup
+
+# TODO:  Add tests for the rebase command
+#        1) Commit changes
+#           1.1) Create changed file
+#           1.2) Commit the changed file
+#           1.3) Pull changes from the master repo
+#           1.4) Rebase the non-pushed commit
+#           1.5) Validate the smudge filter was executed
+
+# $Author:   David Rotthoff <drotthoff@gmail.com> $
+# $Date:     2018-01-18 16:16:47 -0600 $
+# $Source:   test-suite.sh $
+
+output_log="$(pwd)/test-suite.log"
+install_src="$(realpath "$(dirname "${0}")/install.py")"
+#install_src="$(realpath "$(dirname "${0}")/install-dev.py")"
+
+repo_dir="git-test-repo"
+submodule_dir="test-repo2"
+test_dir="testing"
+repo_prefix="https://mdrotthoff:Dell_1891@github.com/mdrotthoff"
+master_repo="rcs-keywords-test1.git"
+module_repo="rcs-keywords-test2.git"
+#test_file1="test1.txt"
+#test_file2="test 1.txt"
+
+
+log_blank_line()
+{
+  echo -e " "
+}
+
+log_message()
+{
+  echo -e "${1}"
+}
+
+log_section_start()
+{
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  echo -e "***  Start Section ${1}"
+  echo -e "***    Title: ${2}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_section_finish()
+{
+#  log_blank_line
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  echo -e "***  Section Finish"
+  echo -e "***    Title: ${1}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  log_blank_line
+  log_blank_line
+  log_blank_line
+}
+
+log_step_start()
+{
+  echo -e "*****************************************************************"
+  echo -e "***  Step Start"
+  echo -e "***    Title: ${1}"
+  echo -e "***    Cmd:   ${2} ${3} ${4} ${5}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_step_finish()
+{
+  log_blank_line
+  echo -e "*****************************************************************"
+  echo -e "***  Step Finish"
+  echo -e "***    Title:  ${1}"
+  echo -e "***    Status: ${2}"
+  echo -e "***    Date:   $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_step_status()
+{
+  echo -e "cmd status: ${1}"
+}
+
+test_file_contents()
+{
+  echo "\$Author\$"
+  echo "\$Date\$"
+  echo "\$Revision\$"
+  echo "\$Rev\$"
+  echo "\$File\$"
+  echo "\$Source\$"
+  echo "\$Hash\$"
+  echo "\$Id\$"
+}
+
+display_file_contents()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Display contents of ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cat \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_message "$(cat "${1}")")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+build_test_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Build test file ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="echo >> \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (test_file_contents) > "${1}"
+    (log_blank_line)
+    (log_message "** ${step_name} - start file contents **")
+    (log_message "$(cat "${1}")")
+    (log_message "** ${step_name} - end file contents **")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+append_test_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Append to file ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="echo >> \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line) >> "${1}"
+    (test_file_contents) >> "${1}"
+    (log_blank_line)
+    (log_message "** ${step_name} - start file contents **")
+    (log_message "$(cat "${1}")")
+    (log_message "** ${step_name} - end file contents **")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+remove_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Remove directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    rm -rf "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+tree_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Tree directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="tree \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (tree "${1}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+change_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Change to directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    cd "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+#    (ls -lah "${1}")
+
+make_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Make directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="mkdir -p \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (mkdir -p "${1}")
+    (log_blank_line)
+    (ls -lah "${1}")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+list_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Directory listing of ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="ls -lah \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (log_blank_line)
+    (ls -lah "${1}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+install_rcs()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Install RCS keyword support to ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="${install_src} \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    ("${install_src}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_status()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Show git status of the repository"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git status"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_clone()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Clone a github repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git clone --no-checkout \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git clone --no-checkout "${1}" .)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_submodule_add()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Add submodule ${1}"
+  if ! [[ -z ${3} ]] ; then
+    step_name="${3}"
+  fi
+
+  step_cmd="git submodule add \"${1}\" \"${2}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git submodule add "${1}" "${2}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_rebase()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Rebase the git repository"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git rebase"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rebase)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_add_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Add file ${2} to the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git add --verbose \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git add --verbose "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_rm_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Remove file ${1} from the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git rm \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rm "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_force_rm_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Force remove file ${1} from the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git rm -f \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rm -f "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_commit()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Test post-commit handler"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git commit -m \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git commit -m "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_pull()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Execute git pull"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git pull"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git push)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_push()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Execute git push"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git push"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git push)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_list()
+{
+  local step_name
+  local step_cmd
+
+  step_name="List all git branches"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git branch -a"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git branch -a)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_create()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Create git branch ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git branch \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git branch "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_checkout()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Checkout git branch ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git checkout \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git checkout "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_merge()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Merge branch ${1} into the current branch"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git merge \"${1}\" -m \"Merge from ${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git merge "${1}" -m "Merge from ${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+
+if [[ -f "${output_log}" ]] ;then
+  rm -f "${output_log}" 2> /dev/null
+fi
+
+
+# Run general tests involving the clean and smudge filters
+current_dir=$(pwd)
+
+
+step_num="01"
+section_name="Create the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+make_dir "${repo_dir}" "${step_num}.01: Create the master repo directory ${repo_dir}"
+change_dir "${repo_dir}" "${step_num}.02: Change directory to ${repo_dir}"
+git_clone "${repo_prefix}/${master_repo}" "${step_num}.03: Clone the master repository ${master_repo} to ${repo_dir}"
+install_rcs "." "${step_num}.04: Install RCS support to the repository"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${repo_dir}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="02"
+section_name="Create the submodule repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_submodule_add "${repo_prefix}/${module_repo}" "${submodule_dir}" "${step_num}.01: Clone the submodule repository ${module_repo} to ${submodule_dir}"
+change_dir "${submodule_dir}" "${step_num}.02: Change directory to ${submodule_dir}"
+git_branch_checkout "master" "${step_num}.03: Checkout the master branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${submodule_dir}"
+change_dir ".." "${step_num}.08: Change directory to ${repo_dir}"
+install_rcs "." "${step_num}.09: Install RCS support to the repository"
+git_commit "${step_num}.10: Commit the submodule to the repository"
+tree_dir "." "${step_num}.11: Show the repository directory tree"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="03"
+section_name="Create the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_create "development" "${step_num}.01: Create the development branch"
+git_branch_list "${step_num}.02: List the branches"
+git_branch_checkout "development" "${step_num}.03: Checkout the development branch"
+git_branch_list "${step_num}.04: List the branches"
+change_dir "${submodule_dir}" "${step_num}.05: Change directory to ${submodule_dir}"
+git_branch_create "development" "${step_num}.06: Create the development branch"
+git_branch_checkout "development" "${step_num}.07: Checkout the development branch"
+git_status "${step_num}.08: Show the repo status"
+change_dir ".." "${step_num}.09: Change directory to ${repo_dir}"
+#git_commit "${step_num}.03: Commit the test files to the repository"
+git_status "${step_num}.10: Show the repo status"
+tree_dir "." "${step_num}.11: Show the repository directory tree"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+
+step_num="04"
+section_name="Create test files in the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+file_name="test-01.txt"
+build_test_file "${file_name}" "${step_num}.01: Build test file ${file_name}"
+file_name="test-02.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+file_name="test-03.txt"
+build_test_file "${file_name}" "${step_num}.03: Build test file ${file_name}"
+list_dir "." "${step_num}.04: List the test files"
+git_add_file "test-*.txt" "${step_num}.04: Add test files test-*.txt to the repository"
+list_dir "." "${step_num}.05: List the test files"
+file_name="test-03.txt"
+append_test_file "${file_name}" "${step_num}.06: Append data to test file ${file_name} to smudging"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="05"
+section_name="Commit test files to the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_commit "${step_num}.01: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.05: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="06"
+section_name="Commit updated test files to the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+file_name="test-02.txt"
+append_test_file "${file_name}" "${step_num}.01: Append data to test file ${file_name}"
+git_add_file "test-*.txt" "${step_num}.02: Add test files test-*.txt to the repository"
+git_commit "${step_num}.03: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.07: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="07"
+section_name="Switch to the master branch in the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+list_dir "." "${step_num}.02: List the test files"
+git_branch_checkout "development" "${step_num}.03: Checkout the development branch"
+list_dir "." "${step_num}.04: List the test files"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+list_dir "." "${step_num}.06: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="08"
+section_name="Merge development branch to the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after merge"
+git_commit "${step_num}.04: Commit the changes"
+list_dir "." "${step_num}.05: List the test files after commit"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="09"
+section_name="Add dev file to development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+file_name="dev-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add dev file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="10"
+section_name="Add master file to master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+file_name="master-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add master file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="11"
+section_name="Merge development branch to master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after merging"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="12"
+section_name="Rebase the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_rebase "${step_num}.01: Rebase the master branch"
+git_branch_list "${step_num}.02: List the branches"
+list_dir "." "${step_num}.03: List the test files after rebase operation"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="13"
+section_name="Merge master branch to development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+git_branch_merge "master" "${step_num}.02: Merge master changes into the development branch"
+list_dir "." "${step_num}.03: List the test files after merging master"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+step_num="14"
+section_name="Remove the test files from the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files prior to removal"
+git_rm_file "test-*.txt" "${step_num}.05: Remove the test files from the development branch"
+list_dir "." "${step_num}.06: List the test files after removal"
+git_commit "${step_num}.07: Commit the changes"
+list_dir "." "${step_num}.08: List the test files after commit"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="15"
+section_name="Merge development changes into the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files prior to merge"
+git_branch_merge "development" "${step_num}.05: Merge development changes into the master branch"
+list_dir "." "${step_num}.06: List the test files after merge"
+git_commit "${step_num}.07: Commit the changes"
+list_dir "." "${step_num}.08: List the test files after commit"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="16"
+section_name="Checkout the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files after checkout of development branch"
+git_commit "${step_num}.05: Commit any changes"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+
+exit 0
+
+
+step_num="99"
+section_name="Remove the test repositories"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+change_dir "${current_dir}" "${step_num}.01: Change to directory ${current_dir}"
+if [[ -d "${repo_dir}" ]] ; then
+  remove_dir "${repo_dir}" "${step_num}.02: Remove repo directory ${repo_dir}"
+fi
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+exit 0
+
+
+
+
+
+
+
+step_num="15"
+(log_message "${step_num}: Add test data to trace log") >> "${output_log}" 2>&1
+step_num="16"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
+step_num="17"
+(log_message "${step_num}: Add additional test data") >> "${output_log}" 2>&1
+step_num="18"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
+
+#19: Commit the additional test data
+step_num="19"
+git_commit "${step_num}.01: Commit the additional test data"
+
+step_num="20"
+(log_message "${step_num}: Push the changes") >> "${output_log}" 2>&1
+step_num="21"
+(log_message "${step_num}: List the branches") >> "${output_log}" 2>&1
+step_num="22"
+(log_message "${step_num}: Checkout the development branch") >> "${output_log}" 2>&1
+step_num="23"
+(log_message "${step_num}: Merge the master branch") >> "${output_log}" 2>&1
+step_num="24"
+(log_message "${step_num}: Add trace logs") >> "${output_log}" 2>&1
+
+#25: Commit & push changes
+step_num="25"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
+
+step_num="27"
+(log_message "${step_num}: Pull development") >> "${output_log}" 2>&1
+step_num="28"
+(log_message "${step_num}: Checkout master") >> "${output_log}" 2>&1
+step_num="29"
+(log_message "${step_num}: Pull master") >> "${output_log}" 2>&1
+step_num="30"
+(log_message "${step_num}: Merge development") >> "${output_log}" 2>&1
+
+#31: Merge master changes into the development branch
+step_num="31"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the development branch"
+git_branch_merge "master" "${step_num}.05: Merge master changes into the development branch"
+git_commit "${step_num}.06: Commit the changes"
+
+#32: Merge development changes into the master branch
+step_num="32"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the master branch"
+git_branch_merge "master" "${step_num}.05: Merge development changes into the master branch"
+git_commit "${step_num}.06: Commit the changes"
+
+#33: Push changes
+step_num="33"
+git_push "${step_num}.01: Push changes"
+
+step_num="36"
+(log_message "${step_num}: Checkout development") >> "${output_log}" 2>&1
+step_num="37"
+(log_message "${step_num}: Merge master") >> "${output_log}" 2>&1
+
+#38: Commit & push changes
+step_num="38"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
+
+#40: Checkout master
+step_num="40"
+git_branch_checkout "master" "${step_num}.01: Checkout master"
+
+#41: Checkout development
+step_num="41"
+git_branch_checkout "development" "${step_num}.01: Checkout development"
+
+(log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
+
+  Entered module display_timing
+    Setup elapsed time: 0.005518
+    Execution elapsed time: 0.021815
+    Total elapsed time: 0.027333
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+  Lines processed: 943
+End program name: .git/filters/rcs-filter-smudge.py
+************ END ****************
+Hook path: .git/filters
+Hook name: rcs-filter-smudge.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+  Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout
+Hook path: .git/hooks
+Hook name: post-checkout
+*********************************
+Start program name: .git/hooks/post-checkout
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/hooks/post-checkout
+      Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[3]: 0
+  Leaving module dump_list
+The hook directory .git/hooks/post-checkout.d is a directory
+
+OS Files existing in the hook named directory .git/hooks/post-checkout.d
+  File: rcs-post-checkout.py   01/20/18 14:42:12  19919 bytes  0775  Regular
+
+Saw hook program .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Executing hook program ".git/hooks/post-checkout.d/rcs-post-checkout.py" "45541340845ddedb6cbaa529bdc850391054b621" "45541340845ddedb6cbaa529bdc850391054b621" "0"
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+*********************************
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Leaving module startup_message
+  Entered module main
+    Param[0]: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[3]: 0
+  Entered module shutdown_message
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+************ END ****************
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+Hook return code 0
+  Entered module display_timing
+    Setup elapsed time: 0.000114
+    Execution elapsed time: 0.000878
+    Total elapsed time: 0.000992
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+************ END ****************
+Hook path: .git/hooks
+Hook name: post-checkout
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+      Leaving module dump_file_stream
+      Entered module print_file_stream
+Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/filters/rcs-filter-smudge.py
+Hook path: .git/filters
+Hook name: rcs-filter-smudge.py
+*********************************
+Start program name: .git/filters/rcs-filter-smudge.py
+.git/filters/rcs-filter-smudge.py: test-suite.sh
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/filters/rcs-filter-smudge.py
+      Param[1]: test-suite.sh
+  Leaving module dump_list
+  Smudge file full name: test-suite.sh
+  Entered module git_log_attributes
+  git log cmd: ['git', 'log', '--date=iso8601', '--max-count=1', '--format=%H%x1f%an%x1f%ae%x1f%ci%x1e', '--', 'test-suite.sh']
+  git exit code: 0
+  stdout length: 103
+  stderr length: 0
+STDOUT from command ['git', 'log', '--date=iso8601', '--max-count=1', '--format=%H%x1f%an%x1f%ae%x1f%ci%x1e', '--', 'test-suite.sh']
+a1afde666a2d32f8bfca535a0b787fb33fc8b821David Rotthoffdrotthoff@gmail.com2018-01-18 16:16:47 -0600
+
+git_log: [{'author_email': u'drotthoff@gmail.com', 'hash': u'a1afde666a2d32f8bfca535a0b787fb33fc8b821', 'commit_date': u'2018-01-18 16:16:47 -0600', 'author_name': u'David Rotthoff'}]
+  Leaving module git_log_attributes
+git hash:     $Hash:     a1afde666a2d32f8bfca535a0b787fb33fc8b821 $
+git author:   $Author:   David Rotthoff <drotthoff@gmail.com> $
+git date:     $Date:     2018-01-18 16:16:47 -0600 $
+git rev:      $Rev:      2018-01-18 16:16:47 -0600 $
+git revision: $Revision: 2018-01-18 16:16:47 -0600 $
+git file:     $File:     test-suite.sh $
+git source:   $Source:   test-suite.sh $
+git id:       $Id:       test-suite.sh | 2018-01-18 16:16:47 -0600 | David Rotthoff $
+
+#! /bin/bash
+# Simple shell script to test the git RCS keywords setup
+
+# TODO:  Add tests for the rebase command
+#        1) Commit changes
+#           1.1) Create changed file
+#           1.2) Commit the changed file
+#           1.3) Pull changes from the master repo
+#           1.4) Rebase the non-pushed commit
+#           1.5) Validate the smudge filter was executed
+
+# $Author:   David Rotthoff <drotthoff@gmail.com> $
+# $Date:     2018-01-18 16:16:47 -0600 $
+# $Source:   test-suite.sh $
+
+output_log="$(pwd)/test-suite.log"
+install_src="$(realpath "$(dirname "${0}")/install.py")"
+#install_src="$(realpath "$(dirname "${0}")/install-dev.py")"
+
+repo_dir="git-test-repo"
+submodule_dir="test-repo2"
+test_dir="testing"
+repo_prefix="https://mdrotthoff:Dell_1891@github.com/mdrotthoff"
+master_repo="rcs-keywords-test1.git"
+module_repo="rcs-keywords-test2.git"
+#test_file1="test1.txt"
+#test_file2="test 1.txt"
+
+
+log_blank_line()
+{
+  echo -e " "
+}
+
+log_message()
+{
+  echo -e "${1}"
+}
+
+log_section_start()
+{
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  echo -e "***  Start Section ${1}"
+  echo -e "***    Title: ${2}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_section_finish()
+{
+#  log_blank_line
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  echo -e "***  Section Finish"
+  echo -e "***    Title: ${1}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  echo -e "*****************************************************************"
+  log_blank_line
+  log_blank_line
+  log_blank_line
+}
+
+log_step_start()
+{
+  echo -e "*****************************************************************"
+  echo -e "***  Step Start"
+  echo -e "***    Title: ${1}"
+  echo -e "***    Cmd:   ${2} ${3} ${4} ${5}"
+  echo -e "***    Date:  $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_step_finish()
+{
+  log_blank_line
+  echo -e "*****************************************************************"
+  echo -e "***  Step Finish"
+  echo -e "***    Title:  ${1}"
+  echo -e "***    Status: ${2}"
+  echo -e "***    Date:   $(date '+%Y-%m-%d %T.%N')"
+  echo -e "*****************************************************************"
+  log_blank_line
+}
+
+log_step_status()
+{
+  echo -e "cmd status: ${1}"
+}
+
+test_file_contents()
+{
+  echo "\$Author\$"
+  echo "\$Date\$"
+  echo "\$Revision\$"
+  echo "\$Rev\$"
+  echo "\$File\$"
+  echo "\$Source\$"
+  echo "\$Hash\$"
+  echo "\$Id\$"
+}
+
+display_file_contents()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Display contents of ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cat \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_message "$(cat "${1}")")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+build_test_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Build test file ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="echo >> \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (test_file_contents) > "${1}"
+    (log_blank_line)
+    (log_message "** ${step_name} - start file contents **")
+    (log_message "$(cat "${1}")")
+    (log_message "** ${step_name} - end file contents **")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+append_test_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Append to file ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="echo >> \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line) >> "${1}"
+    (test_file_contents) >> "${1}"
+    (log_blank_line)
+    (log_message "** ${step_name} - start file contents **")
+    (log_message "$(cat "${1}")")
+    (log_message "** ${step_name} - end file contents **")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+remove_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Remove directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    rm -rf "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+tree_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Tree directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="tree \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (tree "${1}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+change_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Change to directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="cd \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    cd "${1}"
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (ls -lah)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+#    (ls -lah "${1}")
+
+make_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Make directory ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="mkdir -p \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (mkdir -p "${1}")
+    (log_blank_line)
+    (ls -lah "${1}")
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+list_dir()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Directory listing of ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="ls -lah \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    (echo "Current working directory: $(pwd)")
+    (log_blank_line)
+    (ls -lah "${1}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+install_rcs()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Install RCS keyword support to ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="${install_src} \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (log_blank_line)
+    ("${install_src}")
+    (log_blank_line)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_status()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Show git status of the repository"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git status"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_clone()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Clone a github repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git clone --no-checkout \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git clone --no-checkout "${1}" .)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_submodule_add()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Add submodule ${1}"
+  if ! [[ -z ${3} ]] ; then
+    step_name="${3}"
+  fi
+
+  step_cmd="git submodule add \"${1}\" \"${2}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git submodule add "${1}" "${2}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_rebase()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Rebase the git repository"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git rebase"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rebase)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_add_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Add file ${2} to the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git add --verbose \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git add --verbose "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_rm_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Remove file ${1} from the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git rm \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rm "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_force_rm_file()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Force remove file ${1} from the repository"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git rm -f \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git rm -f "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_commit()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Test post-commit handler"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git commit -m \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git commit -m "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_pull()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Execute git pull"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git pull"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git push)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_push()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Execute git push"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git push"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git push)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_list()
+{
+  local step_name
+  local step_cmd
+
+  step_name="List all git branches"
+  if ! [[ -z ${1} ]] ; then
+    step_name="${1}"
+  fi
+
+  step_cmd="git branch -a"
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git branch -a)
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_create()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Create git branch ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git branch \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git branch "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_checkout()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Checkout git branch ${1}"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git checkout \"${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git checkout "${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+git_branch_merge()
+{
+  local step_name
+  local step_cmd
+
+  step_name="Merge branch ${1} into the current branch"
+  if ! [[ -z ${2} ]] ; then
+    step_name="${2}"
+  fi
+
+  step_cmd="git merge \"${1}\" -m \"Merge from ${1}\""
+  {
+    (log_step_start "${step_name}" "${step_cmd}")
+    (git merge "${1}" -m "Merge from ${1}")
+    (log_blank_line)
+    (git status)
+    (log_step_finish "${step_name}" "$?")
+  } >> "${output_log}" 2>&1
+}
+
+
+if [[ -f "${output_log}" ]] ;then
+  rm -f "${output_log}" 2> /dev/null
+fi
+
+
+# Run general tests involving the clean and smudge filters
+current_dir=$(pwd)
+
+
+step_num="01"
+section_name="Create the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+make_dir "${repo_dir}" "${step_num}.01: Create the master repo directory ${repo_dir}"
+change_dir "${repo_dir}" "${step_num}.02: Change directory to ${repo_dir}"
+git_clone "${repo_prefix}/${master_repo}" "${step_num}.03: Clone the master repository ${master_repo} to ${repo_dir}"
+install_rcs "." "${step_num}.04: Install RCS support to the repository"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${repo_dir}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="02"
+section_name="Create the submodule repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_submodule_add "${repo_prefix}/${module_repo}" "${submodule_dir}" "${step_num}.01: Clone the submodule repository ${module_repo} to ${submodule_dir}"
+change_dir "${submodule_dir}" "${step_num}.02: Change directory to ${submodule_dir}"
+git_branch_checkout "master" "${step_num}.03: Checkout the master branch"
+git_branch_list "${step_num}.06: List the branches"
+list_dir "." "${step_num}.07: List the repo directory ${submodule_dir}"
+change_dir ".." "${step_num}.08: Change directory to ${repo_dir}"
+install_rcs "." "${step_num}.09: Install RCS support to the repository"
+git_commit "${step_num}.10: Commit the submodule to the repository"
+tree_dir "." "${step_num}.11: Show the repository directory tree"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="03"
+section_name="Create the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_create "development" "${step_num}.01: Create the development branch"
+git_branch_list "${step_num}.02: List the branches"
+git_branch_checkout "development" "${step_num}.03: Checkout the development branch"
+git_branch_list "${step_num}.04: List the branches"
+change_dir "${submodule_dir}" "${step_num}.05: Change directory to ${submodule_dir}"
+git_branch_create "development" "${step_num}.06: Create the development branch"
+git_branch_checkout "development" "${step_num}.07: Checkout the development branch"
+git_status "${step_num}.08: Show the repo status"
+change_dir ".." "${step_num}.09: Change directory to ${repo_dir}"
+#git_commit "${step_num}.03: Commit the test files to the repository"
+git_status "${step_num}.10: Show the repo status"
+tree_dir "." "${step_num}.11: Show the repository directory tree"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+
+step_num="04"
+section_name="Create test files in the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+file_name="test-01.txt"
+build_test_file "${file_name}" "${step_num}.01: Build test file ${file_name}"
+file_name="test-02.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+file_name="test-03.txt"
+build_test_file "${file_name}" "${step_num}.03: Build test file ${file_name}"
+list_dir "." "${step_num}.04: List the test files"
+git_add_file "test-*.txt" "${step_num}.04: Add test files test-*.txt to the repository"
+list_dir "." "${step_num}.05: List the test files"
+file_name="test-03.txt"
+append_test_file "${file_name}" "${step_num}.06: Append data to test file ${file_name} to smudging"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="05"
+section_name="Commit test files to the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_commit "${step_num}.01: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.02: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.03: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.05: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="06"
+section_name="Commit updated test files to the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+file_name="test-02.txt"
+append_test_file "${file_name}" "${step_num}.01: Append data to test file ${file_name}"
+git_add_file "test-*.txt" "${step_num}.02: Add test files test-*.txt to the repository"
+git_commit "${step_num}.03: Commit the test files to the repository"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+list_dir "." "${step_num}.07: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="07"
+section_name="Switch to the master branch in the master repository"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+list_dir "." "${step_num}.02: List the test files"
+git_branch_checkout "development" "${step_num}.03: Checkout the development branch"
+list_dir "." "${step_num}.04: List the test files"
+git_branch_checkout "master" "${step_num}.05: Checkout the master branch"
+list_dir "." "${step_num}.06: List the test files"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="08"
+section_name="Merge development branch to the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after merge"
+git_commit "${step_num}.04: Commit the changes"
+list_dir "." "${step_num}.05: List the test files after commit"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="09"
+section_name="Add dev file to development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+file_name="dev-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add dev file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="10"
+section_name="Add master file to master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "master" "${step_num}.01: Checkout the master branch"
+file_name="master-01.txt"
+build_test_file "${file_name}" "${step_num}.02: Build test file ${file_name}"
+list_dir "." "${step_num}.03: List the test files after adding ${file_name}"
+git_add_file "${file_name}" "${step_num}.04: Add master file ${file_name} to the repository"
+git_commit "${step_num}.05: Commit the changes"
+list_dir "." "${step_num}.06: List the test files after adding ${file_name}"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.09: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.10: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.11: Display contents of test file ${file_name}"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="11"
+section_name="Merge development branch to master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_merge "development" "${step_num}.02: Merge development changes into the master branch"
+list_dir "." "${step_num}.03: List the test files after merging"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="12"
+section_name="Rebase the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_rebase "${step_num}.01: Rebase the master branch"
+git_branch_list "${step_num}.02: List the branches"
+list_dir "." "${step_num}.03: List the test files after rebase operation"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="13"
+section_name="Merge master branch to development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_checkout "development" "${step_num}.01: Checkout the development branch"
+git_branch_merge "master" "${step_num}.02: Merge master changes into the development branch"
+list_dir "." "${step_num}.03: List the test files after merging master"
+file_name="dev-01.txt"
+display_file_contents "${file_name}" "${step_num}.04: Display contents of test file ${file_name}"
+file_name="master-01.txt"
+display_file_contents "${file_name}" "${step_num}.05: Display contents of test file ${file_name}"
+file_name="test-01.txt"
+display_file_contents "${file_name}" "${step_num}.06: Display contents of test file ${file_name}"
+file_name="test-02.txt"
+display_file_contents "${file_name}" "${step_num}.07: Display contents of test file ${file_name}"
+file_name="test-03.txt"
+display_file_contents "${file_name}" "${step_num}.08: Display contents of test file ${file_name}"
+git_status "${step_num}.09: Show the repo status"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+step_num="14"
+section_name="Remove the test files from the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files prior to removal"
+git_rm_file "test-*.txt" "${step_num}.05: Remove the test files from the development branch"
+list_dir "." "${step_num}.06: List the test files after removal"
+git_commit "${step_num}.07: Commit the changes"
+list_dir "." "${step_num}.08: List the test files after commit"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="15"
+section_name="Merge development changes into the master branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files prior to merge"
+git_branch_merge "development" "${step_num}.05: Merge development changes into the master branch"
+list_dir "." "${step_num}.06: List the test files after merge"
+git_commit "${step_num}.07: Commit the changes"
+list_dir "." "${step_num}.08: List the test files after commit"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+step_num="16"
+section_name="Checkout the development branch"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+list_dir "." "${step_num}.04: List the test files after checkout of development branch"
+git_commit "${step_num}.05: Commit any changes"
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+
+
+exit 0
+
+
+step_num="99"
+section_name="Remove the test repositories"
+(log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
+change_dir "${current_dir}" "${step_num}.01: Change to directory ${current_dir}"
+if [[ -d "${repo_dir}" ]] ; then
+  remove_dir "${repo_dir}" "${step_num}.02: Remove repo directory ${repo_dir}"
+fi
+(log_section_finish "${section_name}") >> "${output_log}" 2>&1
+
+exit 0
+
+
+
+
+
+
+
+step_num="15"
+(log_message "${step_num}: Add test data to trace log") >> "${output_log}" 2>&1
+step_num="16"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
+step_num="17"
+(log_message "${step_num}: Add additional test data") >> "${output_log}" 2>&1
+step_num="18"
+(log_message "${step_num}: Show the status") >> "${output_log}" 2>&1
+
+#19: Commit the additional test data
+step_num="19"
+git_commit "${step_num}.01: Commit the additional test data"
+
+step_num="20"
+(log_message "${step_num}: Push the changes") >> "${output_log}" 2>&1
+step_num="21"
+(log_message "${step_num}: List the branches") >> "${output_log}" 2>&1
+step_num="22"
+(log_message "${step_num}: Checkout the development branch") >> "${output_log}" 2>&1
+step_num="23"
+(log_message "${step_num}: Merge the master branch") >> "${output_log}" 2>&1
+step_num="24"
+(log_message "${step_num}: Add trace logs") >> "${output_log}" 2>&1
+
+#25: Commit & push changes
+step_num="25"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
+
+step_num="27"
+(log_message "${step_num}: Pull development") >> "${output_log}" 2>&1
+step_num="28"
+(log_message "${step_num}: Checkout master") >> "${output_log}" 2>&1
+step_num="29"
+(log_message "${step_num}: Pull master") >> "${output_log}" 2>&1
+step_num="30"
+(log_message "${step_num}: Merge development") >> "${output_log}" 2>&1
+
+#31: Merge master changes into the development branch
+step_num="31"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the development branch"
+git_branch_merge "master" "${step_num}.05: Merge master changes into the development branch"
+git_commit "${step_num}.06: Commit the changes"
+
+#32: Merge development changes into the master branch
+step_num="32"
+git_branch_list "${step_num}.01: List the branches"
+git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_list "${step_num}.03: List the branches"
+git_pull "${step_num}.04: Pull the master branch"
+git_branch_merge "master" "${step_num}.05: Merge development changes into the master branch"
+git_commit "${step_num}.06: Commit the changes"
+
+#33: Push changes
+step_num="33"
+git_push "${step_num}.01: Push changes"
+
+step_num="36"
+(log_message "${step_num}: Checkout development") >> "${output_log}" 2>&1
+step_num="37"
+(log_message "${step_num}: Merge master") >> "${output_log}" 2>&1
+
+#38: Commit & push changes
+step_num="38"
+git_commit "${step_num}.01: Commit changes"
+git_push "${step_num}.02: Push changes"
+
+#40: Checkout master
+step_num="40"
+git_branch_checkout "master" "${step_num}.01: Checkout master"
+
+#41: Checkout development
+step_num="41"
+git_branch_checkout "development" "${step_num}.01: Checkout development"
+
+(log_section_finish "${section_name}" "Param 2" "Param 3") >> "${output_log}" 2>&1
+
+  Entered module display_timing
+    Setup elapsed time: 0.005518
+    Execution elapsed time: 0.021815
+    Total elapsed time: 0.027333
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+  Lines processed: 943
+End program name: .git/filters/rcs-filter-smudge.py
+************ END ****************
+Hook path: .git/filters
+Hook name: rcs-filter-smudge.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+  Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout
+Hook path: .git/hooks
+Hook name: post-checkout
+*********************************
+Start program name: .git/hooks/post-checkout
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: .git/hooks/post-checkout
+      Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+      Param[3]: 0
+  Leaving module dump_list
+The hook directory .git/hooks/post-checkout.d is a directory
+
+OS Files existing in the hook named directory .git/hooks/post-checkout.d
+  File: rcs-post-checkout.py   01/20/18 14:42:12  19919 bytes  0775  Regular
+
+Saw hook program .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Executing hook program ".git/hooks/post-checkout.d/rcs-post-checkout.py" "45541340845ddedb6cbaa529bdc850391054b621" "45541340845ddedb6cbaa529bdc850391054b621" "0"
+  Entered module startup_message
+************ START **************
+Hook program: .git/hooks/post-checkout.d/rcs-post-checkout.py
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+*********************************
+Start program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+  Leaving module startup_message
+  Entered module main
+    Param[0]: .git/hooks/post-checkout.d/rcs-post-checkout.py
+    Param[1]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[2]: 45541340845ddedb6cbaa529bdc850391054b621
+    Param[3]: 0
+  Entered module shutdown_message
+  Files processed: -1
+End program name: .git/hooks/post-checkout.d/rcs-post-checkout.py
+************ END ****************
+Hook path: .git/hooks/post-checkout.d
+Hook name: rcs-post-checkout.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+Hook return code 0
+  Entered module display_timing
+    Setup elapsed time: 0.000114
+    Execution elapsed time: 0.000878
+    Total elapsed time: 0.000992
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+Hooks seen: 1
+Hooks executed: 1
+End program name: .git/hooks/post-checkout
+************ END ****************
+Hook path: .git/hooks
+Hook name: post-checkout
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+      Leaving module print_file_stream
+    Leaving module execute_cmd
+  Leaving module check_out_file
+  Entered module display_timing
+    Setup elapsed time: 0.031931
+    Execution elapsed time: 0.048543
+    Total elapsed time: 0.080474
+  Leaving module display_timing
+  Leaving module main
+  Entered module shutdown_message
+  Files processed: 2
+End program name: rcs-post-commit.py
+************ END ****************
+Hook path: 
+Hook name: rcs-post-commit.py
+Return code: 0
+*********************************
+
+
+
+  Leaving module shutdown_message
+Python Call Graph v0.5.1
+Starting trace
+Creating rcs-post-commit.pdf
+Done!

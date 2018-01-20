@@ -10,9 +10,31 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-post-checkout
-C:  1, 0: Module name "rcs-post-checkout" doesn't conform to snake_case naming style (invalid-name)
-C:634, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
+C:  1, 0: Invalid module name "rcs-post-checkout" (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.93/10 (previous run: 9.93/10, -0.00)
+Your code has been rated at 9.96/10 (previous run: 9.96/10, -0.00)
 
+  Entered module startup_message
+************ START **************
+Hook program: rcs-post-checkout.py
+Hook path: 
+Hook name: rcs-post-checkout.py
+*********************************
+Start program name: rcs-post-checkout.py
+  Leaving module startup_message
+  Entered module main
+    Param[0]: rcs-post-checkout.py
+Python Call Graph v0.5.1
+Starting trace
+Caught exception, will raise after graph is made.
+Creating rcs-post-checkout.pdf
+Done and raising the caught exception:
+Traceback (most recent call last):
+  File "/usr/bin/pycallgraph", line 147, in <module>
+    execfile(args[0])
+  File "rcs-post-checkout.py", line 630, in <module>
+    main(argv=sys.argv)
+  File "rcs-post-checkout.py", line 60, in main
+    if sys.argv[3] == '0':
+IndexError: list index out of range

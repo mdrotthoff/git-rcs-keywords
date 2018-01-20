@@ -10,11 +10,28 @@ pylint:
  
 No config file found, using default configuration
 ************* Module git-hook
-C:  1, 0: Module name "git-hook" doesn't conform to snake_case naming style (invalid-name)
-R:180, 0: Too many branches (19/12) (too-many-branches)
-R:180, 0: Too many statements (54/50) (too-many-statements)
-C:287, 8: Constant name "graphviz" doesn't conform to UPPER_CASE naming style (invalid-name)
+C:  1, 0: Invalid module name "git-hook" (invalid-name)
+R:177, 0: Too many branches (19/12) (too-many-branches)
+R:177, 0: Too many statements (54/50) (too-many-statements)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.72/10 (previous run: 9.67/10, +0.06)
+Your code has been rated at 9.78/10 (previous run: 9.78/10, -0.00)
 
+  Entered module main
+  Entered module startup_message
+************ START **************
+Hook program: git-hook.py
+Hook path: 
+Hook name: git-hook.py
+*********************************
+Start program name: git-hook.py
+  Leaving module startup_message
+  Entered module dump_list
+    Parameter list
+      Param[0]: git-hook.py
+  Leaving module dump_list
+The hook directory git-hook.py.d is not a directory
+Python Call Graph v0.5.1
+Starting trace
+Creating git-hook.pdf
+Done!
