@@ -7,24 +7,27 @@
 # $Source$
 # $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
-"""rcs-keywords-post-commit
+"""rcs-keywords-post-checkout
 
 This module provides code to act as an event hook for the git
-post-commit event.  It detects which files have been changed
-and forces the file to be checked back out within the
-repository.
+post-checkoout event.  It detects which files have been changed
+and forces the files to be checked back out within the
+repository.  If the checkout event is  a file based event, the
+hook exits without doing any work.
 
 """
-
 
 import sys
 import os
 import errno
 import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
@@ -40,29 +43,35 @@ def main(argv):
     Returns:
         Nothing
     """
-    function_name = 'main'
-
     # Set the start time for calculating elapsed time
     start_time = time.clock()
-    setup_time = None
 
     # Display the startup message
     startup_message(argv)
 
+    function_name = 'main'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
+        # List the provided parameters
+        param_num = 0
+        for param in sys.argv:
+            sys.stderr.write('    Param[%d]: %s\n' % (param_num, param))
+            param_num = param_num + 1
 
-    # List the provided parameters
-    if VERBOSE_FLAG:
-        dump_list(list_values=argv,
-                  list_description='Param',
-                  list_message='Parameter list')
+    # If argv[3] is zero (file checkout rather than branch checkout),
+    # then exit the hook
+    if sys.argv[3] == '0':
+        shutdown_message(argv=argv,
+                         files_processed=-1,
+                         return_code=0)
+    elif SUMMARY_FLAG:
+        sys.stderr.write('Continuing for branch checkout: %s\n' % sys.argv[3])
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of modified files
-    files = get_modified_files()
+    # Get the list of files impacted.
+    files = get_checkout_files(first_hash=argv[1], second_hash=argv[2])
 
     # Filter the list of modified files to exclude those modified since
     # the commit
@@ -72,9 +81,6 @@ def main(argv):
     setup_time = time.clock()
 
     # Force a checkout of the remaining file list
-    if DEBUG_FLAG:
-        sys.stderr.write('  Processing the remaining file list\n')
-    # Process the remaining file list
     files_processed = 0
     if files:
         files.sort()
@@ -85,13 +91,14 @@ def main(argv):
             files_processed = files_processed + 1
 
     # Calculate the elapsed times
+    # Calculate the elapsed times
     if TIMING_FLAG:
         display_timing(start_time=start_time,
                        setup_time=setup_time)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
+    if VERBOSE_FLAG:
+        sys.stderr.write('  Leaving module check_out_file\n')
     shutdown_message(argv=argv,
                      files_processed=files_processed,
                      return_code=0)
@@ -248,12 +255,13 @@ def dump_file_stream(stream_handle, stream_description):
     """
     function_name = 'dump_file_stream'
     if DEBUG_FLAG:
-        sys.stderr.write('      Entered module %s\n' % function_name)
+        sys.stderr.write('  Entered module %s\n' % function_name)
 
     # Output the stream handle description
-    sys.stderr.write('        %s\n' % stream_description)
+    sys.stderr.write('      %s\n' % stream_description)
 
     # Output the contents of the stream handle if any exists
+#    if len(stream_handle) > 0:
     if stream_handle:
         sys.stderr.write(stream_handle.strip().decode("utf-8"))
         sys.stderr.write("\n")
@@ -420,25 +428,43 @@ def git_ls_files():
     return cmd_stdout
 
 
-def get_modified_files():
-    """Find files that were modified by the merge.
+def get_checkout_files(first_hash, second_hash):
+    """Find files that have been modified over the range of the supplied
+       commit hashes.
 
     Arguments:
-        None
+        first_hash - The starting hash of the range
+        second_hash - The ending hash of the range
 
     Returns:
         A list of filenames.
     """
-    function_name = 'get_modified_files'
+    function_name = 'get_checkout_files'
     if DEBUG_FLAG:
         sys.stderr.write('  Entered module %s\n' % function_name)
 
-    modified_file_list = []
-    cmd = ['git', 'diff-tree', 'HEAD~1', 'HEAD', '--name-only', '-r',
-           '--diff-filter=ACMRT']
+    file_list = []
 
-    if DEBUG_FLAG:
-        sys.stderr.write('    Getting list of files modified\n')
+    # Get the list of files impacted.  If argv[1] and argv[2] are the same
+    # commit, then pass the value only once otherwise the file list is not
+    # returned
+    if first_hash == second_hash:
+        cmd = ['git',
+               'diff-tree',
+               '-r',
+               '--name-only',
+               '--no-commit-id',
+               '--diff-filter=ACMRT',
+               first_hash]
+    else:
+        cmd = ['git',
+               'diff-tree',
+               '-r',
+               '--name-only',
+               '--no-commit-id',
+               '--diff-filter=ACMRT',
+               first_hash,
+               second_hash]
 
     # Fetch the list of files modified by the last commit
     try:
@@ -447,7 +473,7 @@ def get_modified_files():
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
         # This is a new repository, so get a list of all files
-        if err.returncode == 128:  # new repository
+        if err.returncode == 128:
             cmd_stdout = git_ls_files()
         else:
             shutdown_message(argv=sys.argv,
@@ -455,31 +481,31 @@ def get_modified_files():
                              files_processed=0)
 
     # Convert the stdout stream to a list of files
-    modified_file_list = cmd_stdout.decode('utf8').splitlines()
+    file_list = cmd_stdout.decode('utf8').splitlines()
 
     # Deal with unmodified repositories
-    if modified_file_list and modified_file_list[0] == 'clean':
+    if file_list and file_list[0] == 'clean':
         if DEBUG_FLAG:
             sys.stderr.write('  No files found to process\n')
-            sys.stderr.write('  Leaving module get_modified_files\n')
+            sys.stderr.write('  Leaving module get_committed_files\n')
         shutdown_message(argv=sys.argv,
                          return_code=0,
                          files_processed=0)
 
     # Only return regular files.
-    modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
+    file_list = [i for i in file_list if os.path.isfile(i)]
     if DEBUG_FLAG:
-        dump_list(list_values=modified_file_list,
-                  list_description='Modified file found',
-                  list_message='List modified files found')
+        dump_list(list_values=file_list,
+                  list_description='      Real file found',
+                  list_message='List real files found')
     if VERBOSE_FLAG:
-        sys.stderr.write('  %d modified files found for processing\n'
-                         % len(modified_file_list))
+        sys.stderr.write('  %d real files found for processing\n'
+                         % len(file_list))
 
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
-    return modified_file_list
+    return file_list
 
 
 def git_not_checked_in(files):
@@ -604,4 +630,14 @@ def check_out_file(file_name):
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)

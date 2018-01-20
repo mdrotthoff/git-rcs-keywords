@@ -7,13 +7,18 @@
 # $Source$
 # $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
-"""rcs-keywords-post-commit
+"""rcs-keywords-post-rewrite
 
 This module provides code to act as an event hook for the git
 post-commit event.  It detects which files have been changed
 and forces the file to be checked back out within the
 repository.
 
+TODO:  Need to read stdin for the list of commit hashes to
+       process.  Only need to use one of the two values on
+       the each line to determine the files that are
+       affected.  Should need to just check the files
+       out during the post-rewrite.
 """
 
 
@@ -22,9 +27,12 @@ import os
 import errno
 import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
@@ -61,26 +69,49 @@ def main(argv):
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of modified files
-    files = get_modified_files()
+    # Read stdin and write it to stderr
+    input_lines = sys.stdin.readlines()
+    line_count = 1
+    files = []
+    for source_line in input_lines:
+        line_count += 1
+        words = source_line.split()
+        # Get the list of modified files
+        files = files + get_modified_files(words[1].strip())
 
-    # Filter the list of modified files to exclude those modified since
-    # the commit
-    files = git_not_checked_in(files=files)
+    # Dump the list of files found to be rewritten
+    if VERBOSE_FLAG:
+        dump_list(list_values=sorted(files),
+                  list_description='File',
+                  list_message='Rewritten files list')
+
+    # Create a list of unique files that were rewritten
+    files = set(sorted(files))
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Unique rewritten files list')
+
+    # Remove modified files from the list
+    files = git_not_checked_in(files)
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Non-modified rewritten files list')
+
+    # Check if git is available.
+    check_for_cmd(cmd=['git', '--version'])
 
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
     # Force a checkout of the remaining file list
-    if DEBUG_FLAG:
-        sys.stderr.write('  Processing the remaining file list\n')
-    # Process the remaining file list
     files_processed = 0
     if files:
-        files.sort()
-        for file_name in files:
-            if DEBUG_FLAG:
-                sys.stderr.write('  Checking out file %s\n' % file_name)
+        for file_name in sorted(files):
+            if SUMMARY_FLAG:
+                sys.stderr.write('  Checking out rewritten file %s\n'
+                                 % file_name)
             check_out_file(file_name=file_name)
             files_processed = files_processed + 1
 
@@ -420,7 +451,7 @@ def git_ls_files():
     return cmd_stdout
 
 
-def get_modified_files():
+def get_modified_files(dest_hash):
     """Find files that were modified by the merge.
 
     Arguments:
@@ -434,8 +465,8 @@ def get_modified_files():
         sys.stderr.write('  Entered module %s\n' % function_name)
 
     modified_file_list = []
-    cmd = ['git', 'diff-tree', 'HEAD~1', 'HEAD', '--name-only', '-r',
-           '--diff-filter=ACMRT']
+    cmd = ['git', 'diff-tree', dest_hash, '--name-only', '-r',
+           '--no-commit-id', '--diff-filter=ACMRT']
 
     if DEBUG_FLAG:
         sys.stderr.write('    Getting list of files modified\n')
@@ -465,6 +496,12 @@ def get_modified_files():
         shutdown_message(argv=sys.argv,
                          return_code=0,
                          files_processed=0)
+
+    # List all files initially selected
+    if DEBUG_FLAG:
+        dump_list(list_values=modified_file_list,
+                  list_description='Modified file found',
+                  list_message='List initial files found')
 
     # Only return regular files.
     modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
@@ -604,4 +641,14 @@ def check_out_file(file_name):
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)

@@ -7,10 +7,10 @@
 # $Source$
 # $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
-"""rcs-keywords-post-commit
+"""rcs-keywords-post-merge
 
 This module provides code to act as an event hook for the git
-post-commit event.  It detects which files have been changed
+post-merge event.  It detects which files have been changed
 and forces the file to be checked back out within the
 repository.
 
@@ -22,9 +22,12 @@ import os
 import errno
 import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
@@ -63,6 +66,10 @@ def main(argv):
 
     # Get the list of modified files
     files = get_modified_files()
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Files not checked in')
 
     # Filter the list of modified files to exclude those modified since
     # the commit
@@ -71,9 +78,6 @@ def main(argv):
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
-    # Force a checkout of the remaining file list
-    if DEBUG_FLAG:
-        sys.stderr.write('  Processing the remaining file list\n')
     # Process the remaining file list
     files_processed = 0
     if files:
@@ -95,7 +99,6 @@ def main(argv):
     shutdown_message(argv=argv,
                      files_processed=files_processed,
                      return_code=0)
-    return
 
 
 def startup_message(argv):
@@ -434,7 +437,7 @@ def get_modified_files():
         sys.stderr.write('  Entered module %s\n' % function_name)
 
     modified_file_list = []
-    cmd = ['git', 'diff-tree', 'HEAD~1', 'HEAD', '--name-only', '-r',
+    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
            '--diff-filter=ACMRT']
 
     if DEBUG_FLAG:
@@ -472,6 +475,7 @@ def get_modified_files():
         dump_list(list_values=modified_file_list,
                   list_description='Modified file found',
                   list_message='List modified files found')
+
     if VERBOSE_FLAG:
         sys.stderr.write('  %d modified files found for processing\n'
                          % len(modified_file_list))
@@ -519,7 +523,7 @@ def git_not_checked_in(files):
     # Deal with unmodified repositories
     if not modified_files_list:
         if DEBUG_FLAG:
-            sys.stderr.write('  No modified files found to process\n')
+            sys.stderr.write('  No modified files found to exclude\n')
             sys.stderr.write('  Leaving module git_not_checked_in\n')
         return files
 
@@ -604,4 +608,14 @@ def check_out_file(file_name):
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)

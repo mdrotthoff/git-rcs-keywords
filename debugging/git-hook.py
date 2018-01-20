@@ -6,22 +6,32 @@
 # $Rev$
 # $Source$
 # $Hash$
+# $Id$
 
-"""rcs-keywords-filter-clean
 
-This module provides the code to clean the local copy of the
-file of the keyword substitutions prior to commiting changes
-back to the repository.
+"""git-hook
+
+This module acts as a MPC for each git hook event it is registered
+against.  A symlink is created between the hook name and the program
+that tells it what event is executing.  The correspoinding .d
+directory is read and all executable programs are run.  All parameters
+received by the module are passed along to each of the executed
+programs.
 
 """
 
+
 import sys
 import os
-import re
+import stat
+import subprocess
 import time
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
@@ -52,12 +62,8 @@ def startup_message():
         sys.stderr.write('*********************************\n')
 
     # Output the program name start
-    if VERBOSE_FLAG:
-        sys.stderr.write('Start program name: %s\n' % str(program_name))
-
-    # Output the program name start
     if SUMMARY_FLAG:
-        sys.stderr.write('%s: %s\n' % (str(program_name), sys.argv[1]))
+        sys.stderr.write('Start program name: %s\n' % str(program_name))
 
     # Return from the function
     if DEBUG_FLAG:
@@ -65,7 +71,7 @@ def startup_message():
     return
 
 
-def shutdown_message(return_code=0, lines_processed=0):
+def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
     """Function display any shutdown messages and
     the program.
 
@@ -88,7 +94,8 @@ def shutdown_message(return_code=0, lines_processed=0):
 
     # Display a processing summary
     if SUMMARY_FLAG:
-        sys.stderr.write('  Lines processed: %d\n' % lines_processed)
+        sys.stderr.write('Hooks seen: %d\n' % hook_count)
+        sys.stderr.write('Hooks executed: %d\n' % hook_executed)
         sys.stderr.write('End program name: %s\n' % program_name)
 
     if DEBUG_FLAG:
@@ -187,13 +194,8 @@ def main(argv):
     start_time = time.clock()
 
     # Display the startup message
-    startup_message()
-
-    # Calculate the source file being cleaned (if provided)
-    if len(argv) > 1:
-        file_full_name = argv[1]
-    else:
-        file_full_name = 'Not provided'
+    if SUMMARY_FLAG or DEBUG_FLAG:
+        startup_message()
 
     # List the provided parameters
     if VERBOSE_FLAG:
@@ -201,68 +203,69 @@ def main(argv):
                   list_description='Param',
                   list_message='Parameter list')
 
-    # Display the name of the file being cleaned
-    if VERBOSE_FLAG or DEBUG_FLAG:
-        sys.stderr.write('  Clean file full name: %s\n' % str(file_full_name))
-
-    # Define the various substitution regular expressions
-    author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
-                              re.IGNORECASE)
-    id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
-                          re.IGNORECASE)
-    date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
-                            re.IGNORECASE)
-    source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
-                              re.IGNORECASE)
-    file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
-                            re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d ]+ +\$|\$Revision\$",
-                                re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d ]+ +\$|\$Rev\$",
-                           re.IGNORECASE)
-    hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
-                            re.IGNORECASE)
-
-    # Calculate empty strings based on the keyword
-    git_hash = '$%s$' % 'Hash'
-    git_author = '$%s$' % 'Author'
-    git_date = '$%s$' % 'Date'
-    git_rev = '$%s$' % 'Rev'
-    git_revision = '$%s$' % 'Revision'
-    git_file = '$%s$' % 'File'
-    git_source = '$%s$' % 'Source'
-    git_id = '$%s$' % 'Id'
-
-    # Display the cleaning values (debugging)
+    # Verify that the named hook directory is a directory
+    list_dir = sys.argv[0] + '.d'
+    if not os.path.isdir(list_dir):
+        sys.stderr.write('The hook directory %s is not a directory\n'
+                         % list_dir)
+        exit(0)
     if DEBUG_FLAG:
-        sys.stderr.write('git hash:     %s\n' % git_hash)
-        sys.stderr.write('git author:   %s\n' % git_author)
-        sys.stderr.write('git date:     %s\n' % git_date)
-        sys.stderr.write('git rev:      %s\n' % git_rev)
-        sys.stderr.write('git revision: %s\n' % git_revision)
-        sys.stderr.write('git file:     %s\n' % git_file)
-        sys.stderr.write('git source:   %s\n' % git_source)
-        sys.stderr.write('git id:       %s\n' % git_id)
+        sys.stderr.write('The hook directory %s is a directory\n' % list_dir)
         sys.stderr.write("\n")
 
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
-    # Process each of the rows found on stdin
-    line_count = 0
-    for line in sys.stdin:
-        line_count = line_count + 1
-        line = author_regex.sub(git_author, line)
-        line = id_regex.sub(git_id, line)
-        line = date_regex.sub(git_date, line)
-        line = source_regex.sub(git_source, line)
-        line = file_regex.sub(git_file, line)
-        line = revision_regex.sub(git_revision, line)
-        line = rev_regex.sub(git_rev, line)
-        line = hash_regex.sub(git_hash, line)
-        sys.stdout.write(line)
+    # Show the OS files in the hook named directory
+    if DEBUG_FLAG:
+        sys.stderr.write('OS Files existing in the hook named directory %s\n'
+                         % list_dir)
+        for file_name in sorted(os.listdir(list_dir)):
+            file_stat = os.lstat(os.path.join(list_dir,
+                                              file_name))
+            file_mtime = str(time.strftime('%x %X',
+                                           time.localtime(file_stat.st_mtime)))
+            file_size = str(file_stat.st_size)
+            file_mode = str(oct(stat.S_IMODE(file_stat.st_mode)))
+            file_type = ''
+            if stat.S_ISLNK(file_stat.st_mode) > 0:
+                file_type = file_type + ' Symlink'
+            if stat.S_ISDIR(file_stat.st_mode) > 0:
+                file_type = file_type + ' Directory'
+            if stat.S_ISREG(file_stat.st_mode) > 0:
+                file_type = file_type + ' Regular'
+            sys.stderr.write('  File: %s   %s  %s bytes  %s  %s\n'
+                             % (file_name,
+                                file_mtime,
+                                file_size,
+                                file_mode,
+                                file_type.strip()))
+        sys.stderr.write("\n")
+
+    # Execute each of the hooks found in the relevant directory
+    hook_count = 0
+    hook_executed = 0
+    for file_name in sorted(os.listdir(list_dir)):
+        hook_count = hook_count + 1
+        hook_program = os.path.join(list_dir, file_name)
         if DEBUG_FLAG:
-            sys.stderr.write(line)
+            sys.stderr.write('Saw hook program %s\n' % hook_program)
+        if os.path.isfile(hook_program) and os.access(hook_program, os.X_OK):
+            # If parameters were supplied, pass them through to the actual
+            # hook program
+            if len(argv) > 1:
+                hook_program = '"%s" %s' % (hook_program,
+                                            ' '.join('"%s"' % param
+                                                     for param in argv[1:]))
+            hook_executed = hook_executed + 1
+            if VERBOSE_FLAG:
+                sys.stderr.write('  Executing hook program %s\n'
+                                 % hook_program)
+            hook_call = subprocess.call([hook_program], shell=True)
+            if DEBUG_FLAG:
+                sys.stderr.write('Hook return code %s\n' % hook_call)
+            if hook_call > 0:
+                exit(hook_call)
 
     # Calculate the elapsed times
     if TIMING_FLAG:
@@ -272,10 +275,22 @@ def main(argv):
     # Return from the function
     if DEBUG_FLAG:
         sys.stderr.write('  Leaving module %s\n' % function_name)
-    shutdown_message(return_code=0, lines_processed=line_count)
+    shutdown_message(return_code=0,
+                     hook_count=hook_count,
+                     hook_executed=hook_executed)
     return
 
 
 # Execute the main function
 if __name__ == '__main__':
-    main(argv=sys.argv)
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main(argv=sys.argv)
+    else:
+        main(argv=sys.argv)

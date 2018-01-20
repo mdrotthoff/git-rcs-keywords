@@ -1,0 +1,25 @@
+Processing file: rcs-filter-smudge.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-filter-smudge.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-filter-smudge
+C:  1, 0: Invalid module name "rcs-filter-smudge" (invalid-name)
+R:252, 0: Too many local variables (27/15) (too-many-locals)
+R:252, 0: Too many statements (70/50) (too-many-statements)
+
+------------------------------------------------------------------
+Your code has been rated at 9.84/10 (previous run: 9.84/10, +0.00)
+
+ 
+ 
+Python Call Graph v0.5.1
+Starting trace
+Creating rcs-filter-smudge.pdf
+Done!

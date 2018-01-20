@@ -1,0 +1,25 @@
+Processing file: rcs-filter-clean.py
+ 
+ 
+pycodestyle:
+ 
+checking rcs-filter-clean.py
+ 
+ 
+pylint:
+ 
+No config file found, using default configuration
+************* Module rcs-filter-clean
+C:  1, 0: Invalid module name "rcs-filter-clean" (invalid-name)
+R:173, 0: Too many local variables (23/15) (too-many-locals)
+R:173, 0: Too many statements (59/50) (too-many-statements)
+
+------------------------------------------------------------------
+Your code has been rated at 9.78/10 (previous run: 9.78/10, +0.00)
+
+ 
+ 
+Python Call Graph v0.5.1
+Starting trace
+Creating rcs-filter-clean.pdf
+Done!

@@ -21,6 +21,8 @@ import time
 from shutil import copy2
 import subprocess
 import re
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
 
 GIT_HOOK = 'git-hook.py'
 
@@ -46,11 +48,11 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
+CALL_GRAPH_FLAG = bool(False)
 DEBUG_FLAG = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
 SUMMARY_FLAG = bool(False)
-
 
 PROGRAM_NAME = os.path.abspath(sys.argv[0])
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
@@ -752,4 +754,14 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+    if CALL_GRAPH_FLAG:
+        graphviz = GraphvizOutput()
+        graphviz.output_type = 'pdf'
+        graphviz.output_file = (os.path.basename(sys.argv[0])
+                                + '.' + graphviz.output_type)
+        sys.stderr.write('Writing %s file: %s\n'
+                         % (graphviz.output_type, graphviz.output_file))
+        with PyCallGraph(output=graphviz):
+            main()
+    else:
+        main()
