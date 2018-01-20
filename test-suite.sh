@@ -841,9 +841,6 @@ git_commit "${step_num}.05: Commit any changes"
 
 
 
-exit 0
-
-
 step_num="99"
 section_name="Remove the test repositories"
 (log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1

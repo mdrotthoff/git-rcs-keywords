@@ -10,7 +10,8 @@ generate_lint()
   local app="${1}"
   local logfile="${app%.*}.lint"
   local pdffile="${app%.*}.pdf"
-  
+  local hash=$(git log --max-count=1 --pretty=%H)
+
   if [[ -z "${1}" ]] ; then
     echo "No application name provided to generate_lint"
   else
@@ -27,7 +28,17 @@ generate_lint()
       echo "pylint:"
       echo " "
       pylint "${app}"
-    pycallgraph -o "${pdffile}" -f pdf "${1}"
+      echo " "
+      echo " "
+      if [[ "${1}" == 'rcs-filter-clean.py' ]] ; then
+        pycallgraph -o "${pdffile}" -f pdf "${1}" "${1}"
+      elif [[ "${1}" == 'rcs-filter-smudge.py' ]] ; then
+        pycallgraph -o "${pdffile}" -f pdf "${1}" "${1}"
+      elif [[ "${1}" == 'rcs-post-checkout.py' ]] ; then
+        pycallgraph -o "${pdffile}" -f pdf "${1}" "${hash}" "${hash}" "0"
+      else
+        pycallgraph -o "${pdffile}" -f pdf "${1}"
+      fi
     } > "${logfile}" 2>&1
   fi
 }
