@@ -104,3 +104,9 @@ of the registered git events to hold the associated hook programs.  A symbolic l
 created from the control program to the git event being managed.  **Note:** The hooks
 are executed in a sorted fashion so there is some control over the order the hook
 programs are executed.
+
+## License
+This project is provided as-is without any warranty of fitness. The concepts and ideas
+used came from various other similar projects as well as original research. To the
+extent possible, this project is released to the public domain.
+
