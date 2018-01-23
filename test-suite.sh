@@ -607,7 +607,8 @@ list_dir "." "${step_num}.07: List the repo directory ${submodule_dir}"
 change_dir ".." "${step_num}.08: Change directory to ${repo_dir}"
 install_rcs "." "${step_num}.09: Install RCS support to the repository"
 git_commit "${step_num}.10: Commit the submodule to the repository"
-tree_dir "." "${step_num}.11: Show the repository directory tree"
+install_rcs "." "${step_num}.11: Install RCS support to the repository"
+tree_dir "." "${step_num}.12: Show the repository directory tree"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
 
 step_num="03"
@@ -626,8 +627,6 @@ change_dir ".." "${step_num}.09: Change directory to ${repo_dir}"
 git_status "${step_num}.10: Show the repo status"
 tree_dir "." "${step_num}.11: Show the repository directory tree"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
-
-
 
 step_num="04"
 section_name="Create test files in the master repository"
@@ -802,7 +801,6 @@ display_file_contents "${file_name}" "${step_num}.08: Display contents of test f
 git_status "${step_num}.09: Show the repo status"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
 
-
 step_num="14"
 section_name="Remove the test files from the development branch"
 (log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
@@ -833,13 +831,14 @@ step_num="16"
 section_name="Checkout the development branch"
 (log_section_start "${step_num}" "${section_name}") >> "${output_log}" 2>&1
 git_branch_list "${step_num}.01: List the branches"
-git_branch_checkout "master" "${step_num}.02: Checkout the master branch"
+git_branch_checkout "development" "${step_num}.02: Checkout the development branch"
 git_branch_list "${step_num}.03: List the branches"
 list_dir "." "${step_num}.04: List the test files after checkout of development branch"
 git_commit "${step_num}.05: Commit any changes"
 (log_section_finish "${section_name}") >> "${output_log}" 2>&1
 
 
+exit 0
 
 step_num="99"
 section_name="Remove the test repositories"
