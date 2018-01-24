@@ -155,7 +155,7 @@ def check_for_cmd(cmd):
 
     # Execute the command
     try:
-        execute_cmd(cmd)
+        execute_cmd(cmd=cmd)
 
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
@@ -187,7 +187,7 @@ def git_ls_files():
 
     # Get a list of all files in the current repository branch
     try:
-        cmd_stdout = execute_cmd(cmd)
+        cmd_stdout = execute_cmd(cmd=cmd)
 
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
@@ -234,7 +234,7 @@ def get_checkout_files(first_hash, second_hash):
 
     # Fetch the list of files modified by the last commit
     try:
-        cmd_stdout = execute_cmd(cmd)
+        cmd_stdout = execute_cmd(cmd=cmd)
 
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
@@ -276,7 +276,7 @@ def git_not_checked_in(files):
 
     # Get the list of files that are modified but not checked in
     try:
-        cmd_stdout = execute_cmd(cmd)
+        cmd_stdout = execute_cmd(cmd=cmd)
 
     # if an exception occurs, raise it to the caller
     except subprocess.CalledProcessError as err:
@@ -330,7 +330,7 @@ def check_out_file(file_name):
 
     # Check out the file so that it is smudged
     try:
-        execute_cmd(cmd)
+        execute_cmd(cmd=cmd)
     except subprocess.CalledProcessError as err:
         sys.stderr.write('  CalledProcessError in check_out_file\n')
         shutdown_message(return_code=err.returncode,
