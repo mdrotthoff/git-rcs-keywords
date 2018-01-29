@@ -25,15 +25,15 @@ import sys
 import os
 import subprocess
 import time
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
+# from pycallgraph import PyCallGraph
+# from pycallgraph.output import GraphvizOutput
 
 
 # Set the debugging flag
-CALL_GRAPH = bool(True)
-TIMING_FLAG = bool(True)
+CALL_GRAPH = bool(False)
+TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 
 def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
@@ -177,13 +177,13 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    if CALL_GRAPH:
-        graphviz = GraphvizOutput()
-        graphviz.output_type = 'pdf'
-        graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
-                                + '-' + time.strftime("%Y%m%d-%H%M%S")
-                                + '.' + graphviz.output_type)
-        with PyCallGraph(output=graphviz):
-            main()
-    else:
+#     if CALL_GRAPH:
+#         graphviz = GraphvizOutput()
+#         graphviz.output_type = 'pdf'
+#         graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
+#                                 + '-' + time.strftime("%Y%m%d-%H%M%S")
+#                                 + '.' + graphviz.output_type)
+#         with PyCallGraph(output=graphviz):
+#             main()
+#     else:
         main()

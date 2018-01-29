@@ -21,8 +21,8 @@ import time
 from shutil import copy2
 import subprocess
 import re
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
+# from pycallgraph import PyCallGraph
+# from pycallgraph.output import GraphvizOutput
 
 GIT_HOOK = 'git-hook.py'
 
@@ -48,10 +48,10 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-CALL_GRAPH = bool(True)
-TIMING_FLAG = bool(True)
+CALL_GRAPH = bool(False)
+TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+SUMMARY_FLAG = bool(False)
 
 
 # Set the installation target
@@ -475,13 +475,13 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    if CALL_GRAPH:
-        graphviz = GraphvizOutput()
-        graphviz.output_type = 'pdf'
-        graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
-                                + '-' + time.strftime("%Y%m%d-%H%M%S")
-                                + '.' + graphviz.output_type)
-        with PyCallGraph(output=graphviz):
-            main()
-    else:
+#     if CALL_GRAPH:
+#         graphviz = GraphvizOutput()
+#         graphviz.output_type = 'pdf'
+#         graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
+#                                 + '-' + time.strftime("%Y%m%d-%H%M%S")
+#                                 + '.' + graphviz.output_type)
+#         with PyCallGraph(output=graphviz):
+#             main()
+#     else:
         main()
