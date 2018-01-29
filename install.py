@@ -21,6 +21,8 @@ import time
 from shutil import copy2
 import subprocess
 import re
+# from pycallgraph import PyCallGraph
+# from pycallgraph.output import GraphvizOutput
 
 GIT_HOOK = 'git-hook.py'
 
@@ -46,24 +48,18 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-DEBUG_FLAG = bool(False)
+CALL_GRAPH = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
 SUMMARY_FLAG = bool(False)
 
 
-PROGRAM_NAME = os.path.abspath(sys.argv[0])
-(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(PROGRAM_NAME)
-
 # Set the installation target
+(PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(sys.argv[0])
 if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
-    if DEBUG_FLAG:
-        sys.stderr.write('  Target from parameter: %s\n' % TARGET_DIR)
 else:
     TARGET_DIR = ''
-    if DEBUG_FLAG:
-        sys.stderr.write('  Target default: %s\n' % TARGET_DIR)
 
 
 def check_for_cmd(cmd):
@@ -77,11 +73,6 @@ def check_for_cmd(cmd):
     Returns:
         Nothing
     """
-    function_name = 'check_for_cmd'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-        sys.stderr.write('    Validating command is available\n')
-
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
         shutdown_message(return_code=1)
@@ -101,34 +92,7 @@ def check_for_cmd(cmd):
         shutdown_message(return_code=err.errno)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
-
-
-def validatedirexists(dirname):
-    """Validate whether or not an OS directory exists
-
-    Arguments:
-        dirname: Name of the subdirectory to verify
-
-    Returns:
-        Bool
-    """
-
-    function_name = 'validatedir'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-    dir_exists = os.path.isdir(dirname)
-    if DEBUG_FLAG:
-        sys.stderr.write('  Validate directory %s exists: %s\n'
-                         % (dirname, str(dir_exists)))
-
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
-    return dir_exists
 
 
 def createdir(dirname):
@@ -140,22 +104,13 @@ def createdir(dirname):
     Returns:
         None
     """
-
-    function_name = 'createdir'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-    if validatedirexists(dirname=dirname):
-        if DEBUG_FLAG:
-            sys.stderr.write('  Directory %s already exists\n' % dirname)
+    if os.path.isdir(dirname):
         return
     os.makedirs(dirname)
     if SUMMARY_FLAG:
         sys.stderr.write('  Directory %s created\n' % dirname)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -169,22 +124,12 @@ def copyfile(srcfile, destfile):
     Returns:
         None
     """
-    function_name = 'copyfile'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-    if DEBUG_FLAG:
-        sys.stderr.write('  Copy source file: %s\n' % srcfile)
-        sys.stderr.write('  Copy destination file: %s\n' % destfile)
-
     # Copy the source file to the destination file
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
         sys.stderr.write('  Copied file  %s to %s\n' % (srcfile, destfile))
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -201,11 +146,6 @@ def execute_cmd(cmd):
         Process stdout file handle
         Process stderr file handle
     """
-    function_name = 'execute_cmd'
-    if DEBUG_FLAG:
-        sys.stderr.write('    Entered module %s\n' % function_name)
-        sys.stderr.write('      cmd: %s\n' % str(cmd))
-
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
         shutdown_message(return_code=1)
@@ -216,21 +156,11 @@ def execute_cmd(cmd):
                                   stdout=subprocess.PIPE,
                                   stderr=subprocess.PIPE)
     (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
-    if DEBUG_FLAG:
-        sys.stderr.write('        cmd return code: %d\n'
-                         % cmd_handle.returncode)
-        sys.stderr.write('        stdout length: %d\n'
-                         % len(cmd_stdout))
-        sys.stderr.write('        stderr length: %s\n'
-                         % len(cmd_stderr))
-        dump_file_stream(stream_handle=cmd_stdout,
-                         stream_description='STDOUT from check_for_cmd')
-        dump_file_stream(stream_handle=cmd_stderr,
-                         stream_description='STDERR from check_for_cmd')
+    if cmd_stderr:
+        for line in cmd_stderr.strip().decode("utf-8").splitlines():
+            sys.stderr.write("%s\n" % line)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('    Leaving module %s\n' % function_name)
     return cmd_stdout
 
 
@@ -245,31 +175,16 @@ def registergitevent(eventdir, eventname, eventcode):
     Returns:
         None
     """
-    function_name = 'registergitevent'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-        sys.stderr.write('  git event dir: %s\n' % eventdir)
-        sys.stderr.write('  git event name: %s\n' % eventname)
-        sys.stderr.write('  git event code: %s\n' % eventcode)
-
     event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
-    if DEBUG_FLAG:
-        sys.stderr.write('  git event code dir: %s\n' % event_code_dir)
     createdir(dirname=event_code_dir)
     copyfile(srcfile=os.path.join(PROGRAM_PATH, eventcode),
              destfile=os.path.join(event_code_dir, eventcode))
     event_link = os.path.join(eventdir, eventname)
     if os.path.islink(event_link):
-        if DEBUG_FLAG:
-            sys.stderr.write('  Removed event link: %s\n' % event_link)
         os.remove(event_link)
     os.symlink(GIT_HOOK, event_link)
-    if DEBUG_FLAG:
-        sys.stderr.write('  Created event link: %s\n' % event_link)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -284,15 +199,6 @@ def registerfilter(filter_dir, filter_type, filter_name):
     Returns:
         None
     """
-    function_name = 'registerfilter'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-    if DEBUG_FLAG:
-        sys.stderr.write('  Copying filter: %s\n' % filter_name)
-        sys.stderr.write('  Filter dir: %s\n' % filter_dir)
-        sys.stderr.write('  Filter type: %s\n' % filter_type)
-
     # Register the filter program to rcs-keywords filter
     cmd = ['git',
            'config',
@@ -302,8 +208,6 @@ def registerfilter(filter_dir, filter_type, filter_name):
     execute_cmd(cmd=cmd)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -318,10 +222,6 @@ def registerfilepattern(git_dir):
     Returns:
         None
     """
-    function_name = 'registerfilepattern'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
     # Register the defined file patterns to the filters in the attributes files
     attribute_file = os.path.join(git_dir, 'info', 'attributes')
     attribute_backup = os.path.join(git_dir, 'info', 'attributes~')
@@ -342,16 +242,12 @@ def registerfilepattern(git_dir):
 
     # Write the appropriate file patterns for the filter usage
     max_len = len(max(GIT_FILE_PATTERN, key=len))
-    if DEBUG_FLAG:
-        sys.stderr.write('  max file pattern length: %d\n' % max_len)
     for file_pattern in GIT_FILE_PATTERN:
         destination.write('%s filter=rcs-keywords\n'
                           % file_pattern.ljust(max_len))
     destination.close()
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -365,17 +261,8 @@ def validategitrepo(repo_dir, git_dir='.git'):
     Returns:
         None
     """
-    function_name = 'validategitrepo'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
-        sys.stderr.write('  Target git directory: %s\n' % git_dir)
-#    git_dir=os.path.join(repo_dir, '.git')
-#    git_dir='.git'
-
     # Validate that the installation target has a .git directory
-#    sys.stderr.write('Current directory %s\n' % os.getcwd())
-    if not validatedirexists(dirname=os.path.join(repo_dir, git_dir)):
+    if not os.path.isdir(os.path.join(repo_dir, git_dir)):
         sys.stderr.write('  Target directory %s is not a git repository\n'
                          % repo_dir)
         sys.stderr.write('  Aborting installation!\n')
@@ -383,8 +270,6 @@ def validategitrepo(repo_dir, git_dir='.git'):
                         % repo_dir)
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -399,17 +284,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     Returns:
         None
     """
-    function_name = 'installgitkeywords'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-#    git_dir=os.path.join(repo_dir, '.git')
-#    git_dir='.git'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Repository directory: %s\n' % repo_dir)
-        sys.stderr.write('  Target git directory: %s\n' % git_dir)
-        sys.stderr.write('Current directory %s\n' % os.getcwd())
-
     # Create the core directories
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     createdir(dirname=filter_dir)
@@ -438,7 +312,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     # rcs-keywords filter
     local_dir = os.getcwd()
     os.chdir(os.path.abspath(repo_dir))
-#    sys.stderr.write('Current directory %s\n' % os.getcwd())
     cmd = ['git',
            'config',
            '--local',
@@ -455,11 +328,8 @@ def installgitkeywords(repo_dir, git_dir='.git'):
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])
     os.chdir(local_dir)
-#    sys.stderr.write('Current directory %s\n' % os.getcwd())
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -474,61 +344,20 @@ def display_timing(start_clock=None, setup_clock=None):
     Returns:
         Nothing
     """
-    function_name = 'display_timing'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
     # Calculate the elapsed times
-    if TIMING_FLAG:
-        end_clock = time.clock()
-        if setup_clock is None:
-            setup_clock = end_clock
-        if start_clock is None:
-            start_clock = end_clock
-        sys.stderr.write('    Setup elapsed time: %s\n'
-                         % str(setup_clock - start_clock))
-        sys.stderr.write('    Execution elapsed time: %s\n'
-                         % str(end_clock - setup_clock))
-        sys.stderr.write('    Total elapsed time: %s\n'
-                         % str(end_clock - start_clock))
+    end_clock = time.clock()
+    if setup_clock is None:
+        setup_clock = end_clock
+    if start_clock is None:
+        start_clock = end_clock
+    sys.stderr.write('    Setup elapsed time: %s\n'
+                     % str(setup_clock - start_clock))
+    sys.stderr.write('    Execution elapsed time: %s\n'
+                     % str(end_clock - setup_clock))
+    sys.stderr.write('    Total elapsed time: %s\n'
+                     % str(end_clock - start_clock))
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
-    return
-
-
-def startup_message():
-    """Function display any startup messages
-
-    Arguments:
-        argv -- Command line parameters
-
-    Returns:
-        Nothing
-    """
-    function_name = 'startup_message'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-#    program_name = os.path.abspath(sys.argv[0])
-#    (program_path, program_executable) = os.path.split(program_name)
-
-    # Display source executable information
-    if DEBUG_FLAG:
-        sys.stderr.write('************ START **************\n')
-        sys.stderr.write('Program name: %s\n' % str(PROGRAM_NAME))
-        sys.stderr.write('Program path: %s\n' % str(PROGRAM_PATH))
-        sys.stderr.write('Program executable: %s\n' % str(PROGRAM_EXECUTABLE))
-        sys.stderr.write('*********************************\n')
-
-    # Output the program name start
-    if VERBOSE_FLAG:
-        sys.stderr.write('Start program name: %s\n' % str(PROGRAM_NAME))
-
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
 
 
@@ -546,63 +375,13 @@ def shutdown_message(return_code=0):
     Returns:
         Nothing
     """
-    function_name = 'shutdown_message'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
-#    program_name = os.path.abspath(sys.argv[0])
-#    (program_path, program_executable) = os.path.split(program_name)
-
     # Output the program end
     if VERBOSE_FLAG:
-        sys.stderr.write('End program name: %s\n' % PROGRAM_NAME)
-        sys.stderr.write("\n")
-
-    if DEBUG_FLAG:
-        sys.stderr.write('************ END ****************\n')
-        sys.stderr.write('Program name: %s\n' % str(PROGRAM_NAME))
-        sys.stderr.write('Program path: %s\n' % str(PROGRAM_PATH))
-        sys.stderr.write('Program executable: %s\n' % str(PROGRAM_EXECUTABLE))
-        sys.stderr.write('Return code: %d\n' % return_code)
-        sys.stderr.write('*********************************\n')
-        sys.stderr.write("\n")
-        sys.stderr.write("\n")
+        sys.stderr.write('End program name: %s\n' % sys.argv[0])
         sys.stderr.write("\n")
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
-#    exit(return_code)
-
-
-def dump_file_stream(stream_handle, stream_description):
-    """Function to dump the byte stream handle from Popen
-    to STDERR.
-
-    Arguments:
-        steam_handle -- a stream handle returned by the Popen
-                        communicate function.
-        stream_descrition -- a text description of the stream handle
-
-    Returns:
-        Nothing
-    """
-    function_name = 'dump_file_stream'
-    if DEBUG_FLAG:
-        sys.stderr.write('      Entered module %s\n' % function_name)
-
-    # Output the stream handle description
-    sys.stderr.write('        %s\n' % stream_description)
-
-    # Output the contents of the stream handle if any exists
-    if stream_handle:
-        sys.stderr.write(stream_handle.strip().decode("utf-8"))
-        sys.stderr.write("\n")
-
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('      Leaving module %s\n' % function_name)
-    return
+    exit(return_code)
 
 
 def dump_list(list_values, list_description, list_message):
@@ -616,62 +395,22 @@ def dump_list(list_values, list_description, list_message):
     Returns:
         Nothing
     """
-    function_name = 'dump_list'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-
     sys.stderr.write("    %s\n" % list_message)
     list_num = 0
     for list_value in list_values:
         sys.stderr.write('      %s[%d]: %s\n'
                          % (list_description, list_num, list_value))
-        list_num = list_num + 1
+        list_num += 1
 
     # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
     return
-
-
-def findsubmodules():
-    """Function to find the relevent configuration files for any
-    submodules associated with the master repository.  Leave the
-    parameter blank if the current working directory is holds
-    the master repository
-
-    Arguments:
-        dirname -- OS folder holding the master repository.
-        subdirname -- Subdirectory name within dirname to search
-        filename -- Name of the file to find
-
-    Returns:
-        List of file names
-    """
-    function_name = 'findsubmodules'
-    if DEBUG_FLAG:
-        sys.stderr.write('  Entered module %s\n' % function_name)
-        sys.stderr.write('Current dir: %s\n' % os.getcwd())
-
-    dirmodule = os.path.join('.git', 'modules')
-    field_name = ['gitdir', 'repodir']
-
-    submodule_list = [dict(zip(field_name, (dirpath,
-                                            os.path.relpath(dirpath,
-                                                            dirmodule))))
-                      for (dirpath, _, filenames) in os.walk(dirmodule)
-                      for name in filenames if name == 'config']
-
-    # Return from the function
-    if DEBUG_FLAG:
-        sys.stderr.write('  Leaving module %s\n' % function_name)
-    return submodule_list
 
 
 def main():
     """Main program.
 
     Arguments:
-        argv: command line arguments
+        None
 
     Returns:
         Nothing
@@ -679,11 +418,9 @@ def main():
     # Set the start time for calculating elapsed time
     start_time = time.clock()
 
-    # Parameter processing
-    if SUMMARY_FLAG or DEBUG_FLAG:
-        startup_message()
-
+    # Display the startup message
     if SUMMARY_FLAG:
+        sys.stderr.write('Start program name: %s\n' % sys.argv[0])
         sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
 
     # Save the current working directory
@@ -693,19 +430,6 @@ def main():
         dump_list(list_values=sys.argv,
                   list_description='Param',
                   list_message='Parameter list')
-
-    # Show the embedded variables
-    if DEBUG_FLAG:
-        sys.stderr.write('  git hook manager: %s\n' % GIT_HOOK)
-        sys.stderr.write('  git dirs: ')
-        sys.stderr.write(str(GIT_DIRS))
-        sys.stderr.write('\n  git hooks: ')
-        sys.stderr.write(str(GIT_HOOKS))
-        sys.stderr.write('\n  git filters: ')
-        sys.stderr.write(str(GIT_FILTERS))
-        sys.stderr.write('\n  git file_pattern: ')
-        sys.stderr.write(str(GIT_FILE_PATTERN))
-        sys.stderr.write('\n')
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
@@ -719,19 +443,18 @@ def main():
         validategitrepo(repo_dir=TARGET_DIR)
         # Change to the repository directory
         os.chdir(os.path.abspath(TARGET_DIR))
-        if DEBUG_FLAG:
-            sys.stderr.write('Current directory %s\n' % os.getcwd())
         # Install rcs keywords support in the repo
         installgitkeywords(repo_dir='')
-    #    submodules = findsubmodules(repo_dir=TARGET_DIR)
-        submodules = findsubmodules()
-        if DEBUG_FLAG:
-            sys.stderr.write('  Submodule count: %d\n' % len(submodules))
-        for module in submodules:
-            if DEBUG_FLAG:
-                sys.stderr.write('    Found submodule %s\n' % str(module))
-                sys.stderr.write('Repo dir: %s\n' % module['repodir'])
-                sys.stderr.write('git dir: %s\n' % module['gitdir'])
+        # Find any submodules registered in the repository
+        dirmodule = os.path.join('.git', 'modules')
+        field_name = ['gitdir', 'repodir']
+        submodule_list = [dict(zip(field_name, (dirpath,
+                                                os.path.relpath(dirpath,
+                                                                dirmodule))))
+                          for (dirpath, _, filenames) in os.walk(dirmodule)
+                          for name in filenames if name == 'config']
+        # Install keyword support to submodules found
+        for module in submodule_list:
             installgitkeywords(repo_dir=module['repodir'],
                                git_dir=module['gitdir'])
 
@@ -752,4 +475,13 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+#     if CALL_GRAPH:
+#         graphviz = GraphvizOutput()
+#         graphviz.output_type = 'pdf'
+#         graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
+#                                 + '-' + time.strftime("%Y%m%d-%H%M%S")
+#                                 + '.' + graphviz.output_type)
+#         with PyCallGraph(output=graphviz):
+#             main()
+#     else:
+        main()
