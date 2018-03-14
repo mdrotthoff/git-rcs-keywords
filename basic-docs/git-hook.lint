@@ -4,23 +4,20 @@ Processing file: git-hook.py
 pycodestyle:
  
 checking git-hook.py
+git-hook.py:172:80: E501 line too long (80 > 79 characters)
+                                                     for param in sys.argv[1:]))
+                                                                               ^
+1       E501 line too long (80 > 79 characters)
  
  
 pylint:
  
 No config file found, using default configuration
 ************* Module git-hook
-C:  1, 0: Invalid module name "git-hook" (invalid-name)
-R:177, 0: Too many branches (19/12) (too-many-branches)
-R:177, 0: Too many statements (54/50) (too-many-statements)
+C:  1, 0: Module name "git-hook" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.78/10 (previous run: 9.78/10, +0.00)
+Your code has been rated at 9.88/10 (previous run: 9.74/10, +0.13)
 
  
  
-The hook directory git-hook.py.d is not a directory
-Python Call Graph v0.5.1
-Starting trace
-Creating git-hook.pdf
-Done!

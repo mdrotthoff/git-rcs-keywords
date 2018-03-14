@@ -10,14 +10,10 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-post-rewrite
-C:  1, 0: Invalid module name "rcs-post-rewrite" (invalid-name)
+C:  1, 0: Module name "rcs-post-rewrite" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.96/10 (previous run: 9.96/10, +0.00)
+Your code has been rated at 9.94/10 (previous run: 9.88/10, +0.06)
 
  
  
-Python Call Graph v0.5.1
-Starting trace
-Creating rcs-post-rewrite.pdf
-Done!

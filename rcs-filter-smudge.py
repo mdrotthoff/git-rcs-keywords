@@ -1,4 +1,6 @@
 #! /usr/bin/env python
+# # -*- coding: utf-8 -*
+
 # $Author$
 # $Date$
 # $File$
@@ -7,12 +9,12 @@
 # $Source$
 # $Hash$
 
-"""rcs-keywords-filter-smudge
+"""
+rcs-keywords-filter-smudge
 
 This module provides the code to smudge the local copy of the
 file retreived from the git repository performing the various
 keyword substitutions.
-
 """
 
 import sys
@@ -20,8 +22,16 @@ import os
 import re
 import subprocess
 import time
-# from pycallgraph import PyCallGraph
-# from pycallgraph.output import GraphvizOutput
+
+
+__author__ = "David Rotthoff"
+__email__ = "drotthoff@gmail.com"
+__version__ = "$Revision: 1.0 $"
+__date__ = "$Date$"
+__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__credits__ = []
+__status__ = "Production"
+# __license__ = "Python"
 
 
 # Set the debugging flag
@@ -29,6 +39,11 @@ CALL_GRAPH = bool(False)
 TIMING_FLAG = bool(False)
 VERBOSE_FLAG = bool(False)
 SUMMARY_FLAG = bool(False)
+
+
+if CALL_GRAPH:
+    from pycallgraph import PyCallGraph
+    from pycallgraph.output import GraphvizOutput
 
 
 def shutdown_message(return_code=0, lines_processed=0):
@@ -263,15 +278,27 @@ def main():
     shutdown_message(return_code=0, lines_processed=line_count)
 
 
+def call_graph():
+    """Call_graph execution
+
+    Arguments:
+        None
+
+    Returns:
+        Nothing
+    """
+    graphviz = GraphvizOutput()
+    graphviz.output_type = 'pdf'
+    graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
+                            + '-' + time.strftime("%Y%m%d-%H%M%S")
+                            + '.' + graphviz.output_type)
+    with PyCallGraph(output=graphviz):
+        main()
+
+
 # Execute the main function
 if __name__ == '__main__':
-#     if CALL_GRAPH:
-#         graphviz = GraphvizOutput()
-#         graphviz.output_type = 'pdf'
-#         graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
-#                                 + '-' + time.strftime("%Y%m%d-%H%M%S")
-#                                 + '.' + graphviz.output_type)
-#         with PyCallGraph(output=graphviz):
-#             main()
-#     else:
+    if CALL_GRAPH:
+        call_graph()
+    else:
         main()

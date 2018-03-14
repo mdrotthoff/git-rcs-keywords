@@ -1,4 +1,6 @@
 #! /usr/bin/env python3
+# # -*- coding: utf-8 -*
+
 # $Author$
 # $Date$
 # $File$
@@ -8,7 +10,9 @@
 # $Hash$
 # $Id$
 
-"""Install
+
+"""
+Install-dev
 
 This module installs the RCS keyword functionality into an
 existing git repository.
@@ -21,8 +25,16 @@ import time
 from shutil import copy2
 import subprocess
 import re
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
+
+
+__author__ = "David Rotthoff"
+__email__ = "drotthoff@gmail.com"
+__version__ = "$Revision: 1.0 $"
+__date__ = "$Date$"
+__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__credits__ = []
+__status__ = "Production"
+# __license__ = "Python"
 
 
 GIT_HOOK = 'git-hook.py'
@@ -69,6 +81,11 @@ CALL_GRAPH = bool(True)
 TIMING_FLAG = bool(True)
 VERBOSE_FLAG = bool(False)
 SUMMARY_FLAG = bool(True)
+
+
+if CALL_GRAPH:
+    from pycallgraph import PyCallGraph
+    from pycallgraph.output import GraphvizOutput
 
 
 # Set the installation target

@@ -10,16 +10,12 @@ pylint:
  
 No config file found, using default configuration
 ************* Module rcs-filter-smudge
-C:  1, 0: Invalid module name "rcs-filter-smudge" (invalid-name)
-R:252, 0: Too many local variables (27/15) (too-many-locals)
-R:252, 0: Too many statements (70/50) (too-many-statements)
+C:  1, 0: Module name "rcs-filter-smudge" doesn't conform to snake_case naming style (invalid-name)
+R:176, 0: Too many local variables (25/15) (too-many-locals)
+R:176, 0: Too many statements (52/50) (too-many-statements)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.84/10 (previous run: 9.84/10, +0.00)
+Your code has been rated at 9.75/10 (previous run: 9.67/10, +0.09)
 
  
  
-Python Call Graph v0.5.1
-Starting trace
-Creating rcs-filter-smudge.pdf
-Done!
