@@ -77,10 +77,10 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
 
 
 # Set the debugging flag
-CALL_GRAPH = bool(True)
-TIMING_FLAG = bool(True)
-VERBOSE_FLAG = bool(False)
-SUMMARY_FLAG = bool(True)
+CALL_GRAPH = False
+TIMING_FLAG = False
+VERBOSE_FLAG = False
+SUMMARY_FLAG = False
 
 
 if CALL_GRAPH:
