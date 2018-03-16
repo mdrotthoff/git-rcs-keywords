@@ -11,8 +11,7 @@
 # $Id$
 
 
-"""
-Uninstall
+"""Uninstall
 
 This module uninstalls the RCS keyword functionality from an
 existing git repository.
@@ -29,7 +28,7 @@ import re
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
+__version__ = "1.0.0"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
@@ -510,7 +509,9 @@ def call_graph():
 
 # Execute the main function
 if __name__ == '__main__':
-    if CALL_GRAPH:
-        call_graph()
-    else:
-        main()
+#    if CALL_GRAPH:
+#        call_graph()
+#    else:
+#        main()
+    sys.stdout.write('Author: %s\n' % __author__)
+    sys.stdout.write('Version: %s\n' % __version__)
