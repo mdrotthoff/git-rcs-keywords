@@ -147,7 +147,7 @@ def main():
                   list_message='Parameter list')
 
     # Define the various substitution regular expressions
-    author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
+    author_regex = re.compile(r"\$Author: +[\-.\w@<> ]+ +\$|\$Author\$",
                               re.IGNORECASE)
     id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
                           re.IGNORECASE)
