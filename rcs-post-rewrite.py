@@ -55,15 +55,13 @@ if CALL_GRAPH:
 
 
 def shutdown_message(return_code=0, files_processed=0):
-    """Function display any shutdown messages and
-    the program.
+    """Function display any provided messages and exit the program.
 
     Arguments:
-        argv -- Command line parameters
+        return_code - the return code to be used when the
+                      program exits
         files_processed -- The number of files checked out
                            by the hook
-        return_code - the return code to be used when the
-                      program s
 
     Returns:
         Nothing
@@ -106,12 +104,12 @@ def display_timing(start_time=None, setup_time=None):
 
 
 def dump_list(list_values, list_description, list_message):
-    """Function to dump the byte stream handle from Popen
-    to STDERR.
+    """Function to dump a list of values to STDERR.
 
     Arguments:
         list_values -- a list of files to be output
-        list_descrition -- a text description of the file being output
+        list_descrition -- a text description of the values being output
+        list_message -- a text description of the value list
 
     Returns:
         Nothing
@@ -127,13 +125,14 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def execute_cmd(cmd, cmd_source):
-    """Execute the supplied program
-    available.
+def execute_cmd(cmd, cmd_source=None):
+    """Execute the supplied program.
 
     Arguments:
         cmd -- string or list of strings of commands. A single string may
                not contain spaces.
+        cmd_source -- The function requesting the program execution
+                      Default value of None.
 
     Returns:
         Process stdout file handle
@@ -156,13 +155,15 @@ def execute_cmd(cmd, cmd_source):
     except subprocess.CalledProcessError as err:
         sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
                          .format(str(cmd), str(cmd_source)))
-        shutdown_message(return_code=err.returncode,
-                         files_processed=0)
+        raise
+#        shutdown_message(return_code=err.returncode,
+#                         files_processed=0)
     except OSError as err:
         sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
                          .format(str(cmd), str(cmd_source)))
-        shutdown_message(return_code=err.errno,
-                         files_processed=0)
+        raise
+#        shutdown_message(return_code=err.errno,
+#                         files_processed=0)
 
     # Return from the function
     return cmd_stdout
@@ -260,7 +261,7 @@ def git_ls_files():
 
 
 def get_modified_files(dest_hash):
-    """Find files that were modified by the merge.
+    """Find files that were modified by the rebase / amend.
 
     Arguments:
         None
@@ -326,19 +327,20 @@ def get_modified_files(dest_hash):
 '''
 
 
-def filter_not_checked_in(files):
-    """Find files that are modified but are not checked in.
+def remove_modified_files(files):
+    """Filter the found files to eliminate any that have changes that have
+       not been checked in.
 
     Arguments:
-        None
+        files - list of files to checkout
 
     Returns:
-        A list of modified files that are not checked in.
+        A list of files to checkout that do not have pending changes.
     """
     cmd = ['git', 'status', '-s']
 
     # Get the list of files that are modified but not checked in
-    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='filter_not_checked_in')
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='remove_modified_files')
 
     # Convert the stream output to a list of output lines
     modified_files_list = cmd_stdout.decode('utf8').splitlines()
@@ -396,7 +398,7 @@ def filter_not_checked_in(files):
 
 
 def check_out_file(file_name):
-    """Checkout file that has been modified by the latest commit.
+    """Checkout file that was been modified by the latest merge / amend.
 
     Arguments:
         file_name -- the file name to be checked out for smudging
@@ -489,7 +491,7 @@ def main():
                   list_message='Unique rewritten files list')
 
     # Remove modified files from the list
-    files = filter_not_checked_in(files=files)
+    files = remove_modified_files(files=files)
     if VERBOSE_FLAG:
         dump_list(list_values=files,
                   list_description='File',
