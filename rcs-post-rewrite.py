@@ -473,7 +473,7 @@ def main():
         line_count += 1
         words = source_line.split()
         # Get the list of modified files
-        files = files + get_modified_files(words[1].strip())
+        files = files + get_modified_files(dest_hash=words[1].strip())
 
     # Dump the list of files found to be rewritten
     if VERBOSE_FLAG:
@@ -489,7 +489,7 @@ def main():
                   list_message='Unique rewritten files list')
 
     # Remove modified files from the list
-    files = filter_not_checked_in(files)
+    files = filter_not_checked_in(files=files)
     if VERBOSE_FLAG:
         dump_list(list_values=files,
                   list_description='File',

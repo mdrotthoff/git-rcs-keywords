@@ -177,7 +177,7 @@ def check_for_cmd(cmd):
                          files_processed=0)
 
     # Execute the command
-    execute_cmd(cmd=cmd, 'check_for_cmd')
+    execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
 
     # Return from the function
     return
