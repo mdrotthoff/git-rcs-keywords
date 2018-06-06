@@ -122,7 +122,7 @@ def dump_list(list_values, list_description, list_message):
     return
 
 
-def execute_cmd(cmd):
+def execute_cmd(cmd, cmd_source):
     """Execute the supplied program
     available.
 
@@ -131,9 +131,7 @@ def execute_cmd(cmd):
                not contain spaces.
 
     Returns:
-        Process Popen handle
         Process stdout file handle
-        Process stderr file handle
     """
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
@@ -141,13 +139,25 @@ def execute_cmd(cmd):
                          files_processed=0)
 
     # Execute the command
-    cmd_handle = subprocess.Popen(cmd,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE)
-    (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
-    if cmd_stderr:
-        for line in cmd_stderr.strip().decode("utf-8").splitlines():
-            sys.stderr.write("%s\n" % line)
+    try:
+        cmd_handle = subprocess.Popen(cmd,
+                                      stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE)
+        (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
+        if cmd_stderr:
+            for line in cmd_stderr.strip().decode("utf-8").splitlines():
+                sys.stderr.write("%s\n" % line)
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write("CalledProcessError - Program %s called by % not found! -- Exiting."
+                         % (str(cmd), str(cmd_source)))
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write("OSError - Program %s called by %s not found! -- Exiting."
+                         % (str(cmd), str(cmd_source)))
+        shutdown_message(return_code=err.errno,
+                         files_processed=0)
 
     # Return from the function
     return cmd_stdout
@@ -170,6 +180,13 @@ def check_for_cmd(cmd):
                          files_processed=0)
 
     # Execute the command
+    execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
+
+    # Return from the function
+    return
+
+'''
+    # Execute the command
     try:
         execute_cmd(cmd=cmd)
 
@@ -187,7 +204,7 @@ def check_for_cmd(cmd):
 
     # Return from the function
     return
-
+'''
 
 def git_ls_files():
     """Find files that are relevant based on all files for the
@@ -199,9 +216,16 @@ def git_ls_files():
     Returns:
         A list of filenames.
     """
+
     cmd = ['git', 'ls-files']
 
     # Get a list of all files in the current repository branch
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='git_ls_files')
+
+    # Return from the function
+    return cmd_stdout
+
+'''
     try:
         cmd_stdout = execute_cmd(cmd=cmd)
 
@@ -209,9 +233,9 @@ def git_ls_files():
     except subprocess.CalledProcessError as err:
         shutdown_message(return_code=err.returncode,
                          files_processed=0)
-
     # Return from the function
     return cmd_stdout
+'''
 
 
 def get_checkout_files(first_hash, second_hash):
@@ -249,6 +273,27 @@ def get_checkout_files(first_hash, second_hash):
                second_hash]
 
     # Fetch the list of files modified by the last commit
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='get_checkout_files')
+
+    # Convert the stdout stream to a list of files
+    file_list = cmd_stdout.decode('utf8').splitlines()
+
+    # Deal with unmodified repositories
+    if file_list and file_list[0] == 'clean':
+        shutdown_message(return_code=0,
+                         files_processed=0)
+
+    # Only return regular files.
+    file_list = [i for i in file_list if os.path.isfile(i)]
+    if VERBOSE_FLAG:
+        sys.stderr.write('  %d real files found for processing\n'
+                         % len(file_list))
+
+    # Return from the function
+    return file_list
+
+''' 
+    # Fetch the list of files modified by the last commit
     try:
         cmd_stdout = execute_cmd(cmd=cmd)
 
@@ -277,9 +322,10 @@ def get_checkout_files(first_hash, second_hash):
 
     # Return from the function
     return file_list
+'''
 
 
-def git_not_checked_in(files):
+def filter_not_checked_in(files):
     """Find files that are modified but are not checked in.
 
     Arguments:
@@ -290,6 +336,29 @@ def git_not_checked_in(files):
     """
     cmd = ['git', 'status', '-s']
 
+    # Get the list of files that are modified but not checked in
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='filter_not_checked_in')
+
+    # Convert the stream output to a list of output lines
+    modified_files_list = cmd_stdout.decode('utf8').splitlines()
+
+    # Deal with unmodified repositories
+    if not modified_files_list:
+        return files
+
+    # Pull the file name (second field) of the output line and
+    # remove any double quotes
+    modified_files_list = [l.split(None, 1)[-1].strip('"')
+                           for l in modified_files_list]
+
+    # Remove any modified files from the list of files to process
+    if modified_files_list:
+        files = [f for f in files if f not in modified_files_list]
+
+    # Return from the function
+    return files
+
+'''
     # Get the list of files that are modified but not checked in
     try:
         cmd_stdout = execute_cmd(cmd=cmd)
@@ -322,7 +391,7 @@ def git_not_checked_in(files):
 
     # Return from the function
     return files
-
+'''
 
 def check_out_file(file_name):
     """Checkout file that has been modified by the latest commit.
@@ -344,6 +413,13 @@ def check_out_file(file_name):
 
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
 
+
+    # Check out the file so that it is smudged
+    execute_cmd(cmd=cmd, cmd_source='check_out_files')
+
+    # Return from the function
+    return
+'''
     # Check out the file so that it is smudged
     try:
         execute_cmd(cmd=cmd)
@@ -358,6 +434,7 @@ def check_out_file(file_name):
 
     # Return from the function
     return
+'''
 
 
 def main():
@@ -398,7 +475,7 @@ def main():
 
     # Filter the list of modified files to exclude those modified since
     # the commit
-    files = git_not_checked_in(files=files)
+    files = filter_not_checked_in(files=files)
 
     # Calculate the setup elapsed time
     setup_time = time.clock()
