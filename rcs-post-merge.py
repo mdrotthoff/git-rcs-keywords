@@ -145,15 +145,15 @@ def execute_cmd(cmd, cmd_source):
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
                 sys.stderr.write("%s\n" % line)
-    # if an exception occurs, raise it to the caller
+    # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        sys.stderr.write("CalledProcessError - Program %s called by % not found! -- Exiting."
-                         % (str(cmd), str(cmd_source)))
+        sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
         shutdown_message(return_code=err.returncode,
                          files_processed=0)
     except OSError as err:
-        sys.stderr.write("OSError - Program %s called by %s not found! -- Exiting."
-                         % (str(cmd), str(cmd_source)))
+        sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
         shutdown_message(return_code=err.errno,
                          files_processed=0)
 
