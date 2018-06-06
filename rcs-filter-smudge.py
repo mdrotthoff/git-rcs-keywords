@@ -142,22 +142,34 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
            str(full_file_name)]
 
     # Process the git log command
-    cmd_return = subprocess.Popen(cmd,
-                                  stdout=subprocess.PIPE,
-                                  stderr=subprocess.PIPE)
-    (cmd_stdout, cmd_stderr) = cmd_return.communicate()
-    if cmd_stderr:
-        for line in cmd_stderr.strip().decode("utf-8").splitlines():
-            sys.stderr.write("%s\n" % line)
+    try:
+        cmd_handle = subprocess.Popen(cmd,
+                                      stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE)
+        (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
+        if cmd_stderr:
+            for line in cmd_stderr.strip().decode("utf-8").splitlines():
+                sys.stderr.write("%s\n" % line)
+    # If the command fails, notify the user and exit immediately
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
+        shutdown_message(return_code=err.errno,
+                         files_processed=0)
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
-    if cmd_return.returncode != 0:
+    if cmd_handle.returncode != 0:
         sys.stderr.write("Exiting -- git log return code: %s\n"
-                         % str(cmd_return.returncode))
+                         % str(cmd_handle.returncode))
         sys.stderr.write("Output text: %s\n"
                          % cmd_stdout.strip().decode("utf-8"))
-        shutdown_message(return_code=cmd_return.returncode, lines_processed=0)
+        shutdown_message(return_code=cmd_handle.returncode, lines_processed=0)
 
     # Calculate replacement strings based on the git log results
     if cmd_stdout:
