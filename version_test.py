@@ -226,19 +226,19 @@ class Test_400_LoadYamlData(unittest.TestCase):
 
 class Test_500_LoadSourceFileNames(unittest.TestCase):
     def test_0500_load_source_file_names_should_return_list(self):
-        """The load_python_file_names function should return a list of Python files from the directory"""
+        """The load_source_file_names function should return a list of Python files from the directory"""
         source_list = version.load_source_file_names(param_path_cwd)
         assert isinstance(source_list, list)
         assert len(source_list)  > 0
 
     def test_0510_load_source_file_names_should_return_empty_list_unused_pattern(self):
-        """The load_python_file_names function should return an empty list when an unused pattern is supplied"""
+        """The load_source_file_names function should return an empty list when an unused pattern is supplied"""
         source_list = version.load_source_file_names(param_path_cwd, 'asdasd.bniasd')
         assert isinstance(source_list, list)
         assert len(source_list)  == 0
 
     def test_0520_load_source_file_names_should_return_empty_list_invalid_dir(self):
-        """The load_python_file_names function should return an empty list when an unused pattern is supplied"""
+        """The load_source_file_names function should return an empty list when an unused pattern is supplied"""
         source_list = version.load_source_file_names(param_path_invalid)
         assert isinstance(source_list, list)
         assert len(source_list)  == 0
