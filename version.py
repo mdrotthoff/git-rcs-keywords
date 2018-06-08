@@ -46,6 +46,7 @@ import subprocess
 import time
 import argparse
 import yaml
+import fnmatch
 
 
 __author__ = "David Rotthoff"
@@ -61,19 +62,24 @@ exit_invalid_directory = 1
 exit_invalid_file = 3
 
 
-def load_python_file_names(dir_name):
-    """load_python_file_names
+def load_source_file_names(dir_name, file_pattern='*.py'):
+    """load_souce_file_names
     
     Find and load the Python program file names from the supplied directory
 
     Arguments:
-        dir_name  - name of the directory where the file should be located
-        
+        dir_name     - name of the directory where the file should be located
+        file_pattern - file name patter to search for 
     Returns:
         List of Python program file names
     """
 
-    pass
+    files_found = []
+    for dir_root, dir_names, file_names in os.walk(dir_name):
+        for file_name in fnmatch.filter(file_names, file_pattern):
+            files_found.append(os.path.join(dir_root, file_name))
+
+    return files_found
 
 
 def load_yaml_data(dir_name, file_name):
@@ -153,6 +159,12 @@ def parse_params():
                         type=str,
                         default=None,
                         help='Name of the program file to version')
+    parser.add_argument('--pattern',
+                        action='store',
+                        metavar='SOURCE FILE PATTERN',
+                        type=str,
+                        default='*.py',
+                        help='File pattern for the source files to version')
     parser.add_argument('--data',
                         action='store',
                         metavar='VERSION DATA',
@@ -206,7 +218,14 @@ def main():
                                file_name=parameters.data)
 
     # Find all of the Python source code but exclude the running program
-
+    if parameters.file:
+        sources_found = [ os.path.join(parameters.dir, parameters.file) ]
+    else:
+        sources_found = load_source_file_names(dir_name=parameters.dir,
+                                               file_pattern=parameters.pattern)
+    print('Sources found:')
+    for file_name in sources_found:
+        print('\t{}'.format(file_name))
 
     # Cycle through each source program and adjust the four defined
     # replacement strings based on the configured values.  If a value

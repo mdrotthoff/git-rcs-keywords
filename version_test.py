@@ -32,6 +32,8 @@ param_path_default = '.'
 param_file_program = 'version_play.py'
 param_file_invalid = 'asdasdasdasdacs'
 param_file_default = 'version.yml'
+param_pattern_default = '*.py'
+param_pattern_unused = '*.asdasasd'
 
 exit_success = 0
 exit_invalid_directory = 1
@@ -56,15 +58,34 @@ class Test_100_ParseArgs(unittest.TestCase):
             assert parameters.dir == os.getcwd()
             assert parameters.data == param_file_default
             assert parameters.file == None
+            assert parameters.pattern == param_pattern_default
 
     def test_0110_parse_args_path_data_file(self):
         """The parse_params should return the supplied path, program and data file"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default, '--file', param_file_program]
+        testargs = ["prog",
+                    '--dir', param_path_cwd,
+                    '--data', param_file_default,
+                    '--file', param_file_program]
         with patch.object(sys, 'argv', testargs):
             parameters = version.parse_params()
             assert parameters.dir == os.getcwd()
             assert parameters.data == param_file_default
             assert parameters.file == param_file_program
+            assert parameters.pattern == param_pattern_default
+
+    def test_0115_parse_args_path_data_file_pattern(self):
+        """The parse_params should return the supplied path, program and data file"""
+        testargs = ["prog",
+                    '--dir', param_path_cwd,
+                    '--data', param_file_default,
+                    '--file', param_file_program,
+                    '--pattern', param_pattern_unused]
+        with patch.object(sys, 'argv', testargs):
+            parameters = version.parse_params()
+            assert parameters.dir == os.getcwd()
+            assert parameters.data == param_file_default
+            assert parameters.file == param_file_program
+            assert parameters.pattern == param_pattern_unused
 
     def test_0120_parse_args_defaults(self):
         """The parse_params should return the current working directory and default data file"""
@@ -74,13 +95,14 @@ class Test_100_ParseArgs(unittest.TestCase):
             assert parameters.dir == os.getcwd()
             assert parameters.data == param_file_default
             assert parameters.file == None
+            assert parameters.pattern == param_pattern_default
 
     def test_0130_parse_args_invalid_parameter(self):
         """The parse_params should exit with status code 2 when provided an invalid parameter"""
         testargs = ["prog", '--no-such-param']
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
-                version.main()
+                parameters = version.parse_params()
             self.assertEqual(cm.exception.code, exit_invalid_param)
 
     def test_0140_parse_args_dir_param_missing(self):
@@ -88,7 +110,7 @@ class Test_100_ParseArgs(unittest.TestCase):
         testargs = ["prog", '--dir']
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
-                version.main()
+                parameters = version.parse_params()
             self.assertEqual(cm.exception.code, exit_invalid_param)
 
     def test_0150_parse_args_data_param_missing(self):
@@ -96,7 +118,7 @@ class Test_100_ParseArgs(unittest.TestCase):
         testargs = ["prog", '--data']
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
-                version.main()
+                parameters = version.parse_params()
             self.assertEqual(cm.exception.code, exit_invalid_param)
 
     def test_0160_parse_args_file_param_missing(self):
@@ -104,7 +126,15 @@ class Test_100_ParseArgs(unittest.TestCase):
         testargs = ["prog", '--file']
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
-                version.main()
+                parameters = version.parse_params()
+            self.assertEqual(cm.exception.code, exit_invalid_param)
+
+    def test_0170_parse_args_file_param_missing(self):
+        """The parse_params should exit with status code 2 when pattern parameter is not provided a valued"""
+        testargs = ["prog", '--pattern']
+        with patch.object(sys, 'argv', testargs):
+            with self.assertRaises(SystemExit) as cm:
+                parameters = version.parse_params()
             self.assertEqual(cm.exception.code, exit_invalid_param)
 
 
@@ -194,11 +224,24 @@ class Test_400_LoadYamlData(unittest.TestCase):
         self.assertEqual(test_exception.errno, 2)
 
 
-class Test_500_LoadPythonFileNames(unittest.TestCase):
-    def test_0500_load_python_file_names_should_return_list(self):
+class Test_500_LoadSourceFileNames(unittest.TestCase):
+    def test_0500_load_source_file_names_should_return_list(self):
         """The load_python_file_names function should return a list of Python files from the directory"""
-        python_programs = version.load_python_file_names(param_path_cwd)
-        assert isinstance(python_programs, list)
+        source_list = version.load_source_file_names(param_path_cwd)
+        assert isinstance(source_list, list)
+        assert len(source_list)  > 0
+
+    def test_0510_load_source_file_names_should_return_empty_list_unused_pattern(self):
+        """The load_python_file_names function should return an empty list when an unused pattern is supplied"""
+        source_list = version.load_source_file_names(param_path_cwd, 'asdasd.bniasd')
+        assert isinstance(source_list, list)
+        assert len(source_list)  == 0
+
+    def test_0520_load_source_file_names_should_return_empty_list_invalid_dir(self):
+        """The load_python_file_names function should return an empty list when an unused pattern is supplied"""
+        source_list = version.load_source_file_names(param_path_invalid)
+        assert isinstance(source_list, list)
+        assert len(source_list)  == 0
 
 
 '''
