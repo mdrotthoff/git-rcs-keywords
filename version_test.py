@@ -1,14 +1,6 @@
 #! /usr/bin/env python
 # # -*- coding: utf-8 -*
 
-# $Author$
-# $Date$
-# $File$
-# $Rev$
-# $Rev$
-# $Source$
-# $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
-
 """
 version_test
 
@@ -40,16 +32,19 @@ exit_invalid_directory = 1
 exit_invalid_param = 2
 exit_invalid_file = 3
 
-yaml_status = 'Development'
-yaml_author = 'David Rotthoff'
-yaml_email = 'drotthoff@gmail.com'
+yaml_status =         'Development'
+yaml_author =         'David Rotthoff'
+yaml_email =          'drotthoff@gmail.com'
 yaml_version_prefix = 'git-rcs-keywords'
-yaml_version_major = 0
-yaml_version_minor = 9
-yaml_version_build = 0
+yaml_version_major =  0
+yaml_version_minor =  9
+yaml_version_build =  0
+yaml_string_author =  '__author__'
+yaml_string_email =   '__email__'
+yaml_string_status =  '__status__'
+yaml_string_version = '__version__'
 
-
-class Test_100_ParseArgs(unittest.TestCase):
+class Test_0100_ParseArgs(unittest.TestCase):
     def test_0100_parse_args_path_data(self):
         """The parse_params should return the supplied path and data file"""
         testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default]
@@ -138,7 +133,7 @@ class Test_100_ParseArgs(unittest.TestCase):
             self.assertEqual(cm.exception.code, exit_invalid_param)
 
 
-class Test_200_ValidateDir(unittest.TestCase):
+class Test_0200_ValidateDir(unittest.TestCase):
     def test_0200_validate_dir_cwd(self):
         """The validate_directory should return true when handed the current working directory"""
         assert version.validate_directory(os.getcwd())
@@ -148,7 +143,7 @@ class Test_200_ValidateDir(unittest.TestCase):
         assert not version.validate_directory(param_path_invalid)
 
 
-class Test_300_ValidateFile(unittest.TestCase):
+class Test_0300_ValidateFile(unittest.TestCase):
     def test_0300_validate_file_default(self):
         """The validate_directory should return true when handed the current working directory and default data file"""
         assert version.validate_file(os.getcwd(), param_file_default)
@@ -166,21 +161,36 @@ class Test_300_ValidateFile(unittest.TestCase):
         assert not version.validate_file(param_path_invalid, param_file_invalid)
 
 
-class Test_400_LoadYamlData(unittest.TestCase):
+class Test_0400_LoadYamlData(unittest.TestCase):
     def test_0400_load_yaml_data_should_return_status(self):
         """The load_yaml_data function should return a status of Development when provided default input parameters"""
         yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
         assert yaml_dictionary['status'] == yaml_status
+
+    def test_0405_load_yaml_data_should_return_status_string(self):
+        """The load_yaml_data function should return the status string to search for"""
+        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        assert yaml_dictionary['status_string'] == yaml_string_status
 
     def test_0410_load_yaml_data_should_return_author(self):
         """The load_yaml_data function should return a status of David Rotthoff when provided default input parameters"""
         yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
         assert yaml_dictionary['author'] == yaml_author
 
+    def test_0415_load_yaml_data_should_return_author_string(self):
+        """The load_yaml_data function should return the author string to search for"""
+        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        assert yaml_dictionary['author_string'] == yaml_string_author
+
     def test_0420_load_yaml_data_should_return_email(self):
         """The load_yaml_data function should return a status of drotthoff@gmail.com when provided default input parameters"""
         yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
         assert yaml_dictionary['email'] == yaml_email
+
+    def test_0425_load_yaml_data_should_return_email_string(self):
+        """The load_yaml_data function should return the email string to search for"""
+        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        assert yaml_dictionary['email_string'] == yaml_string_email
 
     def test_0430_load_yaml_data_should_return_version_prefix(self):
         """The load_yaml_data function should return a status of git-rcs-keywords when provided default input parameters"""
@@ -201,6 +211,11 @@ class Test_400_LoadYamlData(unittest.TestCase):
         """The load_yaml_data function should return a status of 0 when provided default input parameters"""
         yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
         assert yaml_dictionary['version']['build'] == yaml_version_build
+
+    def test_0465_load_yaml_data_should_return_version_string(self):
+        """The load_yaml_data function should return a version string to search for"""
+        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        assert yaml_dictionary['version_string'] == yaml_string_version
 
     def test_0470_load_yaml_data_raise_ioerror_for_invalid_directory(self):
         """The load_yaml_data function should raise an IOError exception if passed an invalid directory"""
@@ -224,9 +239,9 @@ class Test_400_LoadYamlData(unittest.TestCase):
         self.assertEqual(test_exception.errno, 2)
 
 
-class Test_500_LoadSourceFileNames(unittest.TestCase):
+class Test_0500_LoadSourceFileNames(unittest.TestCase):
     def test_0500_load_source_file_names_should_return_list(self):
-        """The load_source_file_names function should return a list of Python files from the directory"""
+        """The load_source_file_names function should return a list of source files from the directory"""
         source_list = version.load_source_file_names(param_path_cwd)
         assert isinstance(source_list, list)
         assert len(source_list)  > 0
@@ -239,16 +254,62 @@ class Test_500_LoadSourceFileNames(unittest.TestCase):
 
     def test_0520_load_source_file_names_should_return_empty_list_invalid_dir(self):
         """The load_source_file_names function should return an empty list when an unused pattern is supplied"""
-        source_list = version.load_source_file_names(param_path_invalid)
+        source_list = version.load_source_file_names(param_path_cwd, 'asdasd.bniasd')
+#        assert version.update_source_file(os.path.join(param_path_cwd, 'test'))
         assert isinstance(source_list, list)
         assert len(source_list)  == 0
 
 
-'''
-class Test_900_Main(unittest.TestCase):
+class Test_0600_UpdateSourceFile(unittest.TestCase):
+    def build_yaml_dictionary(self):
+        return version.load_yaml_data(param_path_cwd, param_file_default)
+
+    def test_6000_update_source_file_should_exit_success(self):
+        """The update_source_file function should return normally when provided a valid file name"""
+        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
+            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        version.update_source_file(os.path.join(param_path_cwd, 'test', 'test.py'),
+                                   self.build_yaml_dictionary())
+        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+
+    def test_6010_update_source_file_should_exit_failed(self):
+        """The update_source_file function should raise an exception with an invalid file name"""
+        with self.assertRaises(OSError) as cm:
+            version.update_source_file(os.path.join(param_path_cwd, 'test', 'nosuch-file-test.py'),
+                                       self.build_yaml_dictionary())
+        test_exception = cm.exception
+        self.assertEqual(test_exception.errno, 2)
+
+
+class Test_0700_UpdateSourceFile(unittest.TestCase):
+    def build_yaml_dictionary(self):
+        return version.load_yaml_data(param_path_cwd, param_file_default)
+
+    def test_7000_update_source_file_should_exit_success(self):
+        """The update_source_file function should return normally when provided a valid file name"""
+        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
+            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        version.update_source_file(os.path.join(param_path_cwd, 'test', 'test.py'),
+                                   self.build_yaml_dictionary())
+        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+
+    def test_7010_update_source_file_should_exit_failed(self):
+        """The update_source_file function should raise an exception with an invalid file name"""
+        with self.assertRaises(OSError) as cm:
+            version.update_source_file(os.path.join(param_path_cwd, 'test', 'nosuch-file-test.py'),
+                                       self.build_yaml_dictionary())
+        test_exception = cm.exception
+        self.assertEqual(test_exception.errno, 2)
+
+
+class Test_9900_Main(unittest.TestCase):
     def test_9900_main_should_exit_success(self):
         """The main function should exit with a status code of 0 when provided valid parameters"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default]
+        testargs = ["prog",
+                    '--dir', os.path.join(param_path_cwd, 'test'),
+                    '--data', param_file_default]
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
                 version.main()
@@ -256,7 +317,10 @@ class Test_900_Main(unittest.TestCase):
 
     def test_9910_main_should_exit_invalid_parameter(self):
         """The main function should exit with a status code of 2 when provided an invalid directory"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default, '--no-param']
+        testargs = ["prog",
+                    '--dir', os.path.join(param_path_cwd, 'test'),
+                    '--data', param_file_default,
+                    '--no-param']
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
                 version.main()
@@ -264,7 +328,9 @@ class Test_900_Main(unittest.TestCase):
 
     def test_9920_main_should_exit_invalid_directory(self):
         """The main function should exit with a status code of 1 when provided an invalid directory"""
-        testargs = ["prog", '--dir', param_path_invalid, '--data', param_file_default]
+        testargs = ["prog",
+                    '--dir', param_path_invalid,
+                    '--data', param_file_default]
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
                 version.main()
@@ -272,7 +338,9 @@ class Test_900_Main(unittest.TestCase):
 
     def test_9930_main_should_exit_invalid_data_file(self):
         """The main function should exit with a status code of 3 when provided an invalid data file"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_invalid]
+        testargs = ["prog",
+                    '--dir', os.path.join(param_path_cwd, 'test'),
+                    '--data', param_file_invalid]
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
                 version.main()
@@ -281,13 +349,38 @@ class Test_900_Main(unittest.TestCase):
 
     def test_9940_main_should_exit_invalid_data_file(self):
         """The main function should exit with a status code of 3 when provided an invalid program file"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default, '--file', param_file_invalid]
+        testargs = ["prog",
+                    '--dir', os.path.join(param_path_cwd, 'test'),
+                    '--data', param_file_default,
+                    '--file', param_file_invalid]
         with patch.object(sys, 'argv', testargs):
             with self.assertRaises(SystemExit) as cm:
                 version.main()
                 print('Exit code: {}'.format(cm.exception_code))
             self.assertEqual(cm.exception.code, exit_invalid_file)
-'''
+
+
+class Test_0A00_SaveYamlData(unittest.TestCase):
+    def build_yaml_dictionary(self):
+        return version.load_yaml_data(param_path_cwd, param_file_default)
+
+    def test_A000_save_yaml_data_should_exit_success(self):
+        """The save_yaml_data function should return normally when provided a valid file name"""
+#        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
+#            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+#        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        version.save_yaml_data(self.build_yaml_dictionary(),
+                               os.path.join(param_path_cwd, 'test'),
+                               'version_test.yml')
+        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'versio_test.yml'))
+
+#    def test_A010_update_source_file_should_exit_failed(self):
+#        """The update_source_file function should raise an exception with an invalid file name"""
+#        with self.assertRaises(OSError) as cm:
+#            version.update_source_file(os.path.join(param_path_cwd, 'test', 'nosuch-file-test.py'),
+#                                       self.build_yaml_dictionary())
+#        test_exception = cm.exception
+#        self.assertEqual(test_exception.errno, 2)
 
 
 # Execute the main function

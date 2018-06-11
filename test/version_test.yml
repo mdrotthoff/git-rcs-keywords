@@ -1,0 +1,17 @@
+author: David Rotthoff
+author_string: __author__
+date_string: __date__
+email: drotthoff@gmail.com
+email_string: __email__
+status: Development
+status_string: __status__
+version:
+  build: 0
+  major: 0
+  minor: 9
+  prefix: git-rcs-keywords
+version_string: __version__
+zauthor_string: __author__
+zemail_string: __email__
+zstatus_string: __status__
+zversion_string: __version__

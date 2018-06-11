@@ -1,8 +1,12 @@
-author:   'David Rotthoff'
-email:    'drotthoff@gmail.com'
-status:   'Development'
+author:         'David Rotthoff'
+email:          'drotthoff@gmail.com'
+status:         'Development'
 version:
-  prefix: 'git-rcs-keywords'
-  major:  0
-  minor:  9
-  build:  0
+  prefix:       'git-rcs-keywords'
+  major:        0
+  minor:        9
+  build:        0
+zauthor_string:  '__author__'
+zemail_string:   '__email__'
+zstatus_string:  '__status__'
+zversion_string: '__version__'
