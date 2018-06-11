@@ -26,8 +26,8 @@ import time
 
 __author__ "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-0.9.1"
-__date__ = "2018-06-09 09:05:51"
+__version__ = "git-rcs-keywords-0.9.5"
+__date__ = "2018-06-11 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
 __status__ = "Development"

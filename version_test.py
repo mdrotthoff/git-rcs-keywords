@@ -11,6 +11,7 @@ import sys
 import os
 import version
 import unittest
+import yaml
 
 try:
     # python 3.4+ should use builtin unittest.mock not mock package
@@ -47,7 +48,9 @@ yaml_string_version = '__version__'
 class Test_0100_ParseArgs(unittest.TestCase):
     def test_0100_parse_args_path_data(self):
         """The parse_params should return the supplied path and data file"""
-        testargs = ["prog", '--dir', param_path_cwd, '--data', param_file_default]
+        testargs = ["prog",
+                    '--dir', param_path_cwd,
+                    '--data', param_file_default]
         with patch.object(sys, 'argv', testargs):
             parameters = version.parse_params()
             assert parameters.dir == os.getcwd()
@@ -164,77 +167,91 @@ class Test_0300_ValidateFile(unittest.TestCase):
 class Test_0400_LoadYamlData(unittest.TestCase):
     def test_0400_load_yaml_data_should_return_status(self):
         """The load_yaml_data function should return a status of Development when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['status'] == yaml_status
 
     def test_0405_load_yaml_data_should_return_status_string(self):
         """The load_yaml_data function should return the status string to search for"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['status_string'] == yaml_string_status
 
     def test_0410_load_yaml_data_should_return_author(self):
         """The load_yaml_data function should return a status of David Rotthoff when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['author'] == yaml_author
 
     def test_0415_load_yaml_data_should_return_author_string(self):
         """The load_yaml_data function should return the author string to search for"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['author_string'] == yaml_string_author
 
     def test_0420_load_yaml_data_should_return_email(self):
         """The load_yaml_data function should return a status of drotthoff@gmail.com when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['email'] == yaml_email
 
     def test_0425_load_yaml_data_should_return_email_string(self):
         """The load_yaml_data function should return the email string to search for"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['email_string'] == yaml_string_email
 
     def test_0430_load_yaml_data_should_return_version_prefix(self):
         """The load_yaml_data function should return a status of git-rcs-keywords when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['version']['prefix'] == yaml_version_prefix
 
     def test_0440_load_yaml_data_should_return_version_major(self):
         """The load_yaml_data function should return a status of 0 when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['version']['major'] == yaml_version_major
 
     def test_0450_load_yaml_data_should_return_version_minor(self):
         """The load_yaml_data function should return a status of 9 when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['version']['minor'] == yaml_version_minor
 
     def test_0460_load_yaml_data_should_return_version_build(self):
         """The load_yaml_data function should return a status of 0 when provided default input parameters"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['version']['build'] == yaml_version_build
 
     def test_0465_load_yaml_data_should_return_version_string(self):
         """The load_yaml_data function should return a version string to search for"""
-        yaml_dictionary = version.load_yaml_data(param_path_cwd, param_file_default)
+        yaml_dictionary = version.load_yaml_data(os.path.join(param_path_cwd,
+                                                              param_file_default))
         assert yaml_dictionary['version_string'] == yaml_string_version
 
     def test_0470_load_yaml_data_raise_ioerror_for_invalid_directory(self):
         """The load_yaml_data function should raise an IOError exception if passed an invalid directory"""
         with self.assertRaises(IOError) as cm:
-            yaml_dictionary = version.load_yaml_data(param_path_invalid, param_file_default)
+            yaml_dictionary = version.load_yaml_data(os.path.join(param_path_invalid,
+                                                                  param_file_default))
         test_exception = cm.exception
         self.assertEqual(test_exception.errno, 2)
 
     def test_0470_load_yaml_data_raise_ioerror_for_invalid_file_name(self):
         """The load_yaml_data function should raise an IOError exception if passed an invalid directory"""
         with self.assertRaises(IOError) as cm:
-            yaml_dictionary = version.load_yaml_data(param_path_invalid, param_file_invalid)
+            yaml_dictionary = version.load_yaml_data(os.path.join(param_path_invalid,
+                                                                  param_file_invalid))
         test_exception = cm.exception
         self.assertEqual(test_exception.errno, 2)
 
     def test_0470_load_yaml_data_raise_ioerror_for_invalid_yaml_file(self):
         """The load_yaml_data function should raise an IOError exception if passed an invalid directory"""
         with self.assertRaises(IOError) as cm:
-            yaml_dictionary = version.load_yaml_data(param_path_invalid, 'README.md')
+            yaml_dictionary = version.load_yaml_data(os.path.join(param_path_invalid,
+                                                                  'README.md'))
         test_exception = cm.exception
         self.assertEqual(test_exception.errno, 2)
 
@@ -248,35 +265,50 @@ class Test_0500_LoadSourceFileNames(unittest.TestCase):
 
     def test_0510_load_source_file_names_should_return_empty_list_unused_pattern(self):
         """The load_source_file_names function should return an empty list when an unused pattern is supplied"""
-        source_list = version.load_source_file_names(param_path_cwd, 'asdasd.bniasd')
+        source_list = version.load_source_file_names(param_path_cwd,
+                                                     'asdasd.bniasd')
         assert isinstance(source_list, list)
         assert len(source_list)  == 0
 
     def test_0520_load_source_file_names_should_return_empty_list_invalid_dir(self):
         """The load_source_file_names function should return an empty list when an unused pattern is supplied"""
-        source_list = version.load_source_file_names(param_path_cwd, 'asdasd.bniasd')
-#        assert version.update_source_file(os.path.join(param_path_cwd, 'test'))
+        source_list = version.load_source_file_names(param_path_cwd,
+                                                     'asdasd.bniasd')
         assert isinstance(source_list, list)
         assert len(source_list)  == 0
 
 
 class Test_0600_UpdateSourceFile(unittest.TestCase):
     def build_yaml_dictionary(self):
-        return version.load_yaml_data(param_path_cwd, param_file_default)
+        """Build a YAML dictionary for testing with"""
+        return version.load_yaml_data(os.path.join(param_path_cwd,
+                                                   param_file_default))
 
     def test_6000_update_source_file_should_exit_success(self):
         """The update_source_file function should return normally when provided a valid file name"""
-        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
-            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-        version.update_source_file(os.path.join(param_path_cwd, 'test', 'test.py'),
+        if os.path.isfile(os.path.join(param_path_cwd,
+                                       'test',
+                                       'test.py.bak')):
+            os.remove(os.path.join(param_path_cwd,
+                                   'test',
+                                   'test.py.bak'))
+        assert not os.path.isfile(os.path.join(param_path_cwd,
+                                               'test',
+                                               'test.py.bak'))
+        version.update_source_file(os.path.join(param_path_cwd,
+                                                'test',
+                                                'test.py'),
                                    self.build_yaml_dictionary())
-        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        assert os.path.isfile(os.path.join(param_path_cwd,
+                                           'test',
+                                           'test.py.bak'))
 
     def test_6010_update_source_file_should_exit_failed(self):
         """The update_source_file function should raise an exception with an invalid file name"""
         with self.assertRaises(OSError) as cm:
-            version.update_source_file(os.path.join(param_path_cwd, 'test', 'nosuch-file-test.py'),
+            version.update_source_file(os.path.join(param_path_cwd,
+                                                    'test',
+                                                    'nosuch-file-test.py'),
                                        self.build_yaml_dictionary())
         test_exception = cm.exception
         self.assertEqual(test_exception.errno, 2)
@@ -284,21 +316,35 @@ class Test_0600_UpdateSourceFile(unittest.TestCase):
 
 class Test_0700_UpdateSourceFile(unittest.TestCase):
     def build_yaml_dictionary(self):
-        return version.load_yaml_data(param_path_cwd, param_file_default)
+        """Build a YAML dictionary for testing with"""
+        return version.load_yaml_data(file_name=os.path.join(param_path_cwd,
+                                                             param_file_default))
 
     def test_7000_update_source_file_should_exit_success(self):
         """The update_source_file function should return normally when provided a valid file name"""
-        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
-            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-        version.update_source_file(os.path.join(param_path_cwd, 'test', 'test.py'),
+        if os.path.isfile(os.path.join(param_path_cwd,
+                                       'test',
+                                       'test.py.bak')):
+            os.remove(os.path.join(param_path_cwd,
+                                   'test',
+                                   'test.py.bak'))
+        assert not os.path.isfile(os.path.join(param_path_cwd,
+                                               'test',
+                                               'test.py.bak'))
+        version.update_source_file(os.path.join(param_path_cwd,
+                                                'test',
+                                                'test.py'),
                                    self.build_yaml_dictionary())
-        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
+        assert os.path.isfile(os.path.join(param_path_cwd,
+                                           'test',
+                                           'test.py.bak'))
 
     def test_7010_update_source_file_should_exit_failed(self):
         """The update_source_file function should raise an exception with an invalid file name"""
         with self.assertRaises(OSError) as cm:
-            version.update_source_file(os.path.join(param_path_cwd, 'test', 'nosuch-file-test.py'),
+            version.update_source_file(os.path.join(param_path_cwd,
+                                                    'test',
+                                                    'nosuch-file-test.py'),
                                        self.build_yaml_dictionary())
         test_exception = cm.exception
         self.assertEqual(test_exception.errno, 2)
@@ -362,17 +408,15 @@ class Test_9900_Main(unittest.TestCase):
 
 class Test_0A00_SaveYamlData(unittest.TestCase):
     def build_yaml_dictionary(self):
-        return version.load_yaml_data(param_path_cwd, param_file_default)
+        """Build a YAML dictionary for testing with"""
+        return version.load_yaml_data(file_name=os.path.join(param_path_cwd,
+                                                             param_file_default))
 
     def test_A000_save_yaml_data_should_exit_success(self):
-        """The save_yaml_data function should return normally when provided a valid file name"""
-#        if os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak')):
-#            os.remove(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-#        assert not os.path.isfile(os.path.join(param_path_cwd, 'test', 'test.py.bak'))
-        version.save_yaml_data(self.build_yaml_dictionary(),
-                               os.path.join(param_path_cwd, 'test'),
-                               'version_test.yml')
-        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'versio_test.yml'))
+        """The save_yaml_data function should return normally when provided a valid file name and YAML dictionary"""
+        version.save_yaml_data(os.path.join(param_path_cwd, 'test','version_test.yml'),
+                               self.build_yaml_dictionary())
+        assert os.path.isfile(os.path.join(param_path_cwd, 'test', 'version_test.yml'))
 
 #    def test_A010_update_source_file_should_exit_failed(self):
 #        """The update_source_file function should raise an exception with an invalid file name"""

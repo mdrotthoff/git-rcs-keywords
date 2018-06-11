@@ -66,21 +66,23 @@ exit_invalid_directory = 1
 exit_invalid_file = 3
 
 
-
-def save_yaml_data(yaml_data, dir_name, file_name):
+def save_yaml_data(file_name, yaml_data):
     """save_yaml_data
 
     Save the supplied YAML data into a dictionary
 
     Arguments:
-        dir_name  - name of the directory where the file should be located
+        yaml_data - Dictionary to be output as a YAML file
         file_name - name of the YAML data file
 
     Returns:
         Dictionary of YAML supplied parameters
     """
 
-    with open(os.path.join(dir_name, file_name), 'w') as outfile:
+    # Increment the version.build value
+    yaml_data['version']['build'] += 1
+
+    with open(file_name, 'w') as outfile:
         yaml.dump(yaml_data, outfile, default_flow_style=False)
 
 
@@ -140,7 +142,8 @@ def update_source_file(file_name, yaml_dictionary):
                                                     yaml_dictionary['version']['build'])
 
     # Process the file, replacing the desired lines
-    for line in fileinput.input(file_name, inplace=1, backup='.bak'):
+#    for line in fileinput.input(file_name, inplace=1, backup='.bak'):
+    for line in fileinput.input(file_name, inplace=1):
         if author_regex:
             line = author_regex.sub(author_string, line)
         if status_regex:
@@ -176,20 +179,19 @@ def load_source_file_names(dir_name, file_pattern='*.py'):
     return files_found
 
 
-def load_yaml_data(dir_name, file_name):
+def load_yaml_data(file_name):
     """load_yaml_data
 
     Load the supplied YAML data into a dictionary
 
     Arguments:
-        dir_name  - name of the directory where the file should be located
         file_name - name of the YAML data file
 
     Returns:
         Dictionary of YAML supplied parameters
     """
 
-    yaml_stream = file(os.path.join(dir_name, file_name), 'r')
+    yaml_stream = file(file_name, 'r')
     yaml_dictionary = yaml.load(yaml_stream)
     yaml_stream.close()
 
@@ -207,8 +209,6 @@ def load_yaml_data(dir_name, file_name):
 
     if not 'date_string' in yaml_dictionary:
         yaml_dictionary.update({'date_string' : '__date__'})
-
-    print(str(yaml_dictionary))
 
     return(yaml_dictionary)
 
@@ -297,12 +297,9 @@ def main():
     Returns:
         Nothing
     """
-#    print('Program version is running')
-#    current_dir = os.getcwd()
 
     # Get the parameters supplied on the command line
     parameters = parse_params()
-    # print('Parameters: {}'.format(parameters))
 
     # Verify that the supplied directory is valid
     if not validate_directory(dir_name=parameters.dir):
@@ -322,12 +319,9 @@ def main():
             print('Invalid program file name provided')
             exit(exit_invalid_file)
 
-    # Check for a version.yml file in the target directory
-
-
     # Load the YAML version data from version.yml
-    yaml_data = load_yaml_data(dir_name=parameters.dir,
-                               file_name=parameters.data)
+    yaml_data = load_yaml_data(file_name=os.path.join(parameters.dir,
+                                                      parameters.data))
 
     # Find all of the Python source code but exclude the running program
     if parameters.file:
@@ -336,25 +330,15 @@ def main():
         sources_found = load_source_file_names(dir_name=parameters.dir,
                                                file_pattern=parameters.pattern)
 
-#    print('Sources found:')
-#    for file_name in sources_found:
-#        print('\t{}'.format(file_name))
-
-    # Cycle through each source program and adjust the four defined
-    # replacement strings based on the configured values.  If a value
-    # is not configured, do NOT make any replacement for that value.
+    # Cycle through each source program and adjust the defined replacement
+    # strings based on the configured values.  If a value is not configured,
+    # do NOT make any replacement for that value.
     for file_name in sources_found:
         update_source_file(file_name, yaml_data)
 
-    # Increment the version.build value
-    yaml_data['version']['build'] += 1
-
-
-    # Re-write the version.yml file with the updated values
-    save_yaml_data(yaml_data=yaml_data,
-                   dir_name=parameters.dir,
-                   file_name=parameters.data)
-
+    # Re-write the YAML file with the updated values
+    save_yaml_data(file_name=os.path.join(parameters.dir, parameters.data),
+                   yaml_data=yaml_data)
 
     # Exit the program
     exit(0)
