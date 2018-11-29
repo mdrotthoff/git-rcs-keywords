@@ -14,7 +14,7 @@
 """
 git-hook
 
-This module acts as a MPC for each git hook event it is registered
+This module acts as a MCP for each git hook event it is registered
 against.  A symlink is created between the hook name and the program
 that tells it what event is executing.  The correspoinding .d
 directory is read and all executable programs are run.  All parameters
