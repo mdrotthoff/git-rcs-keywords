@@ -44,11 +44,50 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
+ENVIRONMENT_DUMP_FLAG = True
+VARIABLE_DUMP_FLAG = True
 
+
+if VARIABLE_DUMP_FLAG:
+    from pprint import pprint
 
 if CALL_GRAPH:
     from pycallgraph import PyCallGraph
     from pycallgraph.output import GraphvizOutput
+
+
+def variable_dump(globals=globals(), locals=locals()):
+    """Function to dumps the contents pf the Python
+    global and local varaibles.
+
+    Arguments:
+        globals - Global variable dictionary to dump
+        locals  - Local variable dictionary to dump
+
+    Returns:
+        Nothing
+    """
+
+    # Dump the supplied variable dictionaries
+    if VARIABLE_DUMP_FLAG:
+        sys.stderr.write(pprint(globals))
+        sys.stderr.write(pprint(locals))
+
+
+def environment_dump():
+    """Function to dumpe the contents pf the environment
+    that the program is executing under.
+
+    Arguments:
+        None
+
+    Returns:
+        Nothing
+    """
+    # Display a processing summary
+    if ENVIRONMENT_DUMP_FLAG:
+        for var in os.environ:
+            sys.stderr.write('Variable: %s   Value: %s\n' % (var, os.getenv(var)))
 
 
 def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
@@ -58,7 +97,7 @@ def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
     Arguments:
         argv -- Command line parameters
         files_processed -- The number of files checked out
-                           by the hook
+                          by the hook
         return_code - the return code to be used when the
                       program s
 
@@ -136,6 +175,9 @@ def main():
     """
     # Set the start time for calculating elapsed time
     start_time = time.clock()
+
+    # Dump the system environment variables
+    environment_dump()
 
     # Display the startup message
     if SUMMARY_FLAG:
