@@ -64,6 +64,8 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
+ENVIRONMENT_DUMP_FLAG = False
+VARIABLE_DUMP_FLAG = False
 
 
 if CALL_GRAPH:
@@ -77,6 +79,50 @@ if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
+
+
+def variable_dump(descriotion=None, globals=globals(), locals=locals()):
+    """Function to dumps the contents pf the Python
+    global and local varaibles.
+
+    Arguments:
+        globals - Global variable dictionary to dump
+        locals  - Local variable dictionary to dump
+
+    Returns:
+        Nothing
+    """
+
+    # Dump the supplied variable dictionaries
+    if VARIABLE_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Program global variables\n')
+        for var_name in globals:
+            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        sys.stderr.write('\n\n')
+        sys.stderr.write('Program local variables\n')
+        for var_name in globals:
+            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        sys.stderr.write('\n\n')
+
+
+def environment_dump():
+    """Function to dumpe the contents pf the environment
+    that the program is executing under.
+
+    Arguments:
+        None
+
+    Returns:
+        Nothing
+    """
+    # Display a processing summary
+    if ENVIRONMENT_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Environment variables\n')
+        for var in os.environ:
+            sys.stderr.write('Variable: %s   Value: %s\n' % (var, os.getenv(var)))
+        sys.stderr.write('\n\n')
 
 
 def check_for_cmd(cmd):
@@ -340,7 +386,8 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join('$GIT_DIR',
+#        registerfilter(filter_dir=os.path.join('$GIT_DIR',
+        registerfilter(filter_dir=os.path.join(git_dir,
                                                GIT_DIRS['filter_dir']),
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])

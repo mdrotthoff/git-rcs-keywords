@@ -44,19 +44,16 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
-ENVIRONMENT_DUMP_FLAG = True
-VARIABLE_DUMP_FLAG = True
+ENVIRONMENT_DUMP_FLAG = False
+VARIABLE_DUMP_FLAG = False
 
-
-if VARIABLE_DUMP_FLAG:
-    from pprint import pprint
 
 if CALL_GRAPH:
     from pycallgraph import PyCallGraph
     from pycallgraph.output import GraphvizOutput
 
 
-def variable_dump(globals=globals(), locals=locals()):
+def variable_dump(descriotion=None, globals=globals(), locals=locals()):
     """Function to dumps the contents pf the Python
     global and local varaibles.
 
@@ -70,8 +67,15 @@ def variable_dump(globals=globals(), locals=locals()):
 
     # Dump the supplied variable dictionaries
     if VARIABLE_DUMP_FLAG:
-        sys.stderr.write(pprint(globals))
-        sys.stderr.write(pprint(locals))
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Program global variables\n')
+        for var_name in globals:
+            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        sys.stderr.write('\n\n')
+        sys.stderr.write('Program local variables\n')
+        for var_name in globals:
+            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        sys.stderr.write('\n\n')
 
 
 def environment_dump():
@@ -86,8 +90,11 @@ def environment_dump():
     """
     # Display a processing summary
     if ENVIRONMENT_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Environment variables\n')
         for var in os.environ:
             sys.stderr.write('Variable: %s   Value: %s\n' % (var, os.getenv(var)))
+        sys.stderr.write('\n\n')
 
 
 def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
