@@ -53,9 +53,9 @@ if CALL_GRAPH:
     from pycallgraph.output import GraphvizOutput
 
 
-def variable_dump(descriotion=None, globals=globals(), locals=locals()):
+def variable_dump(description=None, global_var=globals(), local_var=locals()):
     """Function to dumps the contents pf the Python
-    global and local varaibles.
+    global and local variables.
 
     Arguments:
         globals - Global variable dictionary to dump
@@ -68,13 +68,16 @@ def variable_dump(descriotion=None, globals=globals(), locals=locals()):
     # Dump the supplied variable dictionaries
     if VARIABLE_DUMP_FLAG:
         sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Variables dump for %s\n' % description)
         sys.stderr.write('Program global variables\n')
-        for var_name in globals:
-            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        for var_name in global_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, global_var[var_name]))
         sys.stderr.write('\n\n')
         sys.stderr.write('Program local variables\n')
-        for var_name in globals:
-            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        for var_name in local_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, local_var[var_name]))
         sys.stderr.write('\n\n')
 
 
@@ -93,7 +96,8 @@ def environment_dump():
         sys.stderr.write('Program: %s\n' % sys.argv[0])
         sys.stderr.write('Environment variables\n')
         for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n' % (var, os.getenv(var)))
+            sys.stderr.write('Variable: %s   Value: %s\n'
+                             % (var, os.getenv(var)))
         sys.stderr.write('\n\n')
 
 
@@ -142,9 +146,6 @@ def display_timing(start_time=None, setup_time=None):
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_time - start_time))
 
-    # Return from the function
-    return
-
 
 def dump_list(list_values, list_description, list_message):
     """Function to dump a list of values to STDERR.
@@ -163,9 +164,6 @@ def dump_list(list_values, list_description, list_message):
         sys.stderr.write('      %s[%d]: %s\n'
                          % (list_description, list_num, value))
         list_num += 1
-
-    # Return from the function
-    return
 
 
 def execute_cmd(cmd, cmd_source=None):
@@ -195,18 +193,16 @@ def execute_cmd(cmd, cmd_source=None):
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
                 sys.stderr.write("%s\n" % line)
     # If the command fails, notify the user and exit immediately
-    except subprocess.CalledProcessError as err:
-        sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
-                         .format(str(cmd), str(cmd_source)))
+    except subprocess.CalledProcessError:
+        sys.stderr.write(
+            "CalledProcessError - Program {0} called by {1} not found!"
+            .format(str(cmd), str(cmd_source)))
         raise
-#        shutdown_message(return_code=err.returncode,
-#                         files_processed=0)
-    except OSError as err:
-        sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
-                         .format(str(cmd), str(cmd_source)))
+    except OSError:
+        sys.stderr.write(
+            "OSError - Program {0} called by {1} not found!"
+            .format(str(cmd), str(cmd_source)))
         raise
-#        shutdown_message(return_code=err.errno,
-#                         files_processed=0)
 
     # Return from the function
     return cmd_stdout
@@ -231,29 +227,6 @@ def check_for_cmd(cmd):
     # Execute the command
     execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
 
-    # Return from the function
-    return
-
-'''
-    # Execute the command
-    try:
-        execute_cmd(cmd=cmd)
-
-    # If the command fails, notify the user and exit immediately
-    except subprocess.CalledProcessError as err:
-        print("CalledProcessError - Program '{}' not found! -- Exiting."
-              .format(cmd))
-        shutdown_message(return_code=err.returncode,
-                         files_processed=0)
-    except OSError as err:
-        print("OSError - Required program '{}' not found! -- Exiting."
-              .format(cmd))
-        shutdown_message(return_code=err.errno,
-                         files_processed=0)
-
-    # Return from the function
-    return
-'''
 
 def git_ls_files():
     """Find files that are relevant based on all files for the
@@ -273,18 +246,6 @@ def git_ls_files():
 
     # Return from the function
     return cmd_stdout
-
-'''
-    try:
-        cmd_stdout = execute_cmd(cmd=cmd)
-
-    # if an exception occurs, raise it to the caller
-    except subprocess.CalledProcessError as err:
-        shutdown_message(return_code=err.returncode,
-                         files_processed=0)
-    # Return from the function
-    return cmd_stdout
-'''
 
 
 def get_checkout_files(first_hash, second_hash):
@@ -341,38 +302,6 @@ def get_checkout_files(first_hash, second_hash):
     # Return from the function
     return file_list
 
-''' 
-    # Fetch the list of files modified by the last commit
-    try:
-        cmd_stdout = execute_cmd(cmd=cmd)
-
-    # if an exception occurs, raise it to the caller
-    except subprocess.CalledProcessError as err:
-        # This is a new repository, so get a list of all files
-        if err.returncode == 128:
-            cmd_stdout = git_ls_files()
-        else:
-            shutdown_message(return_code=err.returncode,
-                             files_processed=0)
-
-    # Convert the stdout stream to a list of files
-    file_list = cmd_stdout.decode('utf8').splitlines()
-
-    # Deal with unmodified repositories
-    if file_list and file_list[0] == 'clean':
-        shutdown_message(return_code=0,
-                         files_processed=0)
-
-    # Only return regular files.
-    file_list = [i for i in file_list if os.path.isfile(i)]
-    if VERBOSE_FLAG:
-        sys.stderr.write('  %d real files found for processing\n'
-                         % len(file_list))
-
-    # Return from the function
-    return file_list
-'''
-
 
 def remove_modified_files(files):
     """Filter the found files to eliminate any that have changes that have
@@ -408,40 +337,6 @@ def remove_modified_files(files):
     # Return from the function
     return files
 
-'''
-    # Get the list of files that are modified but not checked in
-    try:
-        cmd_stdout = execute_cmd(cmd=cmd)
-
-    # if an exception occurs, raise it to the caller
-    except subprocess.CalledProcessError as err:
-        sys.stderr.write('  CalledProcessError in git_not_checked_id\n')
-        shutdown_message(return_code=err.returncode,
-                         files_processed=0)
-    except OSError as err:
-        sys.stderr.write('  OSError in git_not_checked_id\n')
-        shutdown_message(return_code=err.errno,
-                         files_processed=0)
-
-    # Convert the stream output to a list of output lines
-    modified_files_list = cmd_stdout.decode('utf8').splitlines()
-
-    # Deal with unmodified repositories
-    if not modified_files_list:
-        return files
-
-    # Pull the file name (second field) of the output line and
-    # remove any double quotes
-    modified_files_list = [l.split(None, 1)[-1].strip('"')
-                           for l in modified_files_list]
-
-    # Remove any modified files from the list of files to process
-    if modified_files_list:
-        files = [f for f in files if f not in modified_files_list]
-
-    # Return from the function
-    return files
-'''
 
 def check_out_file(file_name):
     """Checkout file that was been modified by the latest branch checkout.
@@ -463,28 +358,8 @@ def check_out_file(file_name):
 
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
 
-
     # Check out the file so that it is smudged
     execute_cmd(cmd=cmd, cmd_source='check_out_files')
-
-    # Return from the function
-    return
-'''
-    # Check out the file so that it is smudged
-    try:
-        execute_cmd(cmd=cmd)
-    except subprocess.CalledProcessError as err:
-        sys.stderr.write('  CalledProcessError in check_out_file\n')
-        shutdown_message(return_code=err.returncode,
-                         files_processed=0)
-    except OSError as err:
-        sys.stderr.write('  OSError in check_out_file\n')
-        shutdown_message(return_code=err.errno,
-                         files_processed=0)
-
-    # Return from the function
-    return
-'''
 
 
 def main():
@@ -553,7 +428,6 @@ def main():
     # Return from the function
     shutdown_message(files_processed=files_processed,
                      return_code=0)
-    return
 
 
 def call_graph():

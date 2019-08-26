@@ -47,9 +47,9 @@ if CALL_GRAPH:
     from pycallgraph.output import GraphvizOutput
 
 
-def variable_dump(descriotion=None, globals=globals(), locals=locals()):
+def variable_dump(description=None, global_var=globals(), local_var=locals()):
     """Function to dumps the contents pf the Python
-    global and local varaibles.
+    global and local variables.
 
     Arguments:
         globals - Global variable dictionary to dump
@@ -62,13 +62,16 @@ def variable_dump(descriotion=None, globals=globals(), locals=locals()):
     # Dump the supplied variable dictionaries
     if VARIABLE_DUMP_FLAG:
         sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Variables dump for %s\n' % description)
         sys.stderr.write('Program global variables\n')
-        for var_name in globals:
-            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        for var_name in global_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, global_var[var_name]))
         sys.stderr.write('\n\n')
         sys.stderr.write('Program local variables\n')
-        for var_name in globals:
-            sys.stderr.write('Name: %s   Value: %s\n' % (var_name, globals[var_name]))
+        for var_name in local_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, local_var[var_name]))
         sys.stderr.write('\n\n')
 
 
@@ -87,7 +90,8 @@ def environment_dump():
         sys.stderr.write('Program: %s\n' % sys.argv[0])
         sys.stderr.write('Environment variables\n')
         for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n' % (var, os.getenv(var)))
+            sys.stderr.write('Variable: %s   Value: %s\n'
+                             % (var, os.getenv(var)))
         sys.stderr.write('\n\n')
 
 
@@ -138,9 +142,6 @@ def display_timing(start_time=None, setup_time=None):
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_time - start_time))
 
-    # Return from the function
-    return
-
 
 def dump_list(list_values, list_description, list_message):
     """Function to dump the byte stream handle from Popen
@@ -159,9 +160,6 @@ def dump_list(list_values, list_description, list_message):
         sys.stderr.write('      %s[%d]: %s\n'
                          % (list_description, list_num, value))
         list_num += 1
-
-    # Return from the function
-    return
 
 
 def main():
@@ -249,7 +247,6 @@ def main():
 
     # Return from the function
     shutdown_message(return_code=0, lines_processed=line_count)
-    return
 
 
 def call_graph():

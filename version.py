@@ -43,17 +43,18 @@ The string placed into the source code will be formatted as follows:
 """
 
 
-import sys
+# import sys
+# import errno
+# import subprocess
+# import time
+
 import os
-import errno
-import subprocess
-import time
 import argparse
-import yaml
+import datetime
 import fnmatch
 import fileinput
 import re
-import datetime
+import yaml
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -62,8 +63,11 @@ __date__ = "2018-06-08 15:26 CDT"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __status__ = "Production"
 
-exit_invalid_directory = 1
-exit_invalid_file = 3
+EXIT_INVALID_DIRECTORY = 1
+EXIT_INVALID_FILE = 3
+
+# exit_invalid_directory = 1
+# exit_invalid_file = 3
 
 
 def save_yaml_data(file_name, yaml_data):
@@ -103,29 +107,36 @@ def update_source_file(file_name, yaml_dictionary):
     if 'author' in yaml_dictionary:
         regex_string = r'^ *' + yaml_dictionary['author_string'] + '.*'
         author_regex = re.compile(regex_string, re.IGNORECASE)
-        author_string = '{} "{}"'.format(yaml_dictionary['author_string'], yaml_dictionary['author'])
+        author_string = '{} "{}"'.format(
+            yaml_dictionary['author_string'],
+            yaml_dictionary['author'])
 
     # Define the status regular expression
     status_regex = None
     if 'status' in yaml_dictionary:
         regex_string = r'^ *' + yaml_dictionary['status_string'] + '.*'
         status_regex = re.compile(regex_string, re.IGNORECASE)
-        status_string = '{} = "{}"'.format(yaml_dictionary['status_string'], yaml_dictionary['status'])
+        status_string = '{} = "{}"'.format(
+            yaml_dictionary['status_string'],
+            yaml_dictionary['status'])
 
     # Define the e-mail regular expression
     email_regex = None
     if 'email' in yaml_dictionary:
         regex_string = r'^ *' + yaml_dictionary['email_string'] + '.*'
         email_regex = re.compile(regex_string, re.IGNORECASE)
-        email_string = '{} = "{}"'.format(yaml_dictionary['email_string'], yaml_dictionary['email'])
+        email_string = '{} = "{}"'.format(
+            yaml_dictionary['email_string'],
+            yaml_dictionary['email'])
 
     # Define the date regular expression
     date_regex = None
     if 'date_string' in yaml_dictionary:
         regex_string = r'^ *' + yaml_dictionary['date_string'] + '.*'
         date_regex = re.compile(regex_string, re.IGNORECASE)
-        date_string = '{} = "{}"'.format(yaml_dictionary['date_string'],
-                                         datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        date_string = '{} = "{}"'.format(
+            yaml_dictionary['date_string'],
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     # Define the version regular expression
     version_regex = None
@@ -135,11 +146,12 @@ def update_source_file(file_name, yaml_dictionary):
         prefix_string = None
         if 'prefix' in yaml_dictionary['version']:
             prefix_string = yaml_dictionary['version']['prefix'] + '-'
-        version_string = '{} = "{}{}.{}.{}"'.format(yaml_dictionary['version_string'],
-                                                    prefix_string,
-                                                    yaml_dictionary['version']['major'],
-                                                    yaml_dictionary['version']['minor'],
-                                                    yaml_dictionary['version']['build'])
+        version_string = '{} = "{}{}.{}.{}"'\
+            .format(yaml_dictionary['version_string'],
+                    prefix_string,
+                    yaml_dictionary['version']['major'],
+                    yaml_dictionary['version']['minor'],
+                    yaml_dictionary['version']['build'])
 
     # Process the file, replacing the desired lines
 #    for line in fileinput.input(file_name, inplace=1, backup='.bak'):
@@ -156,8 +168,6 @@ def update_source_file(file_name, yaml_dictionary):
             line = date_regex.sub(date_string, line)
         print(line.rstrip())
 
-    return
-
 
 def load_source_file_names(dir_name, file_pattern='*.py'):
     """load_souce_file_names
@@ -172,7 +182,8 @@ def load_source_file_names(dir_name, file_pattern='*.py'):
     """
 
     files_found = []
-    for dir_root, dir_names, file_names in os.walk(dir_name):
+#    for dir_root, dir_names, file_names in os.walk(dir_name):
+    for dir_root, _, file_names in os.walk(dir_name):
         for file_name in fnmatch.filter(file_names, file_pattern):
             files_found.append(os.path.join(dir_root, file_name))
 
@@ -191,26 +202,26 @@ def load_yaml_data(file_name):
         Dictionary of YAML supplied parameters
     """
 
-    yaml_stream = file(file_name, 'r')
+    yaml_stream = open(file_name, 'r')
     yaml_dictionary = yaml.load(yaml_stream)
     yaml_stream.close()
 
-    if not 'version_string' in yaml_dictionary:
-        yaml_dictionary.update({'version_string' : '__version__'})
+    if 'version_string' not in yaml_dictionary:
+        yaml_dictionary.update({'version_string': '__version__'})
 
-    if not 'author_string' in yaml_dictionary:
-        yaml_dictionary.update({'author_string' : '__author__'})
+    if 'author_string' not in yaml_dictionary:
+        yaml_dictionary.update({'author_string': '__author__'})
 
-    if not 'email_string' in yaml_dictionary:
-        yaml_dictionary.update({'email_string' : '__email__'})
+    if 'email_string' not in yaml_dictionary:
+        yaml_dictionary.update({'email_string': '__email__'})
 
-    if not 'status_string' in yaml_dictionary:
-        yaml_dictionary.update({'status_string' : '__status__'})
+    if 'status_string' not in yaml_dictionary:
+        yaml_dictionary.update({'status_string': '__status__'})
 
-    if not 'date_string' in yaml_dictionary:
-        yaml_dictionary.update({'date_string' : '__date__'})
+    if 'date_string' not in yaml_dictionary:
+        yaml_dictionary.update({'date_string': '__date__'})
 
-    return(yaml_dictionary)
+    return yaml_dictionary
 
 
 def validate_file(dir_name, file_name):
@@ -258,7 +269,9 @@ def parse_params():
         Version data file name
     """
 
-    parser = argparse.ArgumentParser(description='Get parameters from the command line.')
+    parser = argparse.ArgumentParser(
+        description='Get parameters from the command line.'
+    )
     parser.add_argument('--dir',
                         action='store',
                         metavar='SOURCE DIRECTORY',
@@ -285,7 +298,7 @@ def parse_params():
                         help='Name of the file containing the version data')
     parameters = parser.parse_args()
 
-    return(parameters)
+    return parameters
 
 
 def main():
@@ -304,20 +317,20 @@ def main():
     # Verify that the supplied directory is valid
     if not validate_directory(dir_name=parameters.dir):
         print('Invalid directory name provided')
-        exit(exit_invalid_directory)
+        exit(EXIT_INVALID_DIRECTORY)
 
     # Verify that the supplied data file is valid
     if not validate_file(dir_name=parameters.dir,
                          file_name=parameters.data):
         print('Invalid data file name provided')
-        exit(exit_invalid_file)
+        exit(EXIT_INVALID_FILE)
 
     # Verify that the program file is valid if supplied
     if parameters.file:
         if not validate_file(dir_name=parameters.dir,
                              file_name=parameters.file):
             print('Invalid program file name provided')
-            exit(exit_invalid_file)
+            exit(EXIT_INVALID_FILE)
 
     # Load the YAML version data from version.yml
     yaml_data = load_yaml_data(file_name=os.path.join(parameters.dir,
@@ -325,7 +338,7 @@ def main():
 
     # Find all of the Python source code but exclude the running program
     if parameters.file:
-        sources_found = [ os.path.join(parameters.dir, parameters.file) ]
+        sources_found = [os.path.join(parameters.dir, parameters.file)]
     else:
         sources_found = load_source_file_names(dir_name=parameters.dir,
                                                file_pattern=parameters.pattern)
