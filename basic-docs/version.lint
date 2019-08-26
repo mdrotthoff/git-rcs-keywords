@@ -1,13 +1,9 @@
-Processing file: install.py
+Processing file: version.py
  
  
 pycodestyle:
  
-checking install.py
-install.py:498:5: E722 do not use bare except'
-    except:
-    ^
-1       E722 do not use bare except'
+checking version.py
  
  
 pylint:

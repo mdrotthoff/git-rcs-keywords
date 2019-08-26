@@ -8,9 +8,8 @@ checking rcs-post-merge.py
  
 pylint:
  
-No config file found, using default configuration
 ************* Module rcs-post-merge
-C:  1, 0: Module name "rcs-post-merge" doesn't conform to snake_case naming style (invalid-name)
+rcs-post-merge.py:1:0: C0103: Module name "rcs-post-merge" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
 Your code has been rated at 9.93/10 (previous run: 9.86/10, +0.07)

@@ -8,12 +8,11 @@ checking rcs-post-checkout.py
  
 pylint:
  
-No config file found, using default configuration
 ************* Module rcs-post-checkout
-C:  1, 0: Module name "rcs-post-checkout" doesn't conform to snake_case naming style (invalid-name)
+rcs-post-checkout.py:1:0: C0103: Module name "rcs-post-checkout" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.94/10 (previous run: 9.87/10, +0.07)
+Your code has been rated at 9.93/10 (previous run: 9.93/10, +0.00)
 
  
  

@@ -8,13 +8,12 @@ checking rcs-filter-clean.py
  
 pylint:
  
-No config file found, using default configuration
 ************* Module rcs-filter-clean
-C:  1, 0: Module name "rcs-filter-clean" doesn't conform to snake_case naming style (invalid-name)
-R:121, 0: Too many local variables (21/15) (too-many-locals)
+rcs-filter-clean.py:1:0: C0103: Module name "rcs-filter-clean" doesn't conform to snake_case naming style (invalid-name)
+rcs-filter-clean.py:165:0: R0914: Too many local variables (21/15) (too-many-locals)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.78/10 (previous run: 9.67/10, +0.12)
+Your code has been rated at 9.82/10 (previous run: 9.56/10, +0.26)
 
  
  
