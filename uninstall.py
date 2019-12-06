@@ -107,9 +107,6 @@ def check_for_cmd(cmd):
               .format(cmd))
         shutdown_message(return_code=err.errno)
 
-    # Return from the function
-    return
-
 
 def createdir(dirname):
     """Create an OS directory
@@ -126,9 +123,6 @@ def createdir(dirname):
     if SUMMARY_FLAG:
         sys.stderr.write('  Directory %s created\n' % dirname)
 
-    # Return from the function
-    return
-
 
 def copyfile(srcfile, destfile):
     """Copy an existing source file to a target file name
@@ -144,9 +138,6 @@ def copyfile(srcfile, destfile):
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
         sys.stderr.write('  Copied file  %s to %s\n' % (srcfile, destfile))
-
-    # Return from the function
-    return
 
 
 def execute_cmd(cmd):
@@ -200,9 +191,6 @@ def registergitevent(eventdir, eventname, eventcode):
         os.remove(event_link)
     os.symlink(GIT_HOOK, event_link)
 
-    # Return from the function
-    return
-
 
 def registerfilter(filter_dir, filter_type, filter_name):
     """Register a git filter for rcs-keywords functionality
@@ -222,9 +210,6 @@ def registerfilter(filter_dir, filter_type, filter_name):
            'filter.rcs-keywords.%s' % filter_type,
            '%s %s' % (os.path.join(filter_dir, filter_name), '%f')]
     execute_cmd(cmd=cmd)
-
-    # Return from the function
-    return
 
 
 def registerfilepattern(git_dir):
@@ -263,9 +248,6 @@ def registerfilepattern(git_dir):
                           % file_pattern.ljust(max_len))
     destination.close()
 
-    # Return from the function
-    return
-
 
 def validategitrepo(repo_dir, git_dir='.git'):
     """Validate that the supplied directory is a git repository
@@ -284,9 +266,6 @@ def validategitrepo(repo_dir, git_dir='.git'):
         sys.stderr.write('  Aborting installation!\n')
         raise Exception('Target git directory %s is not a git repository'
                         % repo_dir)
-
-    # Return from the function
-    return
 
 
 def installgitkeywords(repo_dir, git_dir='.git'):
@@ -345,9 +324,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
                        filter_name=filter_def['filter_name'])
     os.chdir(local_dir)
 
-    # Return from the function
-    return
-
 
 def display_timing(start_clock=None, setup_clock=None):
     """Function displays the elapsed time for various stages of the
@@ -372,9 +348,6 @@ def display_timing(start_clock=None, setup_clock=None):
                      % str(end_clock - setup_clock))
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_clock - start_clock))
-
-    # Return from the function
-    return
 
 
 def shutdown_message(return_code=0):
@@ -417,9 +390,6 @@ def dump_list(list_values, list_description, list_message):
         sys.stderr.write('      %s[%d]: %s\n'
                          % (list_description, list_num, list_value))
         list_num += 1
-
-    # Return from the function
-    return
 
 
 def main():
@@ -509,9 +479,9 @@ def call_graph():
 
 # Execute the main function
 if __name__ == '__main__':
-#    if CALL_GRAPH:
-#        call_graph()
-#    else:
-#        main()
     sys.stdout.write('Author: %s\n' % __author__)
     sys.stdout.write('Version: %s\n' % __version__)
+    if CALL_GRAPH:
+        call_graph()
+    else:
+        main()

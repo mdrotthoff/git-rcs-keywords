@@ -8,14 +8,13 @@ checking rcs-filter-smudge.py
  
 pylint:
  
-No config file found, using default configuration
 ************* Module rcs-filter-smudge
-C:  1, 0: Module name "rcs-filter-smudge" doesn't conform to snake_case naming style (invalid-name)
-R:176, 0: Too many local variables (25/15) (too-many-locals)
-R:176, 0: Too many statements (52/50) (too-many-statements)
+rcs-filter-smudge.py:1:0: C0103: Module name "rcs-filter-smudge" doesn't conform to snake_case naming style (invalid-name)
+rcs-filter-smudge.py:236:0: R0914: Too many local variables (25/15) (too-many-locals)
+rcs-filter-smudge.py:236:0: R0915: Too many statements (53/50) (too-many-statements)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.75/10 (previous run: 9.67/10, +0.09)
+Your code has been rated at 9.80/10 (previous run: 9.80/10, +0.00)
 
  
  

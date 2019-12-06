@@ -1,0 +1,20 @@
+Processing file: install_pargs.py
+ 
+ 
+pycodestyle:
+ 
+checking install_pargs.py
+install_pargs.py:448:5: E722 do not use bare except'
+    except:
+    ^
+1       E722 do not use bare except'
+ 
+ 
+pylint:
+ 
+
+-------------------------------------------------------------------
+Your code has been rated at 10.00/10 (previous run: 9.49/10, +0.51)
+
+ 
+ 

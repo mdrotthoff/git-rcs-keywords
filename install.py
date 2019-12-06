@@ -64,6 +64,8 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
+ENVIRONMENT_DUMP_FLAG = False
+VARIABLE_DUMP_FLAG = False
 
 
 if CALL_GRAPH:
@@ -77,6 +79,54 @@ if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
+
+
+def variable_dump(description=None, global_var=globals(), local_var=locals()):
+    """Function to dumps the contents pf the Python
+    global and local variables.
+
+    Arguments:
+        globals - Global variable dictionary to dump
+        locals  - Local variable dictionary to dump
+
+    Returns:
+        Nothing
+    """
+
+    # Dump the supplied variable dictionaries
+    if VARIABLE_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Variables dump for %s\n' % description)
+        sys.stderr.write('Program global variables\n')
+        for var_name in global_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, global_var[var_name]))
+        sys.stderr.write('\n\n')
+        sys.stderr.write('Program local variables\n')
+        for var_name in local_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, local_var[var_name]))
+        sys.stderr.write('\n\n')
+
+
+def environment_dump():
+    """Function to dumpe the contents pf the environment
+    that the program is executing under.
+
+    Arguments:
+        None
+
+    Returns:
+        Nothing
+    """
+    # Display a processing summary
+    if ENVIRONMENT_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Environment variables\n')
+        for var in os.environ:
+            sys.stderr.write('Variable: %s   Value: %s\n'
+                             % (var, os.getenv(var)))
+        sys.stderr.write('\n\n')
 
 
 def check_for_cmd(cmd):
@@ -108,9 +158,6 @@ def check_for_cmd(cmd):
               .format(cmd))
         shutdown_message(return_code=err.errno)
 
-    # Return from the function
-    return
-
 
 def createdir(dirname):
     """Create an OS directory
@@ -127,9 +174,6 @@ def createdir(dirname):
     if SUMMARY_FLAG:
         sys.stderr.write('  Directory %s created\n' % dirname)
 
-    # Return from the function
-    return
-
 
 def copyfile(srcfile, destfile):
     """Copy an existing source file to a target file name
@@ -145,9 +189,6 @@ def copyfile(srcfile, destfile):
     copy2(srcfile, destfile)
     if SUMMARY_FLAG:
         sys.stderr.write('  Copied file  %s to %s\n' % (srcfile, destfile))
-
-    # Return from the function
-    return
 
 
 def execute_cmd(cmd):
@@ -201,9 +242,6 @@ def registergitevent(eventdir, eventname, eventcode):
         os.remove(event_link)
     os.symlink(GIT_HOOK, event_link)
 
-    # Return from the function
-    return
-
 
 def registerfilter(filter_dir, filter_type, filter_name):
     """Register a git filter for rcs-keywords functionality
@@ -223,9 +261,6 @@ def registerfilter(filter_dir, filter_type, filter_name):
            'filter.rcs-keywords.%s' % filter_type,
            '%s %s' % (os.path.join(filter_dir, filter_name), '%f')]
     execute_cmd(cmd=cmd)
-
-    # Return from the function
-    return
 
 
 def registerfilepattern(git_dir):
@@ -264,9 +299,6 @@ def registerfilepattern(git_dir):
                           % file_pattern.ljust(max_len))
     destination.close()
 
-    # Return from the function
-    return
-
 
 def validategitrepo(repo_dir, git_dir='.git'):
     """Validate that the supplied directory is a git repository
@@ -285,9 +317,6 @@ def validategitrepo(repo_dir, git_dir='.git'):
         sys.stderr.write('  Aborting installation!\n')
         raise Exception('Target git directory %s is not a git repository'
                         % repo_dir)
-
-    # Return from the function
-    return
 
 
 def installgitkeywords(repo_dir, git_dir='.git'):
@@ -340,14 +369,11 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join('$GIT_DIR',
+        registerfilter(filter_dir=os.path.join(git_dir,
                                                GIT_DIRS['filter_dir']),
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])
     os.chdir(local_dir)
-
-    # Return from the function
-    return
 
 
 def display_timing(start_clock=None, setup_clock=None):
@@ -373,9 +399,6 @@ def display_timing(start_clock=None, setup_clock=None):
                      % str(end_clock - setup_clock))
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_clock - start_clock))
-
-    # Return from the function
-    return
 
 
 def shutdown_message(return_code=0):
@@ -418,9 +441,6 @@ def dump_list(list_values, list_description, list_message):
         sys.stderr.write('      %s[%d]: %s\n'
                          % (list_description, list_num, list_value))
         list_num += 1
-
-    # Return from the function
-    return
 
 
 def main():

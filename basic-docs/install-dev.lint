@@ -4,16 +4,19 @@ Processing file: install-dev.py
 pycodestyle:
  
 checking install-dev.py
+install-dev.py:482:5: E722 do not use bare except'
+    except:
+    ^
+1       E722 do not use bare except'
  
  
 pylint:
  
-No config file found, using default configuration
 ************* Module install-dev
-C:  1, 0: Module name "install-dev" doesn't conform to snake_case naming style (invalid-name)
+install-dev.py:1:0: C0103: Module name "install-dev" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.95/10 (previous run: 9.95/10, +0.00)
+Your code has been rated at 9.94/10 (previous run: 9.89/10, +0.06)
 
  
  

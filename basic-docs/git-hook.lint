@@ -4,20 +4,15 @@ Processing file: git-hook.py
 pycodestyle:
  
 checking git-hook.py
-git-hook.py:172:80: E501 line too long (80 > 79 characters)
-                                                     for param in sys.argv[1:]))
-                                                                               ^
-1       E501 line too long (80 > 79 characters)
  
  
 pylint:
  
-No config file found, using default configuration
 ************* Module git-hook
-C:  1, 0: Module name "git-hook" doesn't conform to snake_case naming style (invalid-name)
+git-hook.py:1:0: C0103: Module name "git-hook" doesn't conform to snake_case naming style (invalid-name)
 
 ------------------------------------------------------------------
-Your code has been rated at 9.88/10 (previous run: 9.74/10, +0.13)
+Your code has been rated at 9.90/10 (previous run: 9.90/10, +0.00)
 
  
  
