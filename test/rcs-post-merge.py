@@ -10,17 +10,13 @@
 # $Hash:     "ce6f6d53540aa85c30264deab1a47016232ff0e8 $
 
 """
-rcs-keywords-post-checkout
+rcs-keywords-post-merge
 
 This module provides code to act as an event hook for the git
-post-checkout event.  It detects which files have been changed
-and forces the files to be checked back out within the
-repository.  If the checkout event is  a file based event, the
-hook exits without doing any work.  If the event is a branch
-based event, the files are checked again after the the commit
-information is available after the merge has completed.
+post-merge event.  It detects which files have been changed
+and forces the file to be checked back out within the
+repository once the commit data is available.
 """
-
 
 import sys
 import os
@@ -29,13 +25,13 @@ import subprocess
 import time
 
 
-__author__ = "David Rotthoff"
+__author__ "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
-__date__ = "$Date$"
+__version__ = "git-rcs-keywords-0.9.5"
+__date__ = "2018-06-11 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
-__status__ = "Production"
+__status__ = "Development"
 # __license__ = "Python"
 
 
@@ -44,61 +40,11 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
-ENVIRONMENT_DUMP_FLAG = False
-VARIABLE_DUMP_FLAG = False
 
 
 if CALL_GRAPH:
     from pycallgraph import PyCallGraph
     from pycallgraph.output import GraphvizOutput
-
-
-def variable_dump(description=None, global_var=globals(), local_var=locals()):
-    """Function to dumps the contents pf the Python
-    global and local variables.
-
-    Arguments:
-        globals - Global variable dictionary to dump
-        locals  - Local variable dictionary to dump
-
-    Returns:
-        Nothing
-    """
-
-    # Dump the supplied variable dictionaries
-    if VARIABLE_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Variables dump for %s\n' % description)
-        sys.stderr.write('Program global variables\n')
-        for var_name in global_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, global_var[var_name]))
-        sys.stderr.write('\n\n')
-        sys.stderr.write('Program local variables\n')
-        for var_name in local_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, local_var[var_name]))
-        sys.stderr.write('\n\n')
-
-
-def environment_dump():
-    """Function to dumpe the contents pf the environment
-    that the program is executing under.
-
-    Arguments:
-        None
-
-    Returns:
-        Nothing
-    """
-    # Display a processing summary
-    if ENVIRONMENT_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Environment variables\n')
-        for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n'
-                             % (var, os.getenv(var)))
-        sys.stderr.write('\n\n')
 
 
 def shutdown_message(return_code=0, files_processed=0):
@@ -146,6 +92,9 @@ def display_timing(start_time=None, setup_time=None):
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_time - start_time))
 
+    # Return from the function
+    return
+
 
 def dump_list(list_values, list_description, list_message):
     """Function to dump a list of values to STDERR.
@@ -165,6 +114,9 @@ def dump_list(list_values, list_description, list_message):
                          % (list_description, list_num, value))
         list_num += 1
 
+    # Return from the function
+    return
+
 
 def execute_cmd(cmd, cmd_source=None):
     """Execute the supplied program.
@@ -172,7 +124,7 @@ def execute_cmd(cmd, cmd_source=None):
     Arguments:
         cmd -- string or list of strings of commands. A single string may
                not contain spaces.
-        cmd_source -- The function requesting the program execution.
+        cmd_source -- The function requesting the program execution
                       Default value of None.
 
     Returns:
@@ -193,19 +145,35 @@ def execute_cmd(cmd, cmd_source=None):
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
                 sys.stderr.write("%s\n" % line)
     # If the command fails, notify the user and exit immediately
-    except subprocess.CalledProcessError:
-        sys.stderr.write(
-            "CalledProcessError - Program {0} called by {1} not found!"
-            .format(str(cmd), str(cmd_source)))
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
         raise
-    except OSError:
-        sys.stderr.write(
-            "OSError - Program {0} called by {1} not found!"
-            .format(str(cmd), str(cmd_source)))
+#        shutdown_message(return_code=err.returncode,
+#                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
+                         .format(str(cmd), str(cmd_source)))
         raise
+#        shutdown_message(return_code=err.errno,
+#                         files_processed=0)
 
     # Return from the function
     return cmd_stdout
+
+'''
+    # Execute the command
+    cmd_handle = subprocess.Popen(cmd,
+                                  stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE)
+    (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
+    if cmd_stderr:
+        for line in cmd_stderr.strip().decode("utf-8").splitlines():
+            sys.stderr.write("%s\n" % line)
+
+    # Return from the function
+    return cmd_stdout
+'''
 
 
 def check_for_cmd(cmd):
@@ -227,6 +195,30 @@ def check_for_cmd(cmd):
     # Execute the command
     execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
 
+    # Return from the function
+    return
+
+'''
+    # Execute the command
+    try:
+        execute_cmd(cmd)
+
+    # If the command fails, notify the user and exit immediately
+    except subprocess.CalledProcessError as err:
+        print("CalledProcessError - Program '{}' not found! -- Exiting."
+              .format(cmd))
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        print("OSError - Required program '{}' not found! -- Exiting."
+              .format(cmd))
+        shutdown_message(return_code=err.errno,
+                         files_processed=0)
+
+    # Return from the function
+    return
+'''
+
 
 def git_ls_files():
     """Find files that are relevant based on all files for the
@@ -238,7 +230,6 @@ def git_ls_files():
     Returns:
         A list of filenames.
     """
-
     cmd = ['git', 'ls-files']
 
     # Get a list of all files in the current repository branch
@@ -247,60 +238,85 @@ def git_ls_files():
     # Return from the function
     return cmd_stdout
 
+'''
+    # Get a list of all files in the current repository branch
+    try:
+        cmd_stdout = execute_cmd(cmd)
 
-def get_checkout_files(first_hash, second_hash):
-    """Find files that have been modified over the range of the supplied
-       commit hashes.
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+
+    # Return from the function
+    return cmd_stdout
+'''
+
+
+def get_modified_files():
+    """Find files that were modified by the merge.
 
     Arguments:
-        first_hash - The starting hash of the range
-        second_hash - The ending hash of the range
+        None
 
     Returns:
         A list of filenames.
     """
-    file_list = []
-
-    # Get the list of files impacted.  If argv[1] and argv[2] are the same
-    # commit, then pass the value only once otherwise the file list is not
-    # returned
-    if first_hash == second_hash:
-        cmd = ['git',
-               'diff-tree',
-               '-r',
-               '--name-only',
-               '--no-commit-id',
-               '--diff-filter=ACMRT',
-               first_hash]
-    else:
-        cmd = ['git',
-               'diff-tree',
-               '-r',
-               '--name-only',
-               '--no-commit-id',
-               '--diff-filter=ACMRT',
-               first_hash,
-               second_hash]
+    modified_file_list = []
+    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
+           '--diff-filter=ACMRT']
 
     # Fetch the list of files modified by the last commit
-    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='get_checkout_files')
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='get_modified_files')
 
     # Convert the stdout stream to a list of files
-    file_list = cmd_stdout.decode('utf8').splitlines()
+    modified_file_list = cmd_stdout.decode('utf8').splitlines()
 
     # Deal with unmodified repositories
-    if file_list and file_list[0] == 'clean':
+    if modified_file_list and modified_file_list[0] == 'clean':
         shutdown_message(return_code=0,
                          files_processed=0)
 
     # Only return regular files.
-    file_list = [i for i in file_list if os.path.isfile(i)]
+    modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
     if VERBOSE_FLAG:
-        sys.stderr.write('  %d real files found for processing\n'
-                         % len(file_list))
+        sys.stderr.write('  %d modified files found for processing\n'
+                         % len(modified_file_list))
 
     # Return from the function
-    return file_list
+    return modified_file_list
+
+'''
+    # Fetch the list of files modified by the last commit
+    try:
+        cmd_stdout = execute_cmd(cmd)
+
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        # This is a new repository, so get a list of all files
+        if err.returncode == 128:  # new repository
+            cmd_stdout = git_ls_files()
+        else:
+            shutdown_message(return_code=err.returncode,
+                             files_processed=0)
+
+    # Convert the stdout stream to a list of files
+    modified_file_list = cmd_stdout.decode('utf8').splitlines()
+
+    # Deal with unmodified repositories
+    if modified_file_list and modified_file_list[0] == 'clean':
+        shutdown_message(return_code=0,
+                         files_processed=0)
+
+    # Only return regular files.
+    modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
+    if VERBOSE_FLAG:
+        sys.stderr.write('  %d modified files found for processing\n'
+                         % len(modified_file_list))
+
+    # Return from the function
+    return modified_file_list
+'''
 
 
 def remove_modified_files(files):
@@ -337,9 +353,44 @@ def remove_modified_files(files):
     # Return from the function
     return files
 
+'''
+    # Get the list of files that are modified but not checked in
+    try:
+        cmd_stdout = execute_cmd(cmd)
+
+    # if an exception occurs, raise it to the caller
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write('  CalledProcessError in git_not_checked_id\n')
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write('  OSError in git_not_checked_id\n')
+        shutdown_message(return_code=err.errno,
+                         files_processed=0)
+
+    # Convert the stream output to a list of output lines
+    modified_files_list = cmd_stdout.decode('utf8').splitlines()
+
+    # Deal with unmodified repositories
+    if not modified_files_list:
+        return files
+
+    # Pull the file name (second field) of the output line and
+    # remove any double quotes
+    modified_files_list = [l.split(None, 1)[-1].strip('"')
+                           for l in modified_files_list]
+
+    # Remove any modified files from the list of files to process
+    if modified_files_list:
+        files = [f for f in files if f not in modified_files_list]
+
+    # Return from the function
+    return files
+'''
+
 
 def check_out_file(file_name):
-    """Checkout file that was been modified by the latest branch checkout.
+    """Checkout file that was been modified by the latest merge.
 
     Arguments:
         file_name -- the file name to be checked out for smudging
@@ -361,24 +412,39 @@ def check_out_file(file_name):
     # Check out the file so that it is smudged
     execute_cmd(cmd=cmd, cmd_source='check_out_files')
 
+    # Return from the function
+    return
+
+'''
+    # Check out the file so that it is smudged
+    try:
+        execute_cmd(cmd)
+    except subprocess.CalledProcessError as err:
+        sys.stderr.write('  CalledProcessError in check_out_file\n')
+        shutdown_message(return_code=err.returncode,
+                         files_processed=0)
+    except OSError as err:
+        sys.stderr.write('  OSError in check_out_file\n')
+        shutdown_message(return_code=err.errno,
+                         files_processed=0)
+
+    # Return from the function
+    return
+'''
+
 
 def main():
     """Main program.
 
     Arguments:
-        argv: command line arguments
+        None
 
     Returns:
         Nothing
     """
     # Set the start time for calculating elapsed time
     start_time = time.clock()
-
-    # Dump the system environment variables
-    environment_dump()
-
-    # Dump the program variables
-    variable_dump()
+    setup_time = None
 
     # Display the startup message
     if SUMMARY_FLAG:
@@ -390,20 +456,15 @@ def main():
                   list_description='Param',
                   list_message='Parameter list')
 
-    # If argv[3] is zero (file checkout rather than branch checkout),
-    # then exit the hook as there is no need to re-smudge the file.
-    # (The commit info was already available)
-    if sys.argv[3] == '0':
-        shutdown_message(files_processed=-1,
-                         return_code=0)
-    elif VERBOSE_FLAG:
-        sys.stderr.write('Continuing for branch checkout: %s\n' % sys.argv[3])
-
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of files impacted.
-    files = get_checkout_files(first_hash=sys.argv[1], second_hash=sys.argv[2])
+    # Get the list of modified files
+    files = get_modified_files()
+    if VERBOSE_FLAG:
+        dump_list(list_values=files,
+                  list_description='File',
+                  list_message='Files not checked in')
 
     # Filter the list of modified files to exclude those modified since
     # the commit
@@ -412,7 +473,7 @@ def main():
     # Calculate the setup elapsed time
     setup_time = time.clock()
 
-    # Force a checkout of the remaining file list
+    # Process the remaining file list
     files_processed = 0
     if files:
         files.sort()

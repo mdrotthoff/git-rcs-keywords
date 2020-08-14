@@ -23,13 +23,13 @@ import re
 import time
 
 
-__author__ = "David Rotthoff"
+__author__ "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
-__date__ = "$Date$"
+__version__ = "git-rcs-keywords-0.9.5"
+__date__ = "2018-06-11 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
-__status__ = "Production"
+__status__ = "Development"
 # __license__ = "Python"
 
 
@@ -38,61 +38,11 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
-ENVIRONMENT_DUMP_FLAG = False
-VARIABLE_DUMP_FLAG = False
 
 
 if CALL_GRAPH:
     from pycallgraph import PyCallGraph
     from pycallgraph.output import GraphvizOutput
-
-
-def variable_dump(description=None, global_var=globals(), local_var=locals()):
-    """Function to dumps the contents pf the Python
-    global and local variables.
-
-    Arguments:
-        globals - Global variable dictionary to dump
-        locals  - Local variable dictionary to dump
-
-    Returns:
-        Nothing
-    """
-
-    # Dump the supplied variable dictionaries
-    if VARIABLE_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Variables dump for %s\n' % description)
-        sys.stderr.write('Program global variables\n')
-        for var_name in global_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, global_var[var_name]))
-        sys.stderr.write('\n\n')
-        sys.stderr.write('Program local variables\n')
-        for var_name in local_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, local_var[var_name]))
-        sys.stderr.write('\n\n')
-
-
-def environment_dump():
-    """Function to dumpe the contents pf the environment
-    that the program is executing under.
-
-    Arguments:
-        None
-
-    Returns:
-        Nothing
-    """
-    # Display a processing summary
-    if ENVIRONMENT_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Environment variables\n')
-        for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n'
-                             % (var, os.getenv(var)))
-        sys.stderr.write('\n\n')
 
 
 def shutdown_message(return_code=0, lines_processed=0):
@@ -142,6 +92,9 @@ def display_timing(start_time=None, setup_time=None):
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_time - start_time))
 
+    # Return from the function
+    return
+
 
 def dump_list(list_values, list_description, list_message):
     """Function to dump the byte stream handle from Popen
@@ -161,6 +114,9 @@ def dump_list(list_values, list_description, list_message):
                          % (list_description, list_num, value))
         list_num += 1
 
+    # Return from the function
+    return
+
 
 def main():
     """Main program.
@@ -173,9 +129,6 @@ def main():
     """
     # Set the start time for calculating elapsed time
     start_time = time.clock()
-
-    # Dump the system environment variables
-    environment_dump()
 
     # Calculate the source file being cleaned (if provided)
     if len(sys.argv) > 1:
@@ -247,6 +200,7 @@ def main():
 
     # Return from the function
     shutdown_message(return_code=0, lines_processed=line_count)
+    return
 
 
 def call_graph():

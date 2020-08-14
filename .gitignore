@@ -1,4 +1,6 @@
 /.project
 /.pydevproject
 /.settings
-.idea
+/.idea
+/venv-*
+

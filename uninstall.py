@@ -11,10 +11,9 @@
 # $Id$
 
 
-"""
-Install
+"""Uninstall
 
-This module installs the RCS keyword functionality into an
+This module uninstalls the RCS keyword functionality from an
 existing git repository.
 """
 
@@ -29,7 +28,7 @@ import re
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
+__version__ = "1.0.0"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
@@ -64,8 +63,6 @@ CALL_GRAPH = False
 TIMING_FLAG = False
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
-ENVIRONMENT_DUMP_FLAG = False
-VARIABLE_DUMP_FLAG = False
 
 
 if CALL_GRAPH:
@@ -79,54 +76,6 @@ if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
-
-
-def variable_dump(description=None, global_var=globals(), local_var=locals()):
-    """Function to dumps the contents pf the Python
-    global and local variables.
-
-    Arguments:
-        globals - Global variable dictionary to dump
-        locals  - Local variable dictionary to dump
-
-    Returns:
-        Nothing
-    """
-
-    # Dump the supplied variable dictionaries
-    if VARIABLE_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Variables dump for %s\n' % description)
-        sys.stderr.write('Program global variables\n')
-        for var_name in global_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, global_var[var_name]))
-        sys.stderr.write('\n\n')
-        sys.stderr.write('Program local variables\n')
-        for var_name in local_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, local_var[var_name]))
-        sys.stderr.write('\n\n')
-
-
-def environment_dump():
-    """Function to dumpe the contents pf the environment
-    that the program is executing under.
-
-    Arguments:
-        None
-
-    Returns:
-        Nothing
-    """
-    # Display a processing summary
-    if ENVIRONMENT_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Environment variables\n')
-        for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n'
-                             % (var, os.getenv(var)))
-        sys.stderr.write('\n\n')
 
 
 def check_for_cmd(cmd):
@@ -369,7 +318,7 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join(git_dir,
+        registerfilter(filter_dir=os.path.join('$GIT_DIR',
                                                GIT_DIRS['filter_dir']),
                        filter_type=filter_def['filter_type'],
                        filter_name=filter_def['filter_name'])
@@ -530,6 +479,8 @@ def call_graph():
 
 # Execute the main function
 if __name__ == '__main__':
+    sys.stdout.write('Author: %s\n' % __author__)
+    sys.stdout.write('Version: %s\n' % __version__)
     if CALL_GRAPH:
         call_graph()
     else:
