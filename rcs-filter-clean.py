@@ -25,7 +25,7 @@ import time
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
+__version__ = "1.0.0"
 __date__ = "$Date$"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
@@ -206,9 +206,9 @@ def main():
                               re.IGNORECASE)
     file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
                             re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d ]+ +\$|\$Revision\$",
+    revision_regex = re.compile(r"\$Revision: +[-:\d+ ]+ +\$|\$Revision\$",
                                 re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d ]+ +\$|\$Rev\$",
+    rev_regex = re.compile(r"\$Rev: +[-:\d+ ]+ +\$|\$Rev\$",
                            re.IGNORECASE)
     hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
                             re.IGNORECASE)
