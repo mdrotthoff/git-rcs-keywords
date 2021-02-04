@@ -1,16 +1,6 @@
 #! /usr/bin/env python
 # # -*- coding: utf-8 -*
 
-# $Author$
-# $Date$
-# $File$
-# $Rev$
-# $Rev$
-# $Source$
-# $Hash$
-# $Id$
-
-
 """
 Install
 
@@ -18,23 +8,19 @@ This module installs the RCS keyword functionality into an
 existing git repository.
 """
 
-
 import sys
 import os
-import time
 from shutil import copy2
 import subprocess
 import re
 
-
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "$Revision: 1.0 $"
-__date__ = "$Date$"
+__version__ = "git-rcs-keywords-1.1.0"
+__date__ = "2021-02-04 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
 __status__ = "Production"
-
 
 GIT_HOOK = 'git-hook.py'
 
@@ -58,75 +44,12 @@ GIT_FILE_PATTERN = ['*.sql', '*.ora', '*.txt', '*.md', '*.yml',
                     '*.yaml', '*.hosts', '*.xml', '*.jsn',
                     '*.json', '*.pl', '*.py', '*.sh']
 
-
-# Set the debugging flag
-CALL_GRAPH = False
-TIMING_FLAG = False
-VERBOSE_FLAG = False
-SUMMARY_FLAG = False
-ENVIRONMENT_DUMP_FLAG = False
-VARIABLE_DUMP_FLAG = False
-
-
-if CALL_GRAPH:
-    from pycallgraph import PyCallGraph
-    from pycallgraph.output import GraphvizOutput
-
-
 # Set the installation target
 (PROGRAM_PATH, PROGRAM_EXECUTABLE) = os.path.split(sys.argv[0])
 if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
-
-
-def variable_dump(description=None, global_var=globals(), local_var=locals()):
-    """Function to dumps the contents pf the Python
-    global and local variables.
-
-    Arguments:
-        globals - Global variable dictionary to dump
-        locals  - Local variable dictionary to dump
-
-    Returns:
-        Nothing
-    """
-
-    # Dump the supplied variable dictionaries
-    if VARIABLE_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Variables dump for %s\n' % description)
-        sys.stderr.write('Program global variables\n')
-        for var_name in global_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, global_var[var_name]))
-        sys.stderr.write('\n\n')
-        sys.stderr.write('Program local variables\n')
-        for var_name in local_var:
-            sys.stderr.write('Name: %s   Value: %s\n'
-                             % (var_name, local_var[var_name]))
-        sys.stderr.write('\n\n')
-
-
-def environment_dump():
-    """Function to dumpe the contents pf the environment
-    that the program is executing under.
-
-    Arguments:
-        None
-
-    Returns:
-        Nothing
-    """
-    # Display a processing summary
-    if ENVIRONMENT_DUMP_FLAG:
-        sys.stderr.write('Program: %s\n' % sys.argv[0])
-        sys.stderr.write('Environment variables\n')
-        for var in os.environ:
-            sys.stderr.write('Variable: %s   Value: %s\n'
-                             % (var, os.getenv(var)))
-        sys.stderr.write('\n\n')
 
 
 def check_for_cmd(cmd):
@@ -150,12 +73,16 @@ def check_for_cmd(cmd):
 
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        print("CalledProcessError - Program '{}' not found! -- Exiting."
-              .format(cmd))
+        print(
+            "{0} - Program '{1}' not found! -- Exiting."
+            .format(str(err), str(cmd))
+        )
         shutdown_message(return_code=err.returncode)
     except OSError as err:
-        print("OSError - Required program '{}' not found! -- Exiting."
-              .format(cmd))
+        print(
+            "{0} - Required program '{1}' not found! -- Exiting."
+            .format(str(cmd), str(cmd))
+        )
         shutdown_message(return_code=err.errno)
 
 
@@ -171,8 +98,6 @@ def createdir(dirname):
     if os.path.isdir(dirname):
         return
     os.makedirs(dirname)
-    if SUMMARY_FLAG:
-        sys.stderr.write('  Directory %s created\n' % dirname)
 
 
 def copyfile(srcfile, destfile):
@@ -187,8 +112,6 @@ def copyfile(srcfile, destfile):
     """
     # Copy the source file to the destination file
     copy2(srcfile, destfile)
-    if SUMMARY_FLAG:
-        sys.stderr.write('  Copied file  %s to %s\n' % (srcfile, destfile))
 
 
 def execute_cmd(cmd):
@@ -376,31 +299,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     os.chdir(local_dir)
 
 
-def display_timing(start_clock=None, setup_clock=None):
-    """Function displays the elapsed time for various stages of the
-    the program.
-
-    Arguments:
-        start_clock -- Time the program started
-        setup_clock -- Time the setup stage of the program completed
-
-    Returns:
-        Nothing
-    """
-    # Calculate the elapsed times
-    end_clock = time.clock()
-    if setup_clock is None:
-        setup_clock = end_clock
-    if start_clock is None:
-        start_clock = end_clock
-    sys.stderr.write('    Setup elapsed time: %s\n'
-                     % str(setup_clock - start_clock))
-    sys.stderr.write('    Execution elapsed time: %s\n'
-                     % str(end_clock - setup_clock))
-    sys.stderr.write('    Total elapsed time: %s\n'
-                     % str(end_clock - start_clock))
-
-
 def shutdown_message(return_code=0):
     """Function display any shutdown messages and
     the program.
@@ -415,32 +313,7 @@ def shutdown_message(return_code=0):
     Returns:
         Nothing
     """
-    # Output the program end
-    if VERBOSE_FLAG:
-        sys.stderr.write('End program name: %s\n' % sys.argv[0])
-        sys.stderr.write("\n")
-
-    # Return from the function
     exit(return_code)
-
-
-def dump_list(list_values, list_description, list_message):
-    """Function to dump the byte stream handle from Popen
-    to STDERR.
-
-    Arguments:
-        list_values -- a list of files to be output
-        list_descrition -- a text description of the file being output
-
-    Returns:
-        Nothing
-    """
-    sys.stderr.write("    %s\n" % list_message)
-    list_num = 0
-    for list_value in list_values:
-        sys.stderr.write('      %s[%d]: %s\n'
-                         % (list_description, list_num, list_value))
-        list_num += 1
 
 
 def main():
@@ -452,27 +325,11 @@ def main():
     Returns:
         Nothing
     """
-    # Set the start time for calculating elapsed time
-    start_time = time.clock()
-
-    # Display the startup message
-    if SUMMARY_FLAG:
-        sys.stderr.write('Start program name: %s\n' % sys.argv[0])
-        sys.stderr.write('  Target directory: %s\n' % TARGET_DIR)
-
-    # Save the current working directory
+    # # Set the start time for calculating elapsed time
     current_dir = os.getcwd()
-
-    if VERBOSE_FLAG:
-        dump_list(list_values=sys.argv,
-                  list_description='Param',
-                  list_message='Parameter list')
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
-
-    # Save the setup time
-    setup_time = time.clock()
 
     # Install the keyword support
     try:
@@ -502,35 +359,9 @@ def main():
     # Return to the initial working directory
     os.chdir(current_dir)
 
-    # Calculate the elapsed times
-    if TIMING_FLAG:
-        display_timing(start_clock=start_time,
-                       setup_clock=setup_time)
-
     shutdown_message(return_code=0)
-
-
-def call_graph():
-    """Call_graph execution
-
-    Arguments:
-        None
-
-    Returns:
-        Nothing
-    """
-    graphviz = GraphvizOutput()
-    graphviz.output_type = 'pdf'
-    graphviz.output_file = (os.path.splitext(os.path.basename(sys.argv[0]))[0]
-                            + '-' + time.strftime("%Y%m%d-%H%M%S")
-                            + '.' + graphviz.output_type)
-    with PyCallGraph(output=graphviz):
-        main()
 
 
 # Execute the main function
 if __name__ == '__main__':
-    if CALL_GRAPH:
-        call_graph()
-    else:
-        main()
+    main()

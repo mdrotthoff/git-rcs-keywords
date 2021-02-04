@@ -7,15 +7,27 @@ import errno
 import subprocess
 import time
 
-
-__author__ "David Rotthoff"
+__author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-0.9.5"
-__date__ = "2018-06-11 09:10:44"
+__version__ = "git-rcs-keywords-1.1.0"
+__date__ = "2021-02-04 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
 __status__ = "Development"
 # __license__ = "Python"
+
+# Set the debugging flag
+CALL_GRAPH = False
+TIMING_FLAG = False
+VERBOSE_FLAG = False
+SUMMARY_FLAG = False
+
+# Conditionally map a time function for performance measurement
+# depending on the version of Python used
+if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+    from time import perf_counter as get_clock
+else:
+    from time import clock as get_clock
 
 
 def shutdown_message(return_code=0, files_processed=0):
@@ -51,7 +63,7 @@ def display_timing(start_time=None, setup_time=None):
         Nothing
     """
     # Calculate the elapsed times
-    end_time = time.clock()
+    end_time = get_clock()
     if setup_time is None:
         setup_time = end_time
     if start_time is None:
@@ -117,17 +129,15 @@ def execute_cmd(cmd, cmd_source=None):
                 sys.stderr.write("%s\n" % line)
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        sys.stderr.write("CalledProcessError - Program {0} called by {1} not found! -- Exiting."
-                         .format(str(cmd), str(cmd_source)))
+        sys.stderr.write(
+            "{0} - Program {1} called by {2} not found! -- Exiting."
+            .format(str(err), str(cmd), str(cmd_source)))
         raise
-#        shutdown_message(return_code=err.returncode,
-#                         files_processed=0)
     except OSError as err:
-        sys.stderr.write("OSError - Program {0} called by {1} not found! -- Exiting."
-                         .format(str(cmd), str(cmd_source)))
+        sys.stderr.write(
+            "{0} - Program {1} called by {2} not found! -- Exiting."
+            .format(str(err), str(cmd), str(cmd_source)))
         raise
-#        shutdown_message(return_code=err.errno,
-#                         files_processed=0)
 
     # Return from the function
     return cmd_stdout
@@ -414,7 +424,7 @@ def main():
         Nothing
     """
     # Set the start time for calculating elapsed time
-    start_time = time.clock()
+    start_time = get_clock()
     setup_time = None
 
     # Display the startup message
@@ -442,7 +452,7 @@ def main():
     files = remove_modified_files(files=files)
 
     # Calculate the setup elapsed time
-    setup_time = time.clock()
+    setup_time = get_clock()
 
     # Process the remaining file list
     files_processed = 0
