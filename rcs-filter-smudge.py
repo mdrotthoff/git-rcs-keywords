@@ -163,7 +163,7 @@ def main():
     if git_log:
         # Calculate the replacement strings based on the git log results
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
-        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']).replace('\\', ' '),
+        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
                                                str(git_log[0]['author_email']))
         git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
         git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
