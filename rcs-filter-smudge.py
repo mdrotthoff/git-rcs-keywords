@@ -25,6 +25,7 @@ __credits__ = []
 __status__ = "Production"
 # __license__ = "Python"
 
+logging_level = logging.DEBUG
 
 def shutdown_message(return_code=0):
     """Function display any shutdown messages and
@@ -121,10 +122,11 @@ def main():
         Nothing
     """
     # Initialize logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(levelname)s: %(message)s',
-        filename='git-hook.dmr.log')
+    if logging_level:
+        logging.basicConfig(
+            level=logging_level,
+            format='%(levelname)s: %(message)s',
+            filename='git-hook.dmr.log')
 
     # Calculate the source file being smudged
     file_full_name = sys.argv[1]
@@ -233,8 +235,9 @@ def main():
                 # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
                 # logging.error('Author name: %s' % log_git_author)
                 # logging.error('Exception smudging file %s' % file_full_name)
-                logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-                logging.info('git log attributes: %s' % git_log)
+                if logging_level:
+                    logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+                    logging.info('git log attributes: %s' % git_log)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
             # exit(2)
