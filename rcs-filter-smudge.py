@@ -201,9 +201,9 @@ def main():
             line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except Exception as err:
-        logging.error('KeyError on file %s'.format(file_full_name))
-        err.args += ('filename', file_full_name)
-        logging.error(str(pprint.pprint(err)))
+        # logging.error('KeyError on file %s' % file_full_name)
+        # err.args += ('filename', file_full_name)
+        logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
         # raise
         exit(2)
 
