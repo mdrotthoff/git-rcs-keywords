@@ -235,8 +235,8 @@ def main():
                 line = rev_regex.sub(git_rev, line)
                 line = hash_regex.sub(git_hash, line)
                 sys.stdout.write(line)
-            # except Exception as err:
-            except:
+            except Exception as err:
+            # except:
                 # logging.error('KeyError on file %s' % file_full_name)
                 # err.args += ('filename', file_full_name)
                 # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
@@ -247,6 +247,8 @@ def main():
                     # logging.error('Exception smudging file %s' % file_full_name)
                     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     logging.info('git log attributes: %s' % git_log)
+                    sys.stderr.write('%s exception smudging file %s\nKey words may not be replaced\n%s\n'
+                                     % (err.__name__, file_full_name, err.args))
                     # if logging_level:
                     #     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     #     logging.info('git log attributes: %s' % git_log)
@@ -257,7 +259,7 @@ def main():
                 exception_occurred = 1
     except Exception as err:
         logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-        sys.stderr.write('%s exception smudging file %s\n' % (err.message, file_full_name))
+        sys.stderr.write('%s exception smudging file %s\n%s\n' % (err.__name__, file_full_name, err.args))
         exit(2)
 
     # Return from the function
