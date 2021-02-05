@@ -8,38 +8,40 @@
 # $Rev$
 # $Source$
 # $Hash$
+# $Id$
 
 """
-rcs-keywords-filter-clean
+git-hook
 
-This module provides the code to clean the local copy of the
-file of the keyword substitutions prior to commiting changes
-back to the repository.
+This module acts as a MCP for each git hook event it is registered
+against.  A symlink is created between the hook name and the program
+that tells it what event is executing.  The corresponding .d
+directory is read and all executable programs are run.  All parameters
+received by the module are passed along to each of the executed
+programs.
 """
 
 import sys
 import os
-import re
+import subprocess
 import time
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
+__version__ = "$Revision: 1.0 $"
+__date__ = "$Date$"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
-__status__ = "Development"
+__status__ = "Production"
 # __license__ = "Python"
 
-# Set the debugging flags
+# Set the debugging flag
 CALL_GRAPH = False
 TIMING_FLAG = True
 VERBOSE_FLAG = False
 SUMMARY_FLAG = False
-
-if CALL_GRAPH:
-    from pycallgraph import PyCallGraph
-    from pycallgraph.output import GraphvizOutput
+ENVIRONMENT_DUMP_FLAG = False
+VARIABLE_DUMP_FLAG = False
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
@@ -54,14 +56,62 @@ else:
         pass
 
 
-def shutdown_message(return_code=0, lines_processed=0):
+def variable_dump(description=None, global_var=globals(), local_var=locals()):
+    """Function to dumps the contents pf the Python
+    global and local variables.
+
+    Arguments:
+        globals - Global variable dictionary to dump
+        locals  - Local variable dictionary to dump
+
+    Returns:
+        Nothing
+    """
+
+    # Dump the supplied variable dictionaries
+    if VARIABLE_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Variables dump for %s\n' % description)
+        sys.stderr.write('Program global variables\n')
+        for var_name in global_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, global_var[var_name]))
+        sys.stderr.write('\n\n')
+        sys.stderr.write('Program local variables\n')
+        for var_name in local_var:
+            sys.stderr.write('Name: %s   Value: %s\n'
+                             % (var_name, local_var[var_name]))
+        sys.stderr.write('\n\n')
+
+
+def environment_dump():
+    """Function to dumpe the contents pf the environment
+    that the program is executing under.
+
+    Arguments:
+        None
+
+    Returns:
+        Nothing
+    """
+    # Display a processing summary
+    if ENVIRONMENT_DUMP_FLAG:
+        sys.stderr.write('Program: %s\n' % sys.argv[0])
+        sys.stderr.write('Environment variables\n')
+        for var in os.environ:
+            sys.stderr.write('Variable: %s   Value: %s\n'
+                             % (var, os.getenv(var)))
+        sys.stderr.write('\n\n')
+
+
+def shutdown_message(return_code=0, hook_count=0, hook_executed=0):
     """Function display any shutdown messages and
     the program.
 
     Arguments:
         argv -- Command line parameters
         files_processed -- The number of files checked out
-                           by the hook
+                          by the hook
         return_code - the return code to be used when the
                       program s
 
@@ -70,7 +120,8 @@ def shutdown_message(return_code=0, lines_processed=0):
     """
     # Display a processing summary
     if SUMMARY_FLAG:
-        sys.stderr.write('  Lines processed: %d\n' % lines_processed)
+        sys.stderr.write('Hooks seen: %d\n' % hook_count)
+        sys.stderr.write('Hooks executed: %d\n' % hook_executed)
         sys.stderr.write('End program name: %s\n' % sys.argv[0])
 
     # Return from the function
@@ -89,7 +140,6 @@ def display_timing(start_time=None, setup_time=None):
         Nothing
     """
     # Calculate the elapsed times
-    # end_time = time.clock()
     end_time = get_clock()
     if setup_time is None:
         setup_time = end_time
@@ -101,9 +151,6 @@ def display_timing(start_time=None, setup_time=None):
                      % str(end_time - setup_time))
     sys.stderr.write('    Total elapsed time: %s\n'
                      % str(end_time - start_time))
-
-    # Return from the function
-    return
 
 
 def dump_list(list_values, list_description, list_message):
@@ -124,9 +171,6 @@ def dump_list(list_values, list_description, list_message):
                          % (list_description, list_num, value))
         list_num += 1
 
-    # Return from the function
-    return
-
 
 def main():
     """Main program.
@@ -138,18 +182,14 @@ def main():
         Nothing
     """
     # Set the start time for calculating elapsed time
-    # start_time = time.clock()
     start_time = get_clock()
 
-    # Calculate the source file being cleaned (if provided)
-    if len(sys.argv) > 1:
-        file_full_name = sys.argv[1]
-    else:
-        file_full_name = 'Not provided'
+    # Dump the system environment variables
+    environment_dump()
 
     # Display the startup message
     if SUMMARY_FLAG:
-        sys.stderr.write('Start %s: %s\n' % (str(sys.argv[0]), file_full_name))
+        sys.stderr.write('Start program name: %s\n' % sys.argv[0])
 
     # List the provided parameters
     if VERBOSE_FLAG:
@@ -157,53 +197,37 @@ def main():
                   list_description='Param',
                   list_message='Parameter list')
 
-    # Define the various substitution regular expressions
-#    author_regex = re.compile(r"\$Author: +[\-.\w@<> ]+ +\$|\$Author\$",
-#                              re.IGNORECASE)
-    author_regex = re.compile(r"\$Author:.*\$",
-                              re.IGNORECASE)
-    id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
-                          re.IGNORECASE)
-    date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
-                            re.IGNORECASE)
-    source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
-                              re.IGNORECASE)
-    file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
-                            re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d+ ]+ +\$|\$Revision\$",
-                                re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d+ ]+ +\$|\$Rev\$",
-                           re.IGNORECASE)
-    hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
-                            re.IGNORECASE)
-
-    # Calculate empty strings based on the keyword
-    git_hash = '$%s$' % 'Hash'
-    git_author = '$%s$' % 'Author'
-    git_date = '$%s$' % 'Date'
-    git_rev = '$%s$' % 'Rev'
-    git_revision = '$%s$' % 'Revision'
-    git_file = '$%s$' % 'File'
-    git_source = '$%s$' % 'Source'
-    git_id = '$%s$' % 'Id'
+    # Verify that the named hook directory is a directory
+    list_dir = sys.argv[0] + '.d'
+    if not os.path.isdir(list_dir):
+        sys.stderr.write('The hook directory %s is not a directory\n'
+                         % list_dir)
+        exit(0)
 
     # Calculate the setup elapsed time
-    # setup_time = time.clock()
     setup_time = get_clock()
 
-    # Process each of the rows found on stdin
-    line_count = 0
-    for line in sys.stdin:
-        line_count += 1
-        line = author_regex.sub(git_author, line)
-        line = id_regex.sub(git_id, line)
-        line = date_regex.sub(git_date, line)
-        line = source_regex.sub(git_source, line)
-        line = file_regex.sub(git_file, line)
-        line = revision_regex.sub(git_revision, line)
-        line = rev_regex.sub(git_rev, line)
-        line = hash_regex.sub(git_hash, line)
-        sys.stdout.write(line)
+    # Execute each of the hooks found in the relevant directory
+    hook_count = 0
+    hook_executed = 0
+    for file_name in sorted(os.listdir(list_dir)):
+        hook_count += 1
+        hook_program = os.path.join(list_dir, file_name)
+        if os.path.isfile(hook_program) and os.access(hook_program, os.X_OK):
+            # If parameters were supplied, pass them through to the actual
+            # hook program
+            if len(sys.argv) > 1:
+                hook_program = '"%s" %s' \
+                               % (hook_program,
+                                  ' '.join('"%s"' % param
+                                           for param in sys.argv[1:]))
+            hook_executed += 1
+            if VERBOSE_FLAG:
+                sys.stderr.write('  Executing hook program %s\n'
+                                 % hook_program)
+            hook_call = subprocess.call([hook_program], shell=True)
+            if hook_call > 0:
+                exit(hook_call)
 
     # Calculate the elapsed times
     if TIMING_FLAG:
@@ -211,8 +235,9 @@ def main():
                        setup_time=setup_time)
 
     # Return from the function
-    shutdown_message(return_code=0, lines_processed=line_count)
-    return
+    shutdown_message(return_code=0,
+                     hook_count=hook_count,
+                     hook_executed=hook_executed)
 
 
 def call_graph():
