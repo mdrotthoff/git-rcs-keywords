@@ -122,7 +122,7 @@ def main():
     """
     # Initialize logging
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG,
         format='%(levelname)s: %(message)s',
         filename='git-hook.dmr.log')
 
@@ -163,23 +163,24 @@ def main():
     if git_log:
         # Calculate the replacement strings based on the git log results
         # log_git_author = git_log[0]['author_name'].split('\\')[-1]
-        log_git_author = git_log[0]['author_name']..replace('\\', '\\\\')
+        # log_git_author = git_log[0]['author_name'].replace('\\', '\\\\')
+        git_log[0]['author_name'].replace('\\', '\\\\')
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
-        git_author = '$Author:   %s <%s> $' % (str(log_git_author),
-                                               str(git_log[0]['author_email']))
-        # git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
+        # git_author = '$Author:   %s <%s> $' % (str(log_git_author),
         #                                        str(git_log[0]['author_email']))
+        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
+                                               str(git_log[0]['author_email']))
         git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
         git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
         git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
         git_file = '$File:     %s $' % str(file_name)
         git_source = '$Source:   %s $' % str(file_full_name)
-        git_id = '$Id:       %s | %s | %s $' % (str(file_name),
-                                                str(git_log[0]['commit_date']),
-                                                str(log_git_author))
         # git_id = '$Id:       %s | %s | %s $' % (str(file_name),
         #                                         str(git_log[0]['commit_date']),
-        #                                         str(git_log[0]['author_name']))
+        #                                         str(log_git_author))
+        git_id = '$Id:       %s | %s | %s $' % (str(file_name),
+                                                str(git_log[0]['commit_date']),
+                                                str(git_log[0]['author_name']))
     else:
         # Build a empty keyword list if no source data was found
         # Note: the unusual means of building the list is to keep
@@ -214,11 +215,11 @@ def main():
             # logging.error('KeyError on file %s' % file_full_name)
             # err.args += ('filename', file_full_name)
             # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-            logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
+            # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
             if exception_occurred == 0:
                 # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-                logging.error('Calculated author name from git log %s' % str(log_git_author))
-                logging.error('git log %s' % git_log)
+                # logging.error('Author name: %s' % log_git_author)
+                logging.error('git log attributes: %s' % git_log)
                 # logging.error('Exception smudging file %s' % file_full_name)
                 logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
