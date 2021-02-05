@@ -175,7 +175,10 @@ def main():
         git_source = '$Source:   %s $' % str(file_full_name)
         git_id = '$Id:       %s | %s | %s $' % (str(file_name),
                                                 str(git_log[0]['commit_date']),
-                                                str(git_log[0]['author_name']))
+                                                str(log_git_author))
+        # git_id = '$Id:       %s | %s | %s $' % (str(file_name),
+        #                                         str(git_log[0]['commit_date']),
+        #                                         str(git_log[0]['author_name']))
     else:
         # Build a empty keyword list if no source data was found
         # Note: the unusual means of building the list is to keep
