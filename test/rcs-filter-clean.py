@@ -170,9 +170,9 @@ def main():
                               re.IGNORECASE)
     file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
                             re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d ]+ +\$|\$Revision\$",
+    revision_regex = re.compile(r"\$Revision: +[-:\d+ ]+ +\$|\$Revision\$",
                                 re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d ]+ +\$|\$Rev\$",
+    rev_regex = re.compile(r"\$Rev: +[-:\d+ ]+ +\$|\$Rev\$",
                            re.IGNORECASE)
     hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
                             re.IGNORECASE)
