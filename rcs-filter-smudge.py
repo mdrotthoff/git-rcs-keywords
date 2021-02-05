@@ -176,18 +176,22 @@ def main():
         git_id = '$%s$' % 'Id'
 
     # Process each of the rows found on stdin
-    line_count = 0
-    for line in sys.stdin:
-        line_count += 1
-        line = author_regex.sub(git_author, line)
-        line = id_regex.sub(git_id, line)
-        line = date_regex.sub(git_date, line)
-        line = source_regex.sub(git_source, line)
-        line = file_regex.sub(git_file, line)
-        line = revision_regex.sub(git_revision, line)
-        line = rev_regex.sub(git_rev, line)
-        line = hash_regex.sub(git_hash, line)
-        sys.stdout.write(line)
+    try:
+        line_count = 0
+        for line in sys.stdin:
+            line_count += 1
+            line = author_regex.sub(git_author, line)
+            line = id_regex.sub(git_id, line)
+            line = date_regex.sub(git_date, line)
+            line = source_regex.sub(git_source, line)
+            line = file_regex.sub(git_file, line)
+            line = revision_regex.sub(git_revision, line)
+            line = rev_regex.sub(git_rev, line)
+            line = hash_regex.sub(git_hash, line)
+            sys.stdout.write(line)
+    except KeyError as err:
+        err.args += ('filename', file_full_name)
+        raise
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
