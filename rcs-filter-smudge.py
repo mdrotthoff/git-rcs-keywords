@@ -214,6 +214,7 @@ def main():
             if exception_occurred == 0:
                 # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
                 logging.error('Calculated author name from git log %s' % str(log_git_author))
+                logging.error('git log %s' % git_log)
                 # logging.error('Exception smudging file %s' % file_full_name)
                 logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
