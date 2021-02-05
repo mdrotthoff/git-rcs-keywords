@@ -164,23 +164,36 @@ def main():
         # Calculate the replacement strings based on the git log results
         # log_git_author = git_log[0]['author_name'].split('\\')[-1]
         # log_git_author = git_log[0]['author_name'].replace('\\', '\\\\')
-        git_log[0]['author_name'].replace('\\', '\\\\')
-        git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
-        # git_author = '$Author:   %s <%s> $' % (str(log_git_author),
+        # git_log[0]['author_name'].replace('\\', '\\\\')
+        # git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
+        # # git_author = '$Author:   %s <%s> $' % (str(log_git_author),
+        # #                                        str(git_log[0]['author_email']))
+        # git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
         #                                        str(git_log[0]['author_email']))
-        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
-                                               str(git_log[0]['author_email']))
-        git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
-        git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
-        git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
-        git_file = '$File:     %s $' % str(file_name)
-        git_source = '$Source:   %s $' % str(file_full_name)
+        # git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
+        # git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
+        # git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
+        # git_file = '$File:     %s $' % str(file_name)
+        # git_source = '$Source:   %s $' % str(file_full_name)
+        # # git_id = '$Id:       %s | %s | %s $' % (str(file_name),
+        # #                                         str(git_log[0]['commit_date']),
+        # #                                         str(log_git_author))
         # git_id = '$Id:       %s | %s | %s $' % (str(file_name),
         #                                         str(git_log[0]['commit_date']),
-        #                                         str(log_git_author))
-        git_id = '$Id:       %s | %s | %s $' % (str(file_name),
-                                                str(git_log[0]['commit_date']),
-                                                str(git_log[0]['author_name']))
+        #                                         str(git_log[0]['author_name']))
+
+        git_hash = re.escape('$Hash:     %s $' % str(git_log[0]['hash']))
+        git_author = re.escape('$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
+                                                         str(git_log[0]['author_email'])))
+        git_date = re.escape('$Date:     %s $' % str(git_log[0]['commit_date']))
+        git_rev = re.escape('$Rev:      %s $' % str(git_log[0]['commit_date']))
+        git_revision = re.escape('$Revision: %s $' % str(git_log[0]['commit_date']))
+        git_file = re.escape('$File:     %s $' % str(file_name))
+        git_source = re.escape('$Source:   %s $' % str(file_full_name))
+        git_id = re.escape('$Id:       %s | %s | %s $' % (str(file_name),
+                                                          str(git_log[0]['commit_date']),
+                                                          str(git_log[0]['author_name'])))
+
     else:
         # Build a empty keyword list if no source data was found
         # Note: the unusual means of building the list is to keep
