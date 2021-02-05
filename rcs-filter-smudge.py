@@ -85,13 +85,15 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
             "{0} - Program {1} called by {2} not found! -- Exiting."
             .format(str(err), str(cmd[0]), str(' '.join(cmd)))
         )
-        shutdown_message(return_code=err.returncode)
+        # shutdown_message(return_code=err.returncode)
+        exit(err.returncode)
     except OSError as err:
         sys.stderr.write(
             "{0} - Program {1} called by {2} not found! -- Exiting."
             .format(str(err), str(cmd[0]), str(' '.join(cmd)))
         )
-        shutdown_message(return_code=err.errno)
+        # shutdown_message(return_code=err.errno)
+        exit(err.errno)
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
@@ -100,7 +102,8 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
                          % str(cmd_handle.returncode))
         sys.stderr.write("Output text: %s\n"
                          % cmd_stdout.strip().decode("utf-8"))
-        shutdown_message(return_code=cmd_handle.returncode)
+        # shutdown_message(return_code=cmd_handle.returncode)
+        exit(cmd_handle.returncode)
 
     # Calculate replacement strings based on the git log results
     if cmd_stdout:
@@ -247,8 +250,8 @@ def main():
                     # logging.error('Exception smudging file %s' % file_full_name)
                     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     logging.info('git log attributes: %s' % git_log)
-                    sys.stderr.write('%s exception smudging file %s\nKey words may not be replaced\n%s\n'
-                                     % (err.__name__, file_full_name, err.args))
+                    sys.stderr.write('Exception smudging file %s\nKey words may not be replaced\n'
+                                     % file_full_name)
                     # if logging_level:
                     #     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     #     logging.info('git log attributes: %s' % git_log)
@@ -259,12 +262,13 @@ def main():
                 exception_occurred = 1
     except Exception as err:
         logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-        sys.stderr.write('%s exception smudging file %s\n%s\n' % (err.__name__, file_full_name, err.args))
+        sys.stderr.write('Exception smudging file %s\n' % file_full_name)
         exit(2)
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
-    shutdown_message(return_code=0)
+    # shutdown_message(return_code=0)
+    exit(0)
 
 
 # Execute the main function
