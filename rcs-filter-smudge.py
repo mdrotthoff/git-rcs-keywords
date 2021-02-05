@@ -13,6 +13,7 @@ import sys
 import os
 import re
 import subprocess
+import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -118,6 +119,9 @@ def main():
     Returns:
         Nothing
     """
+    # Initialize logging
+    logging.basicConfig(level=logging.INFO, format='%(levename)s: %(message)s')
+
     # Calculate the source file being smudged
     file_full_name = sys.argv[1]
     file_name = os.path.basename(file_full_name)
@@ -190,8 +194,10 @@ def main():
             line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except KeyError as err:
+        logging.error('KeyError on file %s'.format(file_full_name))
         err.args += ('filename', file_full_name)
-        raise
+        # raise
+        exit(1)
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
