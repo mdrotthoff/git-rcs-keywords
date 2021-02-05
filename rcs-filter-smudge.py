@@ -162,9 +162,12 @@ def main():
 
     if git_log:
         # Calculate the replacement strings based on the git log results
+        log_git_author = git_log[0]['author_name'].split('\\')[-1]
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
-        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
+        git_author = '$Author:   %s <%s> $' % (str(log_git_author),
                                                str(git_log[0]['author_email']))
+        # git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name'].replace('\\', ' ')),
+        #                                        str(git_log[0]['author_email']))
         git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
         git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
         git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
@@ -207,7 +210,7 @@ def main():
             # err.args += ('filename', file_full_name)
             # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
             logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-            logging.error('Escaped author name from git log %s' % str(git_log[0]['author_name']).replace('\\', ' '))
+            logging.error('Calculated author name from git log %s' % str(log_git_author))
             logging.error('Exception smudging file %s' % file_full_name)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
