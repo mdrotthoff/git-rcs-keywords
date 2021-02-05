@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import logging
+import pprint
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -196,6 +197,7 @@ def main():
     except KeyError as err:
         logging.error('KeyError on file %s'.format(file_full_name))
         err.args += ('filename', file_full_name)
+        logging.error(pprint.pprint(err))
         # raise
         exit(1)
 
