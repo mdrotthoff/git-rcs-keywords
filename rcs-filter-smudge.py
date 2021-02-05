@@ -162,17 +162,17 @@ def main():
 
     if git_log:
         # Calculate the replacement strings based on the git log results
-        git_hash = r'$Hash:     %s $' % str(git_log[0]['hash'])
-        git_author = r'$Author:   %s <%s> $' % (str(git_log[0]['author_name']).replace('\\', '\\\\'),
-                                                str(git_log[0]['author_email']))
-        git_date = r'$Date:     %s $' % str(git_log[0]['commit_date'])
-        git_rev = r'$Rev:      %s $' % str(git_log[0]['commit_date'])
-        git_revision = r'$Revision: %s $' % str(git_log[0]['commit_date'])
-        git_file = r'$File:     %s $' % str(file_name)
-        git_source = r'$Source:   %s $' % str(file_full_name)
-        git_id = r'$Id:       %s | %s | %s $' % (str(file_name),
-                                                 str(git_log[0]['commit_date']),
-                                                 str(git_log[0]['author_name']))
+        git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
+        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']).replace('\\', ' '),
+                                               str(git_log[0]['author_email']))
+        git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
+        git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
+        git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
+        git_file = '$File:     %s $' % str(file_name)
+        git_source = '$Source:   %s $' % str(file_full_name)
+        git_id = '$Id:       %s | %s | %s $' % (str(file_name),
+                                                str(git_log[0]['commit_date']),
+                                                str(git_log[0]['author_name']))
     else:
         # Build a empty keyword list if no source data was found
         # Note: the unusual means of building the list is to keep
@@ -206,9 +206,9 @@ def main():
             # logging.error('KeyError on file %s' % file_full_name)
             # err.args += ('filename', file_full_name)
             # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-            logging.error('Exception smudging file %s' % file_full_name)
             logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-            logging.error('Escaped author name from git log %s' % str(git_log[0]['author_name']).replace('\\', '\\\\'))
+            logging.error('Escaped author name from git log %s' % str(git_log[0]['author_name']).replace('\\', ' '))
+            logging.error('Exception smudging file %s' % file_full_name)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
             # exit(2)
