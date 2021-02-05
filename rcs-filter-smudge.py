@@ -253,9 +253,9 @@ def main():
                 # exit(2)
                 sys.stdout.write(source_line)
                 exception_occurred = 1
-    except:
+    except Exception as err:
         logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s\n' % file_full_name)
+        sys.stderr.write('%s exception smudging file %s\n' % (err.message, file_full_name)
         exit(2)
 
     # Return from the function
