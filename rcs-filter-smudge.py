@@ -203,7 +203,8 @@ def main():
     except Exception as err:
         # logging.error('KeyError on file %s' % file_full_name)
         # err.args += ('filename', file_full_name)
-        logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
+        # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
+        logging.exception('Exception processing file %s' % file_full_name)
         # raise
         exit(2)
 
