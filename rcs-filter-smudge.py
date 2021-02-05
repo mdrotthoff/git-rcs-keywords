@@ -191,6 +191,7 @@ def main():
 
     # Process each of the rows found on stdin
     line_count = 0
+    exception_occurred = 0
     for line in sys.stdin:
         try:
             line_count += 1
@@ -210,12 +211,16 @@ def main():
             # err.args += ('filename', file_full_name)
             # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
             logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-            logging.error('Calculated author name from git log %s' % str(log_git_author))
-            logging.error('Exception smudging file %s' % file_full_name)
+            if exception_occurred == 0:
+                # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
+                logging.error('Calculated author name from git log %s' % str(log_git_author))
+                # logging.error('Exception smudging file %s' % file_full_name)
+                logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
             # exit(2)
             sys.stdout.write(source_line)
+            exception_occurred = 1
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
