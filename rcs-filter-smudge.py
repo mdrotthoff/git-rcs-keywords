@@ -14,7 +14,6 @@ import os
 import re
 import subprocess
 import logging
-import pprint
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -25,7 +24,12 @@ __credits__ = []
 __status__ = "Production"
 # __license__ = "Python"
 
-logging_level = logging.DEBUG
+logging_level = None
+# logging_level = logging.DEBUG
+# logging_level = logging.INFO
+logging_level = logging.WARNING
+# logging_level = logging.ERROR
+
 
 def shutdown_message(return_code=0):
     """Function display any shutdown messages and
@@ -108,6 +112,9 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
     else:
         git_log = []
 
+    # Log the results of the git log operation
+    logging.debug('git log results %s' % git_log)
+
     # Return from the function
     return git_log
 
@@ -126,14 +133,14 @@ def main():
         logging.basicConfig(
             level=logging_level,
             format='%(levelname)s: %(message)s',
-            filename='git-hook.dmr.log')
+            filename='git-hook.exception.log')
 
     # Calculate the source file being smudged
     file_full_name = sys.argv[1]
     file_name = os.path.basename(file_full_name)
 
     # Log the file being processed
-    logging.debug('processing file %s' % file_full_name)
+    logging.info('processing file %s' % file_full_name)
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
@@ -212,37 +219,44 @@ def main():
     # Process each of the rows found on stdin
     line_count = 0
     exception_occurred = 0
-    for line in sys.stdin:
-        try:
-            line_count += 1
-            source_line = line
-            line = author_regex.sub(git_author, line)
-            line = id_regex.sub(git_id, line)
-            line = date_regex.sub(git_date, line)
-            line = source_regex.sub(git_source, line)
-            line = file_regex.sub(git_file, line)
-            line = revision_regex.sub(git_revision, line)
-            line = rev_regex.sub(git_rev, line)
-            line = hash_regex.sub(git_hash, line)
-            sys.stdout.write(line)
-        # except Exception as err:
-        except:
-            # logging.error('KeyError on file %s' % file_full_name)
-            # err.args += ('filename', file_full_name)
-            # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-            # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-            if exception_occurred == 0:
+    try:
+        for line in sys.stdin:
+            try:
+                line_count += 1
+                source_line = line
+                line = author_regex.sub(git_author, line)
+                line = id_regex.sub(git_id, line)
+                line = date_regex.sub(git_date, line)
+                line = source_regex.sub(git_source, line)
+                line = file_regex.sub(git_file, line)
+                line = revision_regex.sub(git_revision, line)
+                line = rev_regex.sub(git_rev, line)
+                line = hash_regex.sub(git_hash, line)
+                sys.stdout.write(line)
+            # except Exception as err:
+            except:
+                # logging.error('KeyError on file %s' % file_full_name)
+                # err.args += ('filename', file_full_name)
+                # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                 # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-                # logging.error('Author name: %s' % log_git_author)
-                # logging.error('Exception smudging file %s' % file_full_name)
-                if logging_level:
+                if exception_occurred == 0:
+                    # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
+                    # logging.error('Author name: %s' % log_git_author)
+                    # logging.error('Exception smudging file %s' % file_full_name)
                     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     logging.info('git log attributes: %s' % git_log)
-            # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
-            # raise
-            # exit(2)
-            sys.stdout.write(source_line)
-            exception_occurred = 1
+                    # if logging_level:
+                    #     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+                    #     logging.info('git log attributes: %s' % git_log)
+                # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
+                # raise
+                # exit(2)
+                sys.stdout.write(source_line)
+                exception_occurred = 1
+    except:
+        logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+        sys.stderr.write('Exception smudging file %s\n' % file_full_name)
+        exit(2)
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
