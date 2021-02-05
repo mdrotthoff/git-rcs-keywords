@@ -123,7 +123,7 @@ def main():
     # Initialize logging
     logging.basicConfig(
         level=logging.DEBUG,
-        format='%(levename)s: %(message)s',
+        format='%(levelname)s: %(message)s',
         filename='git-hook.dmr.log')
 
     # Calculate the source file being smudged
@@ -131,7 +131,7 @@ def main():
     file_name = os.path.basename(file_full_name)
 
     # Log the file being processed
-    logging.debug('processing file %s'.format(file_full_name))
+    logging.debug('processing file %s' % file_full_name)
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
