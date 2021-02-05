@@ -162,7 +162,8 @@ def main():
 
     if git_log:
         # Calculate the replacement strings based on the git log results
-        log_git_author = git_log[0]['author_name'].split('\\')[-1]
+        # log_git_author = git_log[0]['author_name'].split('\\')[-1]
+        log_git_author = git_log[0]['author_name']..replace('\\', '\\\\')
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
         git_author = '$Author:   %s <%s> $' % (str(log_git_author),
                                                str(git_log[0]['author_email']))
