@@ -214,6 +214,7 @@ def registerfilepattern(git_dir):
         source.close()
     else:
         destination = open(attribute_file, "w")
+        destination.write('* text=auto !eol\n')
 
     # Write the appropriate file patterns for the filter usage
     max_len = len(max(GIT_FILE_PATTERN, key=len))
