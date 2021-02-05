@@ -163,7 +163,7 @@ def main():
     if git_log:
         # Calculate the replacement strings based on the git log results
         git_hash = r'$Hash:     %s $' % str(git_log[0]['hash'])
-        git_author = r'$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
+        git_author = r'$Author:   %s <%s> $' % (str(git_log[0]['author_name']).replace('\\', '\\\\'),
                                                 str(git_log[0]['author_email']))
         git_date = r'$Date:     %s $' % str(git_log[0]['commit_date'])
         git_rev = r'$Rev:      %s $' % str(git_log[0]['commit_date'])
@@ -187,10 +187,11 @@ def main():
         git_id = '$%s$' % 'Id'
 
     # Process each of the rows found on stdin
-    try:
-        line_count = 0
-        for line in sys.stdin:
+    line_count = 0
+    for line in sys.stdin:
+        try:
             line_count += 1
+            source_line = line
             line = author_regex.sub(git_author, line)
             line = id_regex.sub(git_id, line)
             line = date_regex.sub(git_date, line)
@@ -200,13 +201,15 @@ def main():
             line = rev_regex.sub(git_rev, line)
             line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
-    except Exception as err:
-        # logging.error('KeyError on file %s' % file_full_name)
-        # err.args += ('filename', file_full_name)
-        logging.error('Exception smudging file %s' % file_full_name)
-        # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
-        # raise
-        exit(2)
+        # except Exception as err:
+        except:
+            # logging.error('KeyError on file %s' % file_full_name)
+            # err.args += ('filename', file_full_name)
+            logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+            # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
+            # raise
+            # exit(2)
+            sys.stdout.write(source_line)
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
