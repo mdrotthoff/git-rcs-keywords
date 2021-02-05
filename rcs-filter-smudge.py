@@ -205,7 +205,10 @@ def main():
         except:
             # logging.error('KeyError on file %s' % file_full_name)
             # err.args += ('filename', file_full_name)
-            logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+            # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+            logging.error('Exception smudging file %s' % file_full_name)
+            logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
+            logging.error('Escaped author name from git log %s' % str(git_log[0]['author_name']).replace('\\', '\\\\'))
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
             # exit(2)
