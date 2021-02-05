@@ -122,7 +122,7 @@ def main():
     """
     # Initialize logging
     logging.basicConfig(
-        level=logging.DEBUG,
+        level=logging.INFO,
         format='%(levelname)s: %(message)s',
         filename='git-hook.dmr.log')
 
@@ -219,9 +219,9 @@ def main():
             if exception_occurred == 0:
                 # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
                 # logging.error('Author name: %s' % log_git_author)
-                logging.error('git log attributes: %s' % git_log)
                 # logging.error('Exception smudging file %s' % file_full_name)
                 logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
+                logging.info('git log attributes: %s' % git_log)
             # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
             # raise
             # exit(2)
