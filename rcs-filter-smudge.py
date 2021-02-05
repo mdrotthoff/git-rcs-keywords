@@ -121,11 +121,17 @@ def main():
         Nothing
     """
     # Initialize logging
-    logging.basicConfig(level=logging.INFO, format='%(levename)s: %(message)s')
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(levename)s: %(message)s',
+        filename='git-hook.dmr.log')
 
     # Calculate the source file being smudged
     file_full_name = sys.argv[1]
     file_name = os.path.basename(file_full_name)
+
+    # Log the file being processed
+    logging.debug('processing file %s'.format(file_full_name))
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
@@ -194,12 +200,12 @@ def main():
             line = rev_regex.sub(git_rev, line)
             line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
-    except KeyError as err:
+    except Exception as err:
         logging.error('KeyError on file %s'.format(file_full_name))
         err.args += ('filename', file_full_name)
-        logging.error(pprint.pprint(err))
+        logging.error(str(pprint.pprint(err)))
         # raise
-        exit(1)
+        exit(2)
 
     # Return from the function
     # shutdown_message(return_code=0, lines_processed=line_count)
