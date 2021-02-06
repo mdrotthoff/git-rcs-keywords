@@ -10,11 +10,9 @@ keyword substitutions.
 """
 
 import sys
-import os
 import re
 import subprocess
 import logging
-import io
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -23,44 +21,47 @@ __date__ = "2021-02-04 09:10:44"
 __copyright__ = "Copyright (c) 2018 David Rotthoff"
 __credits__ = []
 __status__ = "Production"
-# __license__ = "Python"
 
-logging_level = None
-# logging_level = logging.DEBUG
-# logging_level = logging.INFO
-logging_level = logging.WARNING
-# logging_level = logging.ERROR
+LOGGING_LEVEL = None
+# LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.INFO
+# LOGGING_LEVEL = logging.WARNING
+# LOGGING_LEVEL = logging.ERROR
 
+# Conditionally map a time function for performance measurement
+# depending on the version of Python used
+if LOGGING_LEVEL:
+    if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+        from time import perf_counter as get_clock
+    else:
+        from time import clock as get_clock
+else:
+    def get_clock():
+        """Dummy get_clock function for when the timing flag is not set"""
+        pass
 
-def shutdown_message(return_code=0):
-    """Function display any shutdown messages and
-    the program.
-
-    Arguments:
-        argv -- Command line parameters
-        files_processed -- The number of files checked out
-                           by the hook
-        return_code - the return code to be used when the
-                      program s
-
-    Returns:
-        Nothing
-    """
-    exit(return_code)
-
-
-def git_log_attributes(git_field_log, full_file_name, git_field_name):
+def git_log_attributes(git_field_log, file_name, git_field_name):
     """Function to dump the git log associated with the provided
     file name.
 
     Arguments:
         git_field_log -- a list of git log fields to capture
-        full_file_name -- The full file name to be examined
+        file_name -- The full file name to be examined
         git_field_name -- Name of the attributes fields for the dictionary
 
     Returns:
-        git_log -- Array of defined attribute dictionaries
+        git_log -- List of defined attribute dictionaries
     """
+
+    # Display input parameters
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        start_time = get_clock()
+        logging.debug('')
+        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+        logging.debug('git_field_log %s' % git_field_log)
+        logging.debug('file_name: %s' % file_name)
+        logging.debug('git_field_name: %s' % git_field_name)
+
     # Format the git log command
     git_field_format = '%x1f'.join(git_field_log) + '%x1e'
     cmd = ['git',
@@ -69,13 +70,15 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
            '--max-count=1',
            '--format=%s' % git_field_format,
            '--',
-           str(full_file_name)]
+           str(file_name)]
 
     # Process the git log command
     try:
-        cmd_handle = subprocess.Popen(cmd,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.PIPE)
+        cmd_handle = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
@@ -117,10 +120,90 @@ def git_log_attributes(git_field_log, full_file_name, git_field_name):
         git_log = []
 
     # Log the results of the git log operation
-    logging.debug('git log results %s' % git_log)
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
+        logging.debug('git_log: %s' % git_log)
 
     # Return from the function
     return git_log
+
+
+def build_regex_dict(git_field_log, file_name, git_field_name):
+    """Function to converts a 1 row list of git log attributes into
+    dictionary of regex expressions.
+
+    Arguments:
+        git_field_log -- a list of git log fields to capture
+        file_name -- The full file name to be examined
+        git_field_name -- Name of the attributes fields for the dictionary
+
+    Returns:
+        regex_dict -- Array of defined attribute dictionaries
+    """
+
+    # Display input parameters
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        start_time = get_clock()
+        logging.debug('')
+        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+        logging.debug('git_field_log %s' % git_field_log)
+        logging.debug('file_name: %s' % file_name)
+        logging.debug('git_field_name: %s' % git_field_name)
+
+    # Format the git log command
+    git_log = git_log_attributes(git_field_log=git_field_log,
+                                 file_name=file_name,
+                                 git_field_name=git_field_name)
+
+    if not git_log:
+        logging.error('No git attributes returned: %s' % sys._getframe().f_code.co_name)
+        exit(4)
+
+    if len(git_log) > 1:
+        logging.error('More than one row of git attributes returned: %s' % sys._getframe().f_code.co_name)
+        exit(3)
+
+    regex_dict = {}
+    if git_log:
+        # Calculate the replacement strings based on the git log results
+        # Deal with values in author name that have a Windows domain name
+        if '\\' in git_log[0]['author_name']:
+            git_log[0]['author_name'] = git_log[0]['author_name'].split('\\')[-1]
+
+        regex_dict['git_hash'] = '$Hash:     %s $' % str(git_log[0]['hash'])
+        regex_dict['git_short_hash'] = '$Short Hash:     %s $' % str(git_log[0]['short_hash'])
+        regex_dict['git_author'] = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
+                                                             str(git_log[0]['author_email']))
+        regex_dict['git_date'] = '$Date:     %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_rev'] = '$Rev:      %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_revision'] = '$Revision: %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_file'] = '$File:     %s $' % str(file_name)
+        regex_dict['git_source'] = '$Source:   %s $' % str(file_name)
+        regex_dict['git_id'] = '$Id:       %s | %s | %s $' % (str(file_name),
+                                                              str(git_log[0]['commit_date']),
+                                                              str(git_log[0]['author_name']))
+
+    else:
+        # Build a empty keyword list if no source data was found
+        # Note: the unusual means of building the list is to keep
+        #       the code from being modified while using keywords!
+        regex_dict['git_hash'] = '$%s$' % 'Hash'
+        regex_dict['git_author'] = '$%s$' % 'Author'
+        regex_dict['git_date'] = '$%s$' % 'Date'
+        regex_dict['git_rev'] = '$%s$' % 'Rev'
+        regex_dict['git_revision'] = '$%s$' % 'Revision'
+        regex_dict['git_file'] = '$%s$' % 'File'
+        regex_dict['git_source'] = '$%s$' % 'Source'
+        regex_dict['git_id'] = '$%s$' % 'Id'
+
+    # Log the results of the git log operation
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
+        logging.debug('regex_dict: %s' % regex_dict)
+
+    return regex_dict
 
 
 def main():
@@ -132,23 +215,25 @@ def main():
     Returns:
         Nothing
     """
-    # Initialize logging
-    if logging_level:
-        logging.basicConfig(
-            level=logging_level,
-            format='%(levelname)s: %(message)s',
-            filename='git-hook.exception.log')
+
+    # Display the parameters passed on the command line
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        start_time = get_clock()
+        logging.debug('')
+        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+        logging.debug('sys.argv parameter count %d' % len(sys.argv))
+        logging.debug('sys.argv parameters %s' % sys.argv)
 
     # Calculate the source file being smudged
-    file_full_name = sys.argv[1]
-    file_name = os.path.basename(file_full_name)
+    full_file_name = sys.argv[1]
 
-    # Log the file being processed
-    logging.info('processing file %s' % file_full_name)
+    # Log the results of the git log operation
+    if LOGGING_LEVEL:
+        logging.debug('Display the file name parameter %s' % full_file_name)
 
     # Define the fields to be extracted from the commit log
-    git_field_name = ['hash', 'author_name', 'author_email', 'commit_date']
-    git_field_log = ['%H', '%an', '%ae', '%ci']
+    git_field_name = ['hash', 'author_name', 'author_email', 'commit_date', 'short_hash']
+    git_field_log = ['%H', '%an', '%ae', '%ci', '%h']
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
@@ -168,83 +253,63 @@ def main():
     hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
                             re.IGNORECASE)
 
-    # Format the git log command
-    git_log = git_log_attributes(git_field_log=git_field_log,
-                                 full_file_name=file_full_name,
-                                 git_field_name=git_field_name)
-
-    if git_log:
-        # Calculate the replacement strings based on the git log results
-        # Deal with values in author name that have a Windows domain name
-        if '\\' in git_log[0]['author_name']:
-            git_log[0]['author_name'] = git_log[0]['author_name'].split('\\')[-1]
-
-        git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
-        # git_author = '$Author:   %s <%s> $' % (str(log_git_author),
-        #                                        str(git_log[0]['author_email']))
-        git_author = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
-                                               str(git_log[0]['author_email']))
-        git_date = '$Date:     %s $' % str(git_log[0]['commit_date'])
-        git_rev = '$Rev:      %s $' % str(git_log[0]['commit_date'])
-        git_revision = '$Revision: %s $' % str(git_log[0]['commit_date'])
-        git_file = '$File:     %s $' % str(file_name)
-        git_source = '$Source:   %s $' % str(file_full_name)
-        # git_id = '$Id:       %s | %s | %s $' % (str(file_name),
-        #                                         str(git_log[0]['commit_date']),
-        #                                         str(log_git_author))
-        git_id = '$Id:       %s | %s | %s $' % (str(file_name),
-                                                str(git_log[0]['commit_date']),
-                                                str(git_log[0]['author_name']))
-
-    else:
-        # Build a empty keyword list if no source data was found
-        # Note: the unusual means of building the list is to keep
-        #       the code from being modified while using keywords!
-        git_hash = '$%s$' % 'Hash'
-        git_author = '$%s$' % 'Author'
-        git_date = '$%s$' % 'Date'
-        git_rev = '$%s$' % 'Rev'
-        git_revision = '$%s$' % 'Revision'
-        git_file = '$%s$' % 'File'
-        git_source = '$%s$' % 'Source'
-        git_id = '$%s$' % 'Id'
+    regex_dict = {}
 
     # Process each of the rows found on stdin
     line_count = 0
-    exception_occurred = 0
     try:
-        # for line in sys.stdin:
+        for line in sys.stdin:
         # for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8', errors='backslashreplace'):
-        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
+        # for line in io.TextIOWrapper(sys.stdin, encoding='utf-8'):
             try:
                 line_count += 1
-                source_line = line
                 if '$' in line:
-                    line = author_regex.sub(git_author, line)
-                    line = id_regex.sub(git_id, line)
-                    line = date_regex.sub(git_date, line)
-                    line = source_regex.sub(git_source, line)
-                    line = file_regex.sub(git_file, line)
-                    line = revision_regex.sub(git_revision, line)
-                    line = rev_regex.sub(git_rev, line)
-                    line = hash_regex.sub(git_hash, line)
+                    if len(regex_dict) == 0:
+                        regex_dict = build_regex_dict(git_field_log=git_field_log,
+                                                      file_name=full_file_name,
+                                                      git_field_name=git_field_name)
+
+                    line = author_regex.sub(regex_dict['git_author'], line)
+                    line = id_regex.sub(regex_dict['git_id'], line)
+                    line = date_regex.sub(regex_dict['git_date'], line)
+                    line = source_regex.sub(regex_dict['git_source'], line)
+                    line = file_regex.sub(regex_dict['git_file'], line)
+                    line = revision_regex.sub(regex_dict['git_revision'], line)
+                    line = rev_regex.sub(regex_dict['git_rev'], line)
+                    line = hash_regex.sub(regex_dict['git_hash'], line)
                 sys.stdout.write(line)
-            except Exception as err:
-                if exception_occurred == 0:
-                    logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-                    logging.info('git log attributes: %s' % git_log)
-                    sys.stderr.write('Exception smudging file %s\nKey words may not be replaced\n'
-                                     % file_full_name)
-                sys.stdout.write(source_line)
-                exception_occurred = 1
-    except Exception as err:
-        logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s\nKey words were not replaced\n' % file_full_name)
+            except Exception:
+                logging.error('Exception smudging file %s' % full_file_name, exc_info=True)
+                logging.info('regex_dict attributes: %s' % regex_dict)
+                sys.stderr.write('Exception smudging file %s - Key words were not be replaced\n'
+                                 % full_file_name)
+                exit(1)
+    except Exception:
+        logging.error('Exception smudging file %s' % full_file_name, exc_info=True)
+        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % full_file_name)
         exit(2)
-    #
-    # exit(0)
+
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
+        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
+    # Initialize logging
+    if LOGGING_LEVEL:
+        if LOGGING_LEVEL <= logging.INFO:
+            start_time = get_clock()
+        logging.basicConfig(
+            level=LOGGING_LEVEL,
+            format='%(levelname)s: %(message)s',
+            filename='git-hook.exception.log')
+        logging.debug('')
+        logging.debug('')
+        logging.debug('Executing: %s' % sys.argv[0])
     main()
+
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
