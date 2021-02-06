@@ -241,6 +241,8 @@ def main():
                     line = revision_regex.sub(git_revision, line)
                     line = rev_regex.sub(git_rev, line)
                     line = hash_regex.sub(git_hash, line)
+                else:
+                    sys.stderr.write('No $ in line %d' % line_count)
                 sys.stdout.write(line)
             except Exception as err:
             # except:
