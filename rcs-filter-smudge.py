@@ -24,7 +24,7 @@ __status__ = "Production"
 
 LOGGING_LEVEL = None
 # LOGGING_LEVEL = logging.DEBUG
-LOGGING_LEVEL = logging.INFO
+# LOGGING_LEVEL = logging.INFO
 # LOGGING_LEVEL = logging.WARNING
 # LOGGING_LEVEL = logging.ERROR
 
@@ -39,6 +39,7 @@ else:
     def get_clock():
         """Dummy get_clock function for when the timing flag is not set"""
         pass
+
 
 def git_log_attributes(git_field_log, file_name, git_field_name):
     """Function to dump the git log associated with the provided
@@ -206,7 +207,7 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
     return regex_dict
 
 
-def main():
+def smudge_input():
     """Main program.
 
     Arguments:
@@ -263,7 +264,8 @@ def main():
         # for line in io.TextIOWrapper(sys.stdin, encoding='utf-8'):
             try:
                 line_count += 1
-                if '$' in line:
+                # if '$' in line:
+                if line.count('$') > 1:
                     if len(regex_dict) == 0:
                         regex_dict = build_regex_dict(git_field_log=git_field_log,
                                                       file_name=full_file_name,
@@ -304,11 +306,11 @@ if __name__ == '__main__':
         logging.basicConfig(
             level=LOGGING_LEVEL,
             format='%(levelname)s: %(message)s',
-            filename='git-hook.exception.log')
+            filename='.git-hook.smudge.log')
         logging.debug('')
         logging.debug('')
         logging.debug('Executing: %s' % sys.argv[0])
-    main()
+    smudge_input()
 
     if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
         end_time = get_clock()

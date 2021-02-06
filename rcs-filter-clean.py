@@ -12,6 +12,7 @@ back to the repository.
 import sys
 # import os
 import re
+import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -22,26 +23,44 @@ __credits__ = []
 __status__ = "Production"
 # __license__ = "Python"
 
+LOGGING_LEVEL = None
+# LOGGING_LEVEL = logging.DEBUG
+# LOGGING_LEVEL = logging.INFO
+# LOGGING_LEVEL = logging.WARNING
+# LOGGING_LEVEL = logging.ERROR
 
-# def shutdown_message(return_code=0, lines_processed=0):
-def shutdown_message(return_code=0):
-    """Function display any shutdown messages and
-    the program.
-
-    Arguments:
-        argv -- Command line parameters
-        files_processed -- The number of files checked out
-                           by the hook
-        return_code - the return code to be used when the
-                      program s
-
-    Returns:
-        Nothing
-    """
-    exit(return_code)
+# Conditionally map a time function for performance measurement
+# depending on the version of Python used
+if LOGGING_LEVEL:
+    if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+        from time import perf_counter as get_clock
+    else:
+        from time import clock as get_clock
+else:
+    def get_clock():
+        """Dummy get_clock function for when the timing flag is not set"""
+        pass
 
 
-def main():
+# # def shutdown_message(return_code=0, lines_processed=0):
+# def shutdown_message(return_code=0):
+#     """Function display any shutdown messages and
+#     the program.
+#
+#     Arguments:
+#         argv -- Command line parameters
+#         files_processed -- The number of files checked out
+#                            by the hook
+#         return_code - the return code to be used when the
+#                       program s
+#
+#     Returns:
+#         Nothing
+#     """
+#     exit(return_code)
+
+
+def clean_input():
     """Main program.
 
     Arguments:
@@ -50,6 +69,15 @@ def main():
     Returns:
         Nothing
     """
+
+    # Display the parameters passed on the command line
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        start_time = get_clock()
+        logging.debug('')
+        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+        logging.debug('sys.argv parameter count %d' % len(sys.argv))
+        logging.debug('sys.argv parameters %s' % sys.argv)
+
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author:.*\$",
                               re.IGNORECASE)
@@ -82,20 +110,23 @@ def main():
     line_count = 0
     for line in sys.stdin:
         line_count += 1
-        line = author_regex.sub(git_author, line)
-        line = id_regex.sub(git_id, line)
-        line = date_regex.sub(git_date, line)
-        line = source_regex.sub(git_source, line)
-        line = file_regex.sub(git_file, line)
-        line = revision_regex.sub(git_revision, line)
-        line = rev_regex.sub(git_rev, line)
-        line = hash_regex.sub(git_hash, line)
+        if line.count('$') > 1:
+            line = author_regex.sub(git_author, line)
+            line = id_regex.sub(git_id, line)
+            line = date_regex.sub(git_date, line)
+            line = source_regex.sub(git_source, line)
+            line = file_regex.sub(git_file, line)
+            line = revision_regex.sub(git_revision, line)
+            line = rev_regex.sub(git_rev, line)
+            line = hash_regex.sub(git_hash, line)
         sys.stdout.write(line)
 
-    shutdown_message(return_code=0)
-    # return
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
+        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+    clean_input()
