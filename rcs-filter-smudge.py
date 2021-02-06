@@ -227,18 +227,20 @@ def main():
     exception_occurred = 0
     try:
         # for line in sys.stdin:
-        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8', errors='backslashreplace'):
+        # for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8', errors='backslashreplace'):
+        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
             try:
                 line_count += 1
                 source_line = line
-                line = author_regex.sub(git_author, line)
-                line = id_regex.sub(git_id, line)
-                line = date_regex.sub(git_date, line)
-                line = source_regex.sub(git_source, line)
-                line = file_regex.sub(git_file, line)
-                line = revision_regex.sub(git_revision, line)
-                line = rev_regex.sub(git_rev, line)
-                line = hash_regex.sub(git_hash, line)
+                if '$' in line:
+                    line = author_regex.sub(git_author, line)
+                    line = id_regex.sub(git_id, line)
+                    line = date_regex.sub(git_date, line)
+                    line = source_regex.sub(git_source, line)
+                    line = file_regex.sub(git_file, line)
+                    line = revision_regex.sub(git_revision, line)
+                    line = rev_regex.sub(git_rev, line)
+                    line = hash_regex.sub(git_hash, line)
                 sys.stdout.write(line)
             except Exception as err:
             # except:
@@ -264,7 +266,7 @@ def main():
                 exception_occurred = 1
     except Exception as err:
         logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s\n' % file_full_name)
+        sys.stderr.write('Exception smudging file %s\nKey words were not replaced\n' % file_full_name)
         exit(2)
 
     # Return from the function
