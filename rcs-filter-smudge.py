@@ -178,8 +178,7 @@ def main():
         # Deal with values in author name that have a Windows domain name
         if '\\' in git_log[0]['author_name']:
             git_log[0]['author_name'] = git_log[0]['author_name'].split('\\')[-1]
-        # log_git_author = git_log[0]['author_name'].replace('\\', '\\\\')
-        # git_log[0]['author_name'].replace('\\', '\\\\')
+
         git_hash = '$Hash:     %s $' % str(git_log[0]['hash'])
         # git_author = '$Author:   %s <%s> $' % (str(log_git_author),
         #                                        str(git_log[0]['author_email']))
@@ -196,18 +195,6 @@ def main():
         git_id = '$Id:       %s | %s | %s $' % (str(file_name),
                                                 str(git_log[0]['commit_date']),
                                                 str(git_log[0]['author_name']))
-
-        # git_hash = re.escape('$Hash:     %s $' % str(git_log[0]['hash']))
-        # git_author = re.escape('$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
-        #                                                  str(git_log[0]['author_email'])))
-        # git_date = re.escape('$Date:     %s $' % str(git_log[0]['commit_date']))
-        # git_rev = re.escape('$Rev:      %s $' % str(git_log[0]['commit_date']))
-        # git_revision = re.escape('$Revision: %s $' % str(git_log[0]['commit_date']))
-        # git_file = re.escape('$File:     %s $' % str(file_name))
-        # git_source = re.escape('$Source:   %s $' % str(file_full_name))
-        # git_id = re.escape('$Id:       %s | %s | %s $' % (str(file_name),
-        #                                                   str(git_log[0]['commit_date']),
-        #                                                   str(git_log[0]['author_name'])))
 
     else:
         # Build a empty keyword list if no source data was found
@@ -241,40 +228,21 @@ def main():
                     line = revision_regex.sub(git_revision, line)
                     line = rev_regex.sub(git_rev, line)
                     line = hash_regex.sub(git_hash, line)
-                else:
-                    sys.stderr.write('No $ in line %d' % line_count)
                 sys.stdout.write(line)
             except Exception as err:
-            # except:
-                # logging.error('KeyError on file %s' % file_full_name)
-                # err.args += ('filename', file_full_name)
-                # logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-                # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
                 if exception_occurred == 0:
-                    # logging.error('Author name from git log %s' % str(git_log[0]['author_name']))
-                    # logging.error('Author name: %s' % log_git_author)
-                    # logging.error('Exception smudging file %s' % file_full_name)
                     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
                     logging.info('git log attributes: %s' % git_log)
                     sys.stderr.write('Exception smudging file %s\nKey words may not be replaced\n'
                                      % file_full_name)
-                    # if logging_level:
-                    #     logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
-                    #     logging.info('git log attributes: %s' % git_log)
-                # logging.exception('Exception processing file %s' % file_full_name, exc_info=True)
-                # raise
-                # exit(2)
                 sys.stdout.write(source_line)
                 exception_occurred = 1
     except Exception as err:
         logging.error('Exception smudging file %s' % file_full_name, exc_info=True)
         sys.stderr.write('Exception smudging file %s\nKey words were not replaced\n' % file_full_name)
         exit(2)
-
-    # Return from the function
-    # shutdown_message(return_code=0, lines_processed=line_count)
-    # shutdown_message(return_code=0)
-    exit(0)
+    #
+    # exit(0)
 
 
 # Execute the main function
