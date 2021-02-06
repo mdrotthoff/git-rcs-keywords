@@ -14,6 +14,7 @@ import os
 import re
 import subprocess
 import logging
+import io
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
@@ -225,7 +226,8 @@ def main():
     line_count = 0
     exception_occurred = 0
     try:
-        for line in sys.stdin:
+        # for line in sys.stdin:
+        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8', errors='backslashreplace'):
             try:
                 line_count += 1
                 source_line = line
