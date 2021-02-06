@@ -226,7 +226,10 @@ def smudge_input():
         logging.debug('sys.argv parameters %s' % sys.argv)
 
     # Calculate the source file being smudged
-    full_file_name = sys.argv[1]
+    if len(sys.argv) > 1:
+        file_name = sys.argv[1]
+    else:
+        file_name = '<Unknown file>'
 
     # Log the results of the git log operation
     if LOGGING_LEVEL:
@@ -268,7 +271,7 @@ def smudge_input():
                 if line.count('$') > 1:
                     if len(regex_dict) == 0:
                         regex_dict = build_regex_dict(git_field_log=git_field_log,
-                                                      file_name=full_file_name,
+                                                      file_name=file_name,
                                                       git_field_name=git_field_name)
 
                     line = author_regex.sub(regex_dict['git_author'], line)

@@ -10,7 +10,6 @@ back to the repository.
 """
 
 import sys
-# import os
 import re
 import logging
 
@@ -42,24 +41,6 @@ else:
         pass
 
 
-# # def shutdown_message(return_code=0, lines_processed=0):
-# def shutdown_message(return_code=0):
-#     """Function display any shutdown messages and
-#     the program.
-#
-#     Arguments:
-#         argv -- Command line parameters
-#         files_processed -- The number of files checked out
-#                            by the hook
-#         return_code - the return code to be used when the
-#                       program s
-#
-#     Returns:
-#         Nothing
-#     """
-#     exit(return_code)
-
-
 def clean_input():
     """Main program.
 
@@ -77,6 +58,12 @@ def clean_input():
         logging.debug('Function: %s' % sys._getframe().f_code.co_name)
         logging.debug('sys.argv parameter count %d' % len(sys.argv))
         logging.debug('sys.argv parameters %s' % sys.argv)
+
+    # Calculate the source file being cleaned
+    if len(sys.argv) > 1:
+        file_name = sys.argv[1]
+    else:
+        file_name = '<Unknown file>'
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author:.*\$",
@@ -108,18 +95,23 @@ def clean_input():
 
     # Process each of the rows found on stdin
     line_count = 0
-    for line in sys.stdin:
-        line_count += 1
-        if line.count('$') > 1:
-            line = author_regex.sub(git_author, line)
-            line = id_regex.sub(git_id, line)
-            line = date_regex.sub(git_date, line)
-            line = source_regex.sub(git_source, line)
-            line = file_regex.sub(git_file, line)
-            line = revision_regex.sub(git_revision, line)
-            line = rev_regex.sub(git_rev, line)
-            line = hash_regex.sub(git_hash, line)
-        sys.stdout.write(line)
+    try:
+        for line in sys.stdin:
+            line_count += 1
+            if line.count('$') > 1:
+                line = author_regex.sub(git_author, line)
+                line = id_regex.sub(git_id, line)
+                line = date_regex.sub(git_date, line)
+                line = source_regex.sub(git_source, line)
+                line = file_regex.sub(git_file, line)
+                line = revision_regex.sub(git_revision, line)
+                line = rev_regex.sub(git_rev, line)
+                line = hash_regex.sub(git_hash, line)
+            sys.stdout.write(line)
+    except Exception:
+        logging.error('Exception cleaning file %s' % file_name, exc_info=True)
+        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % full_file_name)
+        exit(2)
 
     if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
         end_time = get_clock()
@@ -129,4 +121,19 @@ def clean_input():
 
 # Execute the main function
 if __name__ == '__main__':
+    # Initialize logging
+    if LOGGING_LEVEL:
+        if LOGGING_LEVEL <= logging.INFO:
+            start_time = get_clock()
+        logging.basicConfig(
+            level=LOGGING_LEVEL,
+            format='%(levelname)s: %(message)s',
+            filename='.git-hook.clean.log')
+        logging.debug('')
+        logging.debug('')
+        logging.debug('Executing: %s' % sys.argv[0])
     clean_input()
+
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
