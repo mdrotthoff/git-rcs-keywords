@@ -14,31 +14,13 @@ import sys
 import os
 import errno
 import subprocess
-# import time
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
-__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
-# __license__ = "Python"
-
-
-def shutdown_message(return_code=0):
-    """Function display any provided messages and exit the program.
-
-    Arguments:
-        return_code - the return code to be used when the
-                      program exits
-        files_processed -- The number of files checked out
-                           by the hook
-
-    Returns:
-        Nothing
-    """
-    exit(return_code)
 
 
 def execute_cmd(cmd, cmd_source=None):
@@ -55,7 +37,7 @@ def execute_cmd(cmd, cmd_source=None):
     """
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
-        shutdown_message(return_code=1)
+        exit(1)
 
     # Execute the command
     try:
@@ -98,7 +80,7 @@ def check_for_cmd(cmd):
     """
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
-        shutdown_message(return_code=1)
+        exit(1)
 
     # Execute the command
     execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
@@ -147,7 +129,7 @@ def get_modified_files():
 
     # Deal with unmodified repositories
     if modified_file_list and modified_file_list[0] == 'clean':
-        shutdown_message(return_code=0)
+        exit(0)
 
     # Only return regular files.
     modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
@@ -206,7 +188,7 @@ def check_out_file(file_name):
     except OSError as err:
         # Ignore a file not found error, it was being removed anyway
         if err.errno != errno.ENOENT:
-            shutdown_message(return_code=err.errno)
+            exit(err.errno)
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
 
     # Check out the file so that it is smudged
@@ -243,9 +225,6 @@ def main():
         for file_name in files:
             check_out_file(file_name=file_name)
             files_processed += 1
-
-    # Return from the function
-    shutdown_message(return_code=0)
 
 
 # Execute the main function

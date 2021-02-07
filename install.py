@@ -17,8 +17,7 @@ import re
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
-__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
 
@@ -65,7 +64,7 @@ def check_for_cmd(cmd):
     """
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
-        shutdown_message(return_code=1)
+        exit(1)
 
     # Execute the command
     try:
@@ -77,13 +76,13 @@ def check_for_cmd(cmd):
             "{0} - Program '{1}' not found! -- Exiting."
             .format(str(err), str(cmd))
         )
-        shutdown_message(return_code=err.returncode)
+        exit(err.returncode)
     except OSError as err:
         print(
             "{0} - Required program '{1}' not found! -- Exiting."
             .format(str(cmd), str(cmd))
         )
-        shutdown_message(return_code=err.errno)
+        exit(err.errno)
 
 
 def createdir(dirname):
@@ -129,7 +128,7 @@ def execute_cmd(cmd):
     """
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
-        shutdown_message(return_code=1)
+        exit(1)
 
     # Execute the command
     sys.stderr.flush()
@@ -300,23 +299,6 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     os.chdir(local_dir)
 
 
-def shutdown_message(return_code=0):
-    """Function display any shutdown messages and
-    the program.
-
-    Arguments:
-        argv -- Command line parameters
-        files_processed -- The number of files checked out
-                           by the hook
-        return_code - the return code to be used when the
-                      program s
-
-    Returns:
-        Nothing
-    """
-    exit(return_code)
-
-
 def main():
     """Main program.
 
@@ -359,8 +341,6 @@ def main():
 
     # Return to the initial working directory
     os.chdir(current_dir)
-
-    shutdown_message(return_code=0)
 
 
 # Execute the main function

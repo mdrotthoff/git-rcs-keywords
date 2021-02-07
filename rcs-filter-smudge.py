@@ -17,13 +17,12 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
-__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
 
 LOGGING_LEVEL = None
-# LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.DEBUG
 # LOGGING_LEVEL = logging.INFO
 # LOGGING_LEVEL = logging.WARNING
 # LOGGING_LEVEL = logging.ERROR
@@ -113,8 +112,10 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
     # Calculate replacement strings based on the git log results
     if cmd_stdout:
         # Convert returned values to a list of dictionaries
-        git_log = cmd_stdout.strip().decode("utf-8")
-        git_log = git_log.strip().split("\x1e")
+        # git_log = cmd_stdout.strip().decode("utf-8")
+        # git_log = git_log.strip().split("\x1e")
+        git_output = cmd_stdout.strip().decode("utf-8")
+        git_log = git_output.strip().split("\x1e")
         git_log = [row.strip().split("\x1f") for row in git_log]
         git_log = [dict(zip(git_field_name, row)) for row in git_log]
     else:
@@ -233,7 +234,7 @@ def smudge_input():
 
     # Log the results of the git log operation
     if LOGGING_LEVEL:
-        logging.debug('Display the file name parameter %s' % full_file_name)
+        logging.debug('Display the file name parameter %s' % file_name)
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date', 'short_hash']
@@ -263,35 +264,25 @@ def smudge_input():
     line_count = 0
     try:
         for line in sys.stdin:
-        # for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8', errors='backslashreplace'):
-        # for line in io.TextIOWrapper(sys.stdin, encoding='utf-8'):
-            try:
-                line_count += 1
-                # if '$' in line:
-                if line.count('$') > 1:
-                    if len(regex_dict) == 0:
-                        regex_dict = build_regex_dict(git_field_log=git_field_log,
-                                                      file_name=file_name,
-                                                      git_field_name=git_field_name)
+            line_count += 1
+            if line.count('$') > 1:
+                if len(regex_dict) == 0:
+                    regex_dict = build_regex_dict(git_field_log=git_field_log,
+                                                  file_name=file_name,
+                                                  git_field_name=git_field_name)
 
-                    line = author_regex.sub(regex_dict['git_author'], line)
-                    line = id_regex.sub(regex_dict['git_id'], line)
-                    line = date_regex.sub(regex_dict['git_date'], line)
-                    line = source_regex.sub(regex_dict['git_source'], line)
-                    line = file_regex.sub(regex_dict['git_file'], line)
-                    line = revision_regex.sub(regex_dict['git_revision'], line)
-                    line = rev_regex.sub(regex_dict['git_rev'], line)
-                    line = hash_regex.sub(regex_dict['git_hash'], line)
-                sys.stdout.write(line)
-            except Exception:
-                logging.error('Exception smudging file %s' % full_file_name, exc_info=True)
-                logging.info('regex_dict attributes: %s' % regex_dict)
-                sys.stderr.write('Exception smudging file %s - Key words were not be replaced\n'
-                                 % full_file_name)
-                exit(1)
+                line = author_regex.sub(regex_dict['git_author'], line)
+                line = id_regex.sub(regex_dict['git_id'], line)
+                line = date_regex.sub(regex_dict['git_date'], line)
+                line = source_regex.sub(regex_dict['git_source'], line)
+                line = file_regex.sub(regex_dict['git_file'], line)
+                line = revision_regex.sub(regex_dict['git_revision'], line)
+                line = rev_regex.sub(regex_dict['git_rev'], line)
+                line = hash_regex.sub(regex_dict['git_hash'], line)
+            sys.stdout.write(line)
     except Exception:
-        logging.error('Exception smudging file %s' % full_file_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % full_file_name)
+        logging.error('Exception smudging file %s' % file_name, exc_info=True)
+        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % file_name)
         exit(2)
 
     if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
@@ -309,7 +300,8 @@ if __name__ == '__main__':
         logging.basicConfig(
             level=LOGGING_LEVEL,
             format='%(levelname)s: %(message)s',
-            filename='.git-hook.smudge.log')
+            filename='.git-hook.smudge.log'
+        )
         logging.debug('')
         logging.debug('')
         logging.debug('Executing: %s' % sys.argv[0])

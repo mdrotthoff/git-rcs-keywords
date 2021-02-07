@@ -16,14 +16,12 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
-__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
-# __license__ = "Python"
 
 LOGGING_LEVEL = None
-# LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.DEBUG
 # LOGGING_LEVEL = logging.INFO
 # LOGGING_LEVEL = logging.WARNING
 # LOGGING_LEVEL = logging.ERROR
@@ -110,7 +108,7 @@ def clean_input():
             sys.stdout.write(line)
     except Exception:
         logging.error('Exception cleaning file %s' % file_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % full_file_name)
+        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % file_name)
         exit(2)
 
     if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:

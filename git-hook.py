@@ -19,31 +19,12 @@ import subprocess
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __version__ = "git-rcs-keywords-1.1.0"
-__date__ = "2021-02-04 09:10:44"
-__copyright__ = "Copyright (c) 2018 David Rotthoff"
+__date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
-# __license__ = "Python"
 
 
-def shutdown_message(return_code=0):
-    """Function display any shutdown messages and
-    the program.
-
-    Arguments:
-        argv -- Command line parameters
-        files_processed -- The number of files checked out
-                          by the hook
-        return_code - the return code to be used when the
-                      program s
-
-    Returns:
-        Nothing
-    """
-    exit(return_code)
-
-
-def main():
+def process_hooks():
     """Main program.
 
     Arguments:
@@ -78,10 +59,10 @@ def main():
             if hook_call > 0:
                 exit(hook_call)
 
-    # Return from the function
-    shutdown_message(return_code=0)
+    # # Return from the function
+    # exit(0)
 
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+    process_hooks()
