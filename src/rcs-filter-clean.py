@@ -21,7 +21,7 @@ __credits__ = []
 __status__ = "Production"
 
 LOGGING_LEVEL = None
-# LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.DEBUG
 # LOGGING_LEVEL = logging.INFO
 # LOGGING_LEVEL = logging.WARNING
 # LOGGING_LEVEL = logging.ERROR
@@ -39,7 +39,24 @@ else:
         pass
 
 
-def clean_input():
+def configure_logging():
+    logging.basicConfig(
+        level=LOGGING_LEVEL,
+        format='%(asctime)s:%(levelname)s: %(message)s',
+        filename='.git-hook.clean.log',
+        datefmt='%Y-%m-%d %H:%M:%S',
+    )
+    console = logging.StreamHandler()
+    console.setLevel(logging.ERROR)
+    console_formatter = logging.Formatter(
+        fmt='%(asctime)s:%(levelname)s: %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S',
+    )
+    console.setFormatter(console_formatter)
+    logging.getLogger('').addHandler(console)
+
+
+def clean():
     """Main program.
 
     Arguments:
@@ -62,6 +79,9 @@ def clean_input():
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
+
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        logging.info('Processing file: %s' % file_name)
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author:.*\$",
@@ -107,7 +127,7 @@ def clean_input():
                 line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except Exception:
-        logging.error('Exception cleaning file %s' % file_name, exc_info=True)
+        logging.exception('Exception cleaning file %s' % file_name)
         sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % file_name)
         exit(2)
 
@@ -123,15 +143,12 @@ if __name__ == '__main__':
     if LOGGING_LEVEL:
         if LOGGING_LEVEL <= logging.INFO:
             start_time = get_clock()
-        logging.basicConfig(
-            level=LOGGING_LEVEL,
-            format='%(levelname)s: %(message)s',
-            filename='.git-hook.clean.log')
+        configure_logging()
         logging.debug('')
         logging.debug('')
         logging.debug('Executing: %s' % sys.argv[0])
 
-    clean_input()
+    clean()
 
     if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
         end_time = get_clock()
