@@ -8,7 +8,7 @@ This module provides the code to smudge the local copy of the
 file retreived from the git repository performing the various
 keyword substitutions.
 """
-
+from pprint import pprint
 import sys
 import re
 import subprocess
@@ -21,23 +21,60 @@ __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
 
-LOGGING_LEVEL = None
-# LOGGING_LEVEL = logging.DEBUG
-# LOGGING_LEVEL = logging.INFO
-# LOGGING_LEVEL = logging.WARNING
-# LOGGING_LEVEL = logging.ERROR
+# LOGGING_CONSOLE_LEVEL = None
+# LOGGING_CONSOLE_LEVEL = logging.DEBUG
+# LOGGING_CONSOLE_LEVEL = logging.INFO
+# LOGGING_CONSOLE_LEVEL = logging.WARNING
+LOGGING_CONSOLE_LEVEL = logging.ERROR
+# LOGGING_CONSOLE_LEVEL = logging.CRITICAL
+LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = logging.DEBUG
+# LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.WARNING
+# LOGGING_FILE_LEVEL = logging.ERROR
+# LOGGING_FILE_LEVEL = logging.CRITICAL
+LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
+LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
+LOGGING_FILE_NAME = '.git-hook.smudge.log'
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
-if LOGGING_LEVEL:
-    if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
-        from time import perf_counter as get_clock
-    else:
-        from time import clock as get_clock
+if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+    from time import perf_counter as get_clock
 else:
-    def get_clock():
-        """Dummy get_clock function for when the timing flag is not set"""
-        pass
+    from time import clock as get_clock
+
+
+def configure_logging():
+    # Configure the console logger
+    if LOGGING_CONSOLE_LEVEL:
+        console = logging.StreamHandler()
+        console.setLevel(LOGGING_CONSOLE_LEVEL)
+        console_formatter = logging.Formatter(
+            fmt=LOGGING_CONSOLE_MSG_FORMAT,
+            datefmt=LOGGING_CONSOLE_DATE_FORMAT,
+        )
+        console.setFormatter(console_formatter)
+
+    # Create an file based logger if a LOGGING_FILE_LEVEL is defined
+    if LOGGING_FILE_LEVEL:
+        logging.basicConfig(
+            level=LOGGING_FILE_LEVEL,
+            format=LOGGING_FILE_MSG_FORMAT,
+            datefmt=LOGGING_FILE_DATE_FORMAT,
+            filename=LOGGING_FILE_NAME,
+        )
+
+    # Basic logger configuration
+    if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
+        logger = logging.getLogger('')
+        logger.setLevel(logging.DEBUG)
+        if LOGGING_CONSOLE_LEVEL:
+            # Add the console logger to default logger
+            logger.addHandler(console)
 
 
 def git_log_attributes(git_field_log, file_name, git_field_name):
@@ -54,13 +91,11 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
     """
 
     # Display input parameters
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        start_time = get_clock()
-        logging.debug('')
-        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
-        logging.debug('git_field_log %s' % git_field_log)
-        logging.debug('file_name: %s' % file_name)
-        logging.debug('git_field_name: %s' % git_field_name)
+    start_time = get_clock()
+    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.debug('git_field_log %s' % git_field_log)
+    logging.debug('file_name: %s' % file_name)
+    logging.debug('git_field_name: %s' % git_field_name)
 
     # Format the git log command
     git_field_format = '%x1f'.join(git_field_log) + '%x1e'
@@ -71,13 +106,14 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
            '--format=%s' % git_field_format,
            '--',
            str(file_name)]
+    logging.debug('cmd: %s' % cmd)
 
     # Process the git log command
     try:
         cmd_handle = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+            stderr=subprocess.PIPE,
         )
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
         if cmd_stderr:
@@ -85,35 +121,38 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
                 sys.stderr.write("%s\n" % line)
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        sys.stderr.write(
-            "{0} - Program {1} called by {2} not found! -- Exiting."
-            .format(str(err), str(cmd[0]), str(' '.join(cmd)))
+        # sys.stderr.write(
+        #     "{0} - Program {1} called by {2} not found! -- Exiting."
+        #     .format(str(err), str(cmd[0]), str(' '.join(cmd)))
+        # )
+        logging.error(
+            "%s - Program %s called by %s not found! -- Exiting."
+            % (str(err), str(cmd[0]), str(' '.join(cmd)))
         )
-        # shutdown_message(return_code=err.returncode)
         exit(err.returncode)
     except OSError as err:
-        sys.stderr.write(
-            "{0} - Program {1} called by {2} not found! -- Exiting."
-            .format(str(err), str(cmd[0]), str(' '.join(cmd)))
+        logging.error(
+            "%s - Program %s called by %s not found! -- Exiting."
+            % (str(err), str(cmd[0]), str(' '.join(cmd)))
         )
-        # shutdown_message(return_code=err.errno)
         exit(err.errno)
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
     if cmd_handle.returncode != 0:
-        sys.stderr.write("Exiting -- git log return code: %s\n"
-                         % str(cmd_handle.returncode))
-        sys.stderr.write("Output text: %s\n"
-                         % cmd_stdout.strip().decode("utf-8"))
-        # shutdown_message(return_code=cmd_handle.returncode)
+        logging.error(
+            "Exiting -- git log return error code: %s"
+            % str(cmd_handle.returncode)
+        )
+        logging.error(
+            "Output text: %s"
+            % cmd_stdout.strip().decode("utf-8")
+        )
         exit(cmd_handle.returncode)
 
     # Calculate replacement strings based on the git log results
     if cmd_stdout:
         # Convert returned values to a list of dictionaries
-        # git_log = cmd_stdout.strip().decode("utf-8")
-        # git_log = git_log.strip().split("\x1e")
         git_output = cmd_stdout.strip().decode("utf-8")
         git_log = git_output.strip().split("\x1e")
         git_log = [row.strip().split("\x1f") for row in git_log]
@@ -121,11 +160,22 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
     else:
         git_log = []
 
+    if not git_log:
+        logging.error('No git attributes returned: %s'
+                      % sys._getframe().f_code.co_name)
+        exit(4)
+
+    if len(git_log) > 1:
+        logging.error('More than one row of git attributes returned in %s: %s'
+                      % (sys._getframe().f_code.co_name, git_log))
+        exit(3)
+
     # Log the results of the git log operation
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        end_time = get_clock()
-        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
-        logging.debug('git_log: %s' % git_log)
+    end_time = get_clock()
+    logging.debug('git_log: %s' % git_log)
+    logging.info('Elapsed for %s: %s'
+                 % (sys._getframe().f_code.co_name,
+                 end_time - start_time))
 
     # Return from the function
     return git_log
@@ -145,29 +195,23 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
     """
 
     # Display input parameters
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        start_time = get_clock()
-        logging.debug('')
-        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
-        logging.debug('git_field_log %s' % git_field_log)
-        logging.debug('file_name: %s' % file_name)
-        logging.debug('git_field_name: %s' % git_field_name)
+    start_time = get_clock()
+    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.debug('git_field_log %s' % git_field_log)
+    logging.debug('file_name: %s' % file_name)
+    logging.debug('git_field_name: %s' % git_field_name)
 
     # Format the git log command
     git_log = git_log_attributes(git_field_log=git_field_log,
                                  file_name=file_name,
                                  git_field_name=git_field_name)
 
-    if not git_log:
-        logging.error('No git attributes returned: %s' % sys._getframe().f_code.co_name)
-        exit(4)
-
-    if len(git_log) > 1:
-        logging.error('More than one row of git attributes returned: %s' % sys._getframe().f_code.co_name)
-        exit(3)
+    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.debug('git_log %s' % git_log)
 
     regex_dict = {}
     if git_log:
+        logging.debug('Calculating regex dictionary')
         # Calculate the replacement strings based on the git log results
         # Deal with values in author name that have a Windows domain name
         if '\\' in git_log[0]['author_name']:
@@ -187,6 +231,8 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
                                                               str(git_log[0]['author_name']))
 
     else:
+        logging.debug('Building empty regex dictionary')
+
         # Build a empty keyword list if no source data was found
         # Note: the unusual means of building the list is to keep
         #       the code from being modified while using keywords!
@@ -199,16 +245,15 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
         regex_dict['git_source'] = '$%s$' % 'Source'
         regex_dict['git_id'] = '$%s$' % 'Id'
 
-    # Log the results of the git log operation
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        end_time = get_clock()
-        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
-        logging.debug('regex_dict: %s' % regex_dict)
+    # Log the results of the build regex dictionary operation
+    end_time = get_clock()
+    logging.debug('regex_dict: %s' % regex_dict)
+    logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
 
     return regex_dict
 
 
-def smudge_input():
+def smudge():
     """Main program.
 
     Arguments:
@@ -219,22 +264,18 @@ def smudge_input():
     """
 
     # Display the parameters passed on the command line
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        start_time = get_clock()
-        logging.debug('')
-        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
-        logging.debug('sys.argv parameter count %d' % len(sys.argv))
-        logging.debug('sys.argv parameters %s' % sys.argv)
+    start_time = get_clock()
+    logging.debug('')
+    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.debug('sys.argv parameter count %d' % len(sys.argv))
+    logging.debug('sys.argv parameters %s' % sys.argv)
 
     # Calculate the source file being smudged
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
-
-    # Log the results of the git log operation
-    if LOGGING_LEVEL:
-        logging.debug('Display the file name parameter %s' % file_name)
+    logging.debug('File name parameter %s' % file_name)
 
     # Define the fields to be extracted from the commit log
     git_field_name = ['hash', 'author_name', 'author_email', 'commit_date', 'short_hash']
@@ -280,33 +321,35 @@ def smudge_input():
                 line = rev_regex.sub(regex_dict['git_rev'], line)
                 line = hash_regex.sub(regex_dict['git_hash'], line)
             sys.stdout.write(line)
-    except Exception:
-        logging.error('Exception smudging file %s' % file_name, exc_info=True)
-        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % file_name)
+    except UnicodeDecodeError as err:
+        logging.info('UnicodeDecodeError with file %s'
+                     % file_name, exc_info=True)
+        logging.debug('Unicode error:' % err)
+        logging.error('Unicode error in file %s - Keywords not replaced\n'
+                      % file_name)
+        exit(5)
+    except Exception as err:
+        logging.info('Exception smudging file %s'
+                     % file_name, exc_info=True)
+        logging.debug('Generic error:' % err)
+        logging.error('Exception smudging file %s - Keywords not replaced\n'
+                      % file_name)
         exit(2)
 
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        end_time = get_clock()
-        logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
-        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
+    end_time = get_clock()
+    logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
+    logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
     # Initialize logging
-    if LOGGING_LEVEL:
-        if LOGGING_LEVEL <= logging.INFO:
-            start_time = get_clock()
-        logging.basicConfig(
-            level=LOGGING_LEVEL,
-            format='%(levelname)s: %(message)s',
-            filename='.git-hook.smudge.log'
-        )
-        logging.debug('')
-        logging.debug('')
-        logging.debug('Executing: %s' % sys.argv[0])
-    smudge_input()
+    configure_logging()
 
-    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
-        end_time = get_clock()
-        logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
+    start_time = get_clock()
+    logging.debug('Executing: %s' % sys.argv[0])
+
+    smudge()
+
+    end_time = get_clock()
+    logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
