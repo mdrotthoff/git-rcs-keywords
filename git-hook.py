@@ -34,8 +34,8 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-# LOGGING_FILE_LEVEL = None
-LOGGING_FILE_LEVEL = logging.DEBUG
+LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = logging.DEBUG
 # LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
