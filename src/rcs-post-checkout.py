@@ -32,7 +32,8 @@ __status__ = "Production"
 # LOGGING_CONSOLE_LEVEL = logging.WARNING
 LOGGING_CONSOLE_LEVEL = logging.ERROR
 # LOGGING_CONSOLE_LEVEL = logging.CRITICAL
-LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 LOGGING_FILE_LEVEL = None
@@ -54,6 +55,7 @@ else:
 
 
 def configure_logging():
+    """Configure the logging service"""
     # Configure the console logger
     if LOGGING_CONSOLE_LEVEL:
         console = logging.StreamHandler()
@@ -98,12 +100,14 @@ def execute_cmd(cmd, cmd_source=None):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('cmd: %s' % cmd)
-    logging.debug('cmd_source: %s' % cmd_source)
+    logging.debug('cmd: %s', cmd)
+    logging.debug('cmd_source: %s', cmd_source)
 
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
+        end_time = get_clock()
         logging.error('Exiting - embedded space in command')
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(1)
 
     # Execute the command
@@ -114,35 +118,35 @@ def execute_cmd(cmd, cmd_source=None):
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
-                logging.info("stderr line: %s" % line)
+                logging.info("stderr line: %s", line)
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s call failed! -- Exiting." % cmd,
+            "Program %s call failed! -- Exiting.", cmd,
             exc_info=True
         )
         logging.error(
-            "Program %s call failed! -- Exiting." % cmd
+            "Program %s call failed! -- Exiting.", cmd
         )
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         raise
     except OSError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s caused on OS error! -- Exiting."
-            % cmd,
+            "Program %s caused on OS error! -- Exiting.",
+            cmd,
             exc_info=True
         )
         logging.error(
-            "Program %s caused OS error %s! -- Exiting."
-            % (cmd, err.errno)
+            "Program %s caused OS error %s! -- Exiting.",
+            cmd, err.errno
         )
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         raise
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return cmd_stdout
@@ -163,18 +167,20 @@ def check_for_cmd(cmd):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('cmd: %s' % cmd)
+    logging.debug('cmd: %s', cmd)
 
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
+        end_time = get_clock()
         logging.error('Exiting - embedded space in command')
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(1)
 
     # Execute the command
     execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 def git_ls_files():
@@ -198,7 +204,7 @@ def git_ls_files():
     cmd_stdout = execute_cmd(cmd=cmd, cmd_source='git_ls_files')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return cmd_stdout
@@ -219,8 +225,8 @@ def get_checkout_files(first_hash, second_hash):
     # Display input parameters
     start_time = get_clock()
     logging.debug('Entered function')
-    logging.debug('First hash: %s' % first_hash)
-    logging.debug('Second hash: %s' % second_hash)
+    logging.debug('First hash: %s', first_hash)
+    logging.debug('Second hash: %s', second_hash)
 
     file_list = []
 
@@ -253,15 +259,17 @@ def get_checkout_files(first_hash, second_hash):
 
     # Deal with unmodified repositories
     if file_list and file_list[0] == 'clean':
+        end_time = get_clock()
         logging.info('No files to process')
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(0)
 
     # Only return regular files.
     file_list = [i for i in file_list if os.path.isfile(i)]
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
-    logging.debug('Returning file list to process %s' % file_list)
+    logging.debug('Returning file list to process %s', file_list)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return file_list
@@ -281,7 +289,7 @@ def remove_modified_files(files):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('files: %s' % files)
+    logging.debug('files: %s', files)
 
     cmd = ['git', 'status', '-s']
 
@@ -293,22 +301,24 @@ def remove_modified_files(files):
 
     # Deal with unmodified repositories
     if not modified_files_list:
+        end_time = get_clock()
         logging.info('No modified files found')
+        logging.info('Elapsed time: %f', (end_time - start_time))
         return files
 
     # Pull the file name (second field) of the output line and
     # remove any double quotes
     modified_files_list = [l.split(None, 1)[-1].strip('"')
                            for l in modified_files_list]
-    logging.info('Modified files list: %s' % modified_files_list)
+    logging.info('Modified files list: %s', modified_files_list)
 
     # Remove any modified files from the list of files to process
     if modified_files_list:
         files = [f for f in files if f not in modified_files_list]
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' %(end_time - start_time))
-    logging.debug('Modified file list %s' % files)
+    logging.debug('Modified file list %s', files)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return files
@@ -327,7 +337,7 @@ def check_out_file(file_name):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('File_name: %s' % file_name)
+    logging.debug('File_name: %s', file_name)
 
     # Remove the file if it currently exists
     try:
@@ -335,8 +345,10 @@ def check_out_file(file_name):
     except OSError as err:
         # Ignore a file not found error, it was being removed anyway
         if err.errno != errno.ENOENT:
-            logging.error('Unable to remove file %s for re-checkout'
-                          % file_name)
+            end_time = get_clock()
+            logging.error('Unable to remove file %s for re-checkout',
+                          file_name)
+            logging.info('Elapsed time: %f', (end_time - start_time))
             exit(err.errno)
 
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
@@ -345,7 +357,7 @@ def check_out_file(file_name):
     execute_cmd(cmd=cmd, cmd_source='check_out_files')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 def post_checkout():
@@ -361,13 +373,15 @@ def post_checkout():
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('sys.argv: %s' % sys.argv)
+    logging.debug('sys.argv: %s', sys.argv)
 
     # If argv[3] is zero (file checkout rather than branch checkout),
     # then exit the hook as there is no need to re-smudge the file.
     # (The commit info was already available)
     if sys.argv[3] == '0':
+        end_time = get_clock()
         logging.debug('File checkout - no work required')
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(0)
 
     # Check if git is available.
@@ -375,12 +389,12 @@ def post_checkout():
 
     # Get the list of files impacted.
     files = get_checkout_files(first_hash=sys.argv[1], second_hash=sys.argv[2])
-    logging.debug('Files to checkout: %s' % files)
+    logging.debug('Files to checkout: %s', files)
 
     # Filter the list of modified files to exclude those modified since
     # the commit
     files = remove_modified_files(files=files)
-    logging.debug('Non-modified files: %s' % files)
+    logging.debug('Non-modified files: %s', files)
 
     # Force a checkout of the remaining file list
     files_processed = 0
@@ -389,19 +403,20 @@ def post_checkout():
         for file_name in files:
             check_out_file(file_name=file_name)
             files_processed += 1
+            logging.info('Checked out file %s', file_name)
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
     configure_logging()
 
-    start_time = get_clock()
+    START_TIME = get_clock()
     logging.debug('Entered module')
 
     post_checkout()
 
-    end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))

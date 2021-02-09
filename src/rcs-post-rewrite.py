@@ -29,7 +29,8 @@ __status__ = "Production"
 # LOGGING_CONSOLE_LEVEL = logging.WARNING
 LOGGING_CONSOLE_LEVEL = logging.ERROR
 # LOGGING_CONSOLE_LEVEL = logging.CRITICAL
-LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 LOGGING_FILE_LEVEL = None
@@ -51,6 +52,7 @@ else:
 
 
 def configure_logging():
+    """Configure the logging service"""
     # Configure the console logger
     if LOGGING_CONSOLE_LEVEL:
         console = logging.StreamHandler()
@@ -94,14 +96,14 @@ def execute_cmd(cmd, cmd_source=None):
 
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('cmd: %s' % cmd)
-    logging.debug('cmd_source: %s' % cmd_source)
+    logging.debug('cmd: %s', cmd)
+    logging.debug('cmd_source: %s', cmd_source)
 
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
         end_time = get_clock()
         logging.error('Exiting - embedded space in command')
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(1)
 
     # Execute the command
@@ -117,31 +119,35 @@ def execute_cmd(cmd, cmd_source=None):
     except subprocess.CalledProcessError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s called by %s failed! -- Exiting."
-            % (cmd, cmd_source),
+            "Program %s called by %s failed! -- Exiting.",
+            cmd,
+            cmd_source,
             exc_info=True
         )
         logging.error(
-            "Program %s call failed! -- Exiting." % cmd
+            "Program %s call failed! -- Exiting.", cmd
         )
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         raise
     except OSError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s called by %s caused on OS error %s! -- Exiting."
-            % (cmd, cmd_source, err.errno),
+            "Program %s called by %s caused on OS error %s! -- Exiting.",
+            cmd,
+            cmd_source,
+            err.errno,
             exc_info=True
         )
         logging.error(
-            "Program %s caused OS error %s! -- Exiting."
-            % (cmd, err.errno)
+            "Program %s caused OS error %s! -- Exiting.",
+            cmd,
+            err.errno
         )
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         raise
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return cmd_stdout
@@ -161,20 +167,20 @@ def check_for_cmd(cmd):
 
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('cmd: %s' % cmd)
+    logging.debug('cmd: %s', cmd)
 
     # Ensure there are no embedded spaces in a string command
     if isinstance(cmd, str) and ' ' in cmd:
         end_time = get_clock()
         logging.error('Exiting - embedded space in command')
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(1)
 
     # Execute the command
     execute_cmd(cmd=cmd, cmd_source='check_for_cmd')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 def git_ls_files():
@@ -197,7 +203,7 @@ def git_ls_files():
     cmd_stdout = execute_cmd(cmd=cmd, cmd_source='git_ls_files')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return cmd_stdout
@@ -225,21 +231,21 @@ def get_modified_files(dest_hash):
 
     # Convert the stdout stream to a list of files
     modified_file_list = cmd_stdout.decode('utf8').splitlines()
-    logging.debug('modified_file_list: %s' % modified_file_list)
+    logging.debug('modified_file_list: %s', modified_file_list)
 
     # Deal with unmodified repositories
     if modified_file_list and modified_file_list[0] == 'clean':
         end_time = get_clock()
         logging.info('No modified files found')
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(0)
 
     # Only return regular files.
     modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
 
     end_time = get_clock()
-    logging.debug('modified_file_list: ' % modified_file_list)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.debug('modified_file_list: %s', modified_file_list)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return modified_file_list
@@ -258,7 +264,7 @@ def remove_modified_files(files):
 
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('files: %s' % files)
+    logging.debug('files: %s', files)
 
     cmd = ['git', 'status', '-s']
 
@@ -267,29 +273,29 @@ def remove_modified_files(files):
 
     # Convert the stream output to a list of output lines
     modified_files_list = cmd_stdout.decode('utf8').splitlines()
-    logging.debug('modified files list: %s' % modified_files_list)
+    logging.debug('modified files list: %s', modified_files_list)
 
     # Deal with unmodified repositories
     if not modified_files_list:
         end_time = get_clock()
         logging.debug('No modified files found')
-        logging.debug('files: %s' % files)
-        logging.info('Elapsed time: %f' % (end_time - start_time))
+        logging.debug('files: %s', files)
+        logging.info('Elapsed time: %f', (end_time - start_time))
         return files
 
     # Pull the file name (second field) of the output line and
     # remove any double quotes
     modified_files_list = [l.split(None, 1)[-1].strip('"')
                            for l in modified_files_list]
-    logging.debug('modified files list: %s' % modified_files_list)
+    logging.debug('modified files list: %s', modified_files_list)
 
     # Remove any modified files from the list of files to process
     if modified_files_list:
         files = [f for f in files if f not in modified_files_list]
 
     end_time = get_clock()
-    logging.debug('Cleaned files list: %s' % files)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.debug('Cleaned files list: %s', files)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return files
@@ -307,7 +313,7 @@ def check_out_file(file_name):
 
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('file_name: %s' % file_name)
+    logging.debug('file_name: %s', file_name)
 
     # Remove the file if it currently exists
     try:
@@ -317,15 +323,17 @@ def check_out_file(file_name):
         if err.errno != errno.ENOENT:
             end_time = get_clock()
             logging.info(
-                "File removal of %s caused on OS error %d! -- Exiting."
-                % (file_name, err.errno),
+                "File removal of %s caused on OS error %d! -- Exiting.",
+                file_name,
+                err.errno,
                 exc_info=True
             )
             logging.error(
-                "File removal %s caused OS error %d! -- Exiting."
-                % (file_name, err.errno)
+                "File removal %s caused OS error %d! -- Exiting.",
+                file_name,
+                err.errno
             )
-            logging.info('Elapsed time: %f' % (end_time - start_time))
+            logging.info('Elapsed time: %f', (end_time - start_time))
             exit(err.errno)
 
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
@@ -334,7 +342,7 @@ def check_out_file(file_name):
     execute_cmd(cmd=cmd, cmd_source='check_out_file')
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 def post_rewrite():
@@ -363,7 +371,7 @@ def post_rewrite():
         words = source_line.split()
         # Get the list of modified files
         files = files + get_modified_files(dest_hash=words[1].strip())
-    logging.debug('Files: %s' % files)
+    logging.debug('Files: %s', files)
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
@@ -374,20 +382,21 @@ def post_rewrite():
         for file_name in sorted(files):
             check_out_file(file_name=file_name)
             files_processed += 1
-    logging.debug('Files processed: %s' % files_processed)
+            logging.debug('Checked out file %s', file_name)
+    logging.debug('Files processed: %s', files_processed)
 
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
     configure_logging()
 
-    start_time = get_clock()
+    START_TIME = get_clock()
     logging.debug('Entered module')
 
     post_rewrite()
 
-    end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))
