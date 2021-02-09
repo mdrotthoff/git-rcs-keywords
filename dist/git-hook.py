@@ -59,6 +59,9 @@ def process_hooks():
             if hook_call > 0:
                 exit(hook_call)
 
+    # # Return from the function
+    # exit(0)
+
 
 # Execute the main function
 if __name__ == '__main__':

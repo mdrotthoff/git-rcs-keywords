@@ -20,63 +20,26 @@ __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
 
-# LOGGING_CONSOLE_LEVEL = None
-# LOGGING_CONSOLE_LEVEL = logging.DEBUG
-# LOGGING_CONSOLE_LEVEL = logging.INFO
-# LOGGING_CONSOLE_LEVEL = logging.WARNING
-LOGGING_CONSOLE_LEVEL = logging.ERROR
-# LOGGING_CONSOLE_LEVEL = logging.CRITICAL
-LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
-LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
-LOGGING_FILE_LEVEL = None
-# LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
-# LOGGING_FILE_LEVEL = logging.WARNING
-# LOGGING_FILE_LEVEL = logging.ERROR
-# LOGGING_FILE_LEVEL = logging.CRITICAL
-LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
-LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-LOGGING_FILE_NAME = '.git-hook.clean.log'
+LOGGING_LEVEL = None
+# LOGGING_LEVEL = logging.DEBUG
+# LOGGING_LEVEL = logging.INFO
+# LOGGING_LEVEL = logging.WARNING
+# LOGGING_LEVEL = logging.ERROR
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
-if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
-    from time import perf_counter as get_clock
+if LOGGING_LEVEL:
+    if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+        from time import perf_counter as get_clock
+    else:
+        from time import clock as get_clock
 else:
-    from time import clock as get_clock
+    def get_clock():
+        """Dummy get_clock function for when the timing flag is not set"""
+        pass
 
 
-def configure_logging():
-    # Configure the console logger
-    if LOGGING_CONSOLE_LEVEL:
-        console = logging.StreamHandler()
-        console.setLevel(LOGGING_CONSOLE_LEVEL)
-        console_formatter = logging.Formatter(
-            fmt=LOGGING_CONSOLE_MSG_FORMAT,
-            datefmt=LOGGING_CONSOLE_DATE_FORMAT,
-        )
-        console.setFormatter(console_formatter)
-
-    # Create an file based logger if a LOGGING_FILE_LEVEL is defined
-    if LOGGING_FILE_LEVEL:
-        logging.basicConfig(
-            level=LOGGING_FILE_LEVEL,
-            format=LOGGING_FILE_MSG_FORMAT,
-            datefmt=LOGGING_FILE_DATE_FORMAT,
-            filename=LOGGING_FILE_NAME,
-        )
-
-    # Basic logger configuration
-    if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
-        logger = logging.getLogger('')
-        logger.setLevel(logging.DEBUG)
-        if LOGGING_CONSOLE_LEVEL:
-            # Add the console logger to default logger
-            logger.addHandler(console)
-
-
-def clean():
+def clean_input():
     """Main program.
 
     Arguments:
@@ -87,17 +50,18 @@ def clean():
     """
 
     # Display the parameters passed on the command line
-    start_time = get_clock()
-    logging.info('Entered function')
-    logging.debug('sys.argv parameter count %d' % len(sys.argv))
-    logging.debug('sys.argv parameters %s' % sys.argv)
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        start_time = get_clock()
+        logging.debug('')
+        logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+        logging.debug('sys.argv parameter count %d' % len(sys.argv))
+        logging.debug('sys.argv parameters %s' % sys.argv)
 
     # Calculate the source file being cleaned
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
-    logging.info('Processing file: %s' % file_name)
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author:.*\$",
@@ -143,27 +107,32 @@ def clean():
                 line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except Exception:
-        logging.info('Exception cleaning file %s'
-                     % file_name,
-                     exc_info=True)
-        logging.error('Exception smudging file %s - Keywords not replaced'
-                      % file_name)
+        logging.error('Exception cleaning file %s' % file_name, exc_info=True)
+        sys.stderr.write('Exception smudging file %s - Key words were not replaced\n' % file_name)
         exit(2)
 
-    end_time = get_clock()
-    logging.debug('Line count: %d' % line_count)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
+        logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
     # Initialize logging
-    configure_logging()
+    if LOGGING_LEVEL:
+        if LOGGING_LEVEL <= logging.INFO:
+            start_time = get_clock()
+        logging.basicConfig(
+            level=LOGGING_LEVEL,
+            format='%(levelname)s: %(message)s',
+            filename='.git-hook.clean.log')
+        logging.debug('')
+        logging.debug('')
+        logging.debug('Executing: %s' % sys.argv[0])
 
-    start_time = get_clock()
-    logging.debug('Entered module')
+    clean_input()
 
-    clean()
-
-    end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    if LOGGING_LEVEL and LOGGING_LEVEL <= logging.INFO:
+        end_time = get_clock()
+        logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
