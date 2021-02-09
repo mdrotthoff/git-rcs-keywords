@@ -328,7 +328,7 @@ def smudge():
     except UnicodeDecodeError as err:
         logging.info('UnicodeDecodeError with file %s'
                      % file_name, exc_info=True)
-        logging.debug('Unicode error:' % err)
+        logging.debug('Generic exception variables: %s' % vars(err))
         logging.error('Unicode error in file %s - Keywords not replaced'
                       % file_name)
         exit(5)
@@ -336,7 +336,7 @@ def smudge():
         logging.info('Generic exception smudging file %s'
                      % file_name,
                      exc_info=True)
-        logging.debug('Generic error:' % err)
+        logging.debug('Generic exception variables: %s' % vars(err))
         logging.error('Exception smudging file %s - Keywords not replaced'
                       % file_name)
         exit(2)

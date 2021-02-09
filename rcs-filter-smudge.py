@@ -8,7 +8,7 @@ This module provides the code to smudge the local copy of the
 file retreived from the git repository performing the various
 keyword substitutions.
 """
-from pprint import pprint
+
 import sys
 import re
 import subprocess
@@ -92,7 +92,7 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
 
     # Display input parameters
     start_time = get_clock()
-    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.info('Entered function')
     logging.debug('git_field_log %s' % git_field_log)
     logging.debug('file_name: %s' % file_name)
     logging.debug('git_field_name: %s' % git_field_name)
@@ -125,26 +125,37 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         #     "{0} - Program {1} called by {2} not found! -- Exiting."
         #     .format(str(err), str(cmd[0]), str(' '.join(cmd)))
         # )
+        logging.info(
+            "Program %s call failed! -- Exiting." % cmd,
+            exc_info=True
+        )
         logging.error(
-            "%s - Program %s called by %s not found! -- Exiting."
-            % (str(err), str(cmd[0]), str(' '.join(cmd)))
+            "Program %s call failed! -- Exiting." % cmd
         )
         exit(err.returncode)
     except OSError as err:
+        logging.info(
+            "Program %s caused on OS error! -- Exiting."
+            % cmd,
+            exc_info=True
+        )
         logging.error(
-            "%s - Program %s called by %s not found! -- Exiting."
-            % (str(err), str(cmd[0]), str(' '.join(cmd)))
+            "Program %s caused OS error %s! -- Exiting."
+            % (cmd, err.errno)
         )
         exit(err.errno)
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
     if cmd_handle.returncode != 0:
-        logging.error(
-            "Exiting -- git log return error code: %s"
-            % str(cmd_handle.returncode)
+        logging.info(
+            "Exiting -- git log return error code: %d" % cmd_handle.returncode,
+            exc_info=True
         )
         logging.error(
+            "Exiting -- git log return error code: %d" % cmd_handle.returncode
+        )
+        logging.info(
             "Output text: %s"
             % cmd_stdout.strip().decode("utf-8")
         )
@@ -161,21 +172,17 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         git_log = []
 
     if not git_log:
-        logging.error('No git attributes returned: %s'
-                      % sys._getframe().f_code.co_name)
+        logging.error('No git attributes returned')
         exit(4)
 
     if len(git_log) > 1:
-        logging.error('More than one row of git attributes returned in %s: %s'
-                      % (sys._getframe().f_code.co_name, git_log))
+        logging.error('More than one row of git attributes returned')
         exit(3)
 
     # Log the results of the git log operation
     end_time = get_clock()
     logging.debug('git_log: %s' % git_log)
-    logging.info('Elapsed for %s: %s'
-                 % (sys._getframe().f_code.co_name,
-                 end_time - start_time))
+    logging.info('Elapsed time: %f' % (end_time - start_time))
 
     # Return from the function
     return git_log
@@ -196,7 +203,7 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
 
     # Display input parameters
     start_time = get_clock()
-    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.info('Entered function')
     logging.debug('git_field_log %s' % git_field_log)
     logging.debug('file_name: %s' % file_name)
     logging.debug('git_field_name: %s' % git_field_name)
@@ -206,7 +213,6 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
                                  file_name=file_name,
                                  git_field_name=git_field_name)
 
-    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
     logging.debug('git_log %s' % git_log)
 
     regex_dict = {}
@@ -247,8 +253,7 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
 
     # Log the results of the build regex dictionary operation
     end_time = get_clock()
-    logging.debug('regex_dict: %s' % regex_dict)
-    logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
+    logging.info('Elapsed time: %f' % (end_time - start_time))
 
     return regex_dict
 
@@ -265,8 +270,7 @@ def smudge():
 
     # Display the parameters passed on the command line
     start_time = get_clock()
-    logging.debug('')
-    logging.debug('Function: %s' % sys._getframe().f_code.co_name)
+    logging.info('Entered function')
     logging.debug('sys.argv parameter count %d' % len(sys.argv))
     logging.debug('sys.argv parameters %s' % sys.argv)
 
@@ -324,32 +328,32 @@ def smudge():
     except UnicodeDecodeError as err:
         logging.info('UnicodeDecodeError with file %s'
                      % file_name, exc_info=True)
-        logging.debug('Unicode error:' % err)
-        logging.error('Unicode error in file %s - Keywords not replaced\n'
+        logging.debug('Generic exception variables: %s' % vars(err))
+        logging.error('Unicode error in file %s - Keywords not replaced'
                       % file_name)
         exit(5)
     except Exception as err:
-        logging.info('Exception smudging file %s'
-                     % file_name, exc_info=True)
-        logging.debug('Generic error:' % err)
-        logging.error('Exception smudging file %s - Keywords not replaced\n'
+        logging.info('Generic exception smudging file %s'
+                     % file_name,
+                     exc_info=True)
+        logging.debug('Generic exception variables: %s' % vars(err))
+        logging.error('Exception smudging file %s - Keywords not replaced'
                       % file_name)
         exit(2)
 
     end_time = get_clock()
-    logging.info('Line count in %s: %s' % (sys._getframe().f_code.co_name, line_count))
-    logging.info('Elapsed for %s: %s' % (sys._getframe().f_code.co_name, end_time - start_time))
+    logging.info('Line count: %d' % line_count)
+    logging.info('Elapsed time: %f' % (end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
-    # Initialize logging
     configure_logging()
 
     start_time = get_clock()
-    logging.debug('Executing: %s' % sys.argv[0])
+    logging.debug('Entered module')
 
     smudge()
 
     end_time = get_clock()
-    logging.info('Elapsed for %s: %s' % (sys.argv[0], end_time - start_time))
+    logging.info('Elapsed time: %f' % (end_time - start_time))

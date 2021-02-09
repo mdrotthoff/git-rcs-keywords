@@ -142,10 +142,11 @@ def clean():
                 line = rev_regex.sub(git_rev, line)
                 line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
-    except Exception:
+    except Exception as err:
         logging.info('Exception cleaning file %s'
                      % file_name,
                      exc_info=True)
+        logging.debug('Generic exception variables: %s' % vars(err))
         logging.error('Exception smudging file %s - Keywords not replaced'
                       % file_name)
         exit(2)
