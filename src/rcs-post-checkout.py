@@ -33,7 +33,7 @@ __status__ = "Production"
 LOGGING_CONSOLE_LEVEL = logging.ERROR
 # LOGGING_CONSOLE_LEVEL = logging.CRITICAL
 LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
-LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG

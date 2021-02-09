@@ -26,8 +26,9 @@ __status__ = "Production"
 # LOGGING_CONSOLE_LEVEL = logging.WARNING
 LOGGING_CONSOLE_LEVEL = logging.ERROR
 # LOGGING_CONSOLE_LEVEL = logging.CRITICAL
-LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
-LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
@@ -48,6 +49,8 @@ else:
 
 
 def configure_logging():
+    """Configure the logging service"""
+
     # Configure the console logger
     if LOGGING_CONSOLE_LEVEL:
         console = logging.StreamHandler()
@@ -89,15 +92,15 @@ def clean():
     # Display the parameters passed on the command line
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('sys.argv parameter count %d' % len(sys.argv))
-    logging.debug('sys.argv parameters %s' % sys.argv)
+    logging.debug('sys.argv parameter count %d', len(sys.argv))
+    logging.debug('sys.argv parameters %s', sys.argv)
 
     # Calculate the source file being cleaned
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
-    logging.info('Processing file: %s' % file_name)
+    logging.info('Processing file: %s', file_name)
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author:.*\$",
@@ -143,28 +146,27 @@ def clean():
                 line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except Exception as err:
-        logging.info('Exception cleaning file %s'
-                     % file_name,
+        logging.info('Exception cleaning file %s',
+                     file_name,
                      exc_info=True)
-        logging.debug('Generic exception variables: %s' % vars(err))
-        logging.error('Exception smudging file %s - Keywords not replaced'
-                      % file_name)
+        logging.debug('Generic exception variables: %s', vars(err))
+        logging.error('Exception smudging file %s - Keywords not replaced',
+                      file_name)
         exit(2)
 
     end_time = get_clock()
-    logging.debug('Line count: %d' % line_count)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.debug('Line count: %d', line_count)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
-    # Initialize logging
     configure_logging()
 
-    start_time = get_clock()
+    START_TIME = get_clock()
     logging.debug('Entered module')
 
     clean()
 
-    end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))

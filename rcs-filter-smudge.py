@@ -27,8 +27,9 @@ __status__ = "Production"
 # LOGGING_CONSOLE_LEVEL = logging.WARNING
 LOGGING_CONSOLE_LEVEL = logging.ERROR
 # LOGGING_CONSOLE_LEVEL = logging.CRITICAL
-LOGGING_CONSOLE_MSG_FORMAT = '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
-LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
@@ -49,6 +50,7 @@ else:
 
 
 def configure_logging():
+    """Configure the logging service"""
     # Configure the console logger
     if LOGGING_CONSOLE_LEVEL:
         console = logging.StreamHandler()
@@ -93,9 +95,9 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('git_field_log %s' % git_field_log)
-    logging.debug('file_name: %s' % file_name)
-    logging.debug('git_field_name: %s' % git_field_name)
+    logging.debug('git_field_log %s', git_field_log)
+    logging.debug('file_name: %s', file_name)
+    logging.debug('git_field_name: %s', git_field_name)
 
     # Format the git log command
     git_field_format = '%x1f'.join(git_field_log) + '%x1e'
@@ -106,7 +108,7 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
            '--format=%s' % git_field_format,
            '--',
            str(file_name)]
-    logging.debug('cmd: %s' % cmd)
+    logging.debug('cmd: %s', cmd)
 
     # Process the git log command
     try:
@@ -125,23 +127,23 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         #     "{0} - Program {1} called by {2} not found! -- Exiting."
         #     .format(str(err), str(cmd[0]), str(' '.join(cmd)))
         # )
-        logging.info(
-            "Program %s call failed! -- Exiting." % cmd,
-            exc_info=True
-        )
+        logging.info("Program %s call failed! -- Exiting.",
+                     cmd,
+                     exc_info=True)
         logging.error(
-            "Program %s call failed! -- Exiting." % cmd
+            "Program %s call failed! -- Exiting.", cmd
         )
         exit(err.returncode)
     except OSError as err:
         logging.info(
-            "Program %s caused on OS error! -- Exiting."
-            % cmd,
+            "Program %s caused on OS error! -- Exiting.",
+            cmd,
             exc_info=True
         )
         logging.error(
-            "Program %s caused OS error %s! -- Exiting."
-            % (cmd, err.errno)
+            "Program %s caused OS error %s! -- Exiting.",
+            cmd,
+            err.errno
         )
         exit(err.errno)
 
@@ -149,16 +151,13 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
     # with the returned exit code
     if cmd_handle.returncode != 0:
         logging.info(
-            "Exiting -- git log return error code: %d" % cmd_handle.returncode,
+            "Exiting -- git log return error code: %d", cmd_handle.returncode,
             exc_info=True
         )
         logging.error(
-            "Exiting -- git log return error code: %d" % cmd_handle.returncode
+            "Exiting -- git log return error code: %d", cmd_handle.returncode
         )
-        logging.info(
-            "Output text: %s"
-            % cmd_stdout.strip().decode("utf-8")
-        )
+        logging.info("Output text: %s", cmd_stdout.strip().decode("utf-8"))
         exit(cmd_handle.returncode)
 
     # Calculate replacement strings based on the git log results
@@ -181,8 +180,8 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
 
     # Log the results of the git log operation
     end_time = get_clock()
-    logging.debug('git_log: %s' % git_log)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.debug('git_log: %s', git_log)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return git_log
@@ -204,16 +203,16 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
     # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('git_field_log %s' % git_field_log)
-    logging.debug('file_name: %s' % file_name)
-    logging.debug('git_field_name: %s' % git_field_name)
+    logging.debug('git_field_log %s', git_field_log)
+    logging.debug('file_name: %s', file_name)
+    logging.debug('git_field_name: %s', git_field_name)
 
     # Format the git log command
     git_log = git_log_attributes(git_field_log=git_field_log,
                                  file_name=file_name,
                                  git_field_name=git_field_name)
 
-    logging.debug('git_log %s' % git_log)
+    logging.debug('git_log %s', git_log)
 
     regex_dict = {}
     if git_log:
@@ -221,20 +220,30 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
         # Calculate the replacement strings based on the git log results
         # Deal with values in author name that have a Windows domain name
         if '\\' in git_log[0]['author_name']:
-            git_log[0]['author_name'] = git_log[0]['author_name'].split('\\')[-1]
+            git_log[0]['author_name'] = \
+                git_log[0]['author_name'].split('\\')[-1]
 
-        regex_dict['git_hash'] = '$Hash:     %s $' % str(git_log[0]['hash'])
-        regex_dict['git_short_hash'] = '$Short Hash:     %s $' % str(git_log[0]['short_hash'])
-        regex_dict['git_author'] = '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
-                                                             str(git_log[0]['author_email']))
-        regex_dict['git_date'] = '$Date:     %s $' % str(git_log[0]['commit_date'])
-        regex_dict['git_rev'] = '$Rev:      %s $' % str(git_log[0]['commit_date'])
-        regex_dict['git_revision'] = '$Revision: %s $' % str(git_log[0]['commit_date'])
-        regex_dict['git_file'] = '$File:     %s $' % str(file_name)
-        regex_dict['git_source'] = '$Source:   %s $' % str(file_name)
-        regex_dict['git_id'] = '$Id:       %s | %s | %s $' % (str(file_name),
-                                                              str(git_log[0]['commit_date']),
-                                                              str(git_log[0]['author_name']))
+        regex_dict['git_hash'] = \
+            '$Hash:     %s $' % str(git_log[0]['hash'])
+        regex_dict['git_short_hash'] = \
+            '$Short Hash:     %s $' % str(git_log[0]['short_hash'])
+        regex_dict['git_author'] =\
+            '$Author:   %s <%s> $' % (str(git_log[0]['author_name']),
+                                      str(git_log[0]['author_email']))
+        regex_dict['git_date'] = \
+            '$Date:     %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_rev'] = \
+            '$Rev:      %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_revision'] = \
+            '$Revision: %s $' % str(git_log[0]['commit_date'])
+        regex_dict['git_file'] = \
+            '$File:     %s $' % str(file_name)
+        regex_dict['git_source'] = \
+            '$Source:   %s $' % str(file_name)
+        regex_dict['git_id'] = \
+            '$Id:       %s | %s | %s $' % (str(file_name),
+                                           str(git_log[0]['commit_date']),
+                                           str(git_log[0]['author_name']))
 
     else:
         logging.debug('Building empty regex dictionary')
@@ -253,7 +262,7 @@ def build_regex_dict(git_field_log, file_name, git_field_name):
 
     # Log the results of the build regex dictionary operation
     end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
     return regex_dict
 
@@ -271,19 +280,31 @@ def smudge():
     # Display the parameters passed on the command line
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('sys.argv parameter count %d' % len(sys.argv))
-    logging.debug('sys.argv parameters %s' % sys.argv)
+    logging.debug('sys.argv parameter count %d', len(sys.argv))
+    logging.debug('sys.argv parameters %s', sys.argv)
 
     # Calculate the source file being smudged
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
-    logging.debug('File name parameter %s' % file_name)
+    logging.debug('File name parameter %s', file_name)
 
     # Define the fields to be extracted from the commit log
-    git_field_name = ['hash', 'author_name', 'author_email', 'commit_date', 'short_hash']
-    git_field_log = ['%H', '%an', '%ae', '%ci', '%h']
+    git_field_name = [
+        'hash',
+        'author_name',
+        'author_email',
+        'commit_date',
+        'short_hash'
+    ]
+    git_field_log = [
+        '%H',
+        '%an',
+        '%ae',
+        '%ci',
+        '%h'
+    ]
 
     # Define the various substitution regular expressions
     author_regex = re.compile(r"\$Author: +[.\w@<> ]+ +\$|\$Author\$",
@@ -312,9 +333,10 @@ def smudge():
             line_count += 1
             if line.count('$') > 1:
                 if len(regex_dict) == 0:
-                    regex_dict = build_regex_dict(git_field_log=git_field_log,
-                                                  file_name=file_name,
-                                                  git_field_name=git_field_name)
+                    regex_dict = build_regex_dict(
+                        git_field_log=git_field_log,
+                        file_name=file_name,
+                        git_field_name=git_field_name)
 
                 line = author_regex.sub(regex_dict['git_author'], line)
                 line = id_regex.sub(regex_dict['git_id'], line)
@@ -326,34 +348,35 @@ def smudge():
                 line = hash_regex.sub(regex_dict['git_hash'], line)
             sys.stdout.write(line)
     except UnicodeDecodeError as err:
-        logging.info('UnicodeDecodeError with file %s'
-                     % file_name, exc_info=True)
-        logging.debug('Generic exception variables: %s' % vars(err))
-        logging.error('Unicode error in file %s - Keywords not replaced'
-                      % file_name)
+        logging.info('UnicodeDecodeError with file %s',
+                     file_name,
+                     exc_info=True)
+        logging.debug('Generic exception variables: %s', vars(err))
+        logging.error('Unicode error in file %s - Keywords not replaced',
+                      file_name)
         exit(5)
     except Exception as err:
-        logging.info('Generic exception smudging file %s'
-                     % file_name,
+        logging.info('Generic exception smudging file %s',
+                     file_name,
                      exc_info=True)
-        logging.debug('Generic exception variables: %s' % vars(err))
-        logging.error('Exception smudging file %s - Keywords not replaced'
-                      % file_name)
+        logging.debug('Generic exception variables: %s', vars(err))
+        logging.error('Exception smudging file %s - Keywords not replaced',
+                      file_name)
         exit(2)
 
     end_time = get_clock()
-    logging.info('Line count: %d' % line_count)
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    logging.info('Line count: %d', line_count)
+    logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 # Execute the main function
 if __name__ == '__main__':
     configure_logging()
 
-    start_time = get_clock()
+    START_TIME = get_clock()
     logging.debug('Entered module')
 
     smudge()
 
-    end_time = get_clock()
-    logging.info('Elapsed time: %f' % (end_time - start_time))
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))
