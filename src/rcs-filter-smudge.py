@@ -120,21 +120,20 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
-                sys.stderr.write("%s\n" % line)
+                logging.info("stderr.line: %s", line)
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
-        # sys.stderr.write(
-        #     "{0} - Program {1} called by {2} not found! -- Exiting."
-        #     .format(str(err), str(cmd[0]), str(' '.join(cmd)))
-        # )
+        end_time = get_clock()
         logging.info("Program %s call failed! -- Exiting.",
                      cmd,
                      exc_info=True)
         logging.error(
             "Program %s call failed! -- Exiting.", cmd
         )
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(err.returncode)
     except OSError as err:
+        end_time = get_clock()
         logging.info(
             "Program %s caused on OS error! -- Exiting.",
             cmd,
@@ -145,11 +144,13 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
             cmd,
             err.errno
         )
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(err.errno)
 
     # If an error occurred, display the command output and exit
     # with the returned exit code
     if cmd_handle.returncode != 0:
+        end_time = get_clock()
         logging.info(
             "Exiting -- git log return error code: %d", cmd_handle.returncode,
             exc_info=True
@@ -158,6 +159,7 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
             "Exiting -- git log return error code: %d", cmd_handle.returncode
         )
         logging.info("Output text: %s", cmd_stdout.strip().decode("utf-8"))
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(cmd_handle.returncode)
 
     # Calculate replacement strings based on the git log results
@@ -171,11 +173,18 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         git_log = []
 
     if not git_log:
-        logging.error('No git attributes returned')
+        end_time = get_clock()
+        logging.error('No git attributes returned for file %s', file_name)
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(4)
 
     if len(git_log) > 1:
-        logging.error('More than one row of git attributes returned')
+        end_time = get_clock()
+        logging.error(
+            'More than one row of git attributes returned for file %s',
+            file_name
+        )
+        logging.info('Elapsed time: %f', (end_time - start_time))
         exit(3)
 
     # Log the results of the git log operation
