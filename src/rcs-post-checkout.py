@@ -116,6 +116,7 @@ def execute_cmd(cmd, cmd_source=None):
                                       stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE)
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
+        logging.info('Command %s successfully executed', cmd)
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
                 logging.info("stderr line: %s", line)
@@ -342,6 +343,7 @@ def check_out_file(file_name):
     # Remove the file if it currently exists
     try:
         os.remove(file_name)
+        logging.info('Removed file %s', file_name)
     except OSError as err:
         # Ignore a file not found error, it was being removed anyway
         if err.errno != errno.ENOENT:
@@ -350,11 +352,14 @@ def check_out_file(file_name):
                           file_name)
             logging.info('Elapsed time: %f', (end_time - start_time))
             exit(err.errno)
+        else:
+            logging.info('File %s not found to remove', file_name)
 
     cmd = ['git', 'checkout', '-f', '%s' % file_name]
 
     # Check out the file so that it is smudged
     execute_cmd(cmd=cmd, cmd_source='check_out_files')
+    logging.info('Checked out file %s', file_name)
 
     end_time = get_clock()
     logging.info('Elapsed time: %f', (end_time - start_time))
@@ -377,7 +382,9 @@ def post_checkout():
 
     # If argv[3] is zero (file checkout rather than branch checkout),
     # then exit the hook as there is no need to re-smudge the file.
-    # (The commit info was already available)
+    # (The commit info was already available)  If the vallue is 1, then
+    # this is a branch checkout and commit info was not available at the
+    # time the file was checkted out.
     if sys.argv[3] == '0':
         end_time = get_clock()
         logging.debug('File checkout - no work required')
@@ -401,6 +408,7 @@ def post_checkout():
     if files:
         files.sort()
         for file_name in files:
+            logging.info('Checking out file %s', file_name)
             check_out_file(file_name=file_name)
             files_processed += 1
             logging.info('Checked out file %s', file_name)
