@@ -17,7 +17,8 @@ import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "1.1.0"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
