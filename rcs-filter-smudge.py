@@ -31,9 +31,9 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
@@ -173,19 +173,19 @@ def git_log_attributes(git_field_log, file_name, git_field_name):
         git_log = []
 
     if not git_log:
-        end_time = get_clock()
-        logging.error('No git attributes returned for file %s', file_name)
-        logging.info('Elapsed time: %f', (end_time - start_time))
-        exit(4)
+        # end_time = get_clock()
+        logging.info('No git attributes returned for file %s', file_name)
+        # logging.info('Elapsed time: %f', (end_time - start_time))
+        # exit(4)
 
     if len(git_log) > 1:
-        end_time = get_clock()
+        # end_time = get_clock()
         logging.error(
             'More than one row of git attributes returned for file %s',
             file_name
         )
-        logging.info('Elapsed time: %f', (end_time - start_time))
-        exit(3)
+        # logging.info('Elapsed time: %f', (end_time - start_time))
+        # exit(3)
 
     # Log the results of the git log operation
     end_time = get_clock()
