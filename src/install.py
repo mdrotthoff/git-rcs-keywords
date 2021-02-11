@@ -18,7 +18,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-alpha1-13"
+__version__ = "1.1.1-alpha2-13"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -106,7 +106,6 @@ def configure_logging():
     # Basic logger configuration
     if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
         logger = logging.getLogger('')
-        # logger.setLevel(logging.DEBUG)
         if LOGGING_CONSOLE_LEVEL:
             # Add the console logger to default logger
             logger.addHandler(console)
@@ -216,17 +215,18 @@ def register_git_hook(hook_dir, hook_name, hook_code):
     Returns:
         None
     """
-    hook_code_dir = os.path.join(hook_dir, '%s.d' % hook_name)
-    create_dir(dir_name=hook_code_dir)
-    copy_file(src_file=os.path.join(PROGRAM_PATH, hook_code),
-              dest_file=os.path.join(hook_code_dir, hook_code))
+    # hook_code_dir = os.path.join(hook_dir, '%s.d' % hook_name)
+    # # Create the hook directory
+    # create_dir(dir_name=hook_code_dir)
+    # # Copy the hook executable to the hook directory
+    # copy_file(src_file=os.path.join(PROGRAM_PATH, hook_code),
+    #           dest_file=os.path.join(hook_code_dir, hook_code))
+    # # Copy the hook manager to the hook name
+    # copy_file(src_file=os.path.join(PROGRAM_PATH, GIT_HOOK),
+    #           dest_file=os.path.join(hook_dir, hook_name))
 
-    # hook_link = os.path.join(hook_dir, hook_name)
-    # if os.path.islink(hook_link):
-    #     os.remove(hook_link)
-    # os.symlink(GIT_HOOK, hook_link)
-    # Copy the git hook manager into the hook location
-    copy_file(src_file=os.path.join(PROGRAM_PATH, GIT_HOOK),
+    # Copy the hook executable to the hook name
+    copy_file(src_file=os.path.join(PROGRAM_PATH, hook_code),
               dest_file=os.path.join(hook_dir, hook_name))
 
 
@@ -388,21 +388,10 @@ def install():
         os.chdir(os.path.abspath(TARGET_DIR))
         # Install rcs keywords support in the repo
         install_git_keywords(repo_dir='')
-        # # Find any submodules registered in the repository
-        # dirmodule = os.path.join('.git', 'modules')
-        # field_name = ['gitdir', 'repodir']
-        # submodule_list = [dict(zip(field_name, (dirpath,
-        #                                         os.path.relpath(dirpath,
-        #                                                         dirmodule))))
-        #                   for (dirpath, _, filenames) in os.walk(dirmodule)
-        #                   for name in filenames if name == 'config']
-        # # Install keyword support to submodules found
-        # for module in submodule_list:
-        #     installgitkeywords(repo_dir=module['repodir'],
-        #                        git_dir=module['gitdir'])
 
     except:
-        sys.stderr.write('Exception caught\n')
+        logging.debug('Exception occured', exc_info=True)
+        # sys.stderr.write('Exception caught\n')
         raise
 
     # Return to the initial working directory

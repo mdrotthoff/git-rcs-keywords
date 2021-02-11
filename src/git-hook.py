@@ -20,7 +20,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-alpha1-13"
+__version__ = "1.1.1-alpha2-13"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -79,7 +79,6 @@ def configure_logging():
     # Basic logger configuration
     if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
         logger = logging.getLogger('')
-        # logger.setLevel(logging.DEBUG)
         if LOGGING_CONSOLE_LEVEL:
             # Add the console logger to default logger
             logger.addHandler(console)
@@ -87,9 +86,6 @@ def configure_logging():
 
 def process_hooks():
     """Main program.
-
-    Arguments:
-        argv: command line arguments
 
     Returns:
         Nothing
