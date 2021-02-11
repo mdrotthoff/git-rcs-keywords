@@ -19,7 +19,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-dev1-4"
+__version__ = "1.1.1-alpha1-9"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -35,8 +35,8 @@ LOGGING_CONSOLE_MSG_FORMAT = \
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 # LOGGING_FILE_LEVEL = None
-LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.DEBUG
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
@@ -378,7 +378,8 @@ def post_merge():
         for file_name in files:
             check_out_file(file_name=file_name)
             files_processed += 1
-            logging.info('Processed file %s', file_name)
+            sys.stderr.write('Smudged file %s\n' % file_name)
+            logging.info('Checked out file %s', file_name)
     logging.debug('Files processed: %s', files_processed)
 
     end_time = get_clock()

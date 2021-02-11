@@ -20,7 +20,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-dev1-4"
+__version__ = "1.1.1-alpha1-9"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -36,8 +36,8 @@ LOGGING_CONSOLE_MSG_FORMAT = \
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
 # LOGGING_FILE_LEVEL = None
-LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.DEBUG
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
@@ -125,14 +125,14 @@ def process_hooks():
             hook_call = subprocess.call([hook_program], shell=True)
             if hook_call > 0:
                 end_time = get_clock()
-                logging.info('Exiting - Hook program faild with error %s',
+                logging.info('Exiting - Hook program failed with error %s',
                              hook_call)
                 logging.info('Elapsed time: %f', (end_time - start_time))
                 exit(hook_call)
 
     end_time = get_clock()
     logging.debug('Hooks examined: %d', hook_count)
-    logging.debug('Hooks executedL %d', hook_executed)
+    logging.debug('Hooks executed: %d', hook_executed)
     logging.info('Elapsed time: %f', (end_time - start_time))
 
 
