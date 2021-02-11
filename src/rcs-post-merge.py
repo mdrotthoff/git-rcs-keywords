@@ -19,7 +19,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.0"
+__version__ = "1.1.1-dev1-3"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -42,7 +42,8 @@ LOGGING_FILE_LEVEL = logging.DEBUG
 # LOGGING_FILE_LEVEL = logging.CRITICAL
 LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
 LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-LOGGING_FILE_NAME = '.git-hook.post-merge.log'
+# LOGGING_FILE_NAME = '.git-hook.post-merge.log'
+LOGGING_FILE_NAME = '.git-hook.log'
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used

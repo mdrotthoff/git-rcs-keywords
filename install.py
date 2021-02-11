@@ -13,10 +13,12 @@ import os
 from shutil import copy2
 import subprocess
 import re
+import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "1.1.1-dev1-3"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -49,6 +51,65 @@ if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
+
+# LOGGING_CONSOLE_LEVEL = None
+# LOGGING_CONSOLE_LEVEL = logging.DEBUG
+# LOGGING_CONSOLE_LEVEL = logging.INFO
+# LOGGING_CONSOLE_LEVEL = logging.WARNING
+LOGGING_CONSOLE_LEVEL = logging.ERROR
+# LOGGING_CONSOLE_LEVEL = logging.CRITICAL
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
+
+# LOGGING_FILE_LEVEL = None
+LOGGING_FILE_LEVEL = logging.DEBUG
+# LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.WARNING
+# LOGGING_FILE_LEVEL = logging.ERROR
+# LOGGING_FILE_LEVEL = logging.CRITICAL
+LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
+LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
+# LOGGING_FILE_NAME = '.git-hook.install.log'
+LOGGING_FILE_NAME = '.git-hook.log'
+
+# Conditionally map a time function for performance measurement
+# depending on the version of Python used
+if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+    from time import perf_counter as get_clock
+else:
+    from time import clock as get_clock
+
+
+def configure_logging():
+    """Configure the logging service"""
+
+    # Configure the console logger
+    if LOGGING_CONSOLE_LEVEL:
+        console = logging.StreamHandler()
+        console.setLevel(LOGGING_CONSOLE_LEVEL)
+        console_formatter = logging.Formatter(
+            fmt=LOGGING_CONSOLE_MSG_FORMAT,
+            datefmt=LOGGING_CONSOLE_DATE_FORMAT,
+        )
+        console.setFormatter(console_formatter)
+
+    # Create an file based logger if a LOGGING_FILE_LEVEL is defined
+    if LOGGING_FILE_LEVEL:
+        logging.basicConfig(
+            level=LOGGING_FILE_LEVEL,
+            format=LOGGING_FILE_MSG_FORMAT,
+            datefmt=LOGGING_FILE_DATE_FORMAT,
+            filename=LOGGING_FILE_NAME,
+        )
+
+    # Basic logger configuration
+    if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
+        logger = logging.getLogger('')
+        logger.setLevel(logging.DEBUG)
+        if LOGGING_CONSOLE_LEVEL:
+            # Add the console logger to default logger
+            logger.addHandler(console)
 
 
 def check_for_cmd(cmd):
@@ -299,7 +360,7 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     os.chdir(local_dir)
 
 
-def main():
+def install():
     """Main program.
 
     Arguments:
@@ -308,7 +369,7 @@ def main():
     Returns:
         Nothing
     """
-    # # Set the start time for calculating elapsed time
+    # Capture the current working directory
     current_dir = os.getcwd()
 
     # Check if git is available.
@@ -322,18 +383,18 @@ def main():
         os.chdir(os.path.abspath(TARGET_DIR))
         # Install rcs keywords support in the repo
         installgitkeywords(repo_dir='')
-        # Find any submodules registered in the repository
-        dirmodule = os.path.join('.git', 'modules')
-        field_name = ['gitdir', 'repodir']
-        submodule_list = [dict(zip(field_name, (dirpath,
-                                                os.path.relpath(dirpath,
-                                                                dirmodule))))
-                          for (dirpath, _, filenames) in os.walk(dirmodule)
-                          for name in filenames if name == 'config']
-        # Install keyword support to submodules found
-        for module in submodule_list:
-            installgitkeywords(repo_dir=module['repodir'],
-                               git_dir=module['gitdir'])
+        # # Find any submodules registered in the repository
+        # dirmodule = os.path.join('.git', 'modules')
+        # field_name = ['gitdir', 'repodir']
+        # submodule_list = [dict(zip(field_name, (dirpath,
+        #                                         os.path.relpath(dirpath,
+        #                                                         dirmodule))))
+        #                   for (dirpath, _, filenames) in os.walk(dirmodule)
+        #                   for name in filenames if name == 'config']
+        # # Install keyword support to submodules found
+        # for module in submodule_list:
+        #     installgitkeywords(repo_dir=module['repodir'],
+        #                        git_dir=module['gitdir'])
 
     except:
         sys.stderr.write('Exception caught\n')
@@ -345,4 +406,12 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+    configure_logging()
+
+    START_TIME = get_clock()
+    logging.debug('Entered module')
+
+    install()
+
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))
