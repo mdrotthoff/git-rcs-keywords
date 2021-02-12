@@ -22,7 +22,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-beta1-14"
+__version__ = "1.1.1-rc1-16"
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -37,9 +37,9 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-# LOGGING_FILE_LEVEL = None
+LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
