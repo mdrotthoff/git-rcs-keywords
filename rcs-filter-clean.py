@@ -15,7 +15,8 @@ import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "__version__ = "1.1.1-18""
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -38,7 +39,8 @@ LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.CRITICAL
 LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
 LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-LOGGING_FILE_NAME = '.git-hook.clean.log'
+# LOGGING_FILE_NAME = '.git-hook.clean.log'
+LOGGING_FILE_NAME = '.git-hook.log'
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
@@ -73,7 +75,6 @@ def configure_logging():
     # Basic logger configuration
     if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
         logger = logging.getLogger('')
-        logger.setLevel(logging.DEBUG)
         if LOGGING_CONSOLE_LEVEL:
             # Add the console logger to default logger
             logger.addHandler(console)

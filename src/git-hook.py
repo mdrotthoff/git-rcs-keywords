@@ -19,7 +19,8 @@ import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "__version__ = "1.1.1-18""
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -34,15 +35,16 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-# LOGGING_FILE_LEVEL = None
-LOGGING_FILE_LEVEL = logging.DEBUG
+LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = logging.DEBUG
 # LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
 LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
 LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-LOGGING_FILE_NAME = '.git-hook.manager.log'
+# LOGGING_FILE_NAME = '.git-hook.manager.log'
+LOGGING_FILE_NAME = '.git-hook.log'
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
@@ -77,7 +79,6 @@ def configure_logging():
     # Basic logger configuration
     if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
         logger = logging.getLogger('')
-        logger.setLevel(logging.DEBUG)
         if LOGGING_CONSOLE_LEVEL:
             # Add the console logger to default logger
             logger.addHandler(console)
@@ -85,9 +86,6 @@ def configure_logging():
 
 def process_hooks():
     """Main program.
-
-    Arguments:
-        argv: command line arguments
 
     Returns:
         Nothing
@@ -123,14 +121,14 @@ def process_hooks():
             hook_call = subprocess.call([hook_program], shell=True)
             if hook_call > 0:
                 end_time = get_clock()
-                logging.info('Exiting - Hook program faild with error %s',
+                logging.info('Exiting - Hook program failed with error %s',
                              hook_call)
                 logging.info('Elapsed time: %f', (end_time - start_time))
                 exit(hook_call)
 
     end_time = get_clock()
     logging.debug('Hooks examined: %d', hook_count)
-    logging.debug('Hooks executedL %d', hook_executed)
+    logging.debug('Hooks executed: %d', hook_executed)
     logging.info('Elapsed time: %f', (end_time - start_time))
 
 

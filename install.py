@@ -13,26 +13,28 @@ import os
 from shutil import copy2
 import subprocess
 import re
+import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "__version__ = "1.1.1-18""
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
 
 GIT_HOOK = 'git-hook.py'
 
-GIT_DIRS = {'filter_dir': 'filters', 'event_dir': 'hooks'}
+GIT_DIRS = {'filter_dir': 'hooks', 'hooks_dir': 'hooks'}
 
-GIT_HOOKS = [{'event_name': 'post-commit',
-              'event_code': 'rcs-post-commit.py'},
-             {'event_name': 'post-checkout',
-              'event_code': 'rcs-post-checkout.py'},
-             {'event_name': 'post-merge',
-              'event_code': 'rcs-post-merge.py'},
-             {'event_name': 'post-rewrite',
-              'event_code': 'rcs-post-rewrite.py'}]
+GIT_HOOKS = [{'hook_name': 'post-commit',
+              'hook_code': 'rcs-post-commit.py'},
+             {'hook_name': 'post-checkout',
+              'hook_code': 'rcs-post-checkout.py'},
+             {'hook_name': 'post-merge',
+              'hook_code': 'rcs-post-merge.py'},
+             {'hook_name': 'post-rewrite',
+              'hook_code': 'rcs-post-rewrite.py'}]
 
 GIT_FILTERS = [{'filter_type': 'clean',
                 'filter_name': 'rcs-filter-clean.py'},
@@ -49,6 +51,64 @@ if len(sys.argv) > 1:
     TARGET_DIR = sys.argv[1]
 else:
     TARGET_DIR = ''
+
+# LOGGING_CONSOLE_LEVEL = None
+# LOGGING_CONSOLE_LEVEL = logging.DEBUG
+# LOGGING_CONSOLE_LEVEL = logging.INFO
+# LOGGING_CONSOLE_LEVEL = logging.WARNING
+LOGGING_CONSOLE_LEVEL = logging.ERROR
+# LOGGING_CONSOLE_LEVEL = logging.CRITICAL
+LOGGING_CONSOLE_MSG_FORMAT = \
+    '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
+LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
+
+LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = logging.DEBUG
+# LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.WARNING
+# LOGGING_FILE_LEVEL = logging.ERROR
+# LOGGING_FILE_LEVEL = logging.CRITICAL
+LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
+LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
+# LOGGING_FILE_NAME = '.git-hook.install.log'
+LOGGING_FILE_NAME = '.git-hook.log'
+
+# Conditionally map a time function for performance measurement
+# depending on the version of Python used
+if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
+    from time import perf_counter as get_clock
+else:
+    from time import clock as get_clock
+
+
+def configure_logging():
+    """Configure the logging service"""
+
+    # Configure the console logger
+    if LOGGING_CONSOLE_LEVEL:
+        console = logging.StreamHandler()
+        console.setLevel(LOGGING_CONSOLE_LEVEL)
+        console_formatter = logging.Formatter(
+            fmt=LOGGING_CONSOLE_MSG_FORMAT,
+            datefmt=LOGGING_CONSOLE_DATE_FORMAT,
+        )
+        console.setFormatter(console_formatter)
+
+    # Create an file based logger if a LOGGING_FILE_LEVEL is defined
+    if LOGGING_FILE_LEVEL:
+        logging.basicConfig(
+            level=LOGGING_FILE_LEVEL,
+            format=LOGGING_FILE_MSG_FORMAT,
+            datefmt=LOGGING_FILE_DATE_FORMAT,
+            filename=LOGGING_FILE_NAME,
+        )
+
+    # Basic logger configuration
+    if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
+        logger = logging.getLogger('')
+        if LOGGING_CONSOLE_LEVEL:
+            # Add the console logger to default logger
+            logger.addHandler(console)
 
 
 def check_for_cmd(cmd):
@@ -85,32 +145,32 @@ def check_for_cmd(cmd):
         exit(err.errno)
 
 
-def createdir(dirname):
+def create_dir(dir_name):
     """Create an OS directory
 
     Arguments:
-        dirname: Name of the subdirectory to create
+        dir_name: Name of the subdirectory to create
 
     Returns:
         None
     """
-    if os.path.isdir(dirname):
+    if os.path.isdir(dir_name):
         return
-    os.makedirs(dirname)
+    os.makedirs(dir_name)
 
 
-def copyfile(srcfile, destfile):
+def copy_file(src_file, dest_file):
     """Copy an existing source file to a target file name
 
     Arguments:
-        srcfile: Source file for use with the copy
-        destfile: Destination file for use with the copy
+        src_file: Source file for use with the copy
+        dest_file: Destination file for use with the copy
 
     Returns:
         None
     """
     # Copy the source file to the destination file
-    copy2(srcfile, destfile)
+    copy2(src_file, dest_file)
 
 
 def execute_cmd(cmd):
@@ -144,28 +204,33 @@ def execute_cmd(cmd):
     return cmd_stdout
 
 
-def registergitevent(eventdir, eventname, eventcode):
-    """Register a git event in the .git/hooks folder
+def register_git_hook(hook_dir, hook_name, hook_code):
+    """Register a git hook in the .git/hooks folder
 
     Arguments:
-        eventdir: Source file for use with the copy
-        eventname: Destination file for use with the copy
-        eventcode: Source program to be copied into the hook directory
+        hook_dir: Source file for use with the copy
+        hook_name: Destination file for use with the copy
+        hook_code: Source program to be copied into the hook directory
 
     Returns:
         None
     """
-    event_code_dir = os.path.join(eventdir, '%s.d' % eventname)
-    createdir(dirname=event_code_dir)
-    copyfile(srcfile=os.path.join(PROGRAM_PATH, eventcode),
-             destfile=os.path.join(event_code_dir, eventcode))
-    event_link = os.path.join(eventdir, eventname)
-    if os.path.islink(event_link):
-        os.remove(event_link)
-    os.symlink(GIT_HOOK, event_link)
+    # hook_code_dir = os.path.join(hook_dir, '%s.d' % hook_name)
+    # # Create the hook directory
+    # create_dir(dir_name=hook_code_dir)
+    # # Copy the hook executable to the hook directory
+    # copy_file(src_file=os.path.join(PROGRAM_PATH, hook_code),
+    #           dest_file=os.path.join(hook_code_dir, hook_code))
+    # # Copy the hook manager to the hook name
+    # copy_file(src_file=os.path.join(PROGRAM_PATH, GIT_HOOK),
+    #           dest_file=os.path.join(hook_dir, hook_name))
+
+    # Copy the hook executable to the hook name
+    copy_file(src_file=os.path.join(PROGRAM_PATH, hook_code),
+              dest_file=os.path.join(hook_dir, hook_name))
 
 
-def registerfilter(filter_dir, filter_type, filter_name):
+def register_filter(filter_dir, filter_type, filter_name):
     """Register a git filter for rcs-keywords functionality
 
     Arguments:
@@ -185,7 +250,7 @@ def registerfilter(filter_dir, filter_type, filter_name):
     execute_cmd(cmd=cmd)
 
 
-def registerfilepattern(git_dir):
+def register_file_pattern(git_dir):
     """Register the relevant file patterns for rcs-keywords functionality
 
     Arguments:
@@ -223,7 +288,7 @@ def registerfilepattern(git_dir):
     destination.close()
 
 
-def validategitrepo(repo_dir, git_dir='.git'):
+def validate_git_repo(repo_dir, git_dir='.git'):
     """Validate that the supplied directory is a git repository
 
     Arguments:
@@ -242,40 +307,41 @@ def validategitrepo(repo_dir, git_dir='.git'):
                         % repo_dir)
 
 
-def installgitkeywords(repo_dir, git_dir='.git'):
-    """Register a git event in the .git/hooks folder
+def install_git_keywords(repo_dir, git_dir='.git'):
+    """Install RCS Keywords support git
 
     Arguments:
-        eventdir: Source file for use with the copy
-        eventname: Destination file for use with the copy
-        eventcode: Source program to be copied into the hook directory
+        repo_dir: Root folder of the git repository
+        git_dir: Folder holding the git management files.  Typically .git
 
     Returns:
         None
     """
     # Create the core directories
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
-    createdir(dirname=filter_dir)
-    event_dir = os.path.join(git_dir, GIT_DIRS['event_dir'])
-    createdir(dirname=event_dir)
+    create_dir(dir_name=filter_dir)
+    hooks_dir = os.path.join(git_dir, GIT_DIRS['hooks_dir'])
+    create_dir(dir_name=hooks_dir)
 
     # Register the defined file patterns to the filters in the attributes files
-    registerfilepattern(git_dir)
+    register_file_pattern(git_dir)
 
-    # Copy the git event manager
-    copyfile(srcfile=os.path.join(PROGRAM_PATH, GIT_HOOK),
-             destfile=os.path.join(event_dir, GIT_HOOK))
+    # Copy the git hook manager
+    copy_file(src_file=os.path.join(PROGRAM_PATH, GIT_HOOK),
+              dest_file=os.path.join(hooks_dir, GIT_HOOK))
 
-    # Register the git event hooks
-    for git_event in GIT_HOOKS:
-        registergitevent(eventdir=event_dir,
-                         eventname=git_event['event_name'],
-                         eventcode=git_event['event_code'])
+    # Register the git hooks
+    for git_hook in GIT_HOOKS:
+        register_git_hook(hook_dir=hooks_dir,
+                          hook_name=git_hook['hook_name'],
+                          hook_code=git_hook['hook_code'])
 
     # Set up the filter programs for use
     for filter_def in GIT_FILTERS:
-        copyfile(srcfile=os.path.join(PROGRAM_PATH, filter_def['filter_name']),
-                 destfile=os.path.join(filter_dir, filter_def['filter_name']))
+        copy_file(src_file=os.path.join(PROGRAM_PATH,
+                                        filter_def['filter_name']),
+                  dest_file=os.path.join(filter_dir,
+                                         filter_def['filter_name']))
 
     # Change to the repository directory and de-register the
     # rcs-keywords filter
@@ -292,14 +358,14 @@ def installgitkeywords(repo_dir, git_dir='.git'):
     filter_dir = os.path.join(git_dir, GIT_DIRS['filter_dir'])
     for filter_def in GIT_FILTERS:
         # Register the defined filter program
-        registerfilter(filter_dir=os.path.join(git_dir,
-                                               GIT_DIRS['filter_dir']),
-                       filter_type=filter_def['filter_type'],
-                       filter_name=filter_def['filter_name'])
+        register_filter(filter_dir=os.path.join(git_dir,
+                                                GIT_DIRS['filter_dir']),
+                        filter_type=filter_def['filter_type'],
+                        filter_name=filter_def['filter_name'])
     os.chdir(local_dir)
 
 
-def main():
+def install():
     """Main program.
 
     Arguments:
@@ -308,7 +374,7 @@ def main():
     Returns:
         Nothing
     """
-    # # Set the start time for calculating elapsed time
+    # Capture the current working directory
     current_dir = os.getcwd()
 
     # Check if git is available.
@@ -317,26 +383,15 @@ def main():
     # Install the keyword support
     try:
         # Validate that a git repository was supplied
-        validategitrepo(repo_dir=TARGET_DIR)
+        validate_git_repo(repo_dir=TARGET_DIR)
         # Change to the repository directory
         os.chdir(os.path.abspath(TARGET_DIR))
         # Install rcs keywords support in the repo
-        installgitkeywords(repo_dir='')
-        # Find any submodules registered in the repository
-        dirmodule = os.path.join('.git', 'modules')
-        field_name = ['gitdir', 'repodir']
-        submodule_list = [dict(zip(field_name, (dirpath,
-                                                os.path.relpath(dirpath,
-                                                                dirmodule))))
-                          for (dirpath, _, filenames) in os.walk(dirmodule)
-                          for name in filenames if name == 'config']
-        # Install keyword support to submodules found
-        for module in submodule_list:
-            installgitkeywords(repo_dir=module['repodir'],
-                               git_dir=module['gitdir'])
+        install_git_keywords(repo_dir='')
 
     except:
-        sys.stderr.write('Exception caught\n')
+        logging.debug('Exception occured', exc_info=True)
+        # sys.stderr.write('Exception caught\n')
         raise
 
     # Return to the initial working directory
@@ -345,4 +400,12 @@ def main():
 
 # Execute the main function
 if __name__ == '__main__':
-    main()
+    configure_logging()
+
+    START_TIME = get_clock()
+    logging.debug('Entered module')
+
+    install()
+
+    END_TIME = get_clock()
+    logging.info('Elapsed time: %f', (END_TIME - START_TIME))

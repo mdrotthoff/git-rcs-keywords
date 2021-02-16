@@ -1,8 +1,0 @@
-author:         'David Rotthoff'
-email:          'drotthoff@gmail.com'
-status:         'Development'
-version:
-  prefix:       'git-rcs-keywords'
-  major:        0
-  minor:        9
-  build:        0

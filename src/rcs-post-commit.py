@@ -18,7 +18,8 @@ import logging
 
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
-__version__ = "git-rcs-keywords-1.1.0"
+__project__ = "git-rcs-keywords"
+__version__ = "__version__ = "1.1.1-18""
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -33,15 +34,16 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-# LOGGING_FILE_LEVEL = None
+LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-LOGGING_FILE_LEVEL = logging.INFO
+# LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
 LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
 LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-LOGGING_FILE_NAME = '.git-hook.post-commit.log'
+# LOGGING_FILE_NAME = '.git-hook.post-commit.log'
+LOGGING_FILE_NAME = '.git-hook.log'
 
 # Conditionally map a time function for performance measurement
 # depending on the version of Python used
@@ -75,7 +77,6 @@ def configure_logging():
     # Basic logger configuration
     if LOGGING_CONSOLE_LEVEL or LOGGING_FILE_LEVEL:
         logger = logging.getLogger('')
-        logger.setLevel(logging.DEBUG)
         if LOGGING_CONSOLE_LEVEL:
             # Add the console logger to default logger
             logger.addHandler(console)
@@ -384,6 +385,8 @@ def post_commit():
         for file_name in committed_files:
             check_out_file(file_name=file_name)
             files_processed += 1
+            sys.stderr.write('Smudged file %s\n' % file_name)
+            logging.info('Checked out file %s', file_name)
 
     end_time = get_clock()
     logging.debug('files processed: %s', files_processed)
