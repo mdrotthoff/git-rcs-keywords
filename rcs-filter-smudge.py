@@ -17,7 +17,7 @@ import logging
 __author__ = "David Rotthoff"
 __email__ = "drotthoff@gmail.com"
 __project__ = "git-rcs-keywords"
-__version__ = "1.1.1-rc1-16"
+__version__ = "__version__ = "1.1.1-17""
 __date__ = "2021-02-07 10:51:24"
 __credits__ = []
 __status__ = "Production"
@@ -359,20 +359,24 @@ def smudge():
                 line = hash_regex.sub(regex_dict['git_hash'], line)
             sys.stdout.write(line)
     except UnicodeDecodeError as err:
-        logging.info('UnicodeDecodeError with file %s',
+        logging.info('UnicodeDecodeError with file %s on line %d',
                      file_name,
+                     line_count,
                      exc_info=True)
         logging.debug('Generic exception variables: %s', vars(err))
-        logging.error('Unicode error in file %s - Keywords not replaced',
-                      file_name)
+        logging.error('Unicode error in file %s line %d - Keywords not replaced',
+                      file_name,
+                      line_count)
         exit(5)
     except Exception as err:
-        logging.info('Generic exception smudging file %s',
+        logging.info('Generic exception smudging file %s on line %d',
                      file_name,
+                     line_count,
                      exc_info=True)
         logging.debug('Generic exception variables: %s', vars(err))
-        logging.error('Exception smudging file %s - Keywords not replaced',
-                      file_name)
+        logging.error('Exception smudging file %s on line %d - Keywords not replaced',
+                      file_name,
+                      line_count)
         exit(2)
 
     end_time = get_clock()
