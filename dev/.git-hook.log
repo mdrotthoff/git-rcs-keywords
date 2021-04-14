@@ -1,0 +1,125 @@
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:<module>:183: Entered module
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:56: Start environment variables
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: COLORTERM: truecolor
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: DBUS_SESSION_BUS_ADDRESS: unix:abstract=/tmp/dbus-Xkmu90jgOx,guid=e3b9f1afbd1321de1c8704af60184000
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: DISPLAY: :1
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWDIRTYSTATE: True
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWSTASHSTATE: True
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWUNTRACKEDFILES: True
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWUPSTREAM: auto
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GJS_DEBUG_OUTPUT: stderr
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GJS_DEBUG_TOPICS: JS ERROR;JS LOG
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_DESKTOP_SESSION_ID: this-is-deprecated
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_SHELL_SESSION_MODE: classic
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_TERMINAL_SCREEN: /org/gnome/Terminal/screen/535e2956_a260_4940_af0a_2236de5ee2f9
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_TERMINAL_SERVICE: :1.77
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: HISTCONTROL: ignoredups
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: HISTSIZE: 1000
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: HOME: /home/mdrotthoff
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: HOSTNAME: ansible.mdrotthoff.austin.vauto.com
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: LANG: en_US.UTF-8
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: LESSOPEN: ||/usr/bin/lesspipe.sh %s
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: LOGNAME: mdrotthoff
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: LS_COLORS: rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.axa=01;36:*.oga=01;36:*.spx=01;36:*.xspf=01;36:
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: MAIL: /var/spool/mail/mdrotthoff
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: OLDPWD: /home/mdrotthoff/git-rcs-keywords
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: PATH: /home/mdrotthoff/bin:/home/mdrotthoff/bin:/home/mdrotthoff/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: PS1: \nHost: \[\033[1;33m\][${HOSTNAME}]\[\033[0m\]\nGit:  \[\033[1;31m\][$(__git_ps1 "%s")]\[\033[0m\]\nDir:  \[\033[0;32m\][${PWD}]\[\033[0m\]\nUser: \[\033[0;36m\][${USER}]\[\033[0m\]\nCmd:  
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: PS1_old: \nHost: \[\033[1;33m\][${HOSTNAME}]\[\033[0m\]\nGit:  \[\033[1;31m\][$(__git_ps1 "%s")]\[\033[0m\]\nDir:  \[\033[0;32m\][${PWD}]\[\033[0m\]\nUser: \[\033[0;36m\][${USER}]\[\033[0m\]\nCmd:  
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: PWD: /home/mdrotthoff/git-rcs-keywords/dev
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: QT_IM_MODULE: ibus
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: SESSION_MANAGER: local/unix:@/tmp/.ICE-unix/1724,unix/unix:/tmp/.ICE-unix/1724
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: SHELL: /bin/bash
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: SHLVL: 3
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: SSH_AGENT_PID: 1774
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: SSH_AUTH_SOCK: /tmp/ssh-QelCprfBC9Ux/agent.1724
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: TERM: xterm-256color
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: USER: mdrotthoff
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: VTE_VERSION: 5204
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: WINDOWPATH: 1
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XAUTHORITY: /home/mdrotthoff/.Xauthority
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_CURRENT_DESKTOP: GNOME
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_DATA_DIRS: /home/mdrotthoff/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_MENU_PREFIX: gnome-
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_RUNTIME_DIR: /run/user/1000
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_SEAT: seat0
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_SESSION_ID: 2
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XDG_VTNR: 1
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: XMODIFIERS: @im=ibus
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:58: _: ./rcs-filter-clean.py
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:59: End environment variables
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:61: Start command parameters
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:62: Argument count: 1
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:64: Argument 0: ./rcs-filter-clean.py
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:dump_environment:65: End command parameters
+2021-02-17 13.07.44:INFO:rcs-filter-clean:clean:110: Entered function
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:clean:111: sys.argv parameter count 1
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:clean:112: sys.argv parameters ['./rcs-filter-clean.py']
+2021-02-17 13.07.44:INFO:rcs-filter-clean:clean:119: Processing file: <Unknown file>
+2021-02-17 13.07.44:DEBUG:rcs-filter-clean:clean:174: Line count: 191
+2021-02-17 13.07.44:INFO:rcs-filter-clean:clean:175: Elapsed time: 0.000000
+2021-02-17 13.07.44:INFO:rcs-filter-clean:<module>:191: Elapsed time: 0.000000
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:<module>:183: Entered module
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:56: Start environment variables
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: COLORTERM: truecolor
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: DBUS_SESSION_BUS_ADDRESS: unix:abstract=/tmp/dbus-Xkmu90jgOx,guid=e3b9f1afbd1321de1c8704af60184000
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: DISPLAY: :1
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWDIRTYSTATE: True
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWSTASHSTATE: True
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWUNTRACKEDFILES: True
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GIT_PS1_SHOWUPSTREAM: auto
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GJS_DEBUG_OUTPUT: stderr
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GJS_DEBUG_TOPICS: JS ERROR;JS LOG
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_DESKTOP_SESSION_ID: this-is-deprecated
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_SHELL_SESSION_MODE: classic
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_TERMINAL_SCREEN: /org/gnome/Terminal/screen/535e2956_a260_4940_af0a_2236de5ee2f9
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: GNOME_TERMINAL_SERVICE: :1.77
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: HISTCONTROL: ignoredups
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: HISTSIZE: 1000
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: HOME: /home/mdrotthoff
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: HOSTNAME: ansible.mdrotthoff.austin.vauto.com
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: LANG: en_US.UTF-8
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: LESSOPEN: ||/usr/bin/lesspipe.sh %s
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: LOGNAME: mdrotthoff
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: LS_COLORS: rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=01;05;37;41:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.axv=01;35:*.anx=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=01;36:*.au=01;36:*.flac=01;36:*.mid=01;36:*.midi=01;36:*.mka=01;36:*.mp3=01;36:*.mpc=01;36:*.ogg=01;36:*.ra=01;36:*.wav=01;36:*.axa=01;36:*.oga=01;36:*.spx=01;36:*.xspf=01;36:
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: MAIL: /var/spool/mail/mdrotthoff
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: OLDPWD: /home/mdrotthoff/git-rcs-keywords
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: PATH: /home/mdrotthoff/bin:/home/mdrotthoff/bin:/home/mdrotthoff/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: PS1: \nHost: \[\033[1;33m\][${HOSTNAME}]\[\033[0m\]\nGit:  \[\033[1;31m\][$(__git_ps1 "%s")]\[\033[0m\]\nDir:  \[\033[0;32m\][${PWD}]\[\033[0m\]\nUser: \[\033[0;36m\][${USER}]\[\033[0m\]\nCmd:  
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: PS1_old: \nHost: \[\033[1;33m\][${HOSTNAME}]\[\033[0m\]\nGit:  \[\033[1;31m\][$(__git_ps1 "%s")]\[\033[0m\]\nDir:  \[\033[0;32m\][${PWD}]\[\033[0m\]\nUser: \[\033[0;36m\][${USER}]\[\033[0m\]\nCmd:  
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: PWD: /home/mdrotthoff/git-rcs-keywords/dev
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: QT_IM_MODULE: ibus
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: SESSION_MANAGER: local/unix:@/tmp/.ICE-unix/1724,unix/unix:/tmp/.ICE-unix/1724
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: SHELL: /bin/bash
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: SHLVL: 3
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: SSH_AGENT_PID: 1774
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: SSH_AUTH_SOCK: /tmp/ssh-QelCprfBC9Ux/agent.1724
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: TERM: xterm-256color
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: USER: mdrotthoff
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: VTE_VERSION: 5204
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: WINDOWPATH: 1
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XAUTHORITY: /home/mdrotthoff/.Xauthority
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_CURRENT_DESKTOP: GNOME
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_DATA_DIRS: /home/mdrotthoff/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_MENU_PREFIX: gnome-
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_RUNTIME_DIR: /run/user/1000
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_SEAT: seat0
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_SESSION_ID: 2
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XDG_VTNR: 1
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: XMODIFIERS: @im=ibus
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:58: _: ./rcs-filter-clean.py
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:59: End environment variables
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:61: Start command parameters
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:62: Argument count: 2
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:64: Argument 0: ./rcs-filter-clean.py
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:64: Argument 1: rcs-filter-clean.py
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:dump_environment:65: End command parameters
+2021-02-17 13.08.17:INFO:rcs-filter-clean:clean:110: Entered function
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:clean:111: sys.argv parameter count 2
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:clean:112: sys.argv parameters ['./rcs-filter-clean.py', 'rcs-filter-clean.py']
+2021-02-17 13.08.17:INFO:rcs-filter-clean:clean:119: Processing file: rcs-filter-clean.py
+2021-02-17 13.08.17:DEBUG:rcs-filter-clean:clean:174: Line count: 191
+2021-02-17 13.08.17:INFO:rcs-filter-clean:clean:175: Elapsed time: 0.000000
+2021-02-17 13.08.17:INFO:rcs-filter-clean:<module>:191: Elapsed time: 0.000000
+2021-02-17 13.11.13:DEBUG:rcs-filter-smudge:<module>:405: Entered module
+2021-02-17 13.11.13:DEBUG:rcs-filter-smudge:dump_environment:56: Start environment variables

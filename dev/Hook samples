@@ -1,0 +1,20 @@
+-- No samples
+post-checkout
+post-commit
+post-merge
+post-rewrite
+
+-- Samples
+applypatch-msg.sample
+commit-msg.sample
+fsmonitor-watchman.sample
+post-update
+pre-applypatch.sample
+pre-commit.sample
+pre-merge-commit.sample
+pre-push.sample
+pre-rebase.sample
+pre-receive.sample
+prepare-commit-msg.sample
+push-to-checkout.sample
+update.sample

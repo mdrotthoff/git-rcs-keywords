@@ -34,9 +34,9 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
@@ -51,6 +51,20 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
     from time import perf_counter as get_clock
 else:
     from time import clock as get_clock
+
+
+def dump_environment():
+    """Dump the execution environment"""
+    logging.debug('Start environment variables')
+    for key in sorted(os.environ.keys()):
+        logging.debug('%s: %s' % (key, os.environ[key]))
+    logging.debug('End environment variables')
+
+    logging.debug('Start command parameters')
+    logging.debug('Argument count: %d' % len(sys.argv))
+    for cnt, argument in enumerate(sys.argv):
+        logging.debug('Argument %d: %s' % (cnt, argument))
+    logging.debug('End command parameters')
 
 
 def configure_logging():
@@ -302,48 +316,48 @@ def remove_modified_files(files):
     return files
 
 
-def check_out_file(file_name):
-    """Checkout file that was been modified by the latest merge.
-
-    Arguments:
-        file_name -- the file name to be checked out for smudging
-
-    Returns:
-        Nothing.
-    """
-
-    start_time = get_clock()
-    logging.info('Entered function')
-    logging.debug('file_name: %s', file_name)
-
-    # Remove the file if it currently exists
-    try:
-        os.remove(file_name)
-    except OSError as err:
-        # Ignore a file not found error, it was being removed anyway
-        if err.errno != errno.ENOENT:
-            end_time = get_clock()
-            logging.info(
-                "File removal of %s caused on OS error %d! -- Exiting.",
-                file_name,
-                err.errno,
-                exc_info=True
-            )
-            logging.error(
-                "File removal %s caused OS error %d! -- Exiting.",
-                file_name,
-                err.errno
-            )
-            logging.info('Elapsed time: %f', (end_time - start_time))
-            exit(err.errno)
-
-    cmd = ['git', 'checkout', '-f', '%s' % file_name]
-
-    # Check out the file so that it is smudged
-    execute_cmd(cmd=cmd, cmd_source='check_out_files')
-
-    end_time = get_clock()
-    logging.info('Elapsed time: %f', (end_time - start_time))
+# def check_out_file(file_name):
+#     """Checkout file that was been modified by the latest merge.
+#
+#     Arguments:
+#         file_name -- the file name to be checked out for smudging
+#
+#     Returns:
+#         Nothing.
+#     """
+#
+#     start_time = get_clock()
+#     logging.info('Entered function')
+#     logging.debug('file_name: %s', file_name)
+#
+#     # Remove the file if it currently exists
+#     try:
+#         os.remove(file_name)
+#     except OSError as err:
+#         # Ignore a file not found error, it was being removed anyway
+#         if err.errno != errno.ENOENT:
+#             end_time = get_clock()
+#             logging.info(
+#                 "File removal of %s caused on OS error %d! -- Exiting.",
+#                 file_name,
+#                 err.errno,
+#                 exc_info=True
+#             )
+#             logging.error(
+#                 "File removal %s caused OS error %d! -- Exiting.",
+#                 file_name,
+#                 err.errno
+#             )
+#             logging.info('Elapsed time: %f', (end_time - start_time))
+#             exit(err.errno)
+#
+#     cmd = ['git', 'checkout', '-f', '%s' % file_name]
+#
+#     # Check out the file so that it is smudged
+#     execute_cmd(cmd=cmd, cmd_source='check_out_files')
+#
+#     end_time = get_clock()
+#     logging.info('Elapsed time: %f', (end_time - start_time))
 
 
 def post_merge():
@@ -358,6 +372,7 @@ def post_merge():
 
     start_time = get_clock()
     logging.info('Entered function')
+    logging.info('sys.argv: %s', sys.argv)
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
@@ -375,10 +390,10 @@ def post_merge():
     if files:
         files.sort()
         for file_name in files:
-            check_out_file(file_name=file_name)
-            files_processed += 1
-            sys.stderr.write('Smudged file %s\n' % file_name)
+            # check_out_file(file_name=file_name)
+            # sys.stderr.write('Smudged file %s\n' % file_name)
             logging.info('Checked out file %s', file_name)
+            files_processed += 1
     logging.debug('Files processed: %s', files_processed)
 
     end_time = get_clock()
@@ -391,6 +406,9 @@ if __name__ == '__main__':
 
     START_TIME = get_clock()
     logging.debug('Entered module')
+
+    if LOGGING_FILE_LEVEL and LOGGING_FILE_LEVEL <= logging.DEBUG:
+        dump_environment()
 
     post_merge()
 

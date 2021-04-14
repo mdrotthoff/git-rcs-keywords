@@ -27,14 +27,77 @@ GIT_HOOK = 'git-hook.py'
 
 GIT_DIRS = {'filter_dir': 'hooks', 'hooks_dir': 'hooks'}
 
-GIT_HOOKS = [{'hook_name': 'post-commit',
-              'hook_code': 'rcs-post-commit.py'},
-             {'hook_name': 'post-checkout',
-              'hook_code': 'rcs-post-checkout.py'},
-             {'hook_name': 'post-merge',
-              'hook_code': 'rcs-post-merge.py'},
-             {'hook_name': 'post-rewrite',
-              'hook_code': 'rcs-post-rewrite.py'}]
+GIT_HOOKS =\
+    [
+        {
+            'hook_name': 'post-commit',
+            'hook_code': 'rcs-post-commit.py'
+        },
+        {
+            'hook_name': 'post-checkout',
+            'hook_code': 'rcs-post-checkout.py'
+        },
+        {
+            'hook_name': 'post-merge',
+            'hook_code': 'rcs-post-merge.py'
+        },
+        {
+            'hook_name': 'post-rewrite',
+            'hook_code': 'rcs-post-rewrite.py'
+        },
+        {
+            'hook_name': 'applypatch-msg',
+            'hook_code': 'rcs-applypatch-msg.py'
+        },
+        {
+            'hook_name': 'commit-msg',
+            'hook_code': 'rcs-commit-msg.py'
+        },
+        {
+            'hook_name': 'post-update',
+            'hook_code': 'rcs-post-update.py'
+        },
+        {
+            'hook_name': 'pre-applypatch',
+            'hook_code': 'rcs-pre-applypatch.py'
+        },
+        {
+            'hook_name': 'pre-commit',
+            'hook_code': 'rcs-pre-commit.py'
+        },
+        {
+            'hook_name': 'pre-push',
+            'hook_code': 'rcs-pre-push.py'
+        },
+        {
+            'hook_name': 'pre-rebase',
+            'hook_code': 'rcs-pre-rebase.py'
+        },
+        {
+            'hook_name': 'prepare-commit-msg',
+            'hook_code': 'rcs-prepare-commit-msg.py'
+        },
+        {
+            'hook_name': 'update',
+            'hook_code': 'rcs-update.py'
+        },
+        {
+            'hook_name': 'fsmonitor-watchman',
+            'hook_code': 'rcs-fsmonitor-watchman.py'
+        },
+        {
+            'hook_name': 'pre-merge-commit',
+            'hook_code': 'rcs-pre-merge-commit.py'
+        },
+        {
+            'hook_name': 'pre-receive',
+            'hook_code': 'rcs-pre-receive.py'
+        },
+        {
+            'hook_name': 'push-to-checkout',
+            'hook_code': 'rcs-push-to-checkout.py'
+        },
+    ]
 
 GIT_FILTERS = [{'filter_type': 'clean',
                 'filter_name': 'rcs-filter-clean.py'},

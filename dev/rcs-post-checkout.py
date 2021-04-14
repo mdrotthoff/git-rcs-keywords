@@ -2,12 +2,15 @@
 # # -*- coding: utf-8 -*
 
 """
-rcs-keywords-post-merge
+rcs-keywords-post-checkout
 
 This module provides code to act as an event hook for the git
-post-merge event.  It detects which files have been changed
-and forces the file to be checked back out within the
-repository once the commit data is available.
+post-checkout event.  It detects which files have been changed
+and forces the files to be checked back out within the
+repository.  If the checkout event is  a file based event, the
+hook exits without doing any work.  If the event is a branch
+based event, the files are checked again after the the commit
+information is available after the merge has completed.
 """
 
 import sys
@@ -34,15 +37,15 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
 LOGGING_FILE_MSG_FORMAT = LOGGING_CONSOLE_MSG_FORMAT
 LOGGING_FILE_DATE_FORMAT = LOGGING_CONSOLE_DATE_FORMAT
-# LOGGING_FILE_NAME = '.git-hook.post-merge.log'
+# LOGGING_FILE_NAME = '.git-hook.post-checkout.log'
 LOGGING_FILE_NAME = '.git-hook.log'
 
 # Conditionally map a time function for performance measurement
@@ -51,6 +54,20 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
     from time import perf_counter as get_clock
 else:
     from time import clock as get_clock
+
+
+def dump_environment():
+    """Dump the execution environment"""
+    logging.debug('Start environment variables')
+    for key in sorted(os.environ.keys()):
+        logging.debug('%s: %s' % (key, os.environ[key]))
+    logging.debug('End environment variables')
+
+    logging.debug('Start command parameters')
+    logging.debug('Argument count: %d' % len(sys.argv))
+    for cnt, argument in enumerate(sys.argv):
+        logging.debug('Argument %d: %s' % (cnt, argument))
+    logging.debug('End command parameters')
 
 
 def configure_logging():
@@ -88,13 +105,14 @@ def execute_cmd(cmd, cmd_source=None):
     Arguments:
         cmd -- string or list of strings of commands. A single string may
                not contain spaces.
-        cmd_source -- The function requesting the program execution
+        cmd_source -- The function requesting the program execution.
                       Default value of None.
 
     Returns:
         Process stdout file handle
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
     logging.debug('cmd: %s', cmd)
@@ -113,17 +131,15 @@ def execute_cmd(cmd, cmd_source=None):
                                       stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE)
         (cmd_stdout, cmd_stderr) = cmd_handle.communicate()
+        logging.info('Command %s successfully executed', cmd)
         if cmd_stderr:
             for line in cmd_stderr.strip().decode("utf-8").splitlines():
                 logging.info("stderr line: %s", line)
-
     # If the command fails, notify the user and exit immediately
     except subprocess.CalledProcessError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s called by %s failed! -- Exiting.",
-            cmd,
-            cmd_source,
+            "Program %s call failed! -- Exiting.", cmd,
             exc_info=True
         )
         logging.error(
@@ -134,16 +150,13 @@ def execute_cmd(cmd, cmd_source=None):
     except OSError as err:
         end_time = get_clock()
         logging.info(
-            "Program %s called by %s caused on OS error %s! -- Exiting.",
+            "Program %s caused on OS error! -- Exiting.",
             cmd,
-            cmd_source,
-            err.errno,
             exc_info=True
         )
         logging.error(
             "Program %s caused OS error %s! -- Exiting.",
-            cmd,
-            err.errno
+            cmd, err.errno
         )
         logging.info('Elapsed time: %f', (end_time - start_time))
         raise
@@ -167,6 +180,7 @@ def check_for_cmd(cmd):
         Nothing
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
     logging.debug('cmd: %s', cmd)
@@ -196,6 +210,7 @@ def git_ls_files():
         A list of filenames.
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.debug('Entered function')
 
@@ -211,45 +226,69 @@ def git_ls_files():
     return cmd_stdout
 
 
-def get_modified_files():
-    """Find files that were modified by the merge.
+def get_checkout_files(first_hash, second_hash):
+    """Find files that have been modified over the range of the supplied
+       commit hashes.
 
     Arguments:
-        None
+        first_hash - The starting hash of the range
+        second_hash - The ending hash of the range
 
     Returns:
         A list of filenames.
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.debug('Entered function')
+    logging.debug('First hash: %s', first_hash)
+    logging.debug('Second hash: %s', second_hash)
 
-    modified_file_list = []
-    cmd = ['git', 'diff-tree', 'ORIG_HEAD', 'HEAD', '--name-only', '-r',
-           '--diff-filter=ACMRT']
+    file_list = []
+
+    # Get the list of files impacted.  If argv[1] and argv[2] are the same
+    # commit, then pass the value only once otherwise the file list is not
+    # returned
+    if first_hash == second_hash:
+        cmd = ['git',
+               'diff-tree',
+               '-r',
+               '--name-only',
+               '--no-commit-id',
+               '--diff-filter=ACMRT',
+               first_hash]
+    else:
+        cmd = ['git',
+               'diff-tree',
+               '-r',
+               '--name-only',
+               '--no-commit-id',
+               '--diff-filter=ACMRT',
+               first_hash,
+               second_hash]
 
     # Fetch the list of files modified by the last commit
-    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='get_modified_files')
+    cmd_stdout = execute_cmd(cmd=cmd, cmd_source='get_checkout_files')
 
     # Convert the stdout stream to a list of files
-    modified_file_list = cmd_stdout.decode('utf8').splitlines()
+    file_list = cmd_stdout.decode('utf8').splitlines()
 
     # Deal with unmodified repositories
-    if modified_file_list and modified_file_list[0] == 'clean':
+    if file_list and file_list[0] == 'clean':
         end_time = get_clock()
-        logging.info('No modified files found')
+        logging.info('No files to process')
         logging.info('Elapsed time: %f', (end_time - start_time))
         exit(0)
 
     # Only return regular files.
-    modified_file_list = [i for i in modified_file_list if os.path.isfile(i)]
+    file_list = [i for i in file_list if os.path.isfile(i)]
 
     end_time = get_clock()
-    logging.debug('modified_file_list: %s', modified_file_list)
+    logging.debug('Returning file list to process %s', file_list)
     logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
-    return modified_file_list
+    return file_list
 
 
 def remove_modified_files(files):
@@ -263,6 +302,7 @@ def remove_modified_files(files):
         A list of files to checkout that do not have pending changes.
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
     logging.debug('files: %s', files)
@@ -274,13 +314,11 @@ def remove_modified_files(files):
 
     # Convert the stream output to a list of output lines
     modified_files_list = cmd_stdout.decode('utf8').splitlines()
-    logging.debug('modified files list: %s', modified_files_list)
 
     # Deal with unmodified repositories
     if not modified_files_list:
         end_time = get_clock()
         logging.info('No modified files found')
-        logging.debug('files: %s', files)
         logging.info('Elapsed time: %f', (end_time - start_time))
         return files
 
@@ -288,98 +326,108 @@ def remove_modified_files(files):
     # remove any double quotes
     modified_files_list = [l.split(None, 1)[-1].strip('"')
                            for l in modified_files_list]
-    logging.debug('modified files list: %s', modified_files_list)
+    logging.debug('Modified files list: %s', modified_files_list)
 
     # Remove any modified files from the list of files to process
     if modified_files_list:
         files = [f for f in files if f not in modified_files_list]
 
     end_time = get_clock()
-    logging.debug('cleaned files list: %s', files)
+    logging.debug('Modified file list %s', files)
     logging.info('Elapsed time: %f', (end_time - start_time))
 
     # Return from the function
     return files
 
 
-def check_out_file(file_name):
-    """Checkout file that was been modified by the latest merge.
-
-    Arguments:
-        file_name -- the file name to be checked out for smudging
-
-    Returns:
-        Nothing.
-    """
-
-    start_time = get_clock()
-    logging.info('Entered function')
-    logging.debug('file_name: %s', file_name)
-
-    # Remove the file if it currently exists
-    try:
-        os.remove(file_name)
-    except OSError as err:
-        # Ignore a file not found error, it was being removed anyway
-        if err.errno != errno.ENOENT:
-            end_time = get_clock()
-            logging.info(
-                "File removal of %s caused on OS error %d! -- Exiting.",
-                file_name,
-                err.errno,
-                exc_info=True
-            )
-            logging.error(
-                "File removal %s caused OS error %d! -- Exiting.",
-                file_name,
-                err.errno
-            )
-            logging.info('Elapsed time: %f', (end_time - start_time))
-            exit(err.errno)
-
-    cmd = ['git', 'checkout', '-f', '%s' % file_name]
-
-    # Check out the file so that it is smudged
-    execute_cmd(cmd=cmd, cmd_source='check_out_files')
-
-    end_time = get_clock()
-    logging.info('Elapsed time: %f', (end_time - start_time))
+# def check_out_file(file_name):
+#     """Checkout file that was been modified by the latest branch checkout.
+#
+#     Arguments:
+#         file_name -- the file name to be checked out for smudging
+#
+#     Returns:
+#         Nothing.
+#     """
+#
+#     # Display input parameters
+#     start_time = get_clock()
+#     logging.info('Entered function')
+#     logging.debug('File_name: %s', file_name)
+#
+#     # Remove the file if it currently exists
+#     try:
+#         os.remove(file_name)
+#         logging.info('Removed file %s', file_name)
+#     except OSError as err:
+#         # Ignore a file not found error, it was being removed anyway
+#         if err.errno != errno.ENOENT:
+#             end_time = get_clock()
+#             logging.error('Unable to remove file %s for re-checkout',
+#                           file_name)
+#             logging.info('Elapsed time: %f', (end_time - start_time))
+#             exit(err.errno)
+#         else:
+#             logging.info('File %s not found to remove', file_name)
+#
+#     cmd = ['git', 'checkout', '-f', '%s' % file_name]
+#
+#     # Check out the file so that it is smudged
+#     execute_cmd(cmd=cmd, cmd_source='check_out_files')
+#     logging.info('Checked out file %s', file_name)
+#
+#     end_time = get_clock()
+#     logging.info('Elapsed time: %f', (end_time - start_time))
 
 
-def post_merge():
+def post_checkout():
     """Main program.
 
     Arguments:
-        None
+        argv: command line arguments
 
     Returns:
         Nothing
     """
 
+    # Display input parameters
     start_time = get_clock()
     logging.info('Entered function')
+    logging.info('sys.argv: %s', sys.argv)
+
+    # If argv[3] is zero (file checkout rather than branch checkout),
+    # then exit the hook as there is no need to re-smudge the file.
+    # (The commit info was already available)  If the vallue is 1, then
+    # this is a branch checkout and commit info was not available at the
+    # time the file was checkted out.
+    if sys.argv[3] == '0':
+        end_time = get_clock()
+        logging.debug('File checkout - no work required')
+        logging.info('Elapsed time: %f', (end_time - start_time))
+        exit(0)
 
     # Check if git is available.
     check_for_cmd(cmd=['git', '--version'])
 
-    # Get the list of modified files
-    files = get_modified_files()
-    logging.debug('Modified file list: %s', files)
+    # Get the list of files impacted.
+    files = get_checkout_files(first_hash=sys.argv[1], second_hash=sys.argv[2])
+    logging.debug('Files to checkout: %s', files)
 
     # Filter the list of modified files to exclude those modified since
     # the commit
     files = remove_modified_files(files=files)
+    logging.debug('Non-modified files: %s', files)
 
-    # Process the remaining file list
+    # Force a checkout of the remaining file list
     files_processed = 0
     if files:
         files.sort()
         for file_name in files:
-            check_out_file(file_name=file_name)
-            files_processed += 1
-            sys.stderr.write('Smudged file %s\n' % file_name)
+            # logging.info('Checking out file %s', file_name)
+            # check_out_file(file_name=file_name)
+            # sys.stderr.write('Smudged file %s\n' % file_name)
             logging.info('Checked out file %s', file_name)
-    logging.debug('Files processed: %s', files_processed)
+            files_processed += 1
 
     end_time = get_clock()
     logging.info('Elapsed time: %f', (end_time - start_time))
@@ -392,7 +440,10 @@ if __name__ == '__main__':
     START_TIME = get_clock()
     logging.debug('Entered module')
 
-    post_merge()
+    if LOGGING_FILE_LEVEL and LOGGING_FILE_LEVEL <= logging.DEBUG:
+        dump_environment()
+
+    post_checkout()
 
     END_TIME = get_clock()
     logging.info('Elapsed time: %f', (END_TIME - START_TIME))

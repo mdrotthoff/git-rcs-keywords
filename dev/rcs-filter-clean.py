@@ -10,6 +10,7 @@ back to the repository.
 """
 
 import sys
+import os
 import re
 import logging
 
@@ -31,9 +32,9 @@ LOGGING_CONSOLE_MSG_FORMAT = \
     '%(asctime)s:%(levelname)s:%(module)s:%(funcName)s:%(lineno)s: %(message)s'
 LOGGING_CONSOLE_DATE_FORMAT = '%Y-%m-%d %H.%M.%S'
 
-LOGGING_FILE_LEVEL = None
+# LOGGING_FILE_LEVEL = None
 # LOGGING_FILE_LEVEL = logging.DEBUG
-# LOGGING_FILE_LEVEL = logging.INFO
+LOGGING_FILE_LEVEL = logging.INFO
 # LOGGING_FILE_LEVEL = logging.WARNING
 # LOGGING_FILE_LEVEL = logging.ERROR
 # LOGGING_FILE_LEVEL = logging.CRITICAL
@@ -48,6 +49,20 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 3:
     from time import perf_counter as get_clock
 else:
     from time import clock as get_clock
+
+
+def dump_environment():
+    """Dump the execution environment"""
+    logging.debug('Start environment variables')
+    for key in sorted(os.environ.keys()):
+        logging.debug('%s: %s' % (key, os.environ[key]))
+    logging.debug('End environment variables')
+
+    logging.debug('Start command parameters')
+    logging.debug('Argument count: %d' % len(sys.argv))
+    for cnt, argument in enumerate(sys.argv):
+        logging.debug('Argument %d: %s' % (cnt, argument))
+    logging.debug('End command parameters')
 
 
 def configure_logging():
@@ -93,58 +108,57 @@ def clean():
     # Display the parameters passed on the command line
     start_time = get_clock()
     logging.info('Entered function')
-    logging.debug('sys.argv parameter count %d', len(sys.argv))
-    logging.debug('sys.argv parameters %s', sys.argv)
+    logging.info('sys.argv: %s', sys.argv)
 
     # Calculate the source file being cleaned
     if len(sys.argv) > 1:
         file_name = sys.argv[1]
     else:
         file_name = '<Unknown file>'
-    logging.info('Processing file: %s', file_name)
+    logging.info('Cleaning file: %s', file_name)
 
-    # Define the various substitution regular expressions
-    author_regex = re.compile(r"\$Author:.*\$",
-                              re.IGNORECASE)
-    id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
-                          re.IGNORECASE)
-    date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
-                            re.IGNORECASE)
-    source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
-                              re.IGNORECASE)
-    file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
-                            re.IGNORECASE)
-    revision_regex = re.compile(r"\$Revision: +[-:\d+ ]+ +\$|\$Revision\$",
-                                re.IGNORECASE)
-    rev_regex = re.compile(r"\$Rev: +[-:\d+ ]+ +\$|\$Rev\$",
-                           re.IGNORECASE)
-    hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
-                            re.IGNORECASE)
-
-    # Calculate empty strings based on the keyword
-    git_hash = '$%s$' % 'Hash'
-    git_author = '$%s$' % 'Author'
-    git_date = '$%s$' % 'Date'
-    git_rev = '$%s$' % 'Rev'
-    git_revision = '$%s$' % 'Revision'
-    git_file = '$%s$' % 'File'
-    git_source = '$%s$' % 'Source'
-    git_id = '$%s$' % 'Id'
+    # # Define the various substitution regular expressions
+    # author_regex = re.compile(r"\$Author:.*\$",
+    #                           re.IGNORECASE)
+    # id_regex = re.compile(r"\$Id: +.+ \| [-:\d ]+ \| .+ +\$|\$Id\$",
+    #                       re.IGNORECASE)
+    # date_regex = re.compile(r"\$Date: +[-:\d ]+ +\$|\$Date\$",
+    #                         re.IGNORECASE)
+    # source_regex = re.compile(r"\$Source: .+[.].+ \$|\$Source\$",
+    #                           re.IGNORECASE)
+    # file_regex = re.compile(r"\$File: .+[.].+ \$|\$File\$",
+    #                         re.IGNORECASE)
+    # revision_regex = re.compile(r"\$Revision: +[-:\d+ ]+ +\$|\$Revision\$",
+    #                             re.IGNORECASE)
+    # rev_regex = re.compile(r"\$Rev: +[-:\d+ ]+ +\$|\$Rev\$",
+    #                        re.IGNORECASE)
+    # hash_regex = re.compile(r"\$Hash: +\w+ +\$|\$Hash\$",
+    #                         re.IGNORECASE)
+    #
+    # # Calculate empty strings based on the keyword
+    # git_hash = '$%s$' % 'Hash'
+    # git_author = '$%s$' % 'Author'
+    # git_date = '$%s$' % 'Date'
+    # git_rev = '$%s$' % 'Rev'
+    # git_revision = '$%s$' % 'Revision'
+    # git_file = '$%s$' % 'File'
+    # git_source = '$%s$' % 'Source'
+    # git_id = '$%s$' % 'Id'
 
     # Process each of the rows found on stdin
     line_count = 0
     try:
         for line in sys.stdin:
             line_count += 1
-            if line.count('$') > 1:
-                line = author_regex.sub(git_author, line)
-                line = id_regex.sub(git_id, line)
-                line = date_regex.sub(git_date, line)
-                line = source_regex.sub(git_source, line)
-                line = file_regex.sub(git_file, line)
-                line = revision_regex.sub(git_revision, line)
-                line = rev_regex.sub(git_rev, line)
-                line = hash_regex.sub(git_hash, line)
+            # if line.count('$') > 1:
+            #     line = author_regex.sub(git_author, line)
+            #     line = id_regex.sub(git_id, line)
+            #     line = date_regex.sub(git_date, line)
+            #     line = source_regex.sub(git_source, line)
+            #     line = file_regex.sub(git_file, line)
+            #     line = revision_regex.sub(git_revision, line)
+            #     line = rev_regex.sub(git_rev, line)
+            #     line = hash_regex.sub(git_hash, line)
             sys.stdout.write(line)
     except Exception as err:
         logging.info('Exception cleaning file %s',
@@ -166,6 +180,9 @@ if __name__ == '__main__':
 
     START_TIME = get_clock()
     logging.debug('Entered module')
+
+    if LOGGING_FILE_LEVEL and LOGGING_FILE_LEVEL <= logging.DEBUG:
+        dump_environment()
 
     clean()
 
